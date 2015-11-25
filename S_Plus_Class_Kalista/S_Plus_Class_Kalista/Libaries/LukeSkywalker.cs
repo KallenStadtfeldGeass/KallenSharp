@@ -591,7 +591,11 @@ namespace S_Plus_Class_Kalista.Libaries
                     {
                         if (!NoCancelChamps.Contains(_championName))
                         {
+                            if(Orbwalker.PassiveExploit)
+                                LastAATick = Utils.GameTimeTickCount - (int)(ObjectManager.Player.AttackCastDelay * 1000f) - 100;
+                            else
                             LastAATick = Utils.GameTimeTickCount + Game.Ping + 100 - (int)(ObjectManager.Player.AttackCastDelay * 1000f);
+
                             _missileLaunched = false;
 
                             var d = GetRealAutoAttackRange(target) - 65;

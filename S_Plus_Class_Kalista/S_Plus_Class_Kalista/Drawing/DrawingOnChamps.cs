@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LeagueSharp.Common;
+using S_Plus_Class_Kalista.Handlers;
 using Color = System.Drawing.Color;
 
 namespace S_Plus_Class_Kalista.Drawing
@@ -29,10 +30,11 @@ namespace S_Plus_Class_Kalista.Drawing
             var selfMenu = new Menu(".Self", "selfMenu");
             selfMenu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnSelf", "Draw On Self").SetValue(true));
             selfMenu.AddItem(
-                new MenuItem(_MenuItemBase + "Boolean.DrawOnEnemy.RendColor", "Rend Range").SetValue(new Circle(true,
+                new MenuItem(_MenuItemBase + "Boolean.DrawOnSelf.RendColor", "Rend Range").SetValue(new Circle(true,
                     Color.DarkSlateBlue)));
 
-
+            selfMenu.AddItem(
+    new MenuItem(_MenuItemBase + "Boolean.DrawOnSelf.SentinelMode", "Display Sentinel Mode").SetValue(true));
             menu.AddSubMenu(enemyMenu);
             menu.AddSubMenu(selfMenu);
 
@@ -98,6 +100,11 @@ namespace S_Plus_Class_Kalista.Drawing
             }
         }
 
+        private static Color GetColor(bool b)
+        {
+            return b ? Color.White : Color.SlateGray;
+        }
+
         public static void OnDrawSelf(EventArgs args)
         {
             if (!SMenu.Item(_MenuItemBase + "Boolean.DrawOnSelf").GetValue<bool>())
@@ -106,11 +113,22 @@ namespace S_Plus_Class_Kalista.Drawing
             if (!Player.Position.IsOnScreen())
                 return;
   
-                if (SMenu.Item(_MenuItemBase + "Boolean.DrawOnEnemy.RendColor").GetValue<Circle>().Active &&
+                if (SMenu.Item(_MenuItemBase + "Boolean.DrawOnSelf.RendColor").GetValue<Circle>().Active &&
                     Champion.E.Level > 0)
                     Render.Circle.DrawCircle(Player.Position, Champion.E.Range,
-                        SMenu.Item(_MenuItemBase + "Boolean.DrawOnEnemy.RendColor").GetValue<Circle>().Color, 2);
-            
+                        SMenu.Item(_MenuItemBase + "Boolean.DrawOnSelf.RendColor").GetValue<Circle>().Color, 2);
+
+            if (SMenu.Item(_MenuItemBase + "Boolean.DrawOnSelf.SentinelMode").GetValue<bool>() && Champion.W.Level > 0)
+            {
+                if (SMenu.Item(SentinelHandler._MenuItemBase + "Boolean.UseSentinel").GetValue<bool>()) //enabled
+                {
+                    var playerPos = LeagueSharp.Drawing.WorldToScreen(Player.Position);
+                    var vColor = GetColor(Champion.W.IsReady());
+                    var text = "Sentinel Mode:" + SentinelHandler.GetSentinelSelected();
+                    LeagueSharp.Drawing.DrawText(playerPos.X - LeagueSharp.Drawing.GetTextExtent(text).Width + 50,
+                        playerPos.Y - LeagueSharp.Drawing.GetTextExtent(text).Height + 30, vColor, text);
+                }
+            }
 
         }
     }
