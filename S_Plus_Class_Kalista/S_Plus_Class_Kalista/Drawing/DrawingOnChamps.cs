@@ -126,7 +126,7 @@ namespace S_Plus_Class_Kalista.Drawing
                     var vColor = GetColor(Champion.W.IsReady());
                     var text = "Sentinel Mode:" + SentinelHandler.GetSentinelSelected();
                     LeagueSharp.Drawing.DrawText(playerPos.X - LeagueSharp.Drawing.GetTextExtent(text).Width + 50,
-                        playerPos.Y - LeagueSharp.Drawing.GetTextExtent(text).Height + 30, vColor, text);
+                        playerPos.Y - LeagueSharp.Drawing.GetTextExtent(text).Height + 60, vColor, text);
                 }
             }
 
