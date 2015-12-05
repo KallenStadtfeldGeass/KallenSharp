@@ -57,14 +57,13 @@ namespace S_Plus_Class_Kalista.Handlers
 
             Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay");
 
-            if (!Champion.R.IsReady()) return;
+            if (!Champion.R.IsReady()) return; // DOes nto have R
+            if (!SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent").GetValue<bool>()) return; // Not enabled
+            if(SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
+            if(Player.Distance(SoulBoundHero) > Champion.R.Range) return; // in range of R
 
-
-            //menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent", "Auto-Save soulbound HP%").SetValue(true));
-            //menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp", "Auto-Save soulbound when HP% less then").SetValue(new Slider(10, 1, 90)));
-            if (!SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent").GetValue<bool>()) return;
-            if (SoulBoundHero.HealthPercent > SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value) return;
-
+            if (SoulBoundHero.HealthPercent < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value 
+             || HealthPrediction.GetHealthPrediction(SoulBoundHero, Game.Ping/2) < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value)// has less HP then requested
             Champion.R.Cast();
             //// Calculate Damage
             //if ((!(sender is Obj_AI_Hero) || args.SData.IsAutoAttack()) && args.Target != null && args.Target.NetworkId == SoulBoundHero.NetworkId)
