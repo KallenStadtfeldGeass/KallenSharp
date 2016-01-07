@@ -64,6 +64,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (SoulBoundHero.HealthPercent < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value 
              || HealthPrediction.GetHealthPrediction(SoulBoundHero, Game.Ping/2) < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value)// has less HP then requested
+                if (Player.IsRecalling() || Player.InFountain()) return;
             Champion.R.Cast();
             //// Calculate Damage
             //if ((!(sender is Obj_AI_Hero) || args.SData.IsAutoAttack()) && args.Target != null && args.Target.NetworkId == SoulBoundHero.NetworkId)
