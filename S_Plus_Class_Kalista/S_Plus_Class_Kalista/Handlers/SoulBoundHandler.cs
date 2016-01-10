@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LeagueSharp;
 using LeagueSharp.Common;
-using S_Plus_Class_Kalista.Libaries;
 
 namespace S_Plus_Class_Kalista.Handlers
 {
@@ -59,13 +56,13 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (!Champion.R.IsReady()) return; // DOes nto have R
             if (!SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent").GetValue<bool>()) return; // Not enabled
-            if(SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
-            if(Player.Distance(SoulBoundHero) > Champion.R.Range) return; // in range of R
-
-            if (SoulBoundHero.HealthPercent < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value 
-             || HealthPrediction.GetHealthPrediction(SoulBoundHero, Game.Ping/2) < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value)// has less HP then requested
-                if (Player.IsRecalling() || Player.InFountain()) return;
-            Champion.R.Cast();
+            if (SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
+            if (Player.Distance(SoulBoundHero) > Champion.R.Range) return; // in range of R
+            if (Player.IsRecalling() || Player.InFountain()) return; // is recalling or in fountain
+            if (SoulBoundHero.HealthPercent < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value || HealthPrediction.GetHealthPrediction(SoulBoundHero, Game.Ping / 2) < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value)
+            {
+                Champion.R.Cast();
+            }
             //// Calculate Damage
             //if ((!(sender is Obj_AI_Hero) || args.SData.IsAutoAttack()) && args.Target != null && args.Target.NetworkId == SoulBoundHero.NetworkId)
             //{
@@ -102,8 +99,7 @@ namespace S_Plus_Class_Kalista.Handlers
             if (SoulBoundHero == null)
             {
                 SoulBoundHero =
-                    HeroManager.Allies.Find(
-                        ally => ally.Buffs.Any(user => user.Caster.IsMe && user.Name.Contains("kalistacoopstrikeally")));
+                    HeroManager.Allies.FirstOrDefault(x => !x.IsMe && x.HasBuff("kalistacoopstrikeally"));
                 return;
             }
 
