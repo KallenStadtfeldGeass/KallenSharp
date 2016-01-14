@@ -23,9 +23,9 @@ namespace S_Plus_Class_Kalista.Handlers
 
         private static void OnUpdate(EventArgs args)
         {
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.LevelDelay")) return;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.LevelDelay")) return;
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.LevelDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.LevelDelay");
 
             if (SMenu.Item(_MenuItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
                 LevelUpSpells();

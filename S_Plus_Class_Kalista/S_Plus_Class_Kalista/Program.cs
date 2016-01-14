@@ -14,6 +14,7 @@ namespace S_Plus_Class_Kalista
         {
             CustomEvents.Game.OnGameLoad += OnLoad;
         }
+
         private static void OnLoad(EventArgs args)
         {
             if (Player.ChampionName != "Kalista")
@@ -30,6 +31,8 @@ namespace S_Plus_Class_Kalista
             Console.WriteLine(@"S+ Class Kalista Loading Auto Events...");
             RendHandler.Load();
             SentinelHandler.Load();
+            Console.WriteLine(@"S+ Class Kalista Loading ManaManager...");
+            ManaHandler.Load();
             Console.WriteLine(@"S+ Class Kalista Loading Trinkets...");
             TrinketHandler.Load();
             Console.WriteLine(@"S+ Class Kalista Loading Items...");

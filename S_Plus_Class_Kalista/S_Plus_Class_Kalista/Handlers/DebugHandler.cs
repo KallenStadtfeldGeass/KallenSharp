@@ -27,7 +27,7 @@ namespace S_Plus_Class_Kalista.Handlers
         private static void OnUpdate(EventArgs args)
         {
             if (!SMenu.Item(_MenuItemBase + "Boolean.Debug").GetValue<bool>()) return;
-            foreach (var delay in Limiter.Delays)
+            foreach (var delay in Humanizer.Limiter.Delays)
             {
                 Game.PrintChat(delay.Key + ":Delay:" + delay.Value.Delay + ":Last Tick:" + delay.Value.LastTick);
             }

@@ -20,7 +20,8 @@ namespace S_Plus_Class_Kalista.Libaries
         private static void OnUpdate(EventArgs args)
         {
             if (!Champion.E.IsReady()) return;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.EventDelay")) return;
+            if (!ManaHandler.UseAutoE()) return;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.EventDelay")) return;
 
             // BAD CODE
             var used = false;
@@ -30,7 +31,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 used = GetUsed(count++);
             }
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.EventDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.EventDelay");
         }
 
         //BADDDDD
@@ -65,17 +66,17 @@ namespace S_Plus_Class_Kalista.Libaries
         public static void CheckNonKillables(AttackableUnit minion)
         {
                 if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendNonKillables").GetValue<bool>()) return;
-                if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.NonKillableDelay")) return;
+                if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.NonKillableDelay")) return;
                 if (!(minion.Health <= Damage.DamageCalc.CalculateRendDamage((Obj_AI_Base)minion)) || minion.Health > 60) return;
                 if (!minion.IsValidTarget(Champion.E.Range))return;
-                Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.NonKillableDelay");
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.NonKillableDelay");
                 Champion.E.Cast();
         }
 
         private static bool RendEpicMonsters()
         {
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendEpics").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             if (!MinionManager.GetMinions(Player.ServerPosition,
                 Champion.E.Range,
@@ -86,7 +87,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 return false;
 
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
             Champion.E.Cast();
             return true;
         }
@@ -94,7 +95,7 @@ namespace S_Plus_Class_Kalista.Libaries
         public static bool RendEnemies()
         {
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendEnemyChampions").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             foreach (var target in HeroManager.Enemies)
             {
@@ -103,7 +104,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 if (Damage.DamageCalc.CalculateRendDamage(target) < target.Health) continue;
                 if (target.IsDead) continue;
 
-                Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                 Champion.E.Cast();
                 return true;
             }
@@ -114,7 +115,7 @@ namespace S_Plus_Class_Kalista.Libaries
         {
 
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBuffs").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             if (
                 !MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range, MinionTypes.All, MinionTeam.Neutral,
@@ -127,7 +128,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 return false;
 
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
             Champion.E.Cast();
             return true;
         }
@@ -136,7 +137,7 @@ namespace S_Plus_Class_Kalista.Libaries
         {
             var found = false;
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendEpicMinions").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             foreach (var epic in MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range).Where(epic => epic.IsValid))
             {
@@ -153,7 +154,7 @@ namespace S_Plus_Class_Kalista.Libaries
             }
 
             if (!found) return false;
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
             Champion.E.Cast();
             return true;
         }
@@ -161,7 +162,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendHarass()
         {
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendMinions").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             foreach (var target in HeroManager.Enemies)
             {
@@ -173,7 +174,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 var count = minions.Count(minion => minion.Health <= Damage.DamageCalc.CalculateRendDamage(minion) && minion.IsValid);
                 if (SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendHarrassKill.Slider.Killed").GetValue<Slider>().Value > count) continue;
 
-                Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                 Champion.E.Cast();
                 return true;
             }
@@ -183,7 +184,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendMinions()
         {
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendMinions").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
             var minions = MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range);
             var count = minions.Count(minion => minion.Health <= Damage.DamageCalc.CalculateRendDamage(minion) && minion.IsValid);
 
@@ -191,7 +192,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 count)
                 return false;
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
             Champion.E.Cast();
 
             return true;
@@ -200,7 +201,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendSmallMonsters()
         {
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendSmallMonster").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             if (
                 !MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range, MinionTypes.All, MinionTeam.Neutral,
@@ -209,7 +210,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 return false;
 
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
             Champion.E.Cast();
             return true;
         }
@@ -217,7 +218,7 @@ namespace S_Plus_Class_Kalista.Libaries
         {
             
                 if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBeforeDeath").GetValue<bool>()) return false;
-                if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+                if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
                 var champs = 0;
             foreach (var target in HeroManager.Enemies)
@@ -230,7 +231,7 @@ namespace S_Plus_Class_Kalista.Libaries
 
                 if (champs < SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.Enemies").GetValue<Slider>().Value) continue;
 
-                Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                 Champion.E.Cast();
 
                 return true;
@@ -242,7 +243,7 @@ namespace S_Plus_Class_Kalista.Libaries
         {
 
             if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendOnLeave").GetValue<bool>()) return false;
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
 
             foreach (var target in HeroManager.Enemies)
@@ -255,7 +256,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 if (stacks <= SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendOnLeave.Slider.Stacks").GetValue<Slider>().Value) continue;
 
 
-                Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                 Champion.E.Cast();
 
                 return true;

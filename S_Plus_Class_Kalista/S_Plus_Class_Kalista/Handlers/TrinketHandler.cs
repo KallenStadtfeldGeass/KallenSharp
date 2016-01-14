@@ -29,9 +29,9 @@ namespace S_Plus_Class_Kalista.Handlers
 
         private static void OnUpdate(EventArgs args)
         {
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.TrinketDelay")) return;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.TrinketDelay")) return;
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.TrinketDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.TrinketDelay");
             if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Player.Level < 9) return;
             if (!ObjectManager.Player.InShop() || Items.HasItem(Structures.Items.Trinkets.Orb.Id))
                 return;

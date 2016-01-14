@@ -15,119 +15,48 @@ namespace S_Plus_Class_Kalista.Handlers
         {
             SMenu.AddSubMenu(_Menu());
 
-            Game.OnUpdate += OnUpdate;
             Obj_AI_Base.OnProcessSpellCast += OnCast;
         }
 
         private static Menu _Menu()
         {
             var menu = new Menu(_MenuNameBase, "souldBoundMenu");
-
-            //menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.AutoSave.IncomingDamage", "Auto-Save soulbound if incoming damage >= HP").SetValue(true));
-            //menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.AutoSave.IncomingDamage.RemainingHPPercent", ">> max remaining HP% after incming damage").SetValue(new Slider(10, 0, 40)));
-            menu.AddItem(
-                new MenuItem(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent", "Auto-Save soulbound HP%")
-                    .SetValue(true));
-            menu.AddItem(
-                new MenuItem(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp",
-                    "Auto-Save soulbound when HP% less then").SetValue(new Slider(10, 1, 90)));
+            menu.AddItem(new MenuItem(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent", "Auto-Save SoulBound HP%").SetValue(true));
+            menu.AddItem(new MenuItem(_MenuItemBase + "AutoSave.Slider.PercentHp","Soulboud HP%").SetValue(new Slider(10, 1, 90)));
             return menu;
-        }
-
-
-        // ReSharper disable once InconsistentNaming
-        private static readonly Dictionary<float, float> _incomingDamage = new Dictionary<float, float>();
-        // ReSharper disable once InconsistentNaming
-        private static readonly Dictionary<float, float> _instantDamage = new Dictionary<float, float>();
-
-        public static float IncomingDamage
-        {
-            get { return _incomingDamage.Sum(e => e.Value) + _instantDamage.Sum(e => e.Value); }
         }
 
         private static void OnCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!sender.IsEnemy) return;
-            if (SoulBoundHero == null) return;
+            if (Player.InFountain()) return;
+            if (!Champion.R.IsReady()) return;
+            if (!ManaHandler.UseAutoR()) return;
+            if (!SMenu.Item(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent").GetValue<bool>()) return; // Dont save soulmate D:
 
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay")) return;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay")) return;
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay");
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay");
+            if (!GetValidSoulMate()) return; // Get SoulBound as you can change them and also check if there in R range   
 
-            if (!Champion.R.IsReady()) return; // DOes nto have R
-            if (!SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent").GetValue<bool>()) return; // Not enabled
+            var healthPercent = SMenu.Item(_MenuItemBase + "AutoSave.Slider.PercentHp").GetValue<Slider>().Value;
+
             if (SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
-            if (Player.Distance(SoulBoundHero) > Champion.R.Range) return; // in range of R
-            if (Player.IsRecalling() || Player.InFountain()) return; // is recalling or in fountain
-            if (SoulBoundHero.HealthPercent < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value || HealthPrediction.GetHealthPrediction(SoulBoundHero, Game.Ping / 2) < SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Slider.PercentHp").GetValue<Slider>().Value)
+
+            if (SoulBoundHero.HealthPercent <= healthPercent)
             {
                 Champion.R.Cast();
             }
-            //// Calculate Damage
-            //if ((!(sender is Obj_AI_Hero) || args.SData.IsAutoAttack()) && args.Target != null && args.Target.NetworkId == SoulBoundHero.NetworkId)
-            //{
-            //    // Calculate arrival time and damage
-            //    _incomingDamage.Add(SoulBoundHero.ServerPosition.Distance(sender.ServerPosition) / args.SData.MissileSpeed + Game.Time, (float)sender.GetAutoAttackDamage(SoulBoundHero));
-            //}
-            //// Sender is a hero
-            //else if (sender is Obj_AI_Hero)
-            //{
-            //    var attacker = (Obj_AI_Hero)sender;
-            //    var slot = attacker.GetSpellSlot(args.SData.Name);
-
-            //    if (slot == SpellSlot.Unknown) return;
-
-            //    if (slot == attacker.GetSpellSlot("SummonerDot") && args.Target != null && args.Target.NetworkId == SoulBoundHero.NetworkId)
-            //        _instantDamage.Add(Game.Time + 2, (float)attacker.GetSummonerSpellDamage(SoulBoundHero, LeagueSharp.Common.Damage.SummonerSpell.Ignite));
-
-            //    else if (slot.HasFlag(SpellSlot.Q | SpellSlot.W | SpellSlot.E | SpellSlot.R) &&
-            //             ((args.Target != null && args.Target.NetworkId == SoulBoundHero.NetworkId) ||
-            //              args.End.Distance(SoulBoundHero.ServerPosition) < Math.Pow(args.SData.LineWidth, 2)))
-            //        if((float)attacker.GetSpellDamage(SoulBoundHero, slot) > 10)
-            //             _instantDamage.Add(Game.Time + 2, (float)attacker.GetSpellDamage(SoulBoundHero, slot));
-            //}
         }
 
-        private static void OnUpdate(EventArgs args)
+        private static bool GetValidSoulMate()
         {
-            //if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay")) return;
-
-            //Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay");
-
-            //if (!Champion.R.IsReady()) return;
-
-            if (SoulBoundHero == null)
+            foreach (var soulMate in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsAlly && !x.IsMe && x.HasBuff("kalistacoopstrikeally") && x.Distance(ObjectManager.Player.Position) < Champion.R.Range && !x.InFountain() && !x.IsRecalling()))
             {
-                SoulBoundHero =
-                    HeroManager.Allies.FirstOrDefault(x => !x.IsMe && x.HasBuff("kalistacoopstrikeally"));
-                return;
+                SoulBoundHero = soulMate;
+                return true;
             }
-
-
-            //    foreach (var entry in _incomingDamage.Where(entry => entry.Key < Game.Time))
-            //    {
-            //        _incomingDamage.Remove(entry.Key);
-            //    }
-
-            //    foreach (var entry in _instantDamage.Where(entry => entry.Key < Game.Time))
-            //    {
-            //        _instantDamage.Remove(entry.Key);
-            //    }
-
-
-            //    var soulHealth = SoulBoundHero.Health;
-
-            //    if (SoulBoundHero.ChampionName == "Blitzcrank" && !SoulBoundHero.HasBuff("BlitzcrankManaBarrierCD") && !SoulBoundHero.HasBuff("ManaBarrier"))
-            //        soulHealth += SoulBoundHero.Mana / 2;
-
-            //    if (IncomingDamage < 10 || soulHealth < 20) return;
-
-
-            //    if (!SMenu.Item(_MenuItemBase + "Boolean.AutoSave.IncomingDamage").GetValue<bool>()) return;
-            //    if (SoulBoundHero.Distance(Player) > Champion.R.Range) return;
-            //    if (IncomingDamage > soulHealth || IncomingDamage > soulHealth * (100 - SMenu.Item(_MenuItemBase + "Boolean.AutoSave.Boolean.AutoSavePercent").GetValue<Slider>().Value) / 100)
-            //        Champion.R.Cast();
-            //}
+            return false;
         }
     }
 }

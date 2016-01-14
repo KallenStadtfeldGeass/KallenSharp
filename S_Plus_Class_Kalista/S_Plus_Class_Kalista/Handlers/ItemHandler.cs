@@ -76,9 +76,9 @@ namespace S_Plus_Class_Kalista.Handlers
         {
             #region Offensive
 
-            if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.ItemDelay")) return;
+            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.ItemDelay")) return;
 
-            Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.ItemDelay");
+            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.ItemDelay");
 
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;

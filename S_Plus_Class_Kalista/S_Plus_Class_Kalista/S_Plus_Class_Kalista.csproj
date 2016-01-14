@@ -64,6 +64,7 @@
     <Compile Include="Drawing\DrawingOnMonsters.cs" />
     <Compile Include="Handlers\ItemHandler.cs" />
     <Compile Include="Handlers\LevelHandler.cs" />
+    <Compile Include="Handlers\ManaHandler.cs" />
     <Compile Include="Handlers\OrbwalkHandler.cs" />
     <Compile Include="Handlers\Humanizer.cs" />
     <Compile Include="Handlers\RendHandler.cs" />

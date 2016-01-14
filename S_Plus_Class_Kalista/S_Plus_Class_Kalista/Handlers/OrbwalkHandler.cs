@@ -121,7 +121,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (SMenu.Item(_MenuItemBase + "Clear.Boolean.Rend.Minions").GetValue<bool>() && Champion.E.IsReady())
             {
-                if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay"))
+                if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay"))
                 {
                     var minions = MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range);
                     var count =
@@ -130,9 +130,11 @@ namespace S_Plus_Class_Kalista.Handlers
 
                     if (SMenu.Item(_MenuItemBase + "Clear.Boolean.Rend.Minions.Killed").GetValue<Slider>().Value > count)
                     {
-
-                        Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
-                        Champion.E.Cast();
+                        if (ManaHandler.UseModeE())
+                        {
+                            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                            Champion.E.Cast();
+                        }
                     }
                 }
             }
@@ -142,37 +144,45 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (SMenu.Item(_MenuItemBase + "Mixed.Boolean.UseQ").GetValue<bool>())
             {
-                var target = TargetSelector.GetTarget(Champion.Q.Range, TargetSelector.DamageType.Physical);
-                var predictionPosition = Champion.Q.GetPrediction(target);
-                var collisionObjects = predictionPosition.CollisionObjects;
-                if (0 >= collisionObjects.Count && predictionPosition.Hitchance >=
-                    GetHitChance(
-                        SMenu.Item(_MenuItemBase + "Mixed.Boolean.UseQ.Prediction").GetValue<StringList>().SelectedIndex))
+                if (ManaHandler.UseModeQ())
                 {
-                    if (SMenu.Item(_MenuItemBase + "Mixed.Boolean.UseQ.Reset").GetValue<bool>())
+                    var target = TargetSelector.GetTarget(Champion.Q.Range, TargetSelector.DamageType.Physical);
+                    var predictionPosition = Champion.Q.GetPrediction(target);
+                    var collisionObjects = predictionPosition.CollisionObjects;
+                    if (0 >= collisionObjects.Count && predictionPosition.Hitchance >=
+                        GetHitChance(
+                            SMenu.Item(_MenuItemBase + "Mixed.Boolean.UseQ.Prediction")
+                                .GetValue<StringList>()
+                                .SelectedIndex))
                     {
-                        if (Player.IsWindingUp || Player.IsDashing())
+                        if (SMenu.Item(_MenuItemBase + "Mixed.Boolean.UseQ.Reset").GetValue<bool>())
+                        {
+                            if (Player.IsWindingUp || Player.IsDashing())
+                                Champion.Q.Cast(predictionPosition.CastPosition);
+                        }
+
+                        else if (!Player.IsWindingUp && !Player.IsDashing())
                             Champion.Q.Cast(predictionPosition.CastPosition);
                     }
-
-                    else if (!Player.IsWindingUp && !Player.IsDashing())
-                        Champion.Q.Cast(predictionPosition.CastPosition);
                 }
 
             }
             if (SMenu.Item(_MenuItemBase + "Mixed.Boolean.Rend").GetValue<bool>())
             {
-                foreach (var stacks in from target in HeroManager.Enemies
-                    where target.IsValid
-                    where target.IsValidTarget(Champion.E.Range)
-                    where !Damage.DamageCalc.CheckNoDamageBuffs(target)
-                    select target.GetBuffCount("kalistaexpungemarker")
-                    into stacks
-                    where stacks >= SMenu.Item(_MenuItemBase + "Mixed.Boolean.Rend.Stacks").GetValue<Slider>().Value
-                    select stacks)
+                if (ManaHandler.UseModeE())
                 {
-                    if (!Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return;
-                    Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                    foreach (var stacks in from target in HeroManager.Enemies
+                        where target.IsValid
+                        where target.IsValidTarget(Champion.E.Range)
+                        where !Damage.DamageCalc.CheckNoDamageBuffs(target)
+                        select target.GetBuffCount("kalistaexpungemarker")
+                        into stacks
+                        where stacks >= SMenu.Item(_MenuItemBase + "Mixed.Boolean.Rend.Stacks").GetValue<Slider>().Value
+                        select stacks)
+                    {
+                        if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return;
+                        Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                    }
                 }
             }
 
@@ -182,26 +192,30 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ").GetValue<bool>())
             {
-                var target = TargetSelector.GetTarget(Champion.Q.Range, TargetSelector.DamageType.Physical);
-                var predictionPosition = Champion.Q.GetPrediction(target);
-                var collisionObjects = predictionPosition.CollisionObjects;
-                if (0 >= collisionObjects.Count
-                 && predictionPosition.Hitchance >=
-                    GetHitChance(
-                        SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ.Prediction").GetValue<StringList>().SelectedIndex))
+                if (ManaHandler.UseModeQ())
                 {
-                    if (SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ.Reset").GetValue<bool>())
+                    var target = TargetSelector.GetTarget(Champion.Q.Range, TargetSelector.DamageType.Physical);
+                    var predictionPosition = Champion.Q.GetPrediction(target);
+                    var collisionObjects = predictionPosition.CollisionObjects;
+                    if (0 >= collisionObjects.Count
+                        && predictionPosition.Hitchance >=
+                        GetHitChance(
+                            SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ.Prediction")
+                                .GetValue<StringList>()
+                                .SelectedIndex))
                     {
-                        if (Player.IsWindingUp || Player.IsDashing())
+                        if (SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ.Reset").GetValue<bool>())
+                        {
+                            if (Player.IsWindingUp || Player.IsDashing())
+                                Champion.Q.Cast(predictionPosition.CastPosition);
+                        }
+
+                        else if (!Player.IsWindingUp && !Player.IsDashing())
                             Champion.Q.Cast(predictionPosition.CastPosition);
                     }
 
-                    else if (!Player.IsWindingUp && !Player.IsDashing())
-                        Champion.Q.Cast(predictionPosition.CastPosition);
                 }
-
             }
-
 
         }
     }
