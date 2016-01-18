@@ -57,7 +57,7 @@ namespace S_Plus_Class_Kalista.Handlers
                 new MenuItem(DelayItemBase + "Slider.MinSeedDelay", "Minimum Random Delay").SetValue(new Slider(0, 0,
                     500)));
             subMenuDelay.AddItem(
-                new MenuItem(DelayItemBase + "Slider.MaxSeedDelay", "Maximum Random Delay").SetValue(new Slider(250, 0,
+                new MenuItem(DelayItemBase + "Slider.MaxSeedDelay", "Maximum Random Delay").SetValue(new Slider(50, 0,
                     500)));
 
             menu.AddSubMenu(subMenuDelay);

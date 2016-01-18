@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LeagueSharp;
 using LeagueSharp.Common;
 using S_Plus_Class_Kalista.Handlers;
@@ -23,49 +20,52 @@ namespace S_Plus_Class_Kalista.Libaries
             if (!ManaHandler.UseAutoE()) return;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.EventDelay")) return;
 
-            // BAD CODE
-            var used = false;
-            short count = 0;
-            while (!used)
-            {
-                used = GetUsed(count++);
-            }
-
-            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.EventDelay");
+            if(RendChecks(0))
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.EventDelay");
         }
-
-        //BADDDDD
-        private static bool GetUsed(short count)
+        private static bool RendChecks(int index)
         {
-            switch (count)
+            bool useRend;
+
+            switch (index)
             {
                 case 0:
-                    return RendEpicMonsters();
+                    useRend = RendEpicMonsters();
+                    break;
                 case 1:
-                    return RendEnemies();
+                    useRend = RendEnemies();
+                    break;
                 case 2:
-                    return RendBuffs();
+                    useRend = RendBuffs();
+                    break;
                 case 3:
-                    return RendEpicsMinions();
+                    useRend = RendEpicsMinions();
+                    break;
                 case 4:
-                    return RendHarass();
+                    useRend = RendHarass();
+                    break;
                 case 5:
-                    return RendMinions();
+                    useRend = RendMinions();
+                    break;
                 case 6:
-                    return RendSmallMonsters();
+                    useRend = RendSmallMonsters();
+                    break;
                 case 7:
-                    return RendBeforeDeath();
+                    useRend = RendBeforeDeath();
+                    break;
                 case 8:
-                    return RendOnLeave();
-                case 9:
-                    return true;
+                    useRend = RendOnLeave();
+                    break;
+                default:
+                    useRend = true;
+                    break;
             }
-            return false;
+            return useRend || (RendChecks(++index));
         }
 
         public static void CheckNonKillables(AttackableUnit minion)
         {
-                if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendNonKillables").GetValue<bool>()) return;
+                if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendNonKillables").GetValue<bool>()) return;
                 if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.NonKillableDelay")) return;
                 if (!(minion.Health <= Damage.DamageCalc.CalculateRendDamage((Obj_AI_Base)minion)) || minion.Health > 60) return;
                 if (!minion.IsValidTarget(Champion.E.Range))return;
@@ -75,7 +75,7 @@ namespace S_Plus_Class_Kalista.Libaries
 
         private static bool RendEpicMonsters()
         {
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendEpics").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendEpics").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             if (!MinionManager.GetMinions(Player.ServerPosition,
@@ -94,7 +94,7 @@ namespace S_Plus_Class_Kalista.Libaries
 
         public static bool RendEnemies()
         {
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendEnemyChampions").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendEnemyChampions").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             foreach (var target in HeroManager.Enemies)
@@ -114,7 +114,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendBuffs()
         {
 
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBuffs").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendBuffs").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             if (
@@ -136,7 +136,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendEpicsMinions()
         {
             var found = false;
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendEpicMinions").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendEpicMinions").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             foreach (var epic in MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range).Where(epic => epic.IsValid))
@@ -161,7 +161,7 @@ namespace S_Plus_Class_Kalista.Libaries
 
         private static bool RendHarass()
         {
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendMinions").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendMinions").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             foreach (var target in HeroManager.Enemies)
@@ -169,10 +169,10 @@ namespace S_Plus_Class_Kalista.Libaries
                 if (!target.IsValidTarget(Champion.E.Range)) continue;
                 if (Damage.DamageCalc.CheckNoDamageBuffs(target)) continue;
                 var stacks = target.GetBuffCount("kalistaexpungemarker");
-                if (stacks < SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendHarrassKill.Slider.Stacks").GetValue<Slider>().Value) continue;
+                if (stacks < SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendHarrassKill.Slider.Stacks").GetValue<Slider>().Value) continue;
                 var minions = MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range);
                 var count = minions.Count(minion => minion.Health <= Damage.DamageCalc.CalculateRendDamage(minion) && minion.IsValid);
-                if (SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendHarrassKill.Slider.Killed").GetValue<Slider>().Value > count) continue;
+                if (SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendHarrassKill.Slider.Killed").GetValue<Slider>().Value > count) continue;
 
                 Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                 Champion.E.Cast();
@@ -183,12 +183,12 @@ namespace S_Plus_Class_Kalista.Libaries
 
         private static bool RendMinions()
         {
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendMinions").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendMinions").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
             var minions = MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range);
             var count = minions.Count(minion => minion.Health <= Damage.DamageCalc.CalculateRendDamage(minion) && minion.IsValid);
 
-            if (SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendMinions.Slider.Killed").GetValue<Slider>().Value >
+            if (SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendMinions.Slider.Killed").GetValue<Slider>().Value >
                 count)
                 return false;
 
@@ -200,7 +200,7 @@ namespace S_Plus_Class_Kalista.Libaries
 
         private static bool RendSmallMonsters()
         {
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendSmallMonster").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendSmallMonster").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
             if (
@@ -217,19 +217,20 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendBeforeDeath()
         {
             
-                if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBeforeDeath").GetValue<bool>()) return false;
+                if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendBeforeDeath").GetValue<bool>()) return false;
                 if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
                 var champs = 0;
+            // ReSharper disable once LoopCanBePartlyConvertedToQuery
             foreach (var target in HeroManager.Enemies)
             {
                 if (!target.IsValidTarget(Champion.E.Range)) continue;
                 if (!target.HasBuff("KalistaExpungeMarker")) continue;
-                if (ObjectManager.Player.HealthPercent > SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.PercentHP").GetValue<Slider>().Value) continue;
-                if (target.GetBuffCount("kalistaexpungemarker") < SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.Stacks").GetValue<Slider>().Value) continue;
+                if (ObjectManager.Player.HealthPercent > SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.PercentHP").GetValue<Slider>().Value) continue;
+                if (target.GetBuffCount("kalistaexpungemarker") < SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.Stacks").GetValue<Slider>().Value) continue;
                 champs++;
 
-                if (champs < SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.Enemies").GetValue<Slider>().Value) continue;
+                if (champs < SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendBeforeDeath.Slider.Enemies").GetValue<Slider>().Value) continue;
 
                 Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                 Champion.E.Cast();
@@ -242,7 +243,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static bool RendOnLeave()
         {
 
-            if (!SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendOnLeave").GetValue<bool>()) return false;
+            if (!SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendOnLeave").GetValue<bool>()) return false;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return false;
 
 
@@ -253,7 +254,7 @@ namespace S_Plus_Class_Kalista.Libaries
                 if (target.IsDead) continue;
                 if (target.Distance(Player) < Champion.E.Range - 50) continue;
                 var stacks = target.GetBuffCount("kalistaexpungemarker");
-                if (stacks <= SMenu.Item(Handlers.RendHandler._MenuItemBase + "Boolean.RendOnLeave.Slider.Stacks").GetValue<Slider>().Value) continue;
+                if (stacks <= SMenu.Item(RendHandler._MenuItemBase + "Boolean.RendOnLeave.Slider.Stacks").GetValue<Slider>().Value) continue;
 
 
                 Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");

@@ -12,7 +12,7 @@ namespace S_Plus_Class_Kalista.Handlers
     {
         private const string _MenuNameBase = ".Mana Manager Menu";
         private const string _MenuItemBase = ".ManaManager.";
-
+        private static int GetManaPercent => (int)(Player.Mana / Player.MaxMana);
         public static void Load()
         {
             SMenu.AddSubMenu(_Menu());
@@ -41,14 +41,14 @@ namespace S_Plus_Class_Kalista.Handlers
         {
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
-            return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.QPercent").GetValue<Slider>().Value < Player.ManaPercent;
+            return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.QPercent").GetValue<Slider>().Value < GetManaPercent;
         }
 
         public static bool UseModeE()
         {
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
-            return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.EPercent").GetValue<Slider>().Value < Player.ManaPercent;
+            return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.EPercent").GetValue<Slider>().Value < GetManaPercent;
         }
 
 
@@ -56,7 +56,7 @@ namespace S_Plus_Class_Kalista.Handlers
         {
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
-            return SMenu.Item(_MenuItemBase + "ManaManager.Auto.EPercent").GetValue<Slider>().Value < Player.ManaPercent;
+            return SMenu.Item(_MenuItemBase + "ManaManager.Auto.EPercent").GetValue<Slider>().Value < GetManaPercent;
         }
 
 
@@ -64,7 +64,7 @@ namespace S_Plus_Class_Kalista.Handlers
         {
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
-            return SMenu.Item(_MenuItemBase + "ManaManager.Auto.Slider.RPercent").GetValue<Slider>().Value < Player.ManaPercent;
+            return SMenu.Item(_MenuItemBase + "ManaManager.Auto.Slider.RPercent").GetValue<Slider>().Value < GetManaPercent;
         }
     }
 }
