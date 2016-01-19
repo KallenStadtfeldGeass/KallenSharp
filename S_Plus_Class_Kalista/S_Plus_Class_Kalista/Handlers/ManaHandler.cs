@@ -50,13 +50,12 @@ namespace S_Plus_Class_Kalista.Handlers
 
             return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.EPercent").GetValue<Slider>().Value < GetManaPercent;
         }
-
-
+   
         public static bool UseAutoE()
         {
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
-            return SMenu.Item(_MenuItemBase + "ManaManager.Auto.EPercent").GetValue<Slider>().Value < GetManaPercent;
+            return SMenu.Item(_MenuItemBase + "ManaManager.Auto.Slider.EPercent").GetValue<Slider>().Value < GetManaPercent;
         }
 
 
