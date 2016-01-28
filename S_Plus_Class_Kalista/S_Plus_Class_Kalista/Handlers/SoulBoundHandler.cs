@@ -22,13 +22,15 @@ namespace S_Plus_Class_Kalista.Handlers
         {
             var menu = new Menu(_MenuNameBase, "souldBoundMenu");
             menu.AddItem(new MenuItem(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent", "Auto-Save SoulBound HP%").SetValue(true));
-            menu.AddItem(new MenuItem(_MenuItemBase + "AutoSave.Slider.PercentHp","Soulboud HP%").SetValue(new Slider(10, 1, 90)));
+            menu.AddItem(new MenuItem(_MenuItemBase + "AutoSave.Slider.PercentHp","Soulbound HP%").SetValue(new Slider(10, 1, 90)));
             return menu;
         }
 
         private static void OnCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
+            if(sender.Type != GameObjectType.obj_AI_Hero)return;
             if (!sender.IsEnemy) return;
+            if (args.Target == null) return;
             if (Player.InFountain()) return;
             if (!Champion.R.IsReady()) return;
             if (!ManaHandler.UseAutoR()) return;
@@ -43,10 +45,11 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
 
-            if (SoulBoundHero.HealthPercent <= healthPercent)
-            {
-                Champion.R.Cast();
-            }
+            if (!(SoulBoundHero.HealthPercent <= healthPercent) || SoulBoundHero == null) return;
+
+            var msg =$"<b> <font color=\"#008080\">S+ Class Kalista:-Use ULT-:-Reason-:-SoulHero HP%={SoulBoundHero.HealthPercent}, HP% to save at = {healthPercent}";
+            Game.PrintChat(msg);
+            Champion.R.Cast();
         }
 
         private static bool GetValidSoulMate()

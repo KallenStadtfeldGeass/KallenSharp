@@ -1037,6 +1037,22 @@ namespace S_Plus_Class_Kalista.Libaries
                     }
                 }
 
+                /*Champions*/
+                if ((_config.Item($"{_orbwalkerName}.MinionComboOrbwalk").GetValue<bool>() && ActiveMode == OrbwalkingMode.Combo))
+                {
+                    var target = TargetSelector.GetTarget(-1, TargetSelector.DamageType.Physical);
+                    if (target.IsValidTarget() && InAutoAttackRange(target))
+                    {
+                        return target;
+                    }
+                }
+
+                //Forced target
+                if (_forcedTarget.IsValidTarget() && InAutoAttackRange(_forcedTarget))
+                {
+                    return _forcedTarget;
+                }
+
                 /*Killable Minion*/
                 if (ActiveMode == OrbwalkingMode.LaneClear || ActiveMode == OrbwalkingMode.Mixed ||
                     ActiveMode == OrbwalkingMode.LastHit || ( _config.Item($"{_orbwalkerName}.MinionComboOrbwalk").GetValue<bool>() && ActiveMode==OrbwalkingMode.Combo))
@@ -1071,12 +1087,6 @@ namespace S_Plus_Class_Kalista.Libaries
                             }
                         }
                     }
-                }
-
-                //Forced target
-                if (_forcedTarget.IsValidTarget() && InAutoAttackRange(_forcedTarget))
-                {
-                    return _forcedTarget;
                 }
 
                 /* turrets / inhibitors / nexus */
