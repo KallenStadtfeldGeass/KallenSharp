@@ -189,7 +189,7 @@ namespace S_Plus_Class_Kalista.Handlers
         }
         private static void Combo()
         {
-
+            
             if (SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ").GetValue<bool>())
             {
                 if (ManaHandler.UseModeQ())

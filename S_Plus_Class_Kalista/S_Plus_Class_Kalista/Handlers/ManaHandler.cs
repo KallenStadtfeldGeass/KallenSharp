@@ -39,6 +39,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
         public static bool UseModeQ()
         {
+            return true;
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
             return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.QPercent").GetValue<Slider>().Value < GetManaPercent;
@@ -46,6 +47,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
         public static bool UseModeE()
         {
+            return true;
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
             return SMenu.Item(_MenuItemBase + "ManaManager.Mode.Slider.EPercent").GetValue<Slider>().Value < GetManaPercent;
@@ -53,6 +55,7 @@ namespace S_Plus_Class_Kalista.Handlers
    
         public static bool UseAutoE()
         {
+            return true;
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
             return SMenu.Item(_MenuItemBase + "ManaManager.Auto.Slider.EPercent").GetValue<Slider>().Value < GetManaPercent;
@@ -61,6 +64,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
         public static bool UseAutoR()
         {
+            return true;
             if (!SMenu.Item(_MenuItemBase + "ManaManager.Boolean.Enable").GetValue<bool>()) return true; // Dont use mana Manager
 
             return SMenu.Item(_MenuItemBase + "ManaManager.Auto.Slider.RPercent").GetValue<Slider>().Value < GetManaPercent;

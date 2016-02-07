@@ -28,28 +28,37 @@ namespace S_Plus_Class_Kalista.Handlers
 
         private static void OnCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if(sender.Type != GameObjectType.obj_AI_Hero)return;
-            if (!sender.IsEnemy) return;
-            if (args.Target == null) return;
             if (Player.InFountain()) return;
-            if (!Champion.R.IsReady()) return;
-            if (!ManaHandler.UseAutoR()) return;
-            if (!SMenu.Item(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent").GetValue<bool>()) return; // Dont save soulmate D:
 
-            if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay")) return;
-            Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay");
+            // Sender and args checks
+            if (sender.Type != GameObjectType.obj_AI_Hero)return;
+            if (!sender.IsEnemy) return;
+            if (args.Target != null) return;
+            {
+               
+                if (!Champion.R.IsReady()) return;
+                if (!ManaHandler.UseAutoR()) return;
 
-            if (!GetValidSoulMate()) return; // Get SoulBound as you can change them and also check if there in R range   
+                if (!SMenu.Item(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent").GetValue<bool>())
+                    return; // Dont save soulmate D:
 
-            var healthPercent = SMenu.Item(_MenuItemBase + "AutoSave.Slider.PercentHp").GetValue<Slider>().Value;
+                if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay")) return;
+                Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay");
 
-            if (SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
+                if (!GetValidSoulMate())
+                    return; // Get SoulBound as you can change them and also check if there in R range   
 
-            if (!(SoulBoundHero.HealthPercent <= healthPercent) || SoulBoundHero == null) return;
+                var healthPercent = SMenu.Item(_MenuItemBase + "AutoSave.Slider.PercentHp").GetValue<Slider>().Value;
 
-            var msg =$"<b> <font color=\"#008080\">S+ Class Kalista:-Use ULT-:-Reason-:-SoulHero HP%={SoulBoundHero.HealthPercent}, HP% to save at = {healthPercent}";
-            Game.PrintChat(msg);
-            Champion.R.Cast();
+                if (SoulBoundHero.CountEnemiesInRange(800) <= 0) return; // No enimies in range
+
+                if (!(SoulBoundHero.HealthPercent <= healthPercent) || SoulBoundHero == null) return;
+
+                var msg =
+                    $"<b> <font color=\"#008080\">S+ Class Kalista:-Use ULT-:-Reason-:-SoulHero HP%={SoulBoundHero.HealthPercent}, HP% to save at = {healthPercent}";
+                Game.PrintChat(msg);
+                Champion.R.Cast();
+            }
         }
 
         private static bool GetValidSoulMate()
