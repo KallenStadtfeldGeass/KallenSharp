@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LeagueSharp;
 using LeagueSharp.Common;
+using SharpDX;
 using S_Plus_Class_Kalista.Libaries;
 using Damage = S_Plus_Class_Kalista.Libaries.Damage;
 
@@ -12,16 +13,21 @@ namespace S_Plus_Class_Kalista.Handlers
 {
     internal class OrbwalkHandler : Core
     {
-        private const string _MenuNameBase = ".LukeSkywalker.Mode Menu";
-        private const string _MenuItemBase = "LukeSkywalker.Mode.";
+        private const string _MenuNameBase = ".Orbwalker.Mode Menu";
+        private const string _MenuItemBase = "Orbwalker.Mode.";
 
         public static void Load()
         {
-            SMenu.AddSubMenu(new Menu(".LukeSkywalker", ".LukeSkywalker"));
-            LukeOrbwalker = new LukeSkywalker.Orbwalker(SMenu.SubMenu(".LukeSkywalker"));
+            //SMenu.AddSubMenu(new Menu(".LukeSkywalker", ".LukeSkywalker"));
+            //LukeOrbwalker = new LukeSkywalker.Orbwalker(SMenu.SubMenu(".LukeSkywalker"));
+            //Game.OnUpdate += OnUpdate;
+            //SMenu.AddSubMenu(_Menu());
+
+            SMenu.AddSubMenu(new Menu(".Orbwalker", ".Orbwalker"));
+            CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalking.OnNonKillableMinion += RendCheck.CheckNonKillables;
             Game.OnUpdate += OnUpdate;
             SMenu.AddSubMenu(_Menu());
-            LukeSkywalker.OnNonKillableMinion += RendCheck.CheckNonKillables;
         }
 
         private static void OnUpdate(EventArgs args)
@@ -31,7 +37,7 @@ namespace S_Plus_Class_Kalista.Handlers
         private static Menu _Menu()
         {
             var menu = new Menu(_MenuNameBase, "lukeskywalkerModeMenu");
-
+            menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.MinonOrbwalk", "Use Minion Combo-Walk v2(BETA)").SetValue(true));
             var subMenuCombo = new Menu(".Combo", "comboMenu");
             subMenuCombo.AddItem(new MenuItem(_MenuItemBase + "Combo.Boolean.UseQ", "Use Q").SetValue(true));
             subMenuCombo.AddItem(
@@ -76,24 +82,64 @@ namespace S_Plus_Class_Kalista.Handlers
             menu.AddSubMenu(subMenuClear);
             return menu;
         }
+    
+        private static void OrbWalkMinions()
+        {
+            if (!SMenu.Item(_MenuItemBase + "Boolean.MinonOrbwalk").GetValue<bool>()) return;
+            if (CommonOrbwalker.GetTarget() != null) return;
+
+            var enemiesHero = HeroManager.Enemies.Where(x => x.IsEnemy && ObjectManager.Player.Distance(x) <= Orbwalking.GetRealAutoAttackRange(x));
+            if (enemiesHero.Any()) return; // There is a champion we can attack
+
+            var target = TargetSelector.GetTarget(Champion.E.Range * 1.2f, TargetSelector.DamageType.Physical); // Champion in E range
+
+            var autoMinions = MinionManager.GetMinions(Player.Position, Orbwalking.GetRealAutoAttackRange(Player), MinionTypes.All, MinionTeam.NotAlly);
+            if (!autoMinions.Any()) return;
+
+            if (target != null && target.GetBuffCount("kalistaexpungemarker") <= 0)// There is a target with a rend stack
+            {
+
+                if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.RendDelay")) return;
+                var rendMinions = MinionManager.GetMinions(Player.ServerPosition, Champion.E.Range);
+                var count = rendMinions.Count(minion => minion.Health <= Damage.DamageCalc.CalculateRendDamage(minion) && minion.IsValid);
+
+                if (count > 0) // Use Rend
+                {
+                    Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
+                    Champion.E.Cast();
+                    return;
+                }
+            }
+
+            //if no other event occurs
+            foreach (var minion in autoMinions)
+            {
+                if (Vector3.Distance(ObjectManager.Player.ServerPosition, minion.Position) > Orbwalking.GetRealAutoAttackRange(Player) + 50) continue;
+                if (minion.CharData.BaseSkinName == "gangplankbarrel") continue;
+                Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
+                return;
+            }
+
+        }
 
         private static void HandleMode()
         {
-            switch (LukeOrbwalker.ActiveMode)
+            switch (CommonOrbwalker.ActiveMode)
             {
-                case LukeSkywalker.OrbwalkingMode.Combo:
+                case Orbwalking.OrbwalkingMode.Combo:
                     Combo();
+                    OrbWalkMinions();
                     break;
 
-                case LukeSkywalker.OrbwalkingMode.Mixed:
+                case Orbwalking.OrbwalkingMode.Mixed:
                     Mixed();
                     break;
 
-                case LukeSkywalker.OrbwalkingMode.LaneClear:
+                case Orbwalking.OrbwalkingMode.LaneClear:
                     LaneClear();
                     break;
 
-                case LukeSkywalker.OrbwalkingMode.LastHit:
+                case Orbwalking.OrbwalkingMode.LastHit:
                     //LastHit();
                     break;
             }
@@ -106,10 +152,8 @@ namespace S_Plus_Class_Kalista.Handlers
             {
                 case 0:
                     return HitChance.VeryHigh;
-
                 case 1:
                     return HitChance.High;
-
                 case 2:
                     return HitChance.Dashing;
             }
@@ -213,7 +257,6 @@ namespace S_Plus_Class_Kalista.Handlers
                         else if (!Player.IsWindingUp && !Player.IsDashing())
                             Champion.Q.Cast(predictionPosition.CastPosition);
                     }
-
                 }
             }
 

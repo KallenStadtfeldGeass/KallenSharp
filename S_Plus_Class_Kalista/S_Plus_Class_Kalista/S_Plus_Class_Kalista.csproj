@@ -74,7 +74,6 @@
     <Compile Include="Libaries\Damage.cs" />
     <Compile Include="Libaries\Git.cs" />
     <Compile Include="Libaries\LukeSkywalker.cs" />
-    <Compile Include="Libaries\MinionOrbwalker.cs" />
     <Compile Include="Libaries\RendCheck.cs" />
     <Compile Include="Libaries\VectorHelper.cs" />
     <Compile Include="Program.cs" />

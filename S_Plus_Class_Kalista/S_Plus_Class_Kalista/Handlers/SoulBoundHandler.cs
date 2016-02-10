@@ -54,9 +54,9 @@ namespace S_Plus_Class_Kalista.Handlers
 
                 if (!(SoulBoundHero.HealthPercent <= healthPercent) || SoulBoundHero == null) return;
 
-                var msg =
-                    $"<b> <font color=\"#008080\">S+ Class Kalista:-Use ULT-:-Reason-:-SoulHero HP%={SoulBoundHero.HealthPercent}, HP% to save at = {healthPercent}";
-                Game.PrintChat(msg);
+                //var msg =
+                //    $"<b> <font color=\"#008080\">S+ Class Kalista:-Use ULT-:-Reason-:-SoulHero HP%={SoulBoundHero.HealthPercent}, HP% to save at = {healthPercent}";
+                //Game.PrintChat(msg);
                 Champion.R.Cast();
             }
         }

@@ -83,7 +83,7 @@ namespace S_Plus_Class_Kalista.Handlers
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
-            var inCombo = LukeOrbwalker.ActiveMode == LukeSkywalker.OrbwalkingMode.Combo;
+            var inCombo = CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo;
 
             if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Structures.Items.Offensive.Botrk.Id))
             // If enabled and has item

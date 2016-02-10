@@ -26,7 +26,8 @@ namespace S_Plus_Class_Kalista
         public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
         public static Obj_AI_Hero Player => ObjectManager.Player;
       
-        public static LukeSkywalker.Orbwalker LukeOrbwalker { get; set; }
+        public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
+      //  public static LukeSkywalker.Orbwalker LukeOrbwalker { get; set; }
         public static Obj_AI_Hero SoulBoundHero { get; set; }
        
         public class Time
