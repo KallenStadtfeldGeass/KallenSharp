@@ -23,7 +23,7 @@ namespace SIEvade
             //Create Menu
             MenuBuilder.Load(Player.ChampionName);
 
-            (new Menu($"v{Core.AssemblyVersion}", $"versionMenu{Core.AssemblyVersion}")).AddToMainMenu();
+            Core.SMenu.AddSubMenu(new Menu($"v{Core.AssemblyVersion}", $"versionMenu{Core.AssemblyVersion}"));
             Core.SMenu.AddToMainMenu();
 
             Game.PrintChat("<b> <font color=\"#F88017\">SI</font> Evade</b> - <font color=\"#008080\">Thank You for choosing me </font>!");
