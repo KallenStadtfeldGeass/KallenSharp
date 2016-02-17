@@ -63,7 +63,7 @@ namespace SIEvade
           // menu.AddSubMenu(resetMenu);
             menu.AddSubMenu(hpMenu);
             menu.AddSubMenu(levelsMenu);
-            menu.AddSubMenu(new Menu($"By Kallen", $"credits{Core.AssemblyVersion}"));
+            menu.AddSubMenu(new Menu("By Kallen", $"credits{AssemblyVersion}"));
             return menu;
         }
   
@@ -75,20 +75,20 @@ namespace SIEvade
             evadeMenu.AddItem(new MenuItem(itembase + ".UseEvade", "Activate Evade").SetValue(evadeBase.UseEvade));
             evadeMenu.AddItem(new MenuItem(itembase + ".UseEvadeSkills", "Use Evade Skills").SetValue(evadeBase.UseEvadeSkills));
 
-            var timeMenu = new Menu($".Delay Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.Time");
+            var timeMenu = new Menu(".Delay Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.Time");
             //Time
             timeMenu.AddItem(new MenuItem(itembase + ".TimeSettings.Reaction", "Reaction Time").SetValue(new Slider((int)evadeBase.TimeSetting.ReactionTime, 0, 750)));
             timeMenu.AddItem(new MenuItem(itembase + ".TimeSettings.Tick", "Tick Delay").SetValue(new Slider((int)evadeBase.TimeSetting.TickTime, 0, 250)));
             timeMenu.AddItem(new MenuItem(itembase + ".TimeSettings.Detection", "Spell Detection Delay").SetValue(new Slider((int)evadeBase.TimeSetting.DetectionTime, 0, 500)));
 
-            var spellMenu = new Menu($".Spell Dodge Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.SpellSettings");
+            var spellMenu = new Menu(".Spell Dodge Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.SpellSettings");
             //Spell Settings
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeDangerous", "Dodge Only Dangerous").SetValue(evadeBase.SpellSetting.DodgeDangerous));
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeCircular", "Dodge Circular").SetValue(evadeBase.SpellSetting.DodgeCircular));
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeFog", "Dodge Fog of war Spells").SetValue(evadeBase.SpellSetting.DodgeFog));
 
 
-            var otherMenu = new Menu($".Other Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.OtherSettings");
+            var otherMenu = new Menu(".Other Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.OtherSettings");
             //Other settings
             otherMenu.AddItem(new MenuItem(itembase + ".OtherSettings.ClickOnce", "Only Click Once").SetValue(evadeBase.OtherSetting.ClickOnce));
             otherMenu.AddItem(new MenuItem(itembase + ".OtherSettings.FastMove", "Allow Fast Move").SetValue(evadeBase.OtherSetting.FastMove));
