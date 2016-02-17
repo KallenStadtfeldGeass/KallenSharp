@@ -109,13 +109,13 @@ namespace SIEvade
 
             var mode = "none";
 
-            if (SMenu.Item($"{_champName}.DangerLevel.Low").GetValue<Slider>().Value > (int)Player.HealthPercent)
+            if (SMenu.Item($"{_champName}.DangerLevel.Low").GetValue<Slider>().Value >= (int)Player.HealthPercent)
                 mode = "Low";
                 
-            else if (SMenu.Item($"{_champName}.DangerLevel.Mid").GetValue<Slider>().Value > (int)Player.HealthPercent)
+            else if (SMenu.Item($"{_champName}.DangerLevel.Mid").GetValue<Slider>().Value >= (int)Player.HealthPercent)
                 mode = "Mid";
 
-            else if (SMenu.Item($"{_champName}.DangerLevel.High").GetValue<Slider>().Value > (int)Player.HealthPercent)
+            else if (SMenu.Item($"{_champName}.DangerLevel.High").GetValue<Slider>().Value >= (int)Player.HealthPercent)
                 mode = "High";
 
             if(!_currentMode.Equals(mode))
