@@ -8,27 +8,28 @@ namespace SIEvade
     {
 
         private static string _menuNameBase;
+        private static readonly string MenuItemBase = "SIEvade.";
         private static string _champName;
         private static string _currentMode = "T";
         public static void Load(string champName)
         {
             _champName = champName;
-            _menuNameBase = $"SIEvade.{_champName}";
+            _menuNameBase = $"{MenuItemBase}{_champName}";
             SMenu.AddSubMenu(_Menu());
 
             Game.OnUpdate += OnUpdate;
         }
-
+        
         private static Menu _Menu()
         {
             var menu = new Menu(_menuNameBase, $".{_champName}");
 
-            //var resetMenu = new Menu(".Reset Options", $".{ChampName}.Reset");
-            //resetMenu.AddItem(new MenuItem(_MenuItemBase + ".Tank", "Use Tank Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(_MenuItemBase + ".Jungle", "Use Jungle Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(_MenuItemBase + ".Mid", "Use Mid Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(_MenuItemBase + ".Adc", "Use ADC Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(_MenuItemBase + ".Support", "Use Support Settings").SetValue(false));
+            //var resetMenu = new Menu(".Reset Options", $".{_champName}.Reset");
+            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Tank", "Use Tank Settings").SetValue(false));
+            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Jungle", "Use Jungle Settings").SetValue(false));
+            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Mid", "Use Mid Settings").SetValue(false));
+            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Adc", "Use ADC Settings").SetValue(false));
+            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Support", "Use Support Settings").SetValue(false));
 
             var hpMenu = new Menu(".HP% Options", $".{_champName}.HP");
             hpMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.High", "High HP% Activation").SetValue(new Slider(85)));
@@ -58,7 +59,7 @@ namespace SIEvade
             levelsMenu.AddSubMenu(midMenu);
             levelsMenu.AddSubMenu(highMenu);
 
-           // menu.AddSubMenu(resetMenu);
+          // menu.AddSubMenu(resetMenu);
             menu.AddSubMenu(hpMenu);
             menu.AddSubMenu(levelsMenu);
             menu.AddSubMenu(new Menu("By Kallen", "thisDOESnotMATTER"));
@@ -102,25 +103,23 @@ namespace SIEvade
 
         private static void OnUpdate(EventArgs args)
         {
-            if (Time.TickCount - Time.LastTick > 100) //every 100ms check for change in status
-            {
-                Time.LastTick = Time.TickCount;
+            if (Time.TickCount - Time.LastTick < 100) return;
 
-                var mode = "none";
+            Time.LastTick = Time.TickCount;
 
-                if (SMenu.Item($"{_champName}.DangerLevel.Low").GetValue<Slider>().Value > (int)Player.HealthPercent)
-                    mode = "Low";
+            var mode = "none";
+
+            if (SMenu.Item($"{_champName}.DangerLevel.Low").GetValue<Slider>().Value > (int)Player.HealthPercent)
+                mode = "Low";
                 
-                else if (SMenu.Item($"{_champName}.DangerLevel.Mid").GetValue<Slider>().Value > (int)Player.HealthPercent)
-                    mode = "Mid";
+            else if (SMenu.Item($"{_champName}.DangerLevel.Mid").GetValue<Slider>().Value > (int)Player.HealthPercent)
+                mode = "Mid";
 
-                else if (SMenu.Item($"{_champName}.DangerLevel.High").GetValue<Slider>().Value > (int)Player.HealthPercent)
-                    mode = "High";
+            else if (SMenu.Item($"{_champName}.DangerLevel.High").GetValue<Slider>().Value > (int)Player.HealthPercent)
+                mode = "High";
 
-                if(_currentMode != mode)
-                    SyncMenu(mode);
-
-            }
+            if(_currentMode.Equals(mode))
+                SyncMenu(mode);
         }
 
 
