@@ -63,7 +63,6 @@ namespace SIEvade
           // menu.AddSubMenu(resetMenu);
             menu.AddSubMenu(hpMenu);
             menu.AddSubMenu(levelsMenu);
-            menu.AddSubMenu(new Menu("By Kallen", $"credits{AssemblyVersion}"));
             return menu;
         }
   
