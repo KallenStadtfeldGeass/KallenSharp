@@ -24,7 +24,7 @@ namespace SIEvade
         {
 
             var menu = new Menu(_menuNameBase, $".{_champName}");
-            menu.AddSubMenu(new Menu($"v{Core.AssemblyVersion}", $"versionMenu{Core.AssemblyVersion}"));
+
             //var resetMenu = new Menu(".Reset Options", $".{_champName}.Reset");
             //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Tank", "Use Tank Settings").SetValue(false));
             //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Jungle", "Use Jungle Settings").SetValue(false));
