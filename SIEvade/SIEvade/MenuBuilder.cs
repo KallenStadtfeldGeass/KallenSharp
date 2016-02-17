@@ -118,7 +118,7 @@ namespace SIEvade
             else if (SMenu.Item($"{_champName}.DangerLevel.High").GetValue<Slider>().Value > (int)Player.HealthPercent)
                 mode = "High";
 
-            if(_currentMode.Equals(mode))
+            if(!_currentMode.Equals(mode))
                 SyncMenu(mode);
         }
 
