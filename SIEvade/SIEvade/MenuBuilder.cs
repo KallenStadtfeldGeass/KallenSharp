@@ -73,6 +73,7 @@ namespace SIEvade
             evadeMenu.AddItem(new MenuItem(itembase + ".EvadeMode", "Evade Smoothness level").SetValue(new Slider(evadeBase.EvadeMode, 1, 3)));
             evadeMenu.AddItem(new MenuItem(itembase + ".UseEvade", "Activate Evade").SetValue(evadeBase.UseEvade));
             evadeMenu.AddItem(new MenuItem(itembase + ".UseEvadeSkills", "Use Evade Skills").SetValue(evadeBase.UseEvadeSkills));
+            evadeMenu.AddItem(new MenuItem(itembase + ".UseDangerousKeys", "Enable Dodge Only Dangerous Keys").SetValue(false));
 
             var timeMenu = new Menu(".Delay Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.Time");
             //Time
@@ -82,7 +83,7 @@ namespace SIEvade
 
             var spellMenu = new Menu(".Spell Dodge Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.SpellSettings");
             //Spell Settings
-            spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeDangerous", "Dodge Only Dangerous").SetValue(evadeBase.SpellSetting.DodgeDangerous));
+            spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeDangerous", "Dodge Only Dangerous(Always)").SetValue(evadeBase.SpellSetting.DodgeDangerous));
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeCircular", "Dodge Circular").SetValue(evadeBase.SpellSetting.DodgeCircular));
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeFog", "Dodge Fog of war Spells").SetValue(evadeBase.SpellSetting.DodgeFog));
 
@@ -139,13 +140,15 @@ namespace SIEvade
                 }
                 default: // handle evade based on HP
                 {
+
                         string itembase = $"{_champName}.DangerLevelSettings.{mode}";
                         Menu.GetMenu("ezEvade", "ezEvade").Item("DodgeSkillShots").SetValue(new KeyBind(Menu.GetMenu("ezEvade", "ezEvade").Item("DodgeSkillShots").GetValue<KeyBind>().Key, KeyBindType.Toggle, 
                             SMenu.Item(itembase + ".UseEvade").GetValue<bool>()));
                         Menu.GetMenu("ezEvade", "ezEvade").Item("ActivateEvadeSpells").SetValue(new KeyBind(Menu.GetMenu("ezEvade", "ezEvade").Item("ActivateEvadeSpells").GetValue<KeyBind>().Key, KeyBindType.Toggle,
                             SMenu.Item(itembase + ".UseEvadeSkills").GetValue<bool>()));
 
-                      
+                        Menu.GetMenu("ezEvade", "ezEvade").Item("DodgeDangerousKeyEnabled").SetValue(SMenu.Item(itembase + ".UseDangerousKeys").GetValue<bool>());
+
                         Menu.GetMenu("ezEvade", "ezEvade").Item("EvadeMode").SetValue(new StringList(new[] { "Fast", "Smooth", "Very Smooth" }, SMenu.Item(itembase + ".EvadeMode").GetValue<Slider>().Value));
 
                         //Time
