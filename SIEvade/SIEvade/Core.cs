@@ -11,10 +11,10 @@ namespace SIEvade
         private const string MenuName = "Should I Evade";
         public static bool MenuLoaded = false;
         public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
-        public static Obj_AI_Hero Player => ObjectManager.Player;
-        public static Version AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version;
+        public static Obj_AI_Hero Player = ObjectManager.Player;
+        public static Version AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-        public static Menu EzEvadeMenu => Menu.GetMenu("ezEvade", "ezEvade");
+        public static Menu EzEvadeMenu = Menu.GetMenu("ezEvade", "ezEvade");
         public class Time
         {
             private static readonly DateTime AssemblyLoadTime = DateTime.Now;
