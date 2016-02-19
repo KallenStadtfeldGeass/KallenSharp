@@ -8,7 +8,7 @@ namespace SIEvade
 { 
     class Core
     {
-        private const string MenuName = "Should I Evade";
+        private static string MenuName = "Should I Evade";
         public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
         public static Obj_AI_Hero Player;
         public static Version AssemblyVersion;
