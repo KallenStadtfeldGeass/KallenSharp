@@ -5,21 +5,16 @@ using LeagueSharp.Common;
 using Version = System.Version;
 
 namespace SIEvade
-{ 
+{
     class Core
     {
-        private static string MenuName = "Should I Evade";
+        private const string MenuName = "Should I Evade";
+        public static bool MenuLoaded = false;
         public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
-        public static Obj_AI_Hero Player;
-        public static Version AssemblyVersion;
-        public static Menu EzEvadeMenu;
+        public static Obj_AI_Hero Player => ObjectManager.Player;
+        public static Version AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version;
 
-        public static void Load()
-        {
-            Player = ObjectManager.Player;
-            AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            EzEvadeMenu = Menu.GetMenu("ezEvade", "ezEvade");
-        }
+        public static Menu EzEvadeMenu => Menu.GetMenu("ezEvade", "ezEvade");
         public class Time
         {
             private static readonly DateTime AssemblyLoadTime = DateTime.Now;

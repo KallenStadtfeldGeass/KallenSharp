@@ -19,7 +19,7 @@ namespace SIEvade
 
             Game.OnUpdate += OnUpdate;
         }
-        
+
         private static Menu _Menu()
         {
 
@@ -42,31 +42,31 @@ namespace SIEvade
             var lowMenu = GenerateEvadeMenu("LowHP", "Low",
                 new Evade.Base(new Evade.SpellsSettings(false, true, true),
                     new Evade.TimeSettings(150, 50, 100), new Evade.OtherSettings(false, true, true, true),
-                    3,true,true));
+                    3, true, true));
 
 
             var midMenu = GenerateEvadeMenu("MidHP", "Mid",
           new Evade.Base(new Evade.SpellsSettings(false, true, false),
               new Evade.TimeSettings(250, 75, 125), new Evade.OtherSettings(true, false, true, false),
-              3,true,true));
+              3, true, true));
 
 
             var highMenu = GenerateEvadeMenu("HighHP", "High",
   new Evade.Base(new Evade.SpellsSettings(true, false, false),
                     new Evade.TimeSettings(300, 100, 150), new Evade.OtherSettings(true, false, true, false),
-                    3,true,false));
+                    3, true, false));
 
             levelsMenu.AddSubMenu(lowMenu);
             levelsMenu.AddSubMenu(midMenu);
             levelsMenu.AddSubMenu(highMenu);
 
-          // menu.AddSubMenu(resetMenu);
+            // menu.AddSubMenu(resetMenu);
             menu.AddSubMenu(hpMenu);
             menu.AddSubMenu(levelsMenu);
             return menu;
         }
-  
-        private static Menu GenerateEvadeMenu(string menuString,string dangerLevelString,Evade.Base evadeBase)
+
+        private static Menu GenerateEvadeMenu(string menuString, string dangerLevelString, Evade.Base evadeBase)
         {
             string itembase = $"{_champName}.DangerLevelSettings.{dangerLevelString}";
             var evadeMenu = new Menu($".{menuString}", $".{_champName}.DangerLevelSettings.{dangerLevelString}");
@@ -111,17 +111,17 @@ namespace SIEvade
 
             if (SMenu.Item($"{_champName}.DangerLevel.Low").GetValue<Slider>().Value >= (int)Player.HealthPercent)
                 mode = "Low";
-                
+
             else if (SMenu.Item($"{_champName}.DangerLevel.Mid").GetValue<Slider>().Value >= (int)Player.HealthPercent)
                 mode = "Mid";
 
             else if (SMenu.Item($"{_champName}.DangerLevel.High").GetValue<Slider>().Value >= (int)Player.HealthPercent)
                 mode = "High";
 
-            if(!_currentMode.Equals(mode))
+            if (!_currentMode.Equals(mode))
                 SyncMenu(mode);
         }
-        //qwer
+
 
         private static void SyncMenu(string mode)
         {
@@ -130,7 +130,7 @@ namespace SIEvade
             {
 
                 case "none": //Dont evade
-                {
+                    {
                         // ReSharper disable once RedundantArgumentDefaultValue
                         EzEvadeMenu.Item("DodgeSkillShots")
                         .SetValue(new KeyBind(EzEvadeMenu.Item("DodgeSkillShots").GetValue<KeyBind>().Key,
@@ -140,13 +140,13 @@ namespace SIEvade
                         .SetValue(new KeyBind(EzEvadeMenu.Item("ActivateEvadeSpells").GetValue<KeyBind>().Key,
                             KeyBindType.Toggle, false));
 
-                    break;
-                }
+                        break;
+                    }
 
                 default: // handle evade based on HP
-                {
+                    {
 
-                    string itembase = $"{_champName}.DangerLevelSettings.{mode}";
+                        string itembase = $"{_champName}.DangerLevelSettings.{mode}";
                         EzEvadeMenu.Item("DodgeSkillShots")
                         .SetValue(new KeyBind(EzEvadeMenu.Item("DodgeSkillShots").GetValue<KeyBind>().Key,
                             KeyBindType.Toggle,
@@ -160,7 +160,7 @@ namespace SIEvade
                         .SetValue(SMenu.Item(itembase + ".UseDangerousKeys").GetValue<bool>());
 
                         EzEvadeMenu.Item("EvadeMode")
-                        .SetValue(new StringList(new[] {"Fast", "Smooth", "Very Smooth"},
+                        .SetValue(new StringList(new[] { "Fast", "Smooth", "Very Smooth" },
                             SMenu.Item(itembase + ".EvadeMode").GetValue<Slider>().Value));
 
                         //Time
@@ -189,10 +189,10 @@ namespace SIEvade
                         .SetValue(SMenu.Item(itembase + ".OtherSettings.ContinueMovement").GetValue<bool>());
                         EzEvadeMenu.Item("ClickOnlyOnce")
                         .SetValue(SMenu.Item(itembase + ".OtherSettings.ClickOnce").GetValue<bool>());
-                    EzEvadeMenu.Item("FastMovementBlock")
+                        EzEvadeMenu.Item("FastMovementBlock")
                         .SetValue(!SMenu.Item(itembase + ".OtherSettings.FastMove").GetValue<bool>());
-                    break;
-                }
+                        break;
+                    }
 
 
             }
