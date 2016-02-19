@@ -189,7 +189,7 @@ namespace SIEvade
                         .SetValue(SMenu.Item(itembase + ".OtherSettings.ContinueMovement").GetValue<bool>());
                         EzEvadeMenu.Item("ClickOnlyOnce")
                         .SetValue(SMenu.Item(itembase + ".OtherSettings.ClickOnce").GetValue<bool>());
-                        EzEvadeMenu.Item("FastMovementBlock")
+                    EzEvadeMenu.Item("FastMovementBlock")
                         .SetValue(!SMenu.Item(itembase + ".OtherSettings.FastMove").GetValue<bool>());
                     break;
                 }
