@@ -1,0 +1,9 @@
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\bin\Debug\crappyThing.exe.config
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\bin\Debug\crappyThing.exe
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\bin\Debug\crappyThing.pdb
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\obj\Debug\crappyThing.csprojResolveAssemblyReference.cache
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\obj\Debug\crappyThing.Form1.resources
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\obj\Debug\crappyThing.Properties.Resources.resources
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\obj\Debug\crappyThing.csproj.GenerateResource.Cache
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\obj\Debug\crappyThing.exe
+D:\Coding\Git\New\KallenSharp\crappyThing\crappyThing\obj\Debug\crappyThing.pdb

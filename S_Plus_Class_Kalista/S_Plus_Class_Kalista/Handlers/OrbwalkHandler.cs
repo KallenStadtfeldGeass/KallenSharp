@@ -174,7 +174,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
                     if (SMenu.Item(_MenuItemBase + "Clear.Boolean.Rend.Minions.Killed").GetValue<Slider>().Value > count)
                     {
-                        if (ManaHandler.UseModeE())
+                        if (true)//ManaHandler.UseModeE())
                         {
                             Humanizer.Limiter.UseTick($"{Humanizer.DelayItemBase}Slider.RendDelay");
                             Champion.E.Cast();
@@ -188,7 +188,7 @@ namespace S_Plus_Class_Kalista.Handlers
 
             if (SMenu.Item(_MenuItemBase + "Mixed.Boolean.UseQ").GetValue<bool>())
             {
-                if (ManaHandler.UseModeQ())
+                if (true)//ManaHandler.UseModeQ())
                 {
                     var target = TargetSelector.GetTarget(Champion.Q.Range, TargetSelector.DamageType.Physical);
                     var predictionPosition = Champion.Q.GetPrediction(target);
@@ -213,7 +213,7 @@ namespace S_Plus_Class_Kalista.Handlers
             }
             if (SMenu.Item(_MenuItemBase + "Mixed.Boolean.Rend").GetValue<bool>())
             {
-                if (ManaHandler.UseModeE())
+                if (true)//ManaHandler.UseModeE())
                 {
                     foreach (var stacks in from target in HeroManager.Enemies
                         where target.IsValid
@@ -236,7 +236,7 @@ namespace S_Plus_Class_Kalista.Handlers
             
             if (SMenu.Item(_MenuItemBase + "Combo.Boolean.UseQ").GetValue<bool>())
             {
-                if (ManaHandler.UseModeQ())
+                if (true)//ManaHandler.UseModeQ())
                 {
                     var target = TargetSelector.GetTarget(Champion.Q.Range, TargetSelector.DamageType.Physical);
                     var predictionPosition = Champion.Q.GetPrediction(target);

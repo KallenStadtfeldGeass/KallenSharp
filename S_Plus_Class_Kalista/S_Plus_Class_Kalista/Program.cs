@@ -32,7 +32,7 @@ namespace S_Plus_Class_Kalista
             RendHandler.Load();
             SentinelHandler.Load();
             Console.WriteLine(@"S+ Class Kalista Loading ManaManager...");
-            ManaHandler.Load();
+           // ManaHandler.Load();
             Console.WriteLine(@"S+ Class Kalista Loading Trinkets...");
             TrinketHandler.Load();
             Console.WriteLine(@"S+ Class Kalista Loading Items...");

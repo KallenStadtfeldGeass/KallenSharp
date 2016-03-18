@@ -17,7 +17,7 @@ namespace S_Plus_Class_Kalista.Libaries
         private static void OnUpdate(EventArgs args)
         {
             if (!Champion.E.IsReady()) return;
-            if (!ManaHandler.UseAutoE()) return;
+            //if (!ManaHandler.UseAutoE()) return;
             if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.EventDelay")) return;
 
             if(RendChecks(0))

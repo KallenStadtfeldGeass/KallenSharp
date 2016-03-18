@@ -15,29 +15,48 @@ namespace SIEvade
         {
             _champName = champName;
             _menuNameBase = $"{MenuItemBase}{_champName}";
-            SMenu.AddSubMenu(_Menu());
-
+            SMenu.AddSubMenu(D_Menu());
+            SMenu.AddSubMenu(C_Menu());
             Game.OnUpdate += OnUpdate;
         }
 
-        private static Menu _Menu()
+        private static Menu C_Menu()
+        {
+            //Champ Based Menu
+            var menu = new Menu(_menuNameBase, $".{_champName}");
+            var champMenu = new Menu(".HP% Options", $".{_champName}.HP");
+            champMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.High", "High HP% Activation").SetValue(new Slider(SMenu.Item(".DangerLevel.High").GetValue<Slider>().Value)));
+            champMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.Mid", "Mid HP% Activation").SetValue(new Slider(SMenu.Item(".DangerLevel.Mid").GetValue<Slider>().Value)));
+            champMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.Low", "Low HP% Activation").SetValue(new Slider(SMenu.Item(".DangerLevel.Low").GetValue<Slider>().Value)));
+
+            var clevelsMenu = new Menu(".Danger Level Settings", $".{_champName}.DangerLevelSettings");
+
+            var clowMenu = GenerateEvadeMenu("LowHP", "Low");
+            var cmidMenu = GenerateEvadeMenu("MidHP", "Mid");
+            var chighMenu = GenerateEvadeMenu("HighHP", "High");
+
+            clevelsMenu.AddSubMenu(clowMenu);
+            clevelsMenu.AddSubMenu(cmidMenu);
+            clevelsMenu.AddSubMenu(chighMenu);
+
+            champMenu.AddSubMenu(clevelsMenu);
+
+            // menu.AddSubMenu(resetMenu);
+     
+            menu.AddSubMenu(champMenu);
+            return menu;
+        }
+        private static Menu D_Menu()
         {
 
-            var menu = new Menu(_menuNameBase, $".{_champName}");
+            var menu = new Menu("SIEvade Default", $".SIEvade");
 
-            //var resetMenu = new Menu(".Reset Options", $".{_champName}.Reset");
-            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Tank", "Use Tank Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Jungle", "Use Jungle Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Mid", "Use Mid Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Adc", "Use ADC Settings").SetValue(false));
-            //resetMenu.AddItem(new MenuItem(MenuItemBase + "Reset.Support", "Use Support Settings").SetValue(false));
+            var defaultMenu = new Menu(".Default Options", $".default");
+            defaultMenu.AddItem(new MenuItem($".DangerLevel.High", "High HP% Activation").SetValue(new Slider(85)));
+            defaultMenu.AddItem(new MenuItem($".DangerLevel.Mid", "Mid HP% Activation").SetValue(new Slider(65)));
+            defaultMenu.AddItem(new MenuItem($".DangerLevel.Low", "Low HP% Activation").SetValue(new Slider(35)));
 
-            var hpMenu = new Menu(".HP% Options", $".{_champName}.HP");
-            hpMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.High", "High HP% Activation").SetValue(new Slider(85)));
-            hpMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.Mid", "Mid HP% Activation").SetValue(new Slider(65)));
-            hpMenu.AddItem(new MenuItem($"{_champName}.DangerLevel.Low", "Low HP% Activation").SetValue(new Slider(35)));
-
-            var levelsMenu = new Menu(".Danger Level Settings", $".{_champName}.DangerLevelSettings");
+            var levelsMenu = new Menu(".Danger Level Settings", $".DangerLevelSettings");
 
             var lowMenu = GenerateEvadeMenu("LowHP", "Low",
                 new Evade.Base(new Evade.SpellsSettings(false, true, true),
@@ -60,40 +79,83 @@ namespace SIEvade
             levelsMenu.AddSubMenu(midMenu);
             levelsMenu.AddSubMenu(highMenu);
 
-            // menu.AddSubMenu(resetMenu);
-            menu.AddSubMenu(hpMenu);
-            menu.AddSubMenu(levelsMenu);
+            defaultMenu.AddSubMenu(levelsMenu);
+            menu.AddSubMenu(defaultMenu);
+  
             return menu;
         }
 
         private static Menu GenerateEvadeMenu(string menuString, string dangerLevelString, Evade.Base evadeBase)
         {
-            string itembase = $"{_champName}.DangerLevelSettings.{dangerLevelString}";
-            var evadeMenu = new Menu($".{menuString}", $".{_champName}.DangerLevelSettings.{dangerLevelString}");
+            string itembase = $".DangerLevelSettings.{dangerLevelString}";
+            var evadeMenu = new Menu($".{menuString}", $".DangerLevelSettings.{dangerLevelString}");
             evadeMenu.AddItem(new MenuItem(itembase + ".EvadeMode", "Evade Smoothness level").SetValue(new Slider(evadeBase.EvadeMode, 1, 3)));
             evadeMenu.AddItem(new MenuItem(itembase + ".UseEvade", "Activate Evade").SetValue(evadeBase.UseEvade));
             evadeMenu.AddItem(new MenuItem(itembase + ".UseEvadeSkills", "Use Evade Skills").SetValue(evadeBase.UseEvadeSkills));
             evadeMenu.AddItem(new MenuItem(itembase + ".UseDangerousKeys", "Enable Dodge Only Dangerous Keys").SetValue(false));
 
-            var timeMenu = new Menu(".Delay Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.Time");
+            var timeMenu = new Menu(".Delay Settings", $".DangerLevelSettings.{dangerLevelString}.Time");
             //Time
             timeMenu.AddItem(new MenuItem(itembase + ".TimeSettings.Reaction", "Reaction Time").SetValue(new Slider((int)evadeBase.TimeSetting.ReactionTime, 0, 750)));
             timeMenu.AddItem(new MenuItem(itembase + ".TimeSettings.Tick", "Tick Delay").SetValue(new Slider((int)evadeBase.TimeSetting.TickTime, 0, 250)));
             timeMenu.AddItem(new MenuItem(itembase + ".TimeSettings.Detection", "Spell Detection Delay").SetValue(new Slider((int)evadeBase.TimeSetting.DetectionTime, 0, 500)));
 
-            var spellMenu = new Menu(".Spell Dodge Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.SpellSettings");
+            var spellMenu = new Menu(".Spell Dodge Settings", $".DangerLevelSettings.{dangerLevelString}.SpellSettings");
             //Spell Settings
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeDangerous", "Dodge Only Dangerous(Always)").SetValue(evadeBase.SpellSetting.DodgeDangerous));
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeCircular", "Dodge Circular").SetValue(evadeBase.SpellSetting.DodgeCircular));
             spellMenu.AddItem(new MenuItem(itembase + ".SpellSettings.DodgeFog", "Dodge Fog of war Spells").SetValue(evadeBase.SpellSetting.DodgeFog));
 
 
-            var otherMenu = new Menu(".Other Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.OtherSettings");
+            var otherMenu = new Menu(".Other Settings", $".DangerLevelSettings.{dangerLevelString}.OtherSettings");
             //Other settings
             otherMenu.AddItem(new MenuItem(itembase + ".OtherSettings.ClickOnce", "Only Click Once").SetValue(evadeBase.OtherSetting.ClickOnce));
             otherMenu.AddItem(new MenuItem(itembase + ".OtherSettings.FastMove", "Allow Fast Move").SetValue(evadeBase.OtherSetting.FastMove));
             otherMenu.AddItem(new MenuItem(itembase + ".OtherSettings.ContinueMovement", "Continue Movement").SetValue(evadeBase.OtherSetting.ContinueMovement));
             otherMenu.AddItem(new MenuItem(itembase + ".OtherSettings.SpellColision", "Spell Colision Check").SetValue(evadeBase.OtherSetting.SpellColision));
+
+            evadeMenu.AddSubMenu(timeMenu);
+            evadeMenu.AddSubMenu(spellMenu);
+            evadeMenu.AddSubMenu(otherMenu);
+            return evadeMenu;
+        }
+
+        private static Menu GenerateEvadeMenu(string menuString, string dangerLevelString)
+        {
+
+            string Champitembase = $"{_champName}.DangerLevelSettings.{dangerLevelString}";
+            string Defaultitembase = $".DangerLevelSettings.{dangerLevelString}";
+            var evadeMenu = new Menu($".{menuString}", $".{_champName}.DangerLevelSettings.{dangerLevelString}");
+
+           
+            evadeMenu.AddItem(new MenuItem(Champitembase + ".EvadeMode", "Evade Smoothness level")
+                .SetValue(new Slider(SMenu.Item(Defaultitembase + ".EvadeMode").GetValue<Slider>().Value, 1, 3)));
+
+
+            evadeMenu.AddItem(new MenuItem(Champitembase + ".UseEvade", "Activate Evade").SetValue(SMenu.Item(Defaultitembase + ".UseEvade").GetValue<bool>()));
+            evadeMenu.AddItem(new MenuItem(Champitembase + ".UseEvadeSkills", "Use Evade Skills").SetValue(SMenu.Item(Defaultitembase + ".UseEvadeSkills").GetValue<bool>()));
+            evadeMenu.AddItem(new MenuItem(Champitembase + ".UseDangerousKeys", "Enable Dodge Only Dangerous Keys").SetValue(SMenu.Item(Defaultitembase + ".UseDangerousKeys").GetValue<bool>()));
+
+            //SMenu.Item(Defaultitembase + ".UseEvadeSkills").GetValue<bool>()
+            var timeMenu = new Menu(".Delay Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.Time");
+            //Time
+            timeMenu.AddItem(new MenuItem(Champitembase + ".TimeSettings.Reaction", "Reaction Time").SetValue(new Slider(SMenu.Item(Defaultitembase + ".TimeSettings.Reaction").GetValue<Slider>().Value, 0, 750)));
+            timeMenu.AddItem(new MenuItem(Champitembase + ".TimeSettings.Tick", "Tick Delay").SetValue(new Slider(SMenu.Item(Defaultitembase + ".TimeSettings.Tick").GetValue<Slider>().Value, 0, 250)));
+            timeMenu.AddItem(new MenuItem(Champitembase + ".TimeSettings.Detection", "Spell Detection Delay").SetValue(new Slider(SMenu.Item(Defaultitembase + ".TimeSettings.Detection").GetValue<Slider>().Value, 0, 500)));
+
+            var spellMenu = new Menu(".Spell Dodge Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.SpellSettings");
+            //Spell Settings
+            spellMenu.AddItem(new MenuItem(Champitembase + ".SpellSettings.DodgeDangerous", "Dodge Only Dangerous(Always)").SetValue(SMenu.Item(Defaultitembase + ".SpellSettings.DodgeDangerous").GetValue<bool>()));
+            spellMenu.AddItem(new MenuItem(Champitembase + ".SpellSettings.DodgeCircular", "Dodge Circular").SetValue(SMenu.Item(Defaultitembase + ".SpellSettings.DodgeCircular").GetValue<bool>()));
+            spellMenu.AddItem(new MenuItem(Champitembase + ".SpellSettings.DodgeFog", "Dodge Fog of war Spells").SetValue(SMenu.Item(Defaultitembase + ".SpellSettings.DodgeFog").GetValue<bool>()));
+
+
+            var otherMenu = new Menu(".Other Settings", $".{_champName}.DangerLevelSettings.{dangerLevelString}.OtherSettings");
+            //Other settings
+            otherMenu.AddItem(new MenuItem(Champitembase + ".OtherSettings.ClickOnce", "Only Click Once").SetValue(SMenu.Item(Defaultitembase + ".OtherSettings.ClickOnce").GetValue<bool>()));
+            otherMenu.AddItem(new MenuItem(Champitembase + ".OtherSettings.FastMove", "Allow Fast Move").SetValue(SMenu.Item(Defaultitembase + ".OtherSettings.FastMove").GetValue<bool>()));
+            otherMenu.AddItem(new MenuItem(Champitembase + ".OtherSettings.ContinueMovement", "Continue Movement").SetValue(SMenu.Item(Defaultitembase + ".OtherSettings.ContinueMovement").GetValue<bool>()));
+            otherMenu.AddItem(new MenuItem(Champitembase + ".OtherSettings.SpellColision", "Spell Colision Check").SetValue(SMenu.Item(Defaultitembase + ".OtherSettings.SpellColision").GetValue<bool>()));
 
             evadeMenu.AddSubMenu(timeMenu);
             evadeMenu.AddSubMenu(spellMenu);

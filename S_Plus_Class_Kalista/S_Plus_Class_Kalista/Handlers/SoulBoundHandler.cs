@@ -37,9 +37,9 @@ namespace S_Plus_Class_Kalista.Handlers
             {
                
                 if (!Champion.R.IsReady()) return;
-                if (!ManaHandler.UseAutoR()) return;
+                //if (!ManaHandler.UseAutoR()) return;
 
-                if (!SMenu.Item(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent").GetValue<bool>())
+                    if (!SMenu.Item(_MenuItemBase + "AutoSave.Boolean.AutoSavePercent").GetValue<bool>())
                     return; // Dont save soulmate D:
 
                 if (!Humanizer.Limiter.CheckDelay($"{Humanizer.DelayItemBase}Slider.SoulBoundDelay")) return;
