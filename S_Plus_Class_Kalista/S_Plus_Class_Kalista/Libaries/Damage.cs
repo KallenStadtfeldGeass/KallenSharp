@@ -71,20 +71,28 @@ namespace S_Plus_Class_Kalista.Libaries
                 return target.GetBuffCount("kalistaexpungemarker");
             }
 
+
             private static readonly float[] RendBase = new float[] { 20, 30, 40, 50, 60 };
             private const float RendBaseAdRate = .6f;
-            private static readonly float[] RendStackBase = { 10, 14, 19, 25, 32 };
-            private static readonly float[] RendStackAdRate = { 0.2f, 0.225f, 0.25f, 0.275f, 0.3f };
+            private static readonly float[] RendStackBase = { 5, 9, 14, 20, 27 };
+            private static readonly float[] RendStackAdRate = { 0.15f, 0.18f, 0.21f, 0.24f, 0.27f };
+
+            //private static float GetRendDamage(Obj_AI_Base target)
+            //{
+            //    if (!Champion.E.IsReady()) return 0f;
+            //    return (float)Player.CalcDamage(target, LeagueSharp.Common.Damage.DamageType.Physical, Champion.E.GetDamage(target) - 20);
+
+            //}
 
             private static float GetRendDamage(Obj_AI_Base target)
             {
                 var damage = 0f;
                 if (GetRendCount(target) <= 0) return 0f;
 
-                    var eLevel = Champion.E.Level - 1;
-                    var baseAd = Player.BaseAttackDamage + Player.FlatPhysicalDamageMod;
-                    damage = (RendBase[eLevel] + RendBaseAdRate*baseAd) + ((GetRendCount(target) - 1) * (RendStackBase[eLevel] + RendStackAdRate[eLevel]*baseAd));
-                    return (float)Player.CalcDamage(target, LeagueSharp.Common.Damage.DamageType.Physical, damage - (target.FlatHPRegenMod/2));
+                var eLevel = Champion.E.Level - 1;
+                var baseAd = Player.BaseAttackDamage + Player.FlatPhysicalDamageMod;
+                damage = (RendBase[eLevel] + RendBaseAdRate * baseAd) + ((GetRendCount(target) - 1) * (RendStackBase[eLevel] + RendStackAdRate[eLevel] * baseAd));
+                return (float)Player.CalcDamage(target, LeagueSharp.Common.Damage.DamageType.Physical, damage - (target.FlatHPRegenMod / 2));
             }
 
             public static float GetShield(Obj_AI_Base target)
