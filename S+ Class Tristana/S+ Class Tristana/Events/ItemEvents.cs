@@ -19,13 +19,16 @@ namespace S__Class_Tristana.Events
         public const string _MenuDefensiveNameBase = ".Defensive Menu";
         public const string _MenuDefensiveItemBase = _MenuItemBase + ".Defensive.";
 
+        private Data.Items.Defensive Items_Defensive = new Data.Items.Defensive();
+        private Data.Items.Offensive Items_Offensive = new Data.Items.Offensive();
+
         public void OnUpdate(EventArgs args)
         {
             #region Offensive
 
-            if (!Humanizer.Delay.Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.ItemDelay")) return;
+            if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.ItemDelay")) return;
 
-            Humanizer.Delay.Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.ItemDelay");
+            _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.ItemDelay");
 
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;
@@ -152,12 +155,12 @@ namespace S__Class_Tristana.Events
             #endregion
         }
 
-        public static void Before_Attack(Orbwalking.BeforeAttackEventArgs args)
+        public void Before_Attack(Orbwalking.BeforeAttackEventArgs args)
         {
 
         }
 
-        public static void After_Attack(AttackableUnit unit, AttackableUnit target)
+        public void After_Attack(AttackableUnit unit, AttackableUnit target)
         {
 
         }

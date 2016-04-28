@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S__Class_Tristana.Structure
+namespace S__Class_Tristana.Data
 {
     sealed class Level
     { 

@@ -12,12 +12,12 @@ namespace S__Class_Tristana.Events
         public const string _MenuNameBase = ".Level Menu";
         public const string _MenuItemBase = ".Level.";
         private int lastLevel = 1;
-
+        private static Data.Level _Level = new Data.Level();
         public void OnUpdate(EventArgs args)
         {
-            if (!Humanizer.Delay.Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay")) return;
+            if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay")) return;
 
-            Humanizer.Delay.Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay");
+            _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay");
 
             if (lastLevel != Player.Level)
             {

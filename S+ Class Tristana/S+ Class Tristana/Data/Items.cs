@@ -2,7 +2,7 @@
 using Item = LeagueSharp.Common.Items.Item;
 using LeagueSharp;
 
-namespace S__Class_Tristana.Structure
+namespace S__Class_Tristana.Data
 {
     sealed class Items
     {

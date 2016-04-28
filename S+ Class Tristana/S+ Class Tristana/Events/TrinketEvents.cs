@@ -14,11 +14,13 @@ namespace S__Class_Tristana.Events
         public const string _MenuNameBase = ".Trinket Menu";
         public const string _MenuItemBase = ".Trinket.";
 
-        public static void OnUpdate(EventArgs args)
-        {
-            if (!Humanizer.Delay.Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay")) return;
+        private Data.Items.Trinkets Items_Trinkets = new Data.Items.Trinkets();
 
-            Humanizer.Delay.Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay");
+        public void OnUpdate(EventArgs args)
+        {
+            if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay")) return;
+
+            _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay");
             if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Player.Level < 9) return;
             if (!Player.InShop() || Items.HasItem(Items_Trinkets.Orb.Id))
                 return;

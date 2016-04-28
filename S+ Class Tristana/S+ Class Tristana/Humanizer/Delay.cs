@@ -12,11 +12,11 @@ namespace S__Class_Tristana.Humanizer
     class Delay : Core
     {
         // ReSharper disable once InconsistentNaming
-        private static readonly Random _random = new Random();
-        private static float _lastAttackTick, _lastMoveTick;
-        private static float _currentAttackDelay = 500f;
-        private static float _currentMoveDelay = 500f;
-        public static long BlockedCommands;
+        private readonly Random _random = new Random();
+        private float _lastAttackTick, _lastMoveTick;
+        private float _currentAttackDelay = 500f;
+        private float _currentMoveDelay = 500f;
+        public long BlockedCommands;
 
         public const string MenuNameBase = ".Humanizer Menu";
         private const string MenuItemBase = ".Humanizer.";
@@ -26,10 +26,10 @@ namespace S__Class_Tristana.Humanizer
 
         public class Limiter
         {
-            private static readonly Random Rand = new Random();
-            public static readonly Dictionary<string, NewLevelShit> Delays = new Dictionary<string, NewLevelShit>();
+            private readonly Random Rand = new Random();
+            public readonly Dictionary<string, NewLevelShit> Delays = new Dictionary<string, NewLevelShit>();
 
-            private static float _fMin = 0f, _fMax = 250f;
+            private float _fMin = 0f, _fMax = 250f;
 
             public struct NewLevelShit
             {
@@ -44,12 +44,12 @@ namespace S__Class_Tristana.Humanizer
             }
 
 
-            private static string[] _sDelays =
+            private string[] _sDelays =
             {
                  "LevelDelay", "EventDelay", "ItemDelay", "TrinketDelay"
             };
-
-            private static void LoadDelays()
+       
+            private void LoadDelays()
             {
 
                 try
@@ -73,7 +73,7 @@ namespace S__Class_Tristana.Humanizer
 
             }
 
-            public static bool CheckDelay(string key)
+            public bool CheckDelay(string key)
             {
                 if (Delays.ContainsKey(key))
                     return Delays[key].LastTick - _Time.TickCount() < Delays[key].Delay;
@@ -83,7 +83,7 @@ namespace S__Class_Tristana.Humanizer
                 return false;
             }
 
-            public static void UseTick(string key)
+            public void UseTick(string key)
             {
                 Delays[key] = new NewLevelShit(Delays[key].Delay,
                   _Time.TickCount() + Rand.NextFloat(_fMin, _fMax)); //Randomize delay

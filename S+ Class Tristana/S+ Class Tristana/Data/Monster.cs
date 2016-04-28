@@ -2,7 +2,7 @@
 using SharpDX;
 using System.Collections.Generic;
 
-namespace S__Class_Tristana.Structure
+namespace S__Class_Tristana.Data
 {
     sealed class Monster
     {

@@ -73,9 +73,9 @@
     <Compile Include="Menus\TrinketMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Structure\Items.cs" />
-    <Compile Include="Structure\Level.cs" />
-    <Compile Include="Structure\Monster.cs" />
+    <Compile Include="Data\Items.cs" />
+    <Compile Include="Data\Level.cs" />
+    <Compile Include="Data\Monster.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
