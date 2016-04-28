@@ -21,8 +21,8 @@ namespace S__Class_Tristana.Events
             if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay")) return;
 
             _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay");
-            if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Player.Level < 9) return;
-            if (!Player.InShop() || Items.HasItem(Items_Trinkets.Orb.Id))
+            if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || _Champion.Player.Level < 9) return;
+            if (!_Champion.Player.InShop() || Items.HasItem(Items_Trinkets.Orb.Id))
                 return;
 
             Items_Trinkets.Orb.Buy();

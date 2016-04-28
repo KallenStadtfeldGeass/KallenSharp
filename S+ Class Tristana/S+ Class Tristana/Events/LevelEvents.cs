@@ -12,17 +12,17 @@ namespace S__Class_Tristana.Events
         public const string _MenuNameBase = ".Level Menu";
         public const string _MenuItemBase = ".Level.";
         private int lastLevel = 1;
-        private static Data.Level _Level = new Data.Level();
+        private Data.Level _Level = new Data.Level();
         public void OnUpdate(EventArgs args)
         {
             if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay")) return;
 
             _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay");
 
-            if (lastLevel != Player.Level)
+            if (lastLevel != _Champion.Player.Level)
             {
-                _Champion.UpdateChampionRange(Player.Level);
-                lastLevel = Player.Level;
+                _Champion.UpdateChampionRange(_Champion.Player.Level);
+                lastLevel = _Champion.Player.Level;
             }
 
             if (SMenu.Item(_MenuItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
@@ -37,24 +37,24 @@ namespace S__Class_Tristana.Events
 
         private void LevelUpSpells()
         {
-            var qL = Player.Spellbook.GetSpell(_Champion.GetSpellQ().Slot).Level + QOff;
-            var wL = Player.Spellbook.GetSpell(_Champion.GetSpellW().Slot).Level + WOff;
-            var eL = Player.Spellbook.GetSpell(_Champion.GetSpellE().Slot).Level + EOff;
-            var rL = Player.Spellbook.GetSpell(_Champion.GetSpellR().Slot).Level + ROff;
+            var qL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellQ().Slot).Level + QOff;
+            var wL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellW().Slot).Level + WOff;
+            var eL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellE().Slot).Level + EOff;
+            var rL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellR().Slot).Level + ROff;
 
-            if (qL + wL + eL + rL >= Player.Level) return;
+            if (qL + wL + eL + rL >= _Champion.Player.Level) return;
 
             int[] level = { 0, 0, 0, 0 };
 
-             for (var i = 0; i < Player.Level; i++)
+             for (var i = 0; i < _Champion.Player.Level; i++)
              {
                 level[_Level.AbilitySequence[i] - 1] = level[_Level.AbilitySequence[i] - 1] + 1;
              }
             
-            if (qL < level[0]) Player.Spellbook.LevelSpell(SpellSlot.Q);
-            if (wL < level[1]) Player.Spellbook.LevelSpell(SpellSlot.W);
-            if (eL < level[2]) Player.Spellbook.LevelSpell(SpellSlot.E);
-            if (rL < level[3]) Player.Spellbook.LevelSpell(SpellSlot.R);
+            if (qL < level[0]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.Q);
+            if (wL < level[1]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.W);
+            if (eL < level[2]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.E);
+            if (rL < level[3]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.R);
 
 
         }

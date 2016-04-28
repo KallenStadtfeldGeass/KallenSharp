@@ -41,7 +41,7 @@ namespace S__Class_Tristana.Events
                 if (Items_Offensive.Botrk.IsReady())
                 {
                     if (
-                        target.IsValidTarget(Player.AttackRange + Player.BoundingRadius) || Player.HealthPercent < SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
+                        target.IsValidTarget(_Champion.Player.AttackRange + _Champion.Player.BoundingRadius) || _Champion.Player.HealthPercent < SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
                         if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && inCombo &&
@@ -52,7 +52,7 @@ namespace S__Class_Tristana.Events
                             target.HealthPercent < SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp").GetValue<Slider>().Value
                             //not in combo but target HP less then
                             ||
-                            (Player.HealthPercent <
+                            (_Champion.Player.HealthPercent <
                              SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
@@ -70,9 +70,9 @@ namespace S__Class_Tristana.Events
                 if (Items_Offensive.Cutless.IsReady())
                 {
                     if (
-                        target.IsValidTarget(Player.AttackRange +
-                                           Player.BoundingRadius) ||
-                        Player.HealthPercent <
+                        target.IsValidTarget(_Champion.Player.AttackRange +
+                                           _Champion.Player.BoundingRadius) ||
+                        _Champion.Player.HealthPercent <
                        SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
@@ -86,7 +86,7 @@ namespace S__Class_Tristana.Events
                             SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp").GetValue<Slider>().Value
                             //not in combo but target HP less then
                             ||
-                            (Player.HealthPercent <
+                            (_Champion.Player.HealthPercent <
                              SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
@@ -101,7 +101,7 @@ namespace S__Class_Tristana.Events
             // If enabled and has item
             {
                 if (Items_Offensive.GhostBlade.IsReady() &&
-                    target.IsValidTarget(Player.AttackRange + Player.BoundingRadius))
+                    target.IsValidTarget(_Champion.Player.AttackRange + _Champion.Player.BoundingRadius))
                 // Is ready and target is in auto range 
                 {
                     if (inCombo)
@@ -126,7 +126,7 @@ namespace S__Class_Tristana.Events
 
                         foreach (var buff in Bufftype.Where(buff => SMenu.Item(_MenuDefensiveItemBase + "Boolean.QSS." + buff).GetValue<bool>()))
                         {
-                            if (Player.HasBuffOfType(buff))
+                            if (_Champion.Player.HasBuffOfType(buff))
                                 Utility.DelayAction.Add(SMenu.Item(_MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value, () => Items.UseItem(Items_Defensive.Qss.Id));
 
                         }
@@ -144,7 +144,7 @@ namespace S__Class_Tristana.Events
                     {
                         foreach (var buff in Bufftype.Where(buff => SMenu.Item(_MenuDefensiveItemBase + "Boolean.Merc." + buff).GetValue<bool>()))
                         {
-                            if (Player.HasBuffOfType(buff))
+                            if (_Champion.Player.HasBuffOfType(buff))
                                 Utility.DelayAction.Add(SMenu.Item(_MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value, () => Items.UseItem(Items_Defensive.Qss.Id));
 
                         }

@@ -8,6 +8,12 @@ namespace S__Class_Tristana.Libaries
     {
         private Spell _Q, _W, _E, _R;
 
+        public Spell GetSpellQ() => _Q;
+        public Spell GetSpellW() => _W;
+        public Spell GetSpellE() => _E;
+        public Spell GetSpellR() => _R;
+        public Obj_AI_Hero Player { get; set; }
+
         public Champion(float _qRange,float _wRange,float _eRange,float _rRange)
         {
             _Q = new Spell(SpellSlot.Q, _qRange);
@@ -17,11 +23,6 @@ namespace S__Class_Tristana.Libaries
 
             _W.SetSkillshot(0.35f, 250f, 1400f, false, SkillshotType.SkillshotCircle);
         }
-
-        public Spell GetSpellQ() => _Q;
-        public Spell GetSpellW() => _W;
-        public Spell GetSpellE() => _E;
-        public Spell GetSpellR() => _R;
 
         public void UpdateChampionRange(int level)
         {

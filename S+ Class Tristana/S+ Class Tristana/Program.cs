@@ -14,6 +14,7 @@ namespace S__Class_Tristana
         {
             CustomEvents.Game.OnGameLoad += OnLoad;
         }
+
         private static void OnLoad(EventArgs args)
         {
      

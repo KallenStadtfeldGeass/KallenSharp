@@ -20,7 +20,7 @@ namespace S__Class_Tristana.Libaries
             Menus.LevelMenu _LevelMenu = new Menus.LevelMenu();
 
             //Load Data
-            Player = ObjectManager.Player;
+            _Champion.Player = ObjectManager.Player;
             //Load Menus into SMenu
             _HumanizerMenu.Load();
             _MinonsMenu.Load();

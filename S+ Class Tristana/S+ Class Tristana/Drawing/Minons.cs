@@ -11,18 +11,18 @@ namespace S__Class_Tristana.Drawing
 
         public void OnMinionDraw(EventArgs args)
         {
-            if (Player.IsDead) return;
+            if (_Champion.Player.IsDead) return;
             if (!SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions").GetValue<bool>()) return;
 
             foreach (var minion in ObjectManager.Get<Obj_AI_Minion>())
             {
 
-                if (minion.Distance(Player) > SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.Distance").GetValue<Slider>().Value) continue; // Out of render range
+                if (minion.Distance(_Champion.Player) > SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.Distance").GetValue<Slider>().Value) continue; // Out of render range
                 if (minion.IsAlly) continue; //This is not Dota2
                 if (minion.IsDead) continue;//Dont poke the dead
                 if (!minion.IsMinion) continue; //Differect Function
 
-                if (Player.GetAutoAttackDamage(minion) > minion.Health) // Is killable
+                if (_Champion.Player.GetAutoAttackDamage(minion) > minion.Health) // Is killable
                 {
                     Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MarkerKillableColor").GetValue<Circle>().Color, 2);
                 }
@@ -32,7 +32,7 @@ namespace S__Class_Tristana.Drawing
                 {
                     Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MarkerInnerColor").GetValue<Circle>().Color, 2);
 
-                    var remainingHp = (int)100 * (minion.Health - Player.GetAutoAttackDamage(minion)) / minion.Health;
+                    var remainingHp = (int)100 * (minion.Health - _Champion.Player.GetAutoAttackDamage(minion)) / minion.Health;
 
                     Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + (float)remainingHp + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MakerOuterColor").GetValue<Circle>().Color, 2);
                 }

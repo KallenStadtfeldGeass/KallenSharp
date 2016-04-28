@@ -6,7 +6,6 @@ namespace S__Class_Tristana.Data
 {
     sealed class Items
     {
-
         public class Offensive
         {
             public readonly Item Botrk = new Item(ItemData.Blade_of_the_Ruined_King.GetItem().Id);

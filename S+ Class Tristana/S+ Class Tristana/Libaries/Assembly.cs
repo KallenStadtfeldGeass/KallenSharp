@@ -42,7 +42,7 @@ namespace S__Class_Tristana.Libaries
             }
         }
 
-        private static string DownloadServerVersion()
+        private string DownloadServerVersion()
         {
             using (var wC = new WebClient()) return wC.DownloadString("https://raw.githubusercontent.com/KallenStadtfeldGeass/KallenSharp/master/S_Plus_Class_Kalista/S_Plus_Class_Kalista/Properties/AssemblyInfo.cs");
         }
