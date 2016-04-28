@@ -12,3 +12,5 @@ D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\Leagu
 D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\Newtonsoft.Json.dll
 D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.exe
 D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.pdb
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.CodeAnalysisLog.xml
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.lastcodeanalysissucceeded

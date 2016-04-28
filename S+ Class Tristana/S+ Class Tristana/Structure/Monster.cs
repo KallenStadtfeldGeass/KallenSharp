@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace S__Class_Tristana.Structure
 {
-    class Monster
+    sealed class Monster
     {
         public struct MonsterBar
         {

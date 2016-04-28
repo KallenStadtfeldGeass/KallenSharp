@@ -32,10 +32,10 @@ namespace S__Class_Tristana.Events
 
             var inCombo = CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo;
 
-            if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Structure.Items.Offensive.Botrk.Id))
+            if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Items_Offensive.Botrk.Id))
             // If enabled and has item
             {
-                if (Structure.Items.Offensive.Botrk.IsReady())
+                if (Items_Offensive.Botrk.IsReady())
                 {
                     if (
                         target.IsValidTarget(Player.AttackRange + Player.BoundingRadius) || Player.HealthPercent < SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
@@ -53,7 +53,7 @@ namespace S__Class_Tristana.Events
                              SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Items.UseItem(Structure.Items.Offensive.Botrk.Id, target);
+                            Items.UseItem(Items_Offensive.Botrk.Id, target);
                             return;
                         }
 
@@ -61,10 +61,10 @@ namespace S__Class_Tristana.Events
                 }
             }
 
-            if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Structure.Items.Offensive.Cutless.Id))
+            if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Items_Offensive.Cutless.Id))
             // If enabled and has item
             {
-                if (Structure.Items.Offensive.Cutless.IsReady())
+                if (Items_Offensive.Cutless.IsReady())
                 {
                     if (
                         target.IsValidTarget(Player.AttackRange +
@@ -87,23 +87,23 @@ namespace S__Class_Tristana.Events
                              SMenu.Item(_MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Items.UseItem(Structure.Items.Offensive.Cutless.Id, target);
+                            Items.UseItem(Items_Offensive.Cutless.Id, target);
                             return;
                         }
                     }
                 }
             }
 
-            if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Youmuu").GetValue<bool>() && Items.HasItem(Structure.Items.Offensive.GhostBlade.Id))
+            if (SMenu.Item(_MenuOffensiveItemBase + "Boolean.Youmuu").GetValue<bool>() && Items.HasItem(Items_Offensive.GhostBlade.Id))
             // If enabled and has item
             {
-                if (Structure.Items.Offensive.GhostBlade.IsReady() &&
+                if (Items_Offensive.GhostBlade.IsReady() &&
                     target.IsValidTarget(Player.AttackRange + Player.BoundingRadius))
                 // Is ready and target is in auto range 
                 {
                     if (inCombo)
                     {
-                        Items.UseItem(Structure.Items.Offensive.GhostBlade.Id);
+                        Items.UseItem(Items_Offensive.GhostBlade.Id);
                         return;
                     }
                 }
@@ -113,18 +113,18 @@ namespace S__Class_Tristana.Events
 
             #region Defensive
 
-            if (SMenu.Item(_MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && Items.HasItem(Structure.Items.Defensive.Qss.Id))
+            if (SMenu.Item(_MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && Items.HasItem(Items_Defensive.Qss.Id))
             {
                 if (SMenu.Item(_MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && inCombo ||
                     !SMenu.Item(_MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
-                    if (Structure.Items.Defensive.Qss.IsReady())
+                    if (Items_Defensive.Qss.IsReady())
                     {
 
                         foreach (var buff in Bufftype.Where(buff => SMenu.Item(_MenuDefensiveItemBase + "Boolean.QSS." + buff).GetValue<bool>()))
                         {
                             if (Player.HasBuffOfType(buff))
-                                Utility.DelayAction.Add(SMenu.Item(_MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value, () => Items.UseItem(Structure.Items.Defensive.Qss.Id));
+                                Utility.DelayAction.Add(SMenu.Item(_MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value, () => Items.UseItem(Items_Defensive.Qss.Id));
 
                         }
                     }
@@ -132,17 +132,17 @@ namespace S__Class_Tristana.Events
             }
 
 
-            if (SMenu.Item(_MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && Items.HasItem(Structure.Items.Defensive.Merc.Id))
+            if (SMenu.Item(_MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && Items.HasItem(Items_Defensive.Merc.Id))
             {
                 if (SMenu.Item(_MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && inCombo ||
                     !SMenu.Item(_MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
-                    if (Structure.Items.Defensive.Merc.IsReady())
+                    if (Items_Defensive.Merc.IsReady())
                     {
                         foreach (var buff in Bufftype.Where(buff => SMenu.Item(_MenuDefensiveItemBase + "Boolean.Merc." + buff).GetValue<bool>()))
                         {
                             if (Player.HasBuffOfType(buff))
-                                Utility.DelayAction.Add(SMenu.Item(_MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value, () => Items.UseItem(Structure.Items.Defensive.Qss.Id));
+                                Utility.DelayAction.Add(SMenu.Item(_MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value, () => Items.UseItem(Items_Defensive.Qss.Id));
 
                         }
                     }

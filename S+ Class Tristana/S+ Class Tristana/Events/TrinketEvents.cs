@@ -20,10 +20,10 @@ namespace S__Class_Tristana.Events
 
             Humanizer.Delay.Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay");
             if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Player.Level < 9) return;
-            if (!Player.InShop() || Items.HasItem(Structure.Items.Trinkets.Orb.Id))
+            if (!Player.InShop() || Items.HasItem(Items_Trinkets.Orb.Id))
                 return;
 
-            Structure.Items.Trinkets.Orb.Buy();
+            Items_Trinkets.Orb.Buy();
         }
     }
 }
