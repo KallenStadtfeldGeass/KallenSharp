@@ -58,11 +58,6 @@ namespace S__Class_Tristana.Libaries
 
         public string[] ShieldBuffNames = ShieldNames.Split(',');
 
-        public int GetRendCount(Obj_AI_Base target)
-        {
-            return target.GetBuffCount("kalistaexpungemarker");
-        }
-
         public float GetShield(Obj_AI_Base target)
         {
             return ShieldBuffNames.Any(target.HasBuff) ? target.AllShield : 0;

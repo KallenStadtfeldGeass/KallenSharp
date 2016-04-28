@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core.cs" />
+    <Compile Include="Other\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />
     <Compile Include="Drawing\Minons.cs" />
     <Compile Include="Drawing\Monsters.cs" />
@@ -63,8 +63,8 @@
     <Compile Include="Humanizer\Delay.cs" />
     <Compile Include="Libaries\Assembly.cs" />
     <Compile Include="Libaries\Champion.cs" />
-    <Compile Include="Damage.cs" />
-    <Compile Include="Loader.cs" />
+    <Compile Include="Other\Damage.cs" />
+    <Compile Include="Other\Loader.cs" />
     <Compile Include="Libaries\Time.cs" />
     <Compile Include="Menus\HumanizerMenu.cs" />
     <Compile Include="Menus\ItemsMenu.cs" />
