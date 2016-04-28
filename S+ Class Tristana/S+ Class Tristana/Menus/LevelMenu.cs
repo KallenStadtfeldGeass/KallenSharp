@@ -22,7 +22,6 @@ namespace S__Class_Tristana.Menus
         {
             var menu = new Menu(_MenuNameBase, "levelMenu");
             menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.AutoLevelUp", "Auto level-up abilities").SetValue(true));
-            menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.StartE", "Start with E").SetValue(true));
             return menu;
         }
     }

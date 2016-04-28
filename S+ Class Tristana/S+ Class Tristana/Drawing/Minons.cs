@@ -28,14 +28,14 @@ namespace S__Class_Tristana.Drawing
                 }
 
 
-                else // Not killable
-                {
-                    Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MarkerInnerColor").GetValue<Circle>().Color, 2);
+                //else // Not killable
+                //{
+                //    Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MarkerInnerColor").GetValue<Circle>().Color, 2);
 
-                    var remainingHp = (int)100 * (minion.Health - _Champion.Player.GetAutoAttackDamage(minion)) / minion.Health;
+                //    var remainingHp = (int)100 * (minion.Health - _Champion.Player.GetAutoAttackDamage(minion)) / minion.Health;
 
-                    Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + (float)remainingHp + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MakerOuterColor").GetValue<Circle>().Color, 2);
-                }
+                //    Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + (float)remainingHp + 50, SMenu.Item(_MenuItemBase + "Boolean.DrawOnMinions.MakerOuterColor").GetValue<Circle>().Color, 2);
+                //}
             }
 
         }

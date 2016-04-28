@@ -14,8 +14,8 @@ namespace S__Class_Tristana.Menus
         {
             var menu = new Menu(_MenuNameBase, "minionMenu");
             menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions", "Draw On Minions").SetValue(false));
-            menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions.MarkerInnerColor", "Inner Marker Color").SetValue(new Circle(true, Color.DeepSkyBlue)));
-            menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions.MakerOuterColor", "Outer Marker Color").SetValue(new Circle(true, Color.Red)));
+         //   menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions.MarkerInnerColor", "Inner Marker Color").SetValue(new Circle(true, Color.DeepSkyBlue)));
+          //  menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions.MakerOuterColor", "Outer Marker Color").SetValue(new Circle(true, Color.Red)));
             menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions.MarkerKillableColor", "Killable Marker Color").SetValue(new Circle(true, Color.Green)));
             menu.AddItem(new MenuItem(_MenuItemBase + "Boolean.DrawOnMinions.Distance", "Render Distance").SetValue(new Slider(1000, 500, 2500)));
             return menu;

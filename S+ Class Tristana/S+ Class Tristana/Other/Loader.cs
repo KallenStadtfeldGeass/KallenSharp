@@ -18,6 +18,7 @@ namespace S__Class_Tristana.Libaries
             Menus.ItemsMenu _ItemsMenu = new Menus.ItemsMenu();
             Menus.TrinketMenu _TrinketMenu = new Menus.TrinketMenu();
             Menus.LevelMenu _LevelMenu = new Menus.LevelMenu();
+            Menus.ChampionMenu _ChampMenu = new Menus.ChampionMenu();
 
             //Load Data
             _Champion.Player = ObjectManager.Player;
@@ -27,12 +28,12 @@ namespace S__Class_Tristana.Libaries
             _ItemsMenu.Load();
             _TrinketMenu.Load();
             _LevelMenu.Load();
-
+            _ChampMenu.Load();
             //_Assembly.CheckVersion();
 
             //Load Menus + Events
             //Add Orbwalker to menu
-            SMenu.AddSubMenu(new Menu(".Orbwalker", ".Orbwalker"));
+            //SMenu.AddSubMenu(new Menu(".Orbwalker", ".Orbwalker"));
             CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));
 
             //Add SMenu to main menu

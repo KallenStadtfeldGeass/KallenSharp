@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S__Class_Tristana.Libaries
+namespace S__Class_Tristana
 {
     class Damage : Core
     {
@@ -63,7 +63,39 @@ namespace S__Class_Tristana.Libaries
             return ShieldBuffNames.Any(target.HasBuff) ? target.AllShield : 0;
         }
 
-        public float CalculateDamage(Obj_AI_Base target,float fdamage)
+
+        private float GetComboDamage(Obj_AI_Base target)
+        {
+            float damage = 0f;
+
+            if (!_Champion.Player.IsWindingUp) // can auto attack         
+                if(_Champion.Player.Distance(target) < _Champion.Player.AttackRange) // target in auto range
+                   damage += (float)_Champion.Player.GetAutoAttackDamage(target);
+            
+            if(_Champion.GetSpellR().IsReady())
+                if(_Champion.Player.Distance(target) < _Champion.GetSpellR().Range)
+                    damage += (float)_Champion.GetSpellR().GetDamage(target);
+
+            if (target.HasBuff("tristanaecharge"))
+            {
+                int count = target.GetBuffCount("tristanaecharge");
+                if (!_Champion.Player.IsWindingUp)
+                    if (_Champion.Player.Distance(target) < _Champion.Player.AttackRange) // target in auto range
+                        count++;
+
+                    damage += (float)(_Champion.GetSpellE().GetDamage(target) * (count * 0.30)) + _Champion.GetSpellE().GetDamage(target);
+
+                return damage;
+            }
+
+            if (_Champion.GetSpellE().IsReady())
+                if (_Champion.Player.Distance(target) < _Champion.GetSpellE().Range)
+                    damage += (float)(_Champion.GetSpellE().GetDamage(target) * 0.30) + _Champion.GetSpellE().GetDamage(target); // 1 auto charge
+
+            return damage;
+        }
+
+        public float CalculateDamage(Obj_AI_Base target)
         {
             var defuffer = 1f;
 
@@ -86,7 +118,7 @@ namespace S__Class_Tristana.Libaries
                 defuffer *= .4f;
 
 
-            if (!target.IsChampion()) return (fdamage * defuffer);
+            if (!target.IsChampion()) return (GetComboDamage(target) * defuffer);
 
             var healthDebuffer = 0f;
             var hero = (Obj_AI_Hero)target;
@@ -94,7 +126,7 @@ namespace S__Class_Tristana.Libaries
             if (hero.ChampionName == "Blitzcrank" && !target.HasBuff("BlitzcrankManaBarrierCD") && !target.HasBuff("ManaBarrier"))
                 healthDebuffer += target.Mana / 2;
 
-            return (fdamage * defuffer) - (healthDebuffer + GetShield(target) + target.FlatHPRegenMod + 15);
+            return (GetComboDamage(target) * defuffer) - (healthDebuffer + GetShield(target) + target.FlatHPRegenMod + 15);
         }
     }
 }
