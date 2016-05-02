@@ -26,9 +26,9 @@ namespace S__Class_Tristana.Events
         {
             #region Offensive
 
-            if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.ItemDelay")) return;
+            if (!_TickManager.CheckTick($"{Events.HumanizeEvents.ItemBase}Slider.ItemDelay")) return;
 
-            _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.ItemDelay");
+            _TickManager.UseTick($"{Events.HumanizeEvents.ItemBase}Slider.ItemDelay");
 
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;

@@ -13,11 +13,12 @@ namespace S__Class_Tristana.Events
         public const string _MenuItemBase = ".Level.";
         private int lastLevel = 1;
         private Data.Level _Level = new Data.Level();
+
         public void OnUpdate(EventArgs args)
         {
-            if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay")) return;
+            if (!_TickManager.CheckTick($"{Events.HumanizeEvents.ItemBase}Slider.LevelDelay")) return;
 
-            _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.LevelDelay");
+            _TickManager.UseTick($"{Events.HumanizeEvents.ItemBase}Slider.LevelDelay");
 
             if (lastLevel != _Champion.Player.Level)
             {

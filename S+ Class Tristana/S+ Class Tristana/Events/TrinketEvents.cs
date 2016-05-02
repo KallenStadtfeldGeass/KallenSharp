@@ -18,9 +18,10 @@ namespace S__Class_Tristana.Events
 
         public void OnUpdate(EventArgs args)
         {
-            if (!_Limiter.CheckDelay($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay")) return;
+            if (!_TickManager.CheckTick($"{Events.HumanizeEvents.ItemBase}Slider.TrinketDelay")) return;
 
-            _Limiter.UseTick($"{Humanizer.Delay.DelayItemBase}Slider.TrinketDelay");
+            _TickManager.UseTick($"{Events.HumanizeEvents.ItemBase}Slider.TrinketDelay");
+
             if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || _Champion.Player.Level < 9) return;
             if (!_Champion.Player.InShop() || Items.HasItem(Items_Trinkets.Orb.Id))
                 return;

@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\HumanizeEvents.cs" />
+    <Compile Include="Humanizer\Tick.cs" />
+    <Compile Include="Humanizer\TickManager.cs" />
     <Compile Include="Menus\ChampionMenu.cs" />
     <Compile Include="Menus\MonsterMenu.cs" />
     <Compile Include="Other\Core.cs" />
@@ -62,7 +65,6 @@
     <Compile Include="Events\ItemEvents.cs" />
     <Compile Include="Events\LevelEvents.cs" />
     <Compile Include="Events\TrinketEvents.cs" />
-    <Compile Include="Humanizer\Delay.cs" />
     <Compile Include="Libaries\Assembly.cs" />
     <Compile Include="Libaries\Champion.cs" />
     <Compile Include="Other\Damage.cs" />
