@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;
-using LeagueSharp.Common;
-using ItemData = LeagueSharp.Common.Data.ItemData;
+﻿using LeagueSharp.Common;
+using S__Class_Tristana.Other;
+using System;
 
 namespace S__Class_Tristana.Events
 {
-    class TrinketEvents : Core
+    internal class TrinketEvents : Core
     {
-        public const string _MenuNameBase = ".Trinket Menu";
-        public const string _MenuItemBase = ".Trinket.";
-
-        private Data.Items.Trinkets Items_Trinkets = new Data.Items.Trinkets();
+        public const string MenuItemBase = ".Trinket.";
+        public const string MenuNameBase = ".Trinket Menu";
 
         public void OnUpdate(EventArgs args)
         {
-            if (!_TickManager.CheckTick($"{Events.HumanizeEvents.ItemBase}Slider.TrinketDelay")) return;
+            if (!TickManager.CheckTick($"{HumanizeEvents.ItemBase}Slider.TrinketDelay")) return;
 
-            _TickManager.UseTick($"{Events.HumanizeEvents.ItemBase}Slider.TrinketDelay");
+            TickManager.UseTick($"{HumanizeEvents.ItemBase}Slider.TrinketDelay");
 
-            if (!SMenu.Item(_MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || _Champion.Player.Level < 9) return;
-            if (!_Champion.Player.InShop() || Items.HasItem(Items_Trinkets.Orb.Id))
+            if (!SMenu.Item(MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Champion.Player.Level < 9) return;
+            if (!Champion.Player.InShop() || Items.HasItem(_itemsTrinkets.Orb.Id))
                 return;
 
-            Items_Trinkets.Orb.Buy();
+            _itemsTrinkets.Orb.Buy();
         }
+
+        private readonly Data.Items.Trinkets _itemsTrinkets = new Data.Items.Trinkets();
     }
 }

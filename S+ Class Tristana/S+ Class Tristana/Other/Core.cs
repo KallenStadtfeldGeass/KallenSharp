@@ -1,26 +1,31 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
+using System;
 
-
-namespace S__Class_Tristana
+namespace S__Class_Tristana.Other
 {
-    class Core
+    internal class Core
     {
-        //Private Core Crap
-        private static Libaries.Assembly _Assembly = new Libaries.Assembly();
-       
 
-        //Hold Global Data and Functions
-        public static Libaries.Time _Time = new Libaries.Time();
-        public static Libaries.Champion _Champion = new Libaries.Champion(550f, 900f, 625f, 700f);
-        public static Humanizer.TickManager _TickManager = new Humanizer.TickManager();
-        //Menu 
-        public static readonly string MenuName = _Assembly.GetName();
-        public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
+        //Hold The Game "ticks"
+        public float AssemblyTime() => (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;
 
         //Global External Classes and Variables
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
 
+        public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
+        //Private Core Crap
+        private static readonly Libaries.Assembly Assembly = new Libaries.Assembly();
+
+        private readonly DateTime _assemblyLoadTime = DateTime.Now;
+
+        //Hold Global Data and Functions
+        public static Libaries.Champion Champion = new Libaries.Champion(550f, 900f, 625f, 700f);
+
+        public static Humanizer.TickManager TickManager = new Humanizer.TickManager();
+
+        //Menu
+        public static readonly string MenuName = Assembly.GetName();
 
         public static readonly BuffType[] Bufftype =
          {
@@ -33,6 +38,5 @@ namespace S__Class_Tristana
             BuffType.Taunt,
             BuffType.Suppression
         };
-
     }
 }

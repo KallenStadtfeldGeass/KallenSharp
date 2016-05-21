@@ -4,14 +4,10 @@ using System.Collections.Generic;
 
 namespace S__Class_Tristana.Data
 {
-    sealed class Monster
+    internal sealed class Monster
     {
         public struct MonsterBar
         {
-            readonly int BarWidth;
-            readonly int XOffset;
-            readonly int YOffsetBegin;
-            readonly int YOffsetEnd;
 
             public MonsterBar(int barWidth, int xoffset, int yOffsetBegin, int yOffsetEnd)
             {
@@ -20,6 +16,11 @@ namespace S__Class_Tristana.Data
                 YOffsetBegin = yOffsetBegin;
                 YOffsetEnd = yOffsetEnd;
             }
+
+            public int BarWidth { get; }
+            public int XOffset { get; }
+            public int YOffsetBegin { get; }
+            public int YOffsetEnd { get; }
         }
 
         public Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>()
@@ -46,6 +47,5 @@ namespace S__Class_Tristana.Data
             {"SRU_Murkwolf",new MonsterBar(75,54,19,4)},
             {"SRU_Razorbeak",new MonsterBar(75,54,18,4)}
         };
-
     }
 }

@@ -1,15 +1,9 @@
 ﻿using LeagueSharp.Common;
 
-
 namespace S__Class_Tristana.Menus
 {
-    class HumanizerMenu : Events.HumanizeEvents
+    internal class HumanizerMenu : Events.HumanizeEvents
     {
-        public void Load()
-        {
-            SMenu.AddSubMenu(_Menu());
-            Events.HumanizeEvents.LoadDelays();
-        }
 
         private Menu _Menu()
         {
@@ -33,8 +27,13 @@ namespace S__Class_Tristana.Menus
 
             menu.AddSubMenu(subMenuDelay);
 
-
             return menu;
+        }
+
+        public void Load()
+        {
+            SMenu.AddSubMenu(_Menu());
+            LoadDelays();
         }
     }
 }

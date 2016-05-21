@@ -1,5 +1,4 @@
 ﻿using System;
-using LeagueSharp;
 using LeagueSharp.Common;
 
 namespace SIEvade
@@ -9,7 +8,6 @@ namespace SIEvade
         // ReSharper disable once UnusedParameter.Local
         private static void Main(string[] args)
         {
-
             CustomEvents.Game.OnGameLoad += OnLoad;
         }
 
@@ -22,10 +20,10 @@ namespace SIEvade
             MenuBuilder.Load(Player.ChampionName);
 
             SMenu.AddSubMenu(new Menu($"v{AssemblyVersion}", $"versionMenu{AssemblyVersion}"));
-            SMenu.AddSubMenu(new Menu("By Kallen", $"credits{AssemblyVersion}"));
+            SMenu.AddSubMenu(new Menu("By Geass", $"credits{AssemblyVersion}"));
             SMenu.AddToMainMenu();
 
-            Game.PrintChat("<b> <font color=\"#F88017\">SI</font> Evade</b> - <font color=\"#F88017\">Thank You for using SIEVADE <3 If you like it please remember to upvote</font>!");
+            //Game.PrintChat("<b> <font color=\"#F88017\">SI</font> Evade</b> - <font color=\"#F88017\">Thank You for using SIEVADE <3 If you like it please remember to upvote</font>!");
         }
     }
 }

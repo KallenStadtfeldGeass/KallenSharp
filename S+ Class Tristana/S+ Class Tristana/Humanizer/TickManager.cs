@@ -1,43 +1,29 @@
-﻿using SharpDX;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharpDX;
 
 namespace S__Class_Tristana.Humanizer
 {
-    class TickManager
+    internal class TickManager
     {
-        public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
-        private Random rnd;
-        private float RandomMin;
-        private float RandomMax;
+        private float _randomMax;
+        private float _randomMin;
+        private readonly Random _rnd;
 
         public TickManager()
         {
-            rnd = new Random();
-        }
-        public void SetRandomizer(float min,float max)
-        {
-            RandomMin = min;
-            RandomMax = max;
+            _rnd = new Random();
         }
 
-        public bool IsPresent(String key)
+        public void AddTick(string keyName, float min, float max)
         {
-            return Ticks.ContainsKey(key);
-        }
-
-        public void AddTick(String KeyName,float min, float max)
-        {
-            if (IsPresent(KeyName))
+            if (IsPresent(keyName))
             {
-                Console.WriteLine("Key {0} already created", KeyName);
+                Console.WriteLine($"Key {keyName} already created");
                 return;
             }
 
-           Ticks.Add(KeyName, new Tick(min, max));
+            Ticks.Add(keyName, new Tick(min, max));
         }
 
         public bool CheckTick(string key)
@@ -45,18 +31,28 @@ namespace S__Class_Tristana.Humanizer
             if (Ticks.ContainsKey(key))
                 return Ticks[key].IsReady();
 
-            Console.WriteLine("Key {0} not found",key);
+            Console.WriteLine($"Key {key} not found");
             return false;
+        }
 
+        public bool IsPresent(string key)
+        {
+            return Ticks.ContainsKey(key);
+        }
+
+        public void SetRandomizer(float min, float max)
+        {
+            _randomMin = min;
+            _randomMax = max;
         }
 
         public void UseTick(string key)
         {
             if (Ticks.ContainsKey(key))
-                Ticks[key].UseTick(rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + rnd.NextFloat(RandomMin, RandomMax));
+                Ticks[key].UseTick(_rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
 
-            
-            Console.WriteLine("Key {0} not found", key);
+            Console.WriteLine($"Key {key} not found");
         }
+        public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
     }
 }

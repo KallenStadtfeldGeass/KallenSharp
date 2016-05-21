@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace S__Class_Tristana.Drawing
+﻿namespace S__Class_Tristana.Drawing
 {
-    class Monsters
+    internal class Monsters
     {
     }
 }

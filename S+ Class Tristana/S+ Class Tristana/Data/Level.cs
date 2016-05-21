@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace S__Class_Tristana.Data
+﻿namespace S__Class_Tristana.Data
 {
-    sealed class Level
-    { 
-        const short Q = 1;
-        const short W = Q+1;
-        const short E = W+1;
-        const short R = E+1;
-
+    internal sealed class Level
+    {
+        private const short E = W + 1;
+        private const short Q = 1;
+        private const short R = E + 1;
+        private const short W = Q + 1;
 
         public readonly int[] AbilitySequence ={
             E,W,Q,E,
@@ -21,8 +14,5 @@ namespace S__Class_Tristana.Data
             Q,W,W,R,
             W,W
         };
- 
-   
     }
-
 }

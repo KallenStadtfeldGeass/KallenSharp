@@ -1,6 +1,6 @@
 ﻿namespace SIEvade
 {
-    class Evade
+    internal class Evade
     {
         public struct Base
         {

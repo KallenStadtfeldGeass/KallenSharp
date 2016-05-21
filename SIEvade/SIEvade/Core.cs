@@ -6,7 +6,7 @@ using Version = System.Version;
 
 namespace SIEvade
 {
-    class Core
+    internal class Core
     {
         private const string MenuName = "Should I Evade";
         public static bool MenuLoaded = false;

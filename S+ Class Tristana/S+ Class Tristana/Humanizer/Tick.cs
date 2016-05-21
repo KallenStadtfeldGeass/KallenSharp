@@ -1,50 +1,52 @@
-﻿using SharpDX;
+﻿using S__Class_Tristana.Other;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace S__Class_Tristana.Humanizer
 {
-    class Tick : Core
+    internal class Tick : Core
     {
-        private float MinDelay;
-        private float MaxDelay;
-        private float NextTick;
+        private float _maxDelay;
+        private float _minDelay;
+        private float _nextTick;
 
-        public void SetMinAndMax(float min, float max)
+        public Tick(float min = 0, float max = 100)
         {
-            MinDelay = min;
-            MaxDelay = max;
-        }
-
-        public void UseTick(float next)
-        {
-            NextTick = _Time.TickCount() + next;
-        }
-
-        public bool IsReady()
-        {
-            return _Time.TickCount() > NextTick;
-        }
-
-        public float GetMinDelay()
-        {
-            return MinDelay;
+            _nextTick = TickCount();
+            _minDelay = min;
+            _maxDelay = max;
         }
 
         public float GetMaxDelay()
         {
-            return MaxDelay;
+            return _maxDelay;
         }
 
-        public Tick(float min = 0,  float max = 100)
+        public float GetMinDelay()
         {
-            NextTick = _Time.TickCount();
-            MinDelay = min;
-            MaxDelay = max;
+            return _minDelay;
         }
 
+        public bool IsReady()
+        {
+            return AssemblyTime() > _nextTick;
+        }
+
+        public void SetMinAndMax(float min, float max)
+        {
+            _minDelay = min;
+            _maxDelay = max;
+        }
+
+        public float TickCount()
+        {
+            return (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;
+        }
+
+        public void UseTick(float next)
+        {
+            _nextTick = AssemblyTime() + next;
+        }
+
+        private readonly DateTime _assemblyLoadTime = DateTime.Now;
     }
 }

@@ -1,1 +1,16 @@
 D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.config
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.pdb
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.CodeAnalysisLog.xml
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.lastcodeanalysissucceeded
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\LeagueSharp.Common.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\LeagueSharp.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\SharpDX.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\SharpDX.Direct3D9.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\LeagueSharp.Data.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\clipper_library.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\LeagueSharp.Sandbox.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\Newtonsoft.Json.dll
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.csprojResolveAssemblyReference.cache
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.exe
+D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.pdb

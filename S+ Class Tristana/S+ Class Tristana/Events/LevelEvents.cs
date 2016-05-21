@@ -1,63 +1,57 @@
 ﻿using LeagueSharp;
+using S__Class_Tristana.Other;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace S__Class_Tristana.Events
 {
-    class LevelEvents : Core
+    internal class LevelEvents : Core
     {
-        public const string _MenuNameBase = ".Level Menu";
-        public const string _MenuItemBase = ".Level.";
-        private int lastLevel = 1;
-        private Data.Level _Level = new Data.Level();
-
-        public void OnUpdate(EventArgs args)
-        {
-            if (!_TickManager.CheckTick($"{Events.HumanizeEvents.ItemBase}Slider.LevelDelay")) return;
-
-            _TickManager.UseTick($"{Events.HumanizeEvents.ItemBase}Slider.LevelDelay");
-
-            if (lastLevel != _Champion.Player.Level)
-            {
-                _Champion.UpdateChampionRange(_Champion.Player.Level);
-                lastLevel = _Champion.Player.Level;
-            }
-
-            if (SMenu.Item(_MenuItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
-                LevelUpSpells();
-        }
-
-
-        private int QOff = 0;
-        private int WOff = 0;
-        private int EOff = 0;
-        private int ROff = 0;
+        public const string MenuItemBase = ".Level.";
+        public const string MenuNameBase = ".Level Menu";
 
         private void LevelUpSpells()
         {
-            var qL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellQ().Slot).Level + QOff;
-            var wL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellW().Slot).Level + WOff;
-            var eL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellE().Slot).Level + EOff;
-            var rL = _Champion.Player.Spellbook.GetSpell(_Champion.GetSpellR().Slot).Level + ROff;
+            var qL = Champion.Player.Spellbook.GetSpell(Champion.GetSpellQ.Slot).Level + _qOff;
+            var wL = Champion.Player.Spellbook.GetSpell(Champion.GetSpellW.Slot).Level + _wOff;
+            var eL = Champion.Player.Spellbook.GetSpell(Champion.GetSpellE.Slot).Level + _eOff;
+            var rL = Champion.Player.Spellbook.GetSpell(Champion.GetSpellR.Slot).Level + _rOff;
 
-            if (qL + wL + eL + rL >= _Champion.Player.Level) return;
+            if (qL + wL + eL + rL >= Champion.Player.Level) return;
 
             int[] level = { 0, 0, 0, 0 };
 
-             for (var i = 0; i < _Champion.Player.Level; i++)
-             {
-                level[_Level.AbilitySequence[i] - 1] = level[_Level.AbilitySequence[i] - 1] + 1;
-             }
-            
-            if (qL < level[0]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.Q);
-            if (wL < level[1]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.W);
-            if (eL < level[2]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.E);
-            if (rL < level[3]) _Champion.Player.Spellbook.LevelSpell(SpellSlot.R);
+            for (var i = 0; i < Champion.Player.Level; i++)
+            {
+                level[_level.AbilitySequence[i] - 1] = level[_level.AbilitySequence[i] - 1] + 1;
+            }
 
-
+            if (qL < level[0]) Champion.Player.Spellbook.LevelSpell(SpellSlot.Q);
+            if (wL < level[1]) Champion.Player.Spellbook.LevelSpell(SpellSlot.W);
+            if (eL < level[2]) Champion.Player.Spellbook.LevelSpell(SpellSlot.E);
+            if (rL < level[3]) Champion.Player.Spellbook.LevelSpell(SpellSlot.R);
         }
+
+        public void OnUpdate(EventArgs args)
+        {
+            if (!TickManager.CheckTick($"{HumanizeEvents.ItemBase}Slider.LevelDelay")) return;
+
+            TickManager.UseTick($"{HumanizeEvents.ItemBase}Slider.LevelDelay");
+
+            if (_lastLevel != Champion.Player.Level)
+            {
+                Champion.UpdateChampionRange(Champion.Player.Level);
+                _lastLevel = Champion.Player.Level;
+            }
+
+            if (SMenu.Item(MenuItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
+                LevelUpSpells();
+        }
+        private int _lastLevel = 1;
+        private readonly Data.Level _level = new Data.Level();
+
+        private readonly int _qOff = 0;
+        private readonly int _wOff = 0;
+        private readonly int _eOff = 0;
+        private readonly int _rOff = 0;
     }
 }

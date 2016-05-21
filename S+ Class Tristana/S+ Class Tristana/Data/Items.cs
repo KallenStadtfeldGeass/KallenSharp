@@ -1,10 +1,9 @@
-﻿using ItemData = LeagueSharp.Common.Data.ItemData;
-using Item = LeagueSharp.Common.Items.Item;
-using LeagueSharp;
+﻿using Item = LeagueSharp.Common.Items.Item;
+using ItemData = LeagueSharp.Common.Data.ItemData;
 
 namespace S__Class_Tristana.Data
 {
-    sealed class Items
+    internal sealed class Items
     {
         public class Offensive
         {
@@ -27,6 +26,5 @@ namespace S__Class_Tristana.Data
         {
             public readonly Item Orb = new Item(3363);
         }
-
     }
 }
