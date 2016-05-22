@@ -46,6 +46,7 @@ namespace S__Class_Tristana.Events
             if (SMenu.Item(MenuItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
                 LevelUpSpells();
         }
+
         private int _lastLevel = 1;
         private readonly Data.Level _level = new Data.Level();
 

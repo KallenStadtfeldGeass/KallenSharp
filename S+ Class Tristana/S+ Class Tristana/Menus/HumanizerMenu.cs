@@ -4,7 +4,6 @@ namespace S__Class_Tristana.Menus
 {
     internal class HumanizerMenu : Events.HumanizeEvents
     {
-
         private Menu _Menu()
         {
             var menu = new Menu(MenuNameBase, "humanMenu");

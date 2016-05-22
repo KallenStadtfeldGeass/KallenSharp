@@ -5,7 +5,6 @@ namespace S__Class_Tristana.Menus
 {
     internal class MinonsMenu : Drawing.Minons
     {
-
         private Menu _Menu
         {
             get

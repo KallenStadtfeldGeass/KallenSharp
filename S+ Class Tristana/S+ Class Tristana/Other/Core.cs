@@ -6,7 +6,6 @@ namespace S__Class_Tristana.Other
 {
     internal class Core
     {
-
         //Hold The Game "ticks"
         public float AssemblyTime() => (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;
 
@@ -14,6 +13,7 @@ namespace S__Class_Tristana.Other
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
 
         public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
+
         //Private Core Crap
         private static readonly Libaries.Assembly Assembly = new Libaries.Assembly();
 

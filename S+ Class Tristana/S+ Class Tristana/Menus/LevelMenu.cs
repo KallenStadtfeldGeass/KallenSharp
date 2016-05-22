@@ -5,7 +5,6 @@ namespace S__Class_Tristana.Menus
 {
     internal class LevelMenu : Events.LevelEvents
     {
-
         private Menu _Menu
         {
             get

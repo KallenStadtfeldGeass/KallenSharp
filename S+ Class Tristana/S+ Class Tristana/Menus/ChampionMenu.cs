@@ -5,7 +5,6 @@ namespace S__Class_Tristana.Menus
 {
     internal class ChampionMenu : Drawing.Champs
     {
-
         private Menu _Menu
         {
             get

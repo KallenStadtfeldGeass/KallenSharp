@@ -8,7 +8,6 @@ namespace S__Class_Tristana.Data
     {
         public struct MonsterBar
         {
-
             public MonsterBar(int barWidth, int xoffset, int yOffsetBegin, int yOffsetEnd)
             {
                 BarWidth = barWidth;

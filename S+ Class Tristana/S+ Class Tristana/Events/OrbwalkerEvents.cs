@@ -1,12 +1,11 @@
-﻿using System;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
 using S__Class_Tristana.Other;
+using System;
 
 namespace S__Class_Tristana.Events
 {
     internal partial class OrbwalkerEvents : Core
     {
-
         public const string MenuItemBase = ".Orbwalker.";
         public const string MenuNameBase = ".Orbwalker Menu";
 

@@ -82,6 +82,7 @@ namespace S__Class_Tristana.Drawing
                 _damageToEnemy = value;
             }
         }
+
         public Damage Damage = new Damage();
 
         /*

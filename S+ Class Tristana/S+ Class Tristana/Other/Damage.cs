@@ -6,7 +6,6 @@ namespace S__Class_Tristana.Other
 {
     internal class Damage : Core
     {
-
         private const string ShieldNames = "blindmonkwoneshield,evelynnrshield,EyeOfTheStorm,ItemSeraphsEmbrace,JarvanIVGoeldenAegis,KarmaSolKimShield,lulufarieshield,luxprismaticwaveshieldself,manabarrier,mordekaiserironman,nautiluspiercinggazeshield,orianaredactshield,rumbleshieldbuff,Shenstandunitedshield,SkarnerExoskeleton,summonerbarrier,tahmkencheshield,udyrturtleactivation,UrgotTerrorCapacitorActive2,ViktorPowerTransfer,dianashield,malphiteshieldeffect,RivenFeint,ShenStandUnited,sionwshieldstacks,vipassivebuff";
 
         private float GetComboDamage(Obj_AI_Base target)
@@ -72,6 +71,7 @@ namespace S__Class_Tristana.Other
 
             return (GetComboDamage(target) * defuffer) - (healthDebuffer + GetShield(target) + target.FlatHPRegenMod + 15);
         }
+
         public bool CheckNoDamageBuffs(Obj_AI_Hero target)
         {
             foreach (var b in target.Buffs.Where(b => b.IsValidBuff()))

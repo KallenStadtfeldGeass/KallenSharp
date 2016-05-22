@@ -5,7 +5,6 @@ namespace S__Class_Tristana.Menus
 {
     internal class TrinketMenu : Events.TrinketEvents
     {
-
         private Menu _Menu
         {
             get

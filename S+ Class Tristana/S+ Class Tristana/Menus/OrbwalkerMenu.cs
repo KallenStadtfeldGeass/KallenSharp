@@ -11,7 +11,6 @@ namespace S__Class_Tristana.Menus
             {
                 var menu = new Menu(MenuNameBase, "Orbwalker");
 
-
                 var subMenuCombo = new Menu(".Combo", "comboMenu");
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseE", "Use E").SetValue(true));
@@ -34,7 +33,6 @@ namespace S__Class_Tristana.Menus
                 subMenuCombo.AddSubMenu(subEComboMenu);
                 subMenuCombo.AddSubMenu(subRComboMenu);
 
-
                 var subMenuMixed = new Menu(".Mixed", "mixedMenu");
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseE", "Use E").SetValue(true));
@@ -48,10 +46,20 @@ namespace S__Class_Tristana.Menus
                 subMenuMixed.AddSubMenu(subEMixedMenu);
 
                 var subMenuClear = new Menu(".Clear", "clearMenu");
-                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ", "Use Q").SetValue(true));
-                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE", "Use E").SetValue(true));
 
 
+
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Minons", "Use Q On Minons").SetValue(true));
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Minons", "Use E On Minons").SetValue(true));
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Minons.Slider.MinMinons", "Min Minons").SetValue(new Slider(3, 1, 10)));
+
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Turret", "Use Q On Turrets").SetValue(true));
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Turret", "Use E On Turrets").SetValue(true));
+
+
+
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Monsters", "Use Q on Jungle").SetValue(true));
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Monsters", "Use E on Jungle").SetValue(true));
 
                 menu.AddSubMenu(subMenuCombo);
                 menu.AddSubMenu(subMenuMixed);
@@ -62,11 +70,10 @@ namespace S__Class_Tristana.Menus
 
         public void Load()
         {
-            TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50,125);
+            TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50, 125);
             SMenu.AddSubMenu(_Menu);
             var orbwalkHandler = new Events.OrbwalkerEvents();
             Game.OnUpdate += orbwalkHandler.OnUpdate;
         }
-
     }
 }

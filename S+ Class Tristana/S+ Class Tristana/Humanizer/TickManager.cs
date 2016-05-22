@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SharpDX;
+using System;
 using System.Collections.Generic;
-using SharpDX;
 
 namespace S__Class_Tristana.Humanizer
 {
@@ -53,6 +53,7 @@ namespace S__Class_Tristana.Humanizer
 
             Console.WriteLine($"Key {key} not found");
         }
+
         public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
     }
 }
