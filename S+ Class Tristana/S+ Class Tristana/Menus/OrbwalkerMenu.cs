@@ -47,16 +47,12 @@ namespace S__Class_Tristana.Menus
 
                 var subMenuClear = new Menu(".Clear", "clearMenu");
 
-
-
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Minons", "Use Q On Minons").SetValue(true));
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Minons", "Use E On Minons").SetValue(true));
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Minons.Slider.MinMinons", "Min Minons").SetValue(new Slider(3, 1, 10)));
 
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Turret", "Use Q On Turrets").SetValue(true));
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Turret", "Use E On Turrets").SetValue(true));
-
-
 
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Monsters", "Use Q on Jungle").SetValue(true));
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Monsters", "Use E on Jungle").SetValue(true));

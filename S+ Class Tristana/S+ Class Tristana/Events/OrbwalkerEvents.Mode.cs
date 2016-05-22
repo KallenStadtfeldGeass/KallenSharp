@@ -1,7 +1,6 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
 using System.Linq;
-using S__Class_Tristana.Libaries;
 
 namespace S__Class_Tristana.Events
 {
@@ -9,69 +8,54 @@ namespace S__Class_Tristana.Events
     {
         private void Combo()
         {
-
         }
 
-        private void Mixed(Libaries.Champion champion)
+        private Result JungleClear()
         {
-            if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady())
+            if (!SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>() &&
+                !SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>()) return Result.Invalid;
+
+            var validMonsters = MinionManager.GetMinions(Champion.GetSpellQ.Range, MinionTypes.All, MinionTeam.Neutral);
+
+            if (validMonsters.Count <= 0) return Result.Failure;
+
+            var target = validMonsters.OrderBy(hp => hp.MaxHealth).First();
+            if (target == null) return Result.Failure;
+
+            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
-                {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
-                    if (!enemy.IsValidTarget(champion.GetSpellE.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
-                    if (!SMenu.Item(MenuItemBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
-
-                    champion.GetSpellE.Cast(enemy);
-                    CommonOrbwalker.ForceTarget(enemy);
-
-                    if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>())
-                    {
-                        if (champion.GetSpellQ.IsReady())
-                            champion.GetSpellQ.Cast();
-
-                        return;
-                    }
-                }
+                Champion.GetSpellE.Cast(target);
+                CommonOrbwalker.ForceTarget(target);
             }
-            else if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+
+            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
-                {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
-                    if (!enemy.IsValidTarget(champion.GetSpellQ.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
-                    champion.GetSpellQ.Cast();
-                    CommonOrbwalker.ForceTarget(enemy);
-                }
+                Champion.GetSpellQ.Cast();
+                CommonOrbwalker.ForceTarget(target);
             }
+            return Result.Success;
         }
 
         private void LaneClear()
         {
-
             if (!Champion.GetSpellE.IsReady() && !Champion.GetSpellQ.IsReady()) return;
 
-            if (TurretClear()){}
-            else if (JungleClear()){}
+            if (TurretClear() == Result.Success) { }
+            else if (JungleClear() == Result.Success) { }
             else LaneClearE();
-         
         }
 
-
-        private bool LaneClearE()
+        private Result LaneClearE()
         {
-            if(!SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>()
-                && !SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Minons").GetValue<bool>())return false;
-  
+            if (!SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>()
+                && !SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Minons").GetValue<bool>()) return Result.Invalid;
+
             var validMinons = MinionManager.GetMinions(Champion.Player.Position, Champion.GetSpellQ.Range - 50, MinionTypes.All, MinionTeam.NotAlly);
-            if (validMinons.Count < SMenu.Item(MenuNameBase + "Clear.Minons.Slider.MinMinons").GetValue<Slider>().Value) return false;
+            if (validMinons.Count < SMenu.Item(MenuNameBase + "Clear.Minons.Slider.MinMinons").GetValue<Slider>().Value) return Result.Failure;
 
             if (Champion.GetSpellE.IsReady() && SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>())
             {
                 var target = validMinons.First(hp => hp.Health > 100);
-       
 
                 if (target != null)
                 {
@@ -90,20 +74,59 @@ namespace S__Class_Tristana.Events
                     CommonOrbwalker.ForceTarget(minon);
             }
 
-            return true;
+            return Result.Success;
         }
 
-        private bool TurretClear()
+        private void LastHit()
+        {
+        }
+
+        private void Mixed()
+        {
+            if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
+                {
+                    if (enemy.IsDead) continue;
+                    if (!enemy.IsEnemy) continue;
+                    if (!enemy.IsValidTarget(Champion.GetSpellE.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
+                    if (!SMenu.Item(MenuItemBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
+
+                    Champion.GetSpellE.Cast(enemy);
+                    CommonOrbwalker.ForceTarget(enemy);
+
+                    if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>())
+                    {
+                        if (Champion.GetSpellQ.IsReady())
+                            Champion.GetSpellQ.Cast();
+
+                        return;
+                    }
+                }
+            }
+            else if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
+                {
+                    if (enemy.IsDead) continue;
+                    if (!enemy.IsEnemy) continue;
+                    if (!enemy.IsValidTarget(Champion.GetSpellQ.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
+                    Champion.GetSpellQ.Cast();
+                    CommonOrbwalker.ForceTarget(enemy);
+                }
+            }
+        }
+
+        private Result TurretClear()
         {
             if (!SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Turret").GetValue<bool>() &&
-                !SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>()) return false;
+                !SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>()) return Result.Invalid;
 
             var validTurets = ObjectManager.Get<Obj_AI_Turret>().OrderBy(dis => dis.ServerPosition.Distance(Champion.Player.ServerPosition));
 
             var target = validTurets.Where(turret => turret.IsEnemy).Where(turret => !turret.IsDead).FirstOrDefault(turret => turret.IsValidTarget(Champion.GetSpellQ.Range));
-            if (target == null) return false;
+            if (target == null) return Result.Failure;
 
-      
             if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>())
             {
                 Champion.GetSpellE.Cast(target);
@@ -116,42 +139,14 @@ namespace S__Class_Tristana.Events
                 CommonOrbwalker.ForceTarget(target);
             }
 
-            return true;
-
+            return Result.Success;
         }
+    }
 
-
-
-        private bool JungleClear()
-        {
-            if (!SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>() &&
-                !SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>()) return false;
-
-            var validMonsters = MinionManager.GetMinions(Champion.GetSpellQ.Range, MinionTypes.All, MinionTeam.Neutral);
-
-            if (validMonsters.Count <= 0) return false;
-
-            var target = validMonsters.OrderBy(hp => hp.MaxHealth).First();
-            if (target == null) return false;
-
-
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>())
-            {
-                Champion.GetSpellE.Cast(target);
-                CommonOrbwalker.ForceTarget(target);
-            }
-
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>())
-            {
-                Champion.GetSpellQ.Cast();
-                CommonOrbwalker.ForceTarget(target);
-            }
-            return true;
-        }
-
-        private void LastHit()
-        {
-
-        }
+    public enum Result
+    {
+        Success,
+        Failure,
+        Invalid
     }
 }

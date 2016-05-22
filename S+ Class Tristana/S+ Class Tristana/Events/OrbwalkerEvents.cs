@@ -9,12 +9,6 @@ namespace S__Class_Tristana.Events
         public const string MenuItemBase = ".Orbwalker.";
         public const string MenuNameBase = ".Orbwalker Menu";
 
-        public void OnUpdate(EventArgs args)
-        {
-            if (TickManager.CheckTick($"{MenuNameBase}.OrbwalkDelay")) return;
-            OrbwalkModeHandler();
-        }
-
         private void OrbwalkModeHandler()
         {
             switch (CommonOrbwalker.ActiveMode)
@@ -24,8 +18,7 @@ namespace S__Class_Tristana.Events
                     break;
 
                 case Orbwalking.OrbwalkingMode.Mixed:
-                    Mixed(
-                        Champion);
+                    Mixed();
                     break;
 
                 case Orbwalking.OrbwalkingMode.LaneClear:
@@ -38,6 +31,12 @@ namespace S__Class_Tristana.Events
             }
 
             TickManager.UseTick($"{MenuNameBase}.OrbwalkDelay");
+        }
+
+        public void OnUpdate(EventArgs args)
+        {
+            if (TickManager.CheckTick($"{MenuNameBase}.OrbwalkDelay")) return;
+            OrbwalkModeHandler();
         }
     }
 }
