@@ -39,9 +39,6 @@ namespace S__Class_Tristana.Libaries
             }
         }
 
-        public string GetName()
-        {
-            return "S+ Class Tristana";
-        }
+        public string AssemblyName => "S+ Class Tristana";
     }
 }

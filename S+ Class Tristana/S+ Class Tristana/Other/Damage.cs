@@ -103,18 +103,7 @@ namespace S__Class_Tristana.Other
                         return true;
                 }
             }
-            if (target.ChampionName == "Poppy" && HeroManager.Allies.Any(
-                o =>
-                {
-                    return !o.IsMe
-                           && o.Buffs.Any(
-                               b =>
-                                   b.Caster.NetworkId == target.NetworkId && b.IsValidBuff()
-                                   && b.DisplayName == "PoppyDITarget");
-                }))
-            {
-                return true;
-            }
+         
 
             return (target.HasBuffOfType(BuffType.Invulnerability)
                     || target.HasBuffOfType(BuffType.SpellImmunity));

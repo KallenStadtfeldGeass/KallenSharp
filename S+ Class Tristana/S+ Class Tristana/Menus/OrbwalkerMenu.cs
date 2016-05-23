@@ -69,6 +69,7 @@ namespace S__Class_Tristana.Menus
             TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50, 125);
             SMenu.AddSubMenu(_Menu);
             var orbwalkHandler = new Events.OrbwalkerEvents();
+            CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));
             Game.OnUpdate += orbwalkHandler.OnUpdate;
         }
     }

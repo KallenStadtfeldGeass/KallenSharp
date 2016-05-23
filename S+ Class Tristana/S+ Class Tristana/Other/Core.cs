@@ -1,19 +1,20 @@
-﻿using LeagueSharp;
+﻿using System;
+using LeagueSharp;
 using LeagueSharp.Common;
-using System;
 
 namespace S__Class_Tristana.Other
 {
     internal class Core
     {
+
         //Hold The Game "ticks"
         public float AssemblyTime() => (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;
 
         //Global External Classes and Variables
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
 
-        public static Menu SMenu { get; set; } = new Menu(MenuName, MenuName, true);
 
+        public static Menu SMenu { get; set; } = new Menu(Assembly.AssemblyName, Assembly.AssemblyName, true);
         //Private Core Crap
         private static readonly Libaries.Assembly Assembly = new Libaries.Assembly();
 
@@ -24,8 +25,6 @@ namespace S__Class_Tristana.Other
 
         public static Humanizer.TickManager TickManager = new Humanizer.TickManager();
 
-        //Menu
-        public static readonly string MenuName = Assembly.GetName();
 
         public static readonly BuffType[] Bufftype =
          {

@@ -45,6 +45,7 @@ namespace S__Class_Tristana.Events
             else LaneClearE();
         }
 
+        // ReSharper disable once UnusedMethodReturnValue.Local
         private Result LaneClearE()
         {
             if (!SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>()
