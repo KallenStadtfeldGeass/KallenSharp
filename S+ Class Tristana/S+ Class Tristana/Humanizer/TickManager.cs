@@ -17,6 +17,9 @@ namespace S__Class_Tristana.Humanizer
 
         public void AddTick(string keyName, float min, float max)
         {
+            if(keyName.Length <= 0)
+                Console.WriteLine("Add Key can not be null");
+
             if (IsPresent(keyName))
             {
                 Console.WriteLine($"Key {keyName} already created");
@@ -28,6 +31,8 @@ namespace S__Class_Tristana.Humanizer
 
         public bool CheckTick(string key)
         {
+            if (key.Length <= 0)
+                Console.WriteLine("Check Key an not be null");
             if (Ticks.ContainsKey(key))
                 return Ticks[key].IsReady();
 
@@ -48,10 +53,12 @@ namespace S__Class_Tristana.Humanizer
 
         public void UseTick(string key)
         {
+            if (key.Length <= 0) return;
+
             if (Ticks.ContainsKey(key))
                 Ticks[key].UseTick(_rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
-
-            Console.WriteLine($"Key {key} not found");
+            else
+                Console.WriteLine($"Key {key} not found");
         }
 
         public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();

@@ -60,6 +60,7 @@
     <Compile Include="Humanizer\TickManager.cs" />
     <Compile Include="Libaries\Loader.cs" />
     <Compile Include="Menus\ChampionMenu.cs" />
+    <Compile Include="Menus\InterruptionMenu.cs" />
     <Compile Include="Menus\OrbwalkerMenu.cs" />
     <Compile Include="Other\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />

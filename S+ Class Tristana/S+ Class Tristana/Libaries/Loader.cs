@@ -6,7 +6,7 @@ namespace S__Class_Tristana.Libaries
 {
     internal class Loader : Core
     {
-        public void LoadAssembly()
+        public static void LoadAssembly()
         {
             //Initilize Menus
             var humanizerMenu = new Menus.HumanizerMenu();
@@ -26,11 +26,8 @@ namespace S__Class_Tristana.Libaries
             trinketMenu.Load();
             levelMenu.Load();
             champMenu.Load();
-            //_Assembly.CheckVersion();
-
-            //Load Menus + Events
-            CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));
             orbwalkerMenu.Load();
+            //_Assembly.CheckVersion();
 
             //Add SMenu to main menu
             SMenu.AddToMainMenu();

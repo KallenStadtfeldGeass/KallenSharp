@@ -1,6 +1,7 @@
 ﻿using LeagueSharp.Common;
 using S__Class_Tristana.Other;
 using System;
+using S__Class_Tristana.Data;
 
 namespace S__Class_Tristana.Events
 {
@@ -8,11 +9,12 @@ namespace S__Class_Tristana.Events
     {
         public const string MenuItemBase = ".Orbwalker.";
         public const string MenuNameBase = ".Orbwalker Menu";
-
+        private Monster MonstersData = new Monster();
         private void OrbwalkModeHandler()
         {
             switch (CommonOrbwalker.ActiveMode)
             {
+
                 case Orbwalking.OrbwalkingMode.Combo:
                     Combo();
                     break;
@@ -29,13 +31,13 @@ namespace S__Class_Tristana.Events
                     LastHit();
                     break;
             }
-
-            TickManager.UseTick($"{MenuNameBase}.OrbwalkDelay");
         }
 
         public void OnUpdate(EventArgs args)
         {
-            if (TickManager.CheckTick($"{MenuNameBase}.OrbwalkDelay")) return;
+            if (!TickManager.CheckTick($"{MenuNameBase}.OrbwalkDelay")) return;
+
+            TickManager.UseTick($"{MenuNameBase}.OrbwalkDelay");
             OrbwalkModeHandler();
         }
     }

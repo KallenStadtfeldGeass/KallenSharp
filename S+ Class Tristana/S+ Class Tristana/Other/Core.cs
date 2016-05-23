@@ -6,6 +6,7 @@ namespace S__Class_Tristana.Other
 {
     internal class Core
     {
+        private const string AssemblyName = "S+ Class Tristana";
 
         //Hold The Game "ticks"
         public float AssemblyTime() => (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;
@@ -13,10 +14,10 @@ namespace S__Class_Tristana.Other
         //Global External Classes and Variables
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
 
-
-        public static Menu SMenu { get; set; } = new Menu(Assembly.AssemblyName, Assembly.AssemblyName, true);
-        //Private Core Crap
-        private static readonly Libaries.Assembly Assembly = new Libaries.Assembly();
+ 
+        public static Menu SMenu { get; set; } = new Menu(AssemblyName, AssemblyName, true);
+       // //Private Core Crap
+        //private static readonly Libaries.Assembly Assembly = new Libaries.Assembly();
 
         private readonly DateTime _assemblyLoadTime = DateTime.Now;
 

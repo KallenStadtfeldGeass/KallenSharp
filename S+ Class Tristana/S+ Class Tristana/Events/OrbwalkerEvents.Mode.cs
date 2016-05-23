@@ -18,21 +18,26 @@ namespace S__Class_Tristana.Events
             var validMonsters = MinionManager.GetMinions(Champion.GetSpellQ.Range, MinionTypes.All, MinionTeam.Neutral);
 
             if (validMonsters.Count <= 0) return Result.Failure;
-
-            var target = validMonsters.OrderBy(hp => hp.MaxHealth).First();
-            if (target == null) return Result.Failure;
-
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>())
+            
+            foreach (var monster in validMonsters)
             {
-                Champion.GetSpellE.Cast(target);
-                CommonOrbwalker.ForceTarget(target);
+                if (monster.Name.Contains("Mini")) continue;
+                if (!monster.IsValidTarget(Champion.GetSpellE.Range)) continue;
+
+                if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>())
+                {
+                    Champion.GetSpellE.Cast(monster);
+                    CommonOrbwalker.ForceTarget(monster);
+                }
+                if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>())
+                {
+                    Champion.GetSpellQ.Cast();
+                    CommonOrbwalker.ForceTarget(monster);
+                }
+
             }
 
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>())
-            {
-                Champion.GetSpellQ.Cast();
-                CommonOrbwalker.ForceTarget(target);
-            }
+  
             return Result.Success;
         }
 
@@ -56,9 +61,21 @@ namespace S__Class_Tristana.Events
 
             if (Champion.GetSpellE.IsReady() && SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>())
             {
-                var target = validMinons.First(hp => hp.Health > 100);
-
-                if (target != null)
+                Obj_AI_Base target = null;
+                var bestInRange = 0;
+                foreach (var minon in validMinons)
+                {
+                    var inRange = 1;
+                    if (!minon.IsValidTarget(Champion.GetSpellE.Range)) continue;
+                    foreach (var minon2 in validMinons)
+                    {
+                        if (minon2.Distance(minon) < 125) inRange++;
+                    }
+                    if (inRange <= bestInRange) continue;
+                    bestInRange = inRange;
+                    target = minon;
+                }
+                if (target != null && bestInRange >= SMenu.Item(MenuNameBase + "Clear.Minons.Slider.MinMinons").GetValue<Slider>().Value)
                 {
                     Champion.GetSpellE.Cast(target);
                     CommonOrbwalker.ForceTarget(target);
@@ -91,8 +108,9 @@ namespace S__Class_Tristana.Events
                     if (enemy.IsDead) continue;
                     if (!enemy.IsEnemy) continue;
                     if (!enemy.IsValidTarget(Champion.GetSpellE.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
-                    if (!SMenu.Item(MenuItemBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
-
+                    Game.PrintChat("In range");
+                    if (!SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
+                    Game.PrintChat("CAST Check");
                     Champion.GetSpellE.Cast(enemy);
                     CommonOrbwalker.ForceTarget(enemy);
 
