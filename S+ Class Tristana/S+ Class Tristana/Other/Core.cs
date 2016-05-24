@@ -6,7 +6,7 @@ namespace S__Class_Tristana.Other
 {
     internal class Core
     {
-        private const string AssemblyName = "S+ Class Tristana";
+        private const string AssemblyName = "S+ Class Tristana [BETA]";
 
         //Hold The Game "ticks"
         public float AssemblyTime() => (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;

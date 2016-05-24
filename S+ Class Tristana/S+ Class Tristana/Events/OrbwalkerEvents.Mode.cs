@@ -1,13 +1,12 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
 using System.Linq;
-using System.Net;
 
 namespace S__Class_Tristana.Events
 {
     internal partial class OrbwalkerEvents
     {
-private void Combo()
+        private void Combo()
         {
             if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() &&
                 !SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() &&
@@ -54,7 +53,6 @@ private void Combo()
                 }
             }
 
-
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
@@ -63,7 +61,7 @@ private void Combo()
                     if (!enemy.IsEnemy) continue;
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
                     if (!enemy.IsValidTarget(Champion.GetSpellR.Range)) continue;
-                    if(DamageLib.CalculateDamage(enemy) < enemy.Health)continue;
+                    if (DamageLib.CalculateDamage(enemy) < enemy.Health) continue;
                     Champion.GetSpellR.Cast(enemy);
                     break;
                 }

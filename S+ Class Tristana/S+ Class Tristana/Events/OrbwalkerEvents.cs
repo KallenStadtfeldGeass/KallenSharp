@@ -11,6 +11,7 @@ namespace S__Class_Tristana.Events
         public const string MenuNameBase = ".Orbwalker Menu";
         private Monster MonstersData = new Monster();
         private Other.Damage DamageLib = new Other.Damage();
+
         private void OrbwalkModeHandler()
         {
             switch (CommonOrbwalker.ActiveMode)
