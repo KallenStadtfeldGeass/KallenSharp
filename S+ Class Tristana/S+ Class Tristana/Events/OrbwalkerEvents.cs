@@ -1,7 +1,7 @@
 ﻿using LeagueSharp.Common;
+using S__Class_Tristana.Data;
 using S__Class_Tristana.Other;
 using System;
-using S__Class_Tristana.Data;
 
 namespace S__Class_Tristana.Events
 {
@@ -10,11 +10,11 @@ namespace S__Class_Tristana.Events
         public const string MenuItemBase = ".Orbwalker.";
         public const string MenuNameBase = ".Orbwalker Menu";
         private Monster MonstersData = new Monster();
+        private Other.Damage DamageLib = new Other.Damage();
         private void OrbwalkModeHandler()
         {
             switch (CommonOrbwalker.ActiveMode)
             {
-
                 case Orbwalking.OrbwalkingMode.Combo:
                     Combo();
                     break;

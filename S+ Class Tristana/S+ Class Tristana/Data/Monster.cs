@@ -22,7 +22,7 @@ namespace S__Class_Tristana.Data
             public int YOffsetEnd { get; }
         }
 
-        public Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>()
+        public Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>
         {
             {"Neutral.Dragon",SummonersRift.River.Dragon},
             {"Neutral.Baron",SummonersRift.River.Baron},
@@ -34,13 +34,13 @@ namespace S__Class_Tristana.Data
             {"Order.Blue",new Vector2(3871.489f, 7901.054f)}
         };
 
-        public string[] BigMonsters = 
+        public string[] BigMonsters =
         {
             "SRU_Red", "SRU_Blue", "SRU_Dragon", "SRU_Baron", "SRU_Crab", "SRU_Krug", "SRU_Gromp", "SRU_Murkwolf",
             "SRU_Razorbeak"
         };
 
-        public Dictionary<string, MonsterBar> MonsterBarDictionary = new Dictionary<string, MonsterBar>()
+        public Dictionary<string, MonsterBar> MonsterBarDictionary = new Dictionary<string, MonsterBar>
         {
             {"SRU_Red",new MonsterBar(145,3,18,10)},
             {"SRU_Blue",new MonsterBar(145,3,18,10)},

@@ -103,7 +103,6 @@ namespace S__Class_Tristana.Other
                         return true;
                 }
             }
-         
 
             return (target.HasBuffOfType(BuffType.Invulnerability)
                     || target.HasBuffOfType(BuffType.SpellImmunity));

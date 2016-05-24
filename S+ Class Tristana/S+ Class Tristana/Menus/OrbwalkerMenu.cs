@@ -15,7 +15,7 @@ namespace S__Class_Tristana.Menus
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseE", "Use E").SetValue(true));
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseR", "Use R (Killable)").SetValue(true));
-
+                subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.FocusETarget", "Focus E target").SetValue(true));
                 var subEComboMenu = new Menu(".Combo.EChamps", "comboEMenu");
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {

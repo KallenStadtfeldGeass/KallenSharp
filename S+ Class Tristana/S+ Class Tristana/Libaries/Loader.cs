@@ -1,5 +1,4 @@
 ﻿using LeagueSharp;
-using LeagueSharp.Common;
 using S__Class_Tristana.Other;
 
 namespace S__Class_Tristana.Libaries
@@ -16,11 +15,13 @@ namespace S__Class_Tristana.Libaries
             var levelMenu = new Menus.LevelMenu();
             var champMenu = new Menus.ChampionMenu();
             var orbwalkerMenu = new Menus.OrbwalkerMenu();
+            var antiMenu = new Menus.AntiMenu();
 
             //Load Data
             Champion.Player = ObjectManager.Player;
             //Load Menus into SMenu
             humanizerMenu.Load();
+            antiMenu.Load();
             minonsMenu.Load();
             itemsMenu.Load();
             trinketMenu.Load();

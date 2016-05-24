@@ -17,7 +17,7 @@ namespace S__Class_Tristana.Humanizer
 
         public void AddTick(string keyName, float min, float max)
         {
-            if(keyName.Length <= 0)
+            if (keyName.Length <= 0)
                 Console.WriteLine("Add Key can not be null");
 
             if (IsPresent(keyName))

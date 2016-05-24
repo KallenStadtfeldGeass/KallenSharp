@@ -1,6 +1,6 @@
-﻿using System;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
+using System;
 
 namespace S__Class_Tristana.Other
 {
@@ -14,9 +14,8 @@ namespace S__Class_Tristana.Other
         //Global External Classes and Variables
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
 
- 
         public static Menu SMenu { get; set; } = new Menu(AssemblyName, AssemblyName, true);
-       // //Private Core Crap
+        // //Private Core Crap
         //private static readonly Libaries.Assembly Assembly = new Libaries.Assembly();
 
         private readonly DateTime _assemblyLoadTime = DateTime.Now;
@@ -25,7 +24,6 @@ namespace S__Class_Tristana.Other
         public static Libaries.Champion Champion = new Libaries.Champion(550f, 900f, 625f, 700f);
 
         public static Humanizer.TickManager TickManager = new Humanizer.TickManager();
-
 
         public static readonly BuffType[] Bufftype =
          {

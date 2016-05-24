@@ -1,13 +1,73 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
 using System.Linq;
+using System.Net;
 
 namespace S__Class_Tristana.Events
 {
     internal partial class OrbwalkerEvents
     {
-        private void Combo()
+private void Combo()
         {
+            if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() &&
+                !SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() &&
+                !SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>()) return;
+
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                {
+                    if (enemy.IsDead) continue;
+                    if (!enemy.IsEnemy) continue;
+                    if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
+                    if (!enemy.IsValidTarget(Champion.GetSpellE.Range)) continue;
+
+                    Champion.GetSpellE.Cast(enemy);
+                    break;
+                }
+            }
+
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                {
+                    if (enemy.IsDead) continue;
+                    if (!enemy.IsEnemy) continue;
+                    if (!enemy.IsValidTarget(Champion.GetSpellQ.Range)) continue;
+
+                    Champion.GetSpellQ.Cast();
+                    break;
+                }
+            }
+
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                {
+                    if (enemy.IsDead) continue;
+                    if (!enemy.IsEnemy) continue;
+                    if (!enemy.IsValidTarget(Champion.GetSpellQ.Range)) continue;
+                    if (!enemy.HasBuff("TristanaECharge")) continue;
+
+                    CommonOrbwalker.ForceTarget(enemy);
+                    break;
+                }
+            }
+
+
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                {
+                    if (enemy.IsDead) continue;
+                    if (!enemy.IsEnemy) continue;
+                    if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
+                    if (!enemy.IsValidTarget(Champion.GetSpellR.Range)) continue;
+                    if(DamageLib.CalculateDamage(enemy) < enemy.Health)continue;
+                    Champion.GetSpellR.Cast(enemy);
+                    break;
+                }
+            }
         }
 
         private Result JungleClear()
@@ -18,7 +78,7 @@ namespace S__Class_Tristana.Events
             var validMonsters = MinionManager.GetMinions(Champion.GetSpellQ.Range, MinionTypes.All, MinionTeam.Neutral);
 
             if (validMonsters.Count <= 0) return Result.Failure;
-            
+
             foreach (var monster in validMonsters)
             {
                 if (monster.Name.Contains("Mini")) continue;
@@ -34,10 +94,8 @@ namespace S__Class_Tristana.Events
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(monster);
                 }
-
             }
 
-  
             return Result.Success;
         }
 
@@ -125,7 +183,7 @@ namespace S__Class_Tristana.Events
             }
             else if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
                 {
                     if (enemy.IsDead) continue;
                     if (!enemy.IsEnemy) continue;

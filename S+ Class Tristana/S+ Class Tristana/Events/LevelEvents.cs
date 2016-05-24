@@ -21,9 +21,7 @@ namespace S__Class_Tristana.Events
             int[] level = { 0, 0, 0, 0 };
 
             for (var i = 0; i < Champion.Player.Level; i++)
-            {
                 level[_level.AbilitySequence[i] - 1] = level[_level.AbilitySequence[i] - 1] + 1;
-            }
 
             if (qL < level[0]) Champion.Player.Spellbook.LevelSpell(SpellSlot.Q);
             if (wL < level[1]) Champion.Player.Spellbook.LevelSpell(SpellSlot.W);
@@ -50,9 +48,11 @@ namespace S__Class_Tristana.Events
         private int _lastLevel = 1;
         private readonly Data.Level _level = new Data.Level();
 
+#pragma warning disable RECS0122 // Initializing field with default value is redundant
         private readonly int _qOff = 0;
         private readonly int _wOff = 0;
         private readonly int _eOff = 0;
         private readonly int _rOff = 0;
+#pragma warning restore RECS0122 // Initializing field with default value is redundant
     }
 }

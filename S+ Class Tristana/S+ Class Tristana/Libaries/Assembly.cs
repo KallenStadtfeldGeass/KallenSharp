@@ -38,7 +38,5 @@ namespace S__Class_Tristana.Libaries
                 Game.PrintChat("<b> <font color=\"#008080\">S+ Class Tristana Unable to check for updates</font></b>");
             }
         }
-
-  
     }
 }

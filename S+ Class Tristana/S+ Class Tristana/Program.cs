@@ -17,7 +17,7 @@ namespace S__Class_Tristana
             if (ObjectManager.Player.ChampionName != "Tristana")
                 return;
 
-           Libaries.Loader.LoadAssembly();
+            Libaries.Loader.LoadAssembly();
         }
     }
 }
