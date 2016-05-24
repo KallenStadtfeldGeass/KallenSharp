@@ -6,8 +6,8 @@ namespace S__Class_Tristana.Events
 {
     internal class AntiEvents : Core
     {
-        public const string MenuItemBase = ".Interruption.";
-        public const string MenuNameBase = ".Interruption Menu";
+        public const string MenuItemBase = ".Anti.";
+        public const string MenuNameBase = ".Anti Menu";
 
         public void AntiGapClose(ActiveGapcloser user)
         {

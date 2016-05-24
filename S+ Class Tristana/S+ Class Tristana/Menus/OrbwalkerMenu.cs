@@ -20,14 +20,14 @@ namespace S__Class_Tristana.Menus
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {
                     if (!enemy.IsEnemy) continue;
-                    subEComboMenu.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseE.On." + enemy.ChampionName, "Use E On" + enemy.ChampionName).SetValue(true));
+                    subEComboMenu.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseE.On." + enemy.ChampionName, "Use E On " + enemy.ChampionName).SetValue(true));
                 }
 
                 var subRComboMenu = new Menu(".Combo.RChamps", "comboRMenu");
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {
                     if (!enemy.IsEnemy) continue;
-                    subRComboMenu.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName, "Use R On" + enemy.ChampionName).SetValue(true));
+                    subRComboMenu.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName, "Use R On " + enemy.ChampionName).SetValue(true));
                 }
 
                 subMenuCombo.AddSubMenu(subEComboMenu);
@@ -36,12 +36,12 @@ namespace S__Class_Tristana.Menus
                 var subMenuMixed = new Menu(".Mixed", "mixedMenu");
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseE", "Use E").SetValue(true));
-                subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Slider.MaxDistance", "Max Distance (Range-Distance)").SetValue(new Slider(150, 0, 300)));
+                subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Slider.MaxDistance", "Max Distance (Range-Distance)").SetValue(new Slider(85, 0, 300)));
                 var subEMixedMenu = new Menu(".Mixed.EChamps", "mixedEMenu");
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {
                     if (!enemy.IsEnemy) continue;
-                    subEMixedMenu.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName, "Use E On" + enemy.ChampionName).SetValue(true));
+                    subEMixedMenu.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName, "Use E On " + enemy.ChampionName).SetValue(true));
                 }
                 subMenuMixed.AddSubMenu(subEMixedMenu);
 
@@ -66,7 +66,7 @@ namespace S__Class_Tristana.Menus
 
         public void Load()
         {
-            TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50, 125);
+            TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50, 100);
             SMenu.AddSubMenu(_Menu);
             var orbwalkHandler = new Events.OrbwalkerEvents();
             CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));

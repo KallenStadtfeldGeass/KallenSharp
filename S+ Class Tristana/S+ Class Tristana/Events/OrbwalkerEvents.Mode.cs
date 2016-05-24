@@ -61,7 +61,7 @@ namespace S__Class_Tristana.Events
                     if (!enemy.IsEnemy) continue;
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
                     if (!enemy.IsValidTarget(Champion.GetSpellR.Range)) continue;
-                    if (DamageLib.CalculateDamage(enemy) < enemy.Health) continue;
+                    if (_damageLib.CalculateDamage(enemy) < enemy.Health) continue;
                     Champion.GetSpellR.Cast(enemy);
                     break;
                 }
