@@ -12,9 +12,9 @@ namespace S__Class_Tristana.Other
         {
             float damage = 0f;
 
-            if (!Champion.Player.IsWindingUp) // can auto attack
-                if (Champion.Player.Distance(target) < Champion.Player.AttackRange) // target in auto range
-                    damage += (float)Champion.Player.GetAutoAttackDamage(target) - 50;
+            //if (!Champion.Player.IsWindingUp) // can auto attack
+            //    if (Champion.Player.Distance(target) < Champion.Player.AttackRange) // target in auto range
+            //        damage += (float)Champion.Player.GetAutoAttackDamage(target) - 50;
 
             if (Champion.GetSpellR.IsReady())
                 if (Champion.Player.Distance(target) < Champion.GetSpellR.Range)
