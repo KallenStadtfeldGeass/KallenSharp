@@ -79,7 +79,7 @@ namespace S__Class_Tristana.Events
 
             foreach (var monster in validMonsters)
             {
-                if (monster.Name.Contains("Mini")) continue;
+                if (monster.Name.ToLower().Contains("mini")) continue;
                 if (!monster.IsValidTarget(Champion.GetSpellE.Range)) continue;
 
                 if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>())
