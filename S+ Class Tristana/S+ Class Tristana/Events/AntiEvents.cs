@@ -13,7 +13,7 @@ namespace S__Class_Tristana.Events
         {
             if (!TickManager.CheckTick($"{MenuNameBase}.AntiGapCloseDelay")) return;
             TickManager.UseTick($"{MenuNameBase}.AntiGapCloseDelay");
-            Game.PrintChat($"{user.Sender.ChampionName}");
+          //  Game.PrintChat($"{user.Sender.ChampionName}");
 
             if (!SMenu.Item(MenuItemBase + "Boolean.Interruption.Use.On." + user.Sender.ChampionName).GetValue<bool>()) return;
             if (!Champion.GetSpellR.IsReady()) return;
@@ -28,7 +28,7 @@ namespace S__Class_Tristana.Events
             if (!TickManager.CheckTick($"{MenuNameBase}.AutoInterrupterDelay")) return;
             TickManager.UseTick($"{MenuNameBase}.AutoInterrupterDelay");
 
-            Game.PrintChat($"{sender.ChampionName}");
+           // Game.PrintChat($"{sender.ChampionName}");
 
             if (!SMenu.Item(MenuItemBase + "Boolean.AntiGapClose.Use.On." + sender.ChampionName).GetValue<bool>()) return;
 

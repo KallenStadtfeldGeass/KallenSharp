@@ -164,9 +164,9 @@ namespace S__Class_Tristana.Events
                     if (enemy.IsDead) continue;
                     if (!enemy.IsEnemy) continue;
                     if (!enemy.IsValidTarget(Champion.GetSpellE.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
-                    Game.PrintChat("In range");
+                   // Game.PrintChat("In range");
                     if (!SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
-                    Game.PrintChat("CAST Check");
+                   // Game.PrintChat("CAST Check");
                     Champion.GetSpellE.Cast(enemy);
                     CommonOrbwalker.ForceTarget(enemy);
 

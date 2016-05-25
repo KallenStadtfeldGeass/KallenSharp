@@ -23,7 +23,9 @@ namespace S__Class_Tristana.Events
             }
 
             // ReSharper disable once EmptyGeneralCatchClause
-            catch (Exception)
+#pragma warning disable RECS0022 // A catch clause that catches System.Exception and has an empty body
+                // ReSharper disable once EmptyGeneralCatchClause
+            catch
             {
             }
             finally

@@ -36,7 +36,7 @@ namespace S__Class_Tristana.Menus
                 var subMenuMixed = new Menu(".Mixed", "mixedMenu");
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseE", "Use E").SetValue(true));
-                subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Slider.MaxDistance", "Max Distance (Range-Distance)").SetValue(new Slider(85, 0, 300)));
+                subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Slider.MaxDistance", "Max Distance (Range-Distance)").SetValue(new Slider(100, 0, 300)));
                 var subEMixedMenu = new Menu(".Mixed.EChamps", "mixedEMenu");
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {

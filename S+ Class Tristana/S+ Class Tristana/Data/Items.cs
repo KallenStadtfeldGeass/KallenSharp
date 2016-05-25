@@ -7,24 +7,24 @@ namespace S__Class_Tristana.Data
     {
         public class Offensive
         {
-            public readonly Item Botrk = new Item(ItemData.Blade_of_the_Ruined_King.GetItem().Id);
-            public readonly Item Cutless = new Item(ItemData.Bilgewater_Cutlass.GetItem().Id);
-            public readonly Item Hydra = new Item(ItemData.Ravenous_Hydra_Melee_Only.GetItem().Id);
-            public readonly Item Tiamat = new Item(ItemData.Tiamat_Melee_Only.GetItem().Id);
-            public readonly Item GunBlade = new Item(ItemData.Hextech_Gunblade.GetItem().Id);
-            public readonly Item Muraman = new Item(ItemData.Muramana.GetItem().Id);
-            public readonly Item GhostBlade = new Item(ItemData.Youmuus_Ghostblade.GetItem().Id);
+            public Item Botrk { get; } = new Item(ItemData.Blade_of_the_Ruined_King.GetItem().Id);
+            public Item Cutless { get; } = new Item(ItemData.Bilgewater_Cutlass.GetItem().Id);
+            public Item Hydra { get; } = new Item(ItemData.Ravenous_Hydra_Melee_Only.GetItem().Id);
+            public Item Tiamat { get; } = new Item(ItemData.Tiamat_Melee_Only.GetItem().Id);
+            public Item GunBlade { get; } = new Item(ItemData.Hextech_Gunblade.GetItem().Id);
+            public Item Muraman { get; } = new Item(ItemData.Muramana.GetItem().Id);
+            public Item GhostBlade { get; } = new Item(ItemData.Youmuus_Ghostblade.GetItem().Id);
         }
 
         public class Defensive
         {
-            public readonly Item Qss = new Item(ItemData.Quicksilver_Sash.GetItem().Id);
-            public readonly Item Merc = new Item(ItemData.Mercurial_Scimitar.GetItem().Id);
+            public Item Qss { get; } = new Item(ItemData.Quicksilver_Sash.GetItem().Id);
+            public Item Merc { get; } = new Item(ItemData.Mercurial_Scimitar.GetItem().Id);
         }
 
         public class Trinkets
         {
-            public readonly Item Orb = new Item(3363);
+            public Item Orb { get; } = new Item(3363);
         }
     }
 }
