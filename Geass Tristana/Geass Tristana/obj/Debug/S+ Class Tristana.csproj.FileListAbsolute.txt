@@ -1,0 +1,3 @@
+D:\Coding\GitHub New\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.config
+D:\Coding\GitHub New\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S- Class Tristana.exe.config
+D:\Coding\GitHub New\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\Geass Tristana.exe.config
