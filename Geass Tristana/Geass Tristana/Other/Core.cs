@@ -6,7 +6,7 @@ namespace Geass_Tristana.Other
 {
     internal class Core
     {
-        private const string AssemblyName = "S+ Class Tristana [BETA]";
+        private const string AssemblyName = "Geass Tristana [B]";
 
         //Hold The Game "ticks"
         public float AssemblyTime() => (float)DateTime.Now.Subtract(_assemblyLoadTime).TotalMilliseconds;
