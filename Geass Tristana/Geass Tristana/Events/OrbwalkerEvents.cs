@@ -1,6 +1,7 @@
 ﻿using Geass_Tristana.Other;
 using LeagueSharp.Common;
 using System;
+using LeagueSharp;
 
 namespace Geass_Tristana.Events
 {
@@ -8,6 +9,9 @@ namespace Geass_Tristana.Events
     {
         public const string MenuItemBase = ".Orbwalker.";
         public const string MenuNameBase = ".Orbwalker Menu";
+
+        public const string ManaMenuItemBase = ".ManaManager.";
+        public const string ManaMenuNameBase = ".ManaManager Menu";
         private readonly Other.Damage _damageLib = new Other.Damage();
 
         private void OrbwalkModeHandler()
@@ -35,7 +39,7 @@ namespace Geass_Tristana.Events
         public void OnUpdate(EventArgs args)
         {
             if (!TickManager.CheckTick($"{MenuNameBase}.OrbwalkDelay")) return;
-
+   
             TickManager.UseTick($"{MenuNameBase}.OrbwalkDelay");
             OrbwalkModeHandler();
         }

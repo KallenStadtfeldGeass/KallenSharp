@@ -1,2 +1,0 @@
-D:\Coding\GitHub New\KallenSharp\Geass Tristana\Geass Tristana\bin\Debug\Geass Tristana.exe.config
-D:\Coding\GitHub\KallenSharp\Geass Tristana\Geass Tristana\bin\Debug\Geass Tristana.exe.config

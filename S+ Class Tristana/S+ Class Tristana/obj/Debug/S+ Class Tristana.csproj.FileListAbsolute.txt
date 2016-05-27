@@ -1,4 +1,0 @@
-D:\Coding\GitHub\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.config
-D:\Coding\GitHub New\KallenSharp\S+ Class Tristana\S+ Class Tristana\bin\Debug\S+ Class Tristana.exe.config
-D:\Coding\GitHub New\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.exe
-D:\Coding\GitHub New\KallenSharp\S+ Class Tristana\S+ Class Tristana\obj\Debug\S+ Class Tristana.pdb

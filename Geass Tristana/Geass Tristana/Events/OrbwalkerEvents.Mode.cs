@@ -12,7 +12,7 @@ namespace Geass_Tristana.Events
                 !SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() &&
                 !SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>()) return;
 
-            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady())
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady() && ComboUseE())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
                 {
@@ -26,7 +26,7 @@ namespace Geass_Tristana.Events
                 }
             }
 
-            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady() && ComboUseQ())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
                 {
@@ -39,7 +39,7 @@ namespace Geass_Tristana.Events
                 }
             }
 
-            if (SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
                 {
@@ -53,7 +53,7 @@ namespace Geass_Tristana.Events
                 }
             }
 
-            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady())
+            if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady() && ComboUseR())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
                 {
@@ -82,12 +82,12 @@ namespace Geass_Tristana.Events
                 if (monster.Name.ToLower().Contains("mini") || monster.SkinName.ToLower().Contains("mini")) continue;
                 if (!monster.IsValidTarget(Champion.GetSpellE.Range)) continue;
 
-                if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>())
+                if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>() && ClearUseE())
                 {
                     Champion.GetSpellE.Cast(monster);
                     CommonOrbwalker.ForceTarget(monster);
                 }
-                if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>())
+                if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>() && ClearUseQ())
                 {
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(monster);
@@ -115,7 +115,7 @@ namespace Geass_Tristana.Events
             var validMinons = MinionManager.GetMinions(Champion.Player.Position, Champion.GetSpellQ.Range - 50, MinionTypes.All, MinionTeam.NotAlly);
             if (validMinons.Count < SMenu.Item(MenuNameBase + "Clear.Minons.Slider.MinMinons").GetValue<Slider>().Value) return Result.Failure;
 
-            if (Champion.GetSpellE.IsReady() && SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>())
+            if (Champion.GetSpellE.IsReady() && SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Minons").GetValue<bool>() && ClearUseE())
             {
                 Obj_AI_Base target = null;
                 var bestInRange = 0;
@@ -138,7 +138,7 @@ namespace Geass_Tristana.Events
                 }
             }
 
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Minons").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Minons").GetValue<bool>() && Champion.GetSpellQ.IsReady() && ClearUseQ())
             {
                 Champion.GetSpellQ.Cast();
 
@@ -157,7 +157,7 @@ namespace Geass_Tristana.Events
 
         private void Mixed()
         {
-            if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady())
+            if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady() && MixedUseE())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
                 {
@@ -170,7 +170,7 @@ namespace Geass_Tristana.Events
                     Champion.GetSpellE.Cast(enemy);
                     CommonOrbwalker.ForceTarget(enemy);
 
-                    if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>())
+                    if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && MixedUseQ())
                     {
                         if (Champion.GetSpellQ.IsReady())
                             Champion.GetSpellQ.Cast();
@@ -179,7 +179,7 @@ namespace Geass_Tristana.Events
                     }
                 }
             }
-            else if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady())
+            else if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady() && MixedUseQ())
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
                 {
@@ -190,6 +190,20 @@ namespace Geass_Tristana.Events
                     CommonOrbwalker.ForceTarget(enemy);
                 }
             }
+
+            //if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady() && MixedUseR())
+            //{
+            //    foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+            //    {
+            //        if (enemy.IsDead) continue;
+            //        if (!enemy.IsEnemy) continue;
+            //        if (!SMenu.Item(MenuNameBase + "Mixed.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
+            //        if (!enemy.IsValidTarget(Champion.GetSpellR.Range)) continue;
+            //        if (_damageLib.CalculateDamage(enemy) < enemy.Health) continue;
+            //        Champion.GetSpellR.Cast(enemy);
+            //        break;
+            //    }
+            //}
         }
 
         private Result TurretClear()
@@ -202,13 +216,13 @@ namespace Geass_Tristana.Events
             var target = validTurets.Where(turret => turret.IsEnemy).Where(turret => !turret.IsDead).FirstOrDefault(turret => turret.IsValidTarget(Champion.GetSpellQ.Range));
             if (target == null) return Result.Failure;
 
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>())
+            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>() && ClearUseE())
             {
                 Champion.GetSpellE.Cast(target);
                 CommonOrbwalker.ForceTarget(target);
             }
 
-            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Turret").GetValue<bool>())
+            if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Turret").GetValue<bool>() && ClearUseQ())
             {
                 Champion.GetSpellQ.Cast();
                 CommonOrbwalker.ForceTarget(target);

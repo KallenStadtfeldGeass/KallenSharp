@@ -1,10 +1,37 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
-
 namespace Geass_Tristana.Menus
 {
     internal class OrbwalkerMenu : Events.OrbwalkerEvents
     {
+        private Menu ManaMenu
+        {
+            get
+            {
+                var menu = new Menu(ManaMenuNameBase, "ManaManager");
+                menu.AddItem(new MenuItem(ManaMenuItemBase + "Use.ManaManager", "Use ManaManager").SetValue(true));
+
+                var subMenuCombo = new Menu(".Combo", "comboManaMenu2");
+                subMenuCombo.AddItem(new MenuItem(ManaMenuItemBase + "Combo.Slider.MinMana.Q", "Min Mana% Q").SetValue(new Slider(30)));
+                subMenuCombo.AddItem(new MenuItem(ManaMenuItemBase + "Combo.Slider.MinMana.E", "Min Mana% E").SetValue(new Slider(25)));
+                subMenuCombo.AddItem(new MenuItem(ManaMenuItemBase + "Combo.Slider.MinMana.R", "Min Mana% R").SetValue(new Slider(1)));
+
+                var subMenuMixed = new Menu(".Mixed", "mixedManaMenu");
+                subMenuMixed.AddItem(new MenuItem(ManaMenuItemBase + "Mixed.Slider.MinMana.Q", "Min Mana% Q").SetValue(new Slider(40)));
+                subMenuMixed.AddItem(new MenuItem(ManaMenuItemBase + "Mixed.Slider.MinMana.E", "Min Mana% E").SetValue(new Slider(30)));
+                //subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Slider.MinMana.R", "Min Mana% R").SetValue(new Slider()));
+
+                var subMenuClear = new Menu(".Clear", "clearManaMenu");
+                subMenuClear.AddItem(new MenuItem(ManaMenuItemBase + "Clear.Slider.MinMana.Q", "Min Mana% Q").SetValue(new Slider(25)));
+                subMenuClear.AddItem(new MenuItem(ManaMenuItemBase + "Clear.Slider.MinMana.E", "Min Mana% E").SetValue(new Slider(15)));
+
+                menu.AddSubMenu(subMenuCombo);
+                menu.AddSubMenu(subMenuMixed);
+                menu.AddSubMenu(subMenuClear);
+                return menu;
+            }
+        }
+
         private Menu _Menu
         {
             get
@@ -67,6 +94,7 @@ namespace Geass_Tristana.Menus
         public void Load()
         {
             TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50, 100);
+            SMenu.AddSubMenu(ManaMenu);
             SMenu.AddSubMenu(_Menu);
             var orbwalkHandler = new Events.OrbwalkerEvents();
             CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));

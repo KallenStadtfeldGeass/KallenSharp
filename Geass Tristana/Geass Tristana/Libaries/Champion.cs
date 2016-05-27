@@ -23,6 +23,9 @@ namespace Geass_Tristana.Libaries
 
         public Spell GetSpellW { get; }
 
+        public int GetManaPercent => (int)(Player.Mana / Player.MaxMana * 100);
+        public int HealthPercent => (int)(Player.Health / Player.MaxHealth * 100);
+
         public void UpdateChampionRange(int level)
         {
             GetSpellQ.Range = 550 + (9 * (level - 1));
