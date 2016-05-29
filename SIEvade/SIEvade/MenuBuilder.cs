@@ -163,16 +163,16 @@ namespace SIEvade
             return evadeMenu;
         }
 
-        //static int check = 0;
+        static int check = 0;
         private static void OnUpdate(EventArgs args)
         {
             if (Time.TickCount - Time.LastTick < 100) return;
 
             Time.LastTick = Time.TickCount;
 
-            if (EzEvadeMenu == null)
+            if (EzEvadeMenu == null && check == 0)
             {
-                Console.WriteLine("EzEvade null trying to retrieve");
+                Console.WriteLine("EzEvade null trying to retrieve.");
                 EzEvadeMenu = Menu.GetMenu("EzEvade", "ezEvade");
 
                 return;
