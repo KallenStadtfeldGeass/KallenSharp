@@ -1,5 +1,6 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
+
 namespace Geass_Tristana.Menus
 {
     internal class OrbwalkerMenu : Events.OrbwalkerEvents
@@ -42,7 +43,7 @@ namespace Geass_Tristana.Menus
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseE", "Use E").SetValue(true));
                 subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseR", "Use R (Killable)").SetValue(true));
-                subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.FocusETarget", "Focus E target").SetValue(true));
+                subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.FocusETarget", "Focus E target").SetValue(false));
                 var subEComboMenu = new Menu(".Combo.EChamps", "comboEMenu");
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {
@@ -64,6 +65,7 @@ namespace Geass_Tristana.Menus
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseQ", "Use Q").SetValue(true));
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.UseE", "Use E").SetValue(true));
                 subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Slider.MaxDistance", "Max Distance (Range-Distance)").SetValue(new Slider(100, 0, 300)));
+                subMenuMixed.AddItem(new MenuItem(MenuNameBase + "Mixed.Boolean.FocusETarget", "Focus E target").SetValue(true));
                 var subEMixedMenu = new Menu(".Mixed.EChamps", "mixedEMenu");
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
                 {
@@ -84,6 +86,7 @@ namespace Geass_Tristana.Menus
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseQ.Monsters", "Use Q on Jungle").SetValue(true));
                 subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.UseE.Monsters", "Use E on Jungle").SetValue(true));
 
+                subMenuClear.AddItem(new MenuItem(MenuNameBase + "Clear.Boolean.FocusETarget", "Focus E target").SetValue(true));
                 menu.AddSubMenu(subMenuCombo);
                 menu.AddSubMenu(subMenuMixed);
                 menu.AddSubMenu(subMenuClear);

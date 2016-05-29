@@ -1,7 +1,8 @@
 ﻿using Geass_Tristana.Other;
+using LeagueSharp;
 using LeagueSharp.Common;
 using System;
-using LeagueSharp;
+using System.Linq;
 
 namespace Geass_Tristana.Events
 {
@@ -39,8 +40,30 @@ namespace Geass_Tristana.Events
         public void OnUpdate(EventArgs args)
         {
             if (!TickManager.CheckTick($"{MenuNameBase}.OrbwalkDelay")) return;
-   
+
             TickManager.UseTick($"{MenuNameBase}.OrbwalkDelay");
+            if (CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.LaneClear && SMenu.Item(MenuNameBase + "Clear.Boolean.FocusETarget").GetValue<bool>())
+            {
+                foreach (
+                    var minon in
+                        MinionManager.GetMinions(Champion.Player.Position, Champion.GetSpellQ.Range,
+                            MinionTypes.All, MinionTeam.NotAlly).Where(charge => charge.HasBuff("TristanaECharge")))
+                {
+                    CommonOrbwalker.ForceTarget(minon);
+                    break;
+                }
+            }
+            else if (CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Mixed
+               && SMenu.Item(MenuNameBase + "Mixed.Boolean.FocusETarget").GetValue<bool>() ||
+               CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
+               SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>())
+            {
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health).Where(target => target.HasBuff("TristanaECharge")))
+                {
+                    CommonOrbwalker.ForceTarget(enemy);
+                }
+            }
+
             OrbwalkModeHandler();
         }
     }
