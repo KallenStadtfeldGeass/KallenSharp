@@ -14,7 +14,7 @@ namespace SIEvade
         public static Obj_AI_Hero Player = ObjectManager.Player;
         public static Version AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-        public static Menu EzEvadeMenu = Menu.GetMenu("ezEvade", "ezEvade");
+        public static Menu EzEvadeMenu;// = Menu.GetMenu("ezEvade", "ezEvade");
         public class Time
         {
             private static readonly DateTime AssemblyLoadTime = DateTime.Now;

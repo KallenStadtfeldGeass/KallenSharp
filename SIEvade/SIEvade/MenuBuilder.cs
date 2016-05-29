@@ -165,9 +165,18 @@ namespace SIEvade
 
         private static void OnUpdate(EventArgs args)
         {
-            if (Time.TickCount - Time.LastTick < 200) return;
+            if (Time.TickCount - Time.LastTick < 100) return;
 
             Time.LastTick = Time.TickCount;
+
+            if (EzEvadeMenu == null)
+            {
+                Console.WriteLine("EzEvade null");
+                EzEvadeMenu = Menu.GetMenu("ezEvade", "ezEvade");
+                return;
+
+            }
+
 
             var mode = "none";
 
@@ -188,76 +197,78 @@ namespace SIEvade
         private static void SyncMenu(string mode)
         {
             _currentMode = mode;
-            switch (mode)
-            {
+                switch (mode)
+                {
 
-                case "none": //Dont evade
+                    case "none": //Dont evade
                     {
                         // ReSharper disable once RedundantArgumentDefaultValue
                         EzEvadeMenu.Item("DodgeSkillShots")
-                        .SetValue(new KeyBind(EzEvadeMenu.Item("DodgeSkillShots").GetValue<KeyBind>().Key,
-                            KeyBindType.Toggle, false));
+                            .SetValue(new KeyBind(EzEvadeMenu.Item("DodgeSkillShots").GetValue<KeyBind>().Key,
+                                KeyBindType.Toggle, false));
                         // ReSharper disable once RedundantArgumentDefaultValue
                         EzEvadeMenu.Item("ActivateEvadeSpells")
-                        .SetValue(new KeyBind(EzEvadeMenu.Item("ActivateEvadeSpells").GetValue<KeyBind>().Key,
-                            KeyBindType.Toggle, false));
+                            .SetValue(new KeyBind(EzEvadeMenu.Item("ActivateEvadeSpells").GetValue<KeyBind>().Key,
+                                KeyBindType.Toggle, false));
 
                         break;
                     }
 
-                default: // handle evade based on HP
+                    default: // handle evade based on HP
                     {
 
                         string itembase = $"{_champName}.DangerLevelSettings.{mode}";
                         EzEvadeMenu.Item("DodgeSkillShots")
-                        .SetValue(new KeyBind(EzEvadeMenu.Item("DodgeSkillShots").GetValue<KeyBind>().Key,
-                            KeyBindType.Toggle,
-                            SMenu.Item(itembase + ".UseEvade").GetValue<bool>()));
+                            .SetValue(new KeyBind(EzEvadeMenu.Item("DodgeSkillShots").GetValue<KeyBind>().Key,
+                                KeyBindType.Toggle,
+                                SMenu.Item(itembase + ".UseEvade").GetValue<bool>()));
                         EzEvadeMenu.Item("ActivateEvadeSpells")
-                        .SetValue(new KeyBind(EzEvadeMenu.Item("ActivateEvadeSpells").GetValue<KeyBind>().Key,
-                            KeyBindType.Toggle,
-                            SMenu.Item(itembase + ".UseEvadeSkills").GetValue<bool>()));
+                            .SetValue(new KeyBind(EzEvadeMenu.Item("ActivateEvadeSpells").GetValue<KeyBind>().Key,
+                                KeyBindType.Toggle,
+                                SMenu.Item(itembase + ".UseEvadeSkills").GetValue<bool>()));
 
                         EzEvadeMenu.Item("DodgeDangerousKeyEnabled")
-                        .SetValue(SMenu.Item(itembase + ".UseDangerousKeys").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".UseDangerousKeys").GetValue<bool>());
 
                         EzEvadeMenu.Item("EvadeMode")
-                        .SetValue(new StringList(new[] { "Fast", "Smooth", "Very Smooth" },
-                            SMenu.Item(itembase + ".EvadeMode").GetValue<Slider>().Value));
+                            .SetValue(new StringList(new[] {"Fast", "Smooth", "Very Smooth"},
+                                SMenu.Item(itembase + ".EvadeMode").GetValue<Slider>().Value));
 
                         //Time
                         EzEvadeMenu.Item("TickLimiter")
-                        .SetValue(new Slider(SMenu.Item(itembase + ".TimeSettings.Tick").GetValue<Slider>().Value, 0,
-                            250));
+                            .SetValue(new Slider(SMenu.Item(itembase + ".TimeSettings.Tick").GetValue<Slider>().Value, 0,
+                                250));
                         EzEvadeMenu.Item("ReactionTime")
-                        .SetValue(new Slider(SMenu.Item(itembase + ".TimeSettings.Reaction").GetValue<Slider>().Value, 0,
-                            750));
+                            .SetValue(
+                                new Slider(SMenu.Item(itembase + ".TimeSettings.Reaction").GetValue<Slider>().Value, 0,
+                                    750));
                         EzEvadeMenu.Item("SpellDetectionTime")
-                        .SetValue(new Slider(SMenu.Item(itembase + ".TimeSettings.Detection").GetValue<Slider>().Value,
-                            0, 500));
+                            .SetValue(
+                                new Slider(SMenu.Item(itembase + ".TimeSettings.Detection").GetValue<Slider>().Value,
+                                    0, 500));
 
                         //Spell
                         EzEvadeMenu.Item("DodgeDangerous")
-                        .SetValue(SMenu.Item(itembase + ".SpellSettings.DodgeDangerous").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".SpellSettings.DodgeDangerous").GetValue<bool>());
                         EzEvadeMenu.Item("DodgeCircularSpells")
-                        .SetValue(SMenu.Item(itembase + ".SpellSettings.DodgeCircular").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".SpellSettings.DodgeCircular").GetValue<bool>());
                         EzEvadeMenu.Item("DodgeFOWSpells")
-                        .SetValue(SMenu.Item(itembase + ".SpellSettings.DodgeFog").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".SpellSettings.DodgeFog").GetValue<bool>());
 
                         //Other
                         EzEvadeMenu.Item("CheckSpellCollision")
-                        .SetValue(SMenu.Item(itembase + ".OtherSettings.SpellColision").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".OtherSettings.SpellColision").GetValue<bool>());
                         EzEvadeMenu.Item("ContinueMovement")
-                        .SetValue(SMenu.Item(itembase + ".OtherSettings.ContinueMovement").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".OtherSettings.ContinueMovement").GetValue<bool>());
                         EzEvadeMenu.Item("ClickOnlyOnce")
-                        .SetValue(SMenu.Item(itembase + ".OtherSettings.ClickOnce").GetValue<bool>());
+                            .SetValue(SMenu.Item(itembase + ".OtherSettings.ClickOnce").GetValue<bool>());
                         EzEvadeMenu.Item("FastMovementBlock")
-                        .SetValue(!SMenu.Item(itembase + ".OtherSettings.FastMove").GetValue<bool>());
+                            .SetValue(!SMenu.Item(itembase + ".OtherSettings.FastMove").GetValue<bool>());
                         break;
                     }
+                }
 
-
-            }
+            
         }
 
     }
