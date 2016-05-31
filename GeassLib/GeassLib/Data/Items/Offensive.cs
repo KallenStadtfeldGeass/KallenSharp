@@ -3,7 +3,7 @@ using ItemData = LeagueSharp.Common.Data.ItemData;
 
 namespace GeassLib.Data.Items
 {
-    class Offensive
+    public class Offensive
     {
         public Item Botrk { get; } = new Item(ItemData.Blade_of_the_Ruined_King.GetItem().Id);
         public Item Cutless { get; } = new Item(ItemData.Bilgewater_Cutlass.GetItem().Id);

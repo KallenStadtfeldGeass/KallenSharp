@@ -3,7 +3,7 @@ using LeagueSharp.Common;
 
 namespace GeassLib.Interfaces.Drawing
 {
-    interface Champion
+    public interface Champion
     {
         Utility.HpBarDamageIndicator.DamageToUnitDelegate DamageToEnemy { get; set; }
 

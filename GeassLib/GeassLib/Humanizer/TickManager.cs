@@ -4,7 +4,7 @@ using SharpDX;
 
 namespace GeassLib.Humanizer
 {
-    internal class TickManager 
+    public class TickManager 
     {
         private readonly Assembly _assembly;
         private float _randomMax;

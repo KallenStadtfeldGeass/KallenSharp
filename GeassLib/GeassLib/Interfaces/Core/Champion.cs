@@ -3,7 +3,7 @@ using LeagueSharp.Common;
 
 namespace GeassLib.Interfaces.Core
 {
-    internal interface Champion
+    public interface Champion
     {
         int GetManaPercent { get; }
         int HealthPercent { get; }

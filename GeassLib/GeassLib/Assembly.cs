@@ -2,7 +2,7 @@
 
 namespace GeassLib
 {
-    public class Assembly
+    internal class Assembly
     {
         public Assembly()
         {

@@ -50,12 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
+    <Compile Include="Data\Items\Trinkets.cs" />
     <Compile Include="Data\Monsters.cs" />
     <Compile Include="Humanizer\Tick.cs" />
     <Compile Include="Humanizer\TickManager.cs" />
     <Compile Include="Interfaces\Drawing\Champion.cs" />
-    <Compile Include="Interfaces\Core\IChampion.cs" />
-    <Compile Include="Interfaces\Core\IMenu.cs" />
+    <Compile Include="Interfaces\Core\Champion.cs" />
+    <Compile Include="Interfaces\Core\Menu.cs" />
     <Compile Include="Interfaces\Drawing\Minion.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
     <Compile Include="Data\Items\Offensive.cs" />

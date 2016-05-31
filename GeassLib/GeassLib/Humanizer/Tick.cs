@@ -1,6 +1,6 @@
 ﻿namespace GeassLib.Humanizer
 {
-    internal class Tick
+    public class Tick
     {
         private float _maxDelay;
         private float _minDelay;

@@ -2,7 +2,7 @@
 
 namespace GeassLib.Interfaces.Drawing
 {
-    interface Minion
+    public interface Minion
     {
         void OnMinionDraw(EventArgs args);
     }
