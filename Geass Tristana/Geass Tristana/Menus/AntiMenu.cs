@@ -4,7 +4,7 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class AntiMenu : AntiEvents, Interface.IMenu
+    internal class AntiMenu : AntiEvents, GeassLib.Interfaces.Core.Menu
     {
         public Menu GetMenu()
         {

@@ -3,7 +3,7 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Libaries
 {
-    internal class Champion : Interface.IChampion
+    internal class Champion : GeassLib.Interfaces.Core.Champion
     {
         public Champion(float qRange, float wRange, float eRange, float rRange)
         {

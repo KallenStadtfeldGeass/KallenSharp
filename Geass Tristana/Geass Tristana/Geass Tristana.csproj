@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GeassLib">
+      <HintPath>C:\Riot Games\PlaySharp\System\GeassLib.dll</HintPath>
+    </Reference>
     <Reference Include="LeagueSharp">
       <HintPath>C:\Riot Games\PlaySharp\System\LeagueSharp.dll</HintPath>
     </Reference>
@@ -53,20 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\IMinons.cs" />
-    <Compile Include="Interface\IChampionDraw.cs" />
+    <Compile Include="Data\Level.cs" />
     <Compile Include="Events\HumanizeEvents.cs" />
     <Compile Include="Events\AntiEvents.cs" />
     <Compile Include="Events\OrbwalkerEvents.cs" />
     <Compile Include="Events\OrbwalkerEvents.Mode.cs" />
     <Compile Include="Events\OrbwalkerEvents.ManaManager.cs" />
-    <Compile Include="Humanizer\Tick.cs" />
-    <Compile Include="Humanizer\TickManager.cs" />
-    <Compile Include="Interface\IChampion.cs" />
     <Compile Include="Libaries\Loader.cs" />
     <Compile Include="Menus\ChampionMenu.cs" />
     <Compile Include="Menus\AntiMenu.cs" />
-    <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Menus\OrbwalkerMenu.cs" />
     <Compile Include="Other\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />
@@ -85,9 +83,6 @@
     <Compile Include="Menus\TrinketMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\Items.cs" />
-    <Compile Include="Data\Level.cs" />
-    <Compile Include="Data\Monster.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

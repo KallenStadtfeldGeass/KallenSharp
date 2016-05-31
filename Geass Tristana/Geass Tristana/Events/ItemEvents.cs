@@ -153,7 +153,7 @@ namespace Geass_Tristana.Events
             #endregion Defensive
         }
 
-        private readonly Data.Items.Defensive _itemsDefensive = new Data.Items.Defensive();
-        private readonly Data.Items.Offensive _itemsOffensive = new Data.Items.Offensive();
+        private readonly GeassLib.Data.Items.Defensive _itemsDefensive = new GeassLib.Data.Items.Defensive();
+        private readonly GeassLib.Data.Items.Offensive _itemsOffensive = new GeassLib.Data.Items.Offensive();
     }
 }

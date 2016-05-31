@@ -4,7 +4,7 @@ using System;
 
 namespace Geass_Tristana.Events
 {
-    internal class TrinketEvents : Core
+     class TrinketEvents : Core
     {
         public const string MenuItemBase = ".Trinket.";
         public const string MenuNameBase = ".Trinket Menu";
@@ -22,6 +22,6 @@ namespace Geass_Tristana.Events
             _itemsTrinkets.Orb.Buy();
         }
 
-        private readonly Data.Items.Trinkets _itemsTrinkets = new Data.Items.Trinkets();
+        private readonly GeassLib.Data.Items.Trinkets _itemsTrinkets = new GeassLib.Data.Items.Trinkets();
     }
 }

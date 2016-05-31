@@ -3,7 +3,7 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class OrbwalkerMenu : Events.OrbwalkerEvents, Interface.IMenu
+    internal class OrbwalkerMenu : Events.OrbwalkerEvents, GeassLib.Interfaces.Core.Menu
     {
         private Menu ManaMenu
         {

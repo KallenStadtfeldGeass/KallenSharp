@@ -3,7 +3,7 @@ using Color = System.Drawing.Color;
 
 namespace Geass_Tristana.Menus
 {
-    internal class ChampionMenu : Drawing.Champs, Interface.IMenu
+    internal class ChampionMenu : Drawing.Champs, GeassLib.Interfaces.Core.Menu
     {
         public Menu GetMenu()
         {

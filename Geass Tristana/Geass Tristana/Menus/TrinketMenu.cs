@@ -3,7 +3,7 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class TrinketMenu : Events.TrinketEvents, Interface.IMenu
+     class TrinketMenu : Events.TrinketEvents, GeassLib.Interfaces.Core.Menu
     {
         public Menu GetMenu()
         {

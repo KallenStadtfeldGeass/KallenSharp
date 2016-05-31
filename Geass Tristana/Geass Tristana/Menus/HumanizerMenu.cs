@@ -2,7 +2,7 @@
 
 namespace Geass_Tristana.Menus
 {
-    internal class HumanizerMenu : Events.HumanizeEvents, Interface.IMenu
+    internal class HumanizerMenu : Events.HumanizeEvents, GeassLib.Interfaces.Core.Menu
     {
         public Menu GetMenu()
         {
