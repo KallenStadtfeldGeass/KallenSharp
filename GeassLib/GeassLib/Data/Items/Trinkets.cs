@@ -1,5 +1,4 @@
 ﻿using Item = LeagueSharp.Common.Items.Item;
-using ItemData = LeagueSharp.Common.Data.ItemData;
 
 namespace GeassLib.Data.Items
 {
