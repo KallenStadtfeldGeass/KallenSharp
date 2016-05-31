@@ -2,9 +2,9 @@
 
 namespace Geass_Tristana.Menus
 {
-    internal class HumanizerMenu : Events.HumanizeEvents
+    internal class HumanizerMenu : Events.HumanizeEvents, Interface.IMenu
     {
-        private Menu _Menu()
+        public Menu GetMenu()
         {
             var menu = new Menu(MenuNameBase, "humanMenu");
 
@@ -31,7 +31,7 @@ namespace Geass_Tristana.Menus
 
         public void Load()
         {
-            SMenu.AddSubMenu(_Menu());
+            SMenu.AddSubMenu(GetMenu());
             LoadDelays();
         }
     }

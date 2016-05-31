@@ -4,12 +4,10 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class AntiMenu : AntiEvents
+    internal class AntiMenu : AntiEvents, Interface.IMenu
     {
-        private Menu _Menu
+        public Menu GetMenu()
         {
-            get
-            {
                 var menu = new Menu(MenuNameBase, "antiMenu");
 
                 menu.AddItem(new MenuItem(MenuItemBase + "Boolean.Interruption.Use", "Enable Interruption").SetValue(false));
@@ -36,12 +34,11 @@ namespace Geass_Tristana.Menus
                 menu.AddSubMenu(antigapclosemenu);
 
                 return menu;
-            }
         }
 
         public void Load()
         {
-            SMenu.AddSubMenu(_Menu);
+            SMenu.AddSubMenu(GetMenu());
             TickManager.AddTick($"{MenuNameBase}.AntiGapCloseDelay", 25, 50);
             TickManager.AddTick($"{MenuNameBase}.AutoInterrupterDelay", 25, 50);
 

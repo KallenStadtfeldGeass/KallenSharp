@@ -5,7 +5,7 @@ using System;
 
 namespace Geass_Tristana.Drawing
 {
-    internal class Minons : Core
+    internal class Minons : Core, Interface.IMinons
     {
         public const string MenuItemBase = ".Minions.";
         public const string MenuNameBase = ".Minions Menu";

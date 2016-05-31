@@ -14,13 +14,9 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady() && ComboUseE())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellE.Range)).OrderBy(hp => hp.Health)))
                 {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
-                    if (!enemy.IsValidTarget(Champion.GetSpellE.Range)) continue;
-
                     Champion.GetSpellE.Cast(enemy);
                     break;
                 }
@@ -28,26 +24,18 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady() && ComboUseQ())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellQ.Range)).OrderBy(hp => hp.Health)))
                 {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
-                    if (!enemy.IsValidTarget(Champion.GetSpellQ.Range)) continue;
-
                     Champion.GetSpellQ.Cast();
+                    CommonOrbwalker.ForceTarget(enemy);
                     break;
                 }
             }
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellQ.Range) && e.HasBuff("TristanaECharge")).OrderBy(hp => hp.Health)))
                 {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
-                    if (!enemy.IsValidTarget(Champion.GetSpellQ.Range)) continue;
-                    if (!enemy.HasBuff("TristanaECharge")) continue;
-
                     CommonOrbwalker.ForceTarget(enemy);
                     break;
                 }
@@ -55,12 +43,9 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady() && ComboUseR())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellR.Range)).OrderBy(hp => hp.Health)))
                 {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
-                    if (!enemy.IsValidTarget(Champion.GetSpellR.Range)) continue;
                     if (_damageLib.CalculateDamage(enemy) < enemy.Health) continue;
                     Champion.GetSpellR.Cast(enemy);
                     break;
@@ -77,9 +62,8 @@ namespace Geass_Tristana.Events
 
             if (validMonsters.Count <= 0) return Result.Failure;
 
-            foreach (var monster in validMonsters)
+            foreach (var monster in validMonsters.Where(name => !name.Name.ToLower().Contains("mini") && !name.SkinName.ToLower().Contains("mini")).OrderBy(hp => hp.Health))
             {
-                if (monster.Name.ToLower().Contains("mini") || monster.SkinName.ToLower().Contains("mini")) continue;
                 if (!monster.IsValidTarget(Champion.GetSpellE.Range)) continue;
 
                 if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>() && ClearUseE())

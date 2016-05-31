@@ -3,21 +3,19 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class LevelMenu : Events.LevelEvents
+    internal class LevelMenu : Events.LevelEvents, Interface.IMenu
     {
-        private Menu _Menu
+        public Menu GetMenu()
         {
-            get
-            {
                 var menu = new Menu(MenuNameBase, "levelMenu");
                 menu.AddItem(new MenuItem(MenuItemBase + "Boolean.AutoLevelUp", "Auto level-up abilities").SetValue(true));
                 return menu;
-            }
+            
         }
 
         public void Load()
         {
-            SMenu.AddSubMenu(_Menu);
+            SMenu.AddSubMenu(GetMenu());
             Game.OnUpdate += OnUpdate;
         }
     }

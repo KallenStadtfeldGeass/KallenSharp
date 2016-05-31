@@ -7,7 +7,7 @@ using Damage = Geass_Tristana.Other.Damage;
 
 namespace Geass_Tristana.Drawing
 {
-    internal class Champs : Core
+    internal class Champs : Core, Interface.IChampionDraw
     {
         public const string MenuItemBase = ".Champions.";
         public const string MenuNameBase = ".Champions Menu";

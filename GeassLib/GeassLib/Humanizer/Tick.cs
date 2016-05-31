@@ -1,16 +1,14 @@
-﻿using Geass_Tristana.Other;
-
-namespace Geass_Tristana.Humanizer
+﻿namespace GeassLib.Humanizer
 {
-    internal class Tick : Core
+    internal class Tick
     {
         private float _maxDelay;
         private float _minDelay;
         private float _nextTick;
 
-        public Tick(float min = 0, float max = 100)
+        public Tick(float currentTime, float min = 0, float max = 100)
         {
-            _nextTick = AssemblyTime();
+            _nextTick = currentTime;
             _minDelay = min;
             _maxDelay = max;
         }
@@ -25,9 +23,9 @@ namespace Geass_Tristana.Humanizer
             return _minDelay;
         }
 
-        public bool IsReady()
+        public bool IsReady(float currentTime)
         {
-            return AssemblyTime() > _nextTick;
+            return currentTime > _nextTick;
         }
 
         public void SetMinAndMax(float min, float max)
@@ -36,9 +34,9 @@ namespace Geass_Tristana.Humanizer
             _maxDelay = max;
         }
 
-        public void UseTick(float next)
+        public void UseTick(float next, float currentTime)
         {
-            _nextTick = AssemblyTime() + next;
+            _nextTick = currentTime + next;
         }
     }
 }

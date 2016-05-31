@@ -3,7 +3,7 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Libaries
 {
-    internal class Champion
+    internal class Champion : Interface.IChampion
     {
         public Champion(float qRange, float wRange, float eRange, float rRange)
         {
@@ -15,13 +15,13 @@ namespace Geass_Tristana.Libaries
             GetSpellW.SetSkillshot(0.35f, 250f, 1400f, false, SkillshotType.SkillshotCircle);
         }
 
-        public Spell GetSpellE { get; }
+        public Spell GetSpellE { get; set; }
 
-        public Spell GetSpellQ { get; }
+        public Spell GetSpellQ { get; set; }
 
-        public Spell GetSpellR { get; }
+        public Spell GetSpellR { get; set; }
 
-        public Spell GetSpellW { get; }
+        public Spell GetSpellW { get; set; }
 
         public int GetManaPercent => (int)(Player.Mana / Player.MaxMana * 100);
         public int HealthPercent => (int)(Player.Health / Player.MaxHealth * 100);

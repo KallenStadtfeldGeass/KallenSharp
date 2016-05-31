@@ -3,21 +3,18 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class TrinketMenu : Events.TrinketEvents
+    internal class TrinketMenu : Events.TrinketEvents, Interface.IMenu
     {
-        private Menu _Menu
+        public Menu GetMenu()
         {
-            get
-            {
                 var menu = new Menu(MenuNameBase, "trinketOptions");
                 menu.AddItem(new MenuItem(MenuItemBase + "Boolean.BuyOrb", "Auto Buy Orb At Level >= 9").SetValue(true));
                 return menu;
-            }
         }
 
         public void Load()
         {
-            SMenu.AddSubMenu(_Menu);
+            SMenu.AddSubMenu(GetMenu());
             Game.OnUpdate += OnUpdate;
         }
     }

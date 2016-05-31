@@ -3,12 +3,10 @@ using Color = System.Drawing.Color;
 
 namespace Geass_Tristana.Menus
 {
-    internal class ChampionMenu : Drawing.Champs
+    internal class ChampionMenu : Drawing.Champs, Interface.IMenu
     {
-        private Menu _Menu
+        public Menu GetMenu()
         {
-            get
-            {
                 var menu = new Menu(MenuNameBase, "enemyMenu");
 
                 var enemyMenu = new Menu(".Enemys", "enemyMenu");
@@ -25,12 +23,11 @@ namespace Geass_Tristana.Menus
                 menu.AddSubMenu(selfMenu);
 
                 return menu;
-            }
         }
 
         public void Load()
         {
-            SMenu.AddSubMenu(_Menu);
+            SMenu.AddSubMenu(GetMenu());
             var champs = new Drawing.Champs();
             champs.DamageToEnemy = champs.Damage.CalculateDamage;
 

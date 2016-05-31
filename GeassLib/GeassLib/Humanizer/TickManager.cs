@@ -1,18 +1,21 @@
-﻿using SharpDX;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SharpDX;
 
-namespace Geass_Tristana.Humanizer
+namespace GeassLib.Humanizer
 {
-    internal class TickManager
+    internal class TickManager 
     {
+        private readonly Assembly _assembly;
         private float _randomMax;
         private float _randomMin;
-
         private readonly Random _rnd;
+
+        public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
 
         public TickManager()
         {
+            _assembly = new Assembly();
             _rnd = new Random();
         }
 
@@ -35,7 +38,7 @@ namespace Geass_Tristana.Humanizer
             if (key.Length <= 0)
                 Console.WriteLine("Check Key an not be null");
             if (Ticks.ContainsKey(key))
-                return Ticks[key].IsReady();
+                return Ticks[key].IsReady(_assembly.AssemblyTime());
 
             Console.WriteLine($"Key {key} not found");
             return false;
@@ -57,11 +60,9 @@ namespace Geass_Tristana.Humanizer
             if (key.Length <= 0) return;
 
             if (Ticks.ContainsKey(key))
-                Ticks[key].UseTick(_rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
+                Ticks[key].UseTick(_assembly.AssemblyTime(),_rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
             else
                 Console.WriteLine($"Key {key} not found");
         }
-
-        public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
     }
 }

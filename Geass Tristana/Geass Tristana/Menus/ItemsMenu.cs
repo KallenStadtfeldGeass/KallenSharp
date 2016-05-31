@@ -3,12 +3,10 @@ using LeagueSharp.Common;
 
 namespace Geass_Tristana.Menus
 {
-    internal class ItemsMenu : Events.ItemEvents
+    internal class ItemsMenu : Events.ItemEvents, Interface.IMenu
     {
-        private Menu Menu
+        public Menu GetMenu()
         {
-            get
-            {
                 var menu = new Menu(MenuNameBase, "itemMenu");
 
                 var offensiveMenu = new Menu(MenuOffensiveNameBase, "offensiveMenu");
@@ -48,12 +46,12 @@ namespace Geass_Tristana.Menus
                 menu.AddSubMenu(offensiveMenu);
                 menu.AddSubMenu(defensiveMenu);
                 return menu;
-            }
+            
         }
 
         public void Load()
         {
-            SMenu.AddSubMenu(Menu);
+            SMenu.AddSubMenu(GetMenu());
             Orbwalking.AfterAttack += After_Attack;
             Orbwalking.BeforeAttack += Before_Attack;
             Game.OnUpdate += OnUpdate;
