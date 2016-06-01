@@ -6,12 +6,13 @@ namespace Geass_Tristana.Other
 {
     internal class Damage : Core
     {
-        private const string ShieldNames = "blindmonkwoneshield,evelynnrshield,EyeOfTheStorm,ItemSeraphsEmbrace,JarvanIVGoeldenAegis,KarmaSolKimShield,lulufarieshield,luxprismaticwaveshieldself,manabarrier,mordekaiserironman,nautiluspiercinggazeshield,orianaredactshield,rumbleshieldbuff,Shenstandunitedshield,SkarnerExoskeleton,summonerbarrier,tahmkencheshield,udyrturtleactivation,UrgotTerrorCapacitorActive2,ViktorPowerTransfer,dianashield,malphiteshieldeffect,RivenFeint,ShenStandUnited,sionwshieldstacks,vipassivebuff";
-
+        
         private float GetComboDamage(Obj_AI_Base target)
         {
             float damage = 0f;
 
+            if (GeassLib.Functions.Calculations.Damage.CheckNoDamageBuffs((Obj_AI_Hero)target))return damage;
+            
             //if (!Champion.Player.IsWindingUp) // can auto attack
             //    if (Champion.Player.Distance(target) < Champion.Player.AttackRange) // target in auto range
             //        damage += (float)Champion.Player.GetAutoAttackDamage(target) - 50;
@@ -41,6 +42,8 @@ namespace Geass_Tristana.Other
 
         public float CalculateDamage(Obj_AI_Base target)
         {
+            if (GeassLib.Functions.Calculations.Damage.CheckNoDamageBuffs((Obj_AI_Hero)target)) return 0f;
+
             var defuffer = 1f;
 
             if (target.HasBuff("FerociousHowl") || target.HasBuff("GarenW"))
@@ -69,51 +72,7 @@ namespace Geass_Tristana.Other
             if (hero.ChampionName == "Blitzcrank" && !target.HasBuff("BlitzcrankManaBarrierCD") && !target.HasBuff("ManaBarrier"))
                 healthDebuffer += target.Mana / 2;
 
-            return (GetComboDamage(target) * defuffer) - (healthDebuffer + GetShield(target) + target.FlatHPRegenMod + 15);
+            return (GetComboDamage(target) * defuffer) - (healthDebuffer + GeassLib.Functions.Calculations.Damage.GetShield(target) + target.FlatHPRegenMod + 15);
         }
-
-        public bool CheckNoDamageBuffs(Obj_AI_Hero target)
-        {
-            foreach (var b in target.Buffs.Where(b => b.IsValidBuff()))
-            {
-                switch (b.DisplayName)
-                {
-                    case "Chrono Shift":
-                        return true;
-
-                    case "JudicatorIntervention":
-                        return true;
-
-                    case "Undying Rage":
-                        if (target.ChampionName == "Tryndamere")
-                            return true;
-                        continue;
-
-                    //Spell Shields
-                    case "bansheesveil":
-                        return true;
-
-                    case "SivirE":
-                        return true;
-
-                    case "NocturneW":
-                        return true;
-
-                    case "kindredrnodeathbuff":
-                        return true;
-                }
-            }
-
-            return (target.HasBuffOfType(BuffType.Invulnerability)
-                    || target.HasBuffOfType(BuffType.SpellImmunity));
-            // || target.HasBuffOfType(BuffType.SpellShield));
-        }
-
-        public float GetShield(Obj_AI_Base target)
-        {
-            return ShieldBuffNames.Any(target.HasBuff) ? target.AllShield : 0;
-        }
-
-        public string[] ShieldBuffNames = ShieldNames.Split(',');
     }
 }

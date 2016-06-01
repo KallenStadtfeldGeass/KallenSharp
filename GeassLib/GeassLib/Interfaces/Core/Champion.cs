@@ -3,6 +3,7 @@ using LeagueSharp.Common;
 
 namespace GeassLib.Interfaces.Core
 {
+    // ReSharper disable once InconsistentNaming
     public interface Champion
     {
         int GetManaPercent { get; }

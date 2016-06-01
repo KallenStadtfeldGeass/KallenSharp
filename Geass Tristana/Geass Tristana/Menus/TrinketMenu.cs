@@ -8,7 +8,7 @@ namespace Geass_Tristana.Menus
         public Menu GetMenu()
         {
                 var menu = new Menu(MenuNameBase, "trinketOptions");
-                menu.AddItem(new MenuItem(MenuItemBase + "Boolean.BuyOrb", "Auto Buy Orb At Level >= 9").SetValue(true));
+                GeassLib.Functions.Menu.AddBool(menu, MenuItemBase + "Boolean.BuyOrb", "Auto Buy Orb At Level >= 9");
                 return menu;
         }
 

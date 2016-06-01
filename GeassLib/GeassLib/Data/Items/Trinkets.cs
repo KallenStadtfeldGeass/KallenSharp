@@ -2,8 +2,8 @@
 
 namespace GeassLib.Data.Items
 {
-    public class Trinkets
+    public static class Trinkets
     {
-        public Item Orb { get; } = new Item(3363);
+        public static Item Orb { get; } = new Item(3363);
     }
 }

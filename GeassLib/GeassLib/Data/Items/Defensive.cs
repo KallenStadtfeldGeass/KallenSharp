@@ -3,9 +3,9 @@ using ItemData = LeagueSharp.Common.Data.ItemData;
 
 namespace GeassLib.Data.Items
 {
-    public class Defensive
+    public static class Defensive
     {
-        public Item Qss { get; } = new Item(ItemData.Quicksilver_Sash.GetItem().Id);
-        public Item Merc { get; } = new Item(ItemData.Mercurial_Scimitar.GetItem().Id);
+        public static Item Qss { get; } = new Item(ItemData.Quicksilver_Sash.GetItem().Id);
+        public static Item Merc { get; } = new Item(ItemData.Mercurial_Scimitar.GetItem().Id);
     }
 }

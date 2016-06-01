@@ -16,12 +16,10 @@ namespace Geass_Tristana.Events
             TickManager.UseTick($"{HumanizeEvents.ItemBase}Slider.TrinketDelay");
 
             if (!SMenu.Item(MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Champion.Player.Level < 9) return;
-            if (!Champion.Player.InShop() || Items.HasItem(_itemsTrinkets.Orb.Id))
+            if (!Champion.Player.InShop() || Items.HasItem(GeassLib.Data.Items.Trinkets.Orb.Id))
                 return;
 
-            _itemsTrinkets.Orb.Buy();
+           GeassLib.Data.Items.Trinkets.Orb.Buy();
         }
-
-        private readonly GeassLib.Data.Items.Trinkets _itemsTrinkets = new GeassLib.Data.Items.Trinkets();
     }
 }

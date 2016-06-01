@@ -4,7 +4,7 @@ using SharpDX;
 
 namespace GeassLib.Data
 {
-    sealed class Monsters
+    public static class Monsters
     {
         public struct MonsterBar
         {
@@ -22,7 +22,7 @@ namespace GeassLib.Data
             public int YOffsetEnd { get; }
         }
 
-        public Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>
+        public static Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>
         {
             {"Neutral.Dragon",SummonersRift.River.Dragon},
             {"Neutral.Baron",SummonersRift.River.Baron},
@@ -34,13 +34,13 @@ namespace GeassLib.Data
             {"Order.Blue",new Vector2(3871.489f, 7901.054f)}
         };
 
-        public string[] BigMonsters =
+        public static string[] BigMonsters =
         {
             "SRU_Red", "SRU_Blue", "SRU_Dragon", "SRU_Baron", "SRU_Crab", "SRU_Krug", "SRU_Gromp", "SRU_Murkwolf",
             "SRU_Razorbeak"
         };
 
-        public Dictionary<string, MonsterBar> MonsterBarDictionary = new Dictionary<string, MonsterBar>
+        public static Dictionary<string, MonsterBar> MonsterBarDictionary = new Dictionary<string, MonsterBar>
         {
             {"SRU_Red",new MonsterBar(145,3,18,10)},
             {"SRU_Blue",new MonsterBar(145,3,18,10)},

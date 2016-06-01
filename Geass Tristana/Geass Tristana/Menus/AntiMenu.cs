@@ -15,9 +15,10 @@ namespace Geass_Tristana.Menus
 
                 var interruptionMenu = new Menu(".Interruption", "interruptionMenu");
 
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
+                var enemies = GeassLib.Functions.Objects.Heroes.GetEnemies();
+
+            foreach (var enemy in enemies)
                 {
-                    if (!enemy.IsEnemy) continue;
                     interruptionMenu.AddItem(new MenuItem(MenuItemBase + "Boolean.Interruption.Use.On." + enemy.ChampionName, "Use R Interruption On " + enemy.ChampionName).SetValue(true));
                 }
 
@@ -25,9 +26,8 @@ namespace Geass_Tristana.Menus
 
                 var antigapclosemenu = new Menu(".Anti-GapClose", "Antigapclosemenu");
 
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
+            foreach (var enemy in enemies)
                 {
-                    if (!enemy.IsEnemy) continue;
                     antigapclosemenu.AddItem(new MenuItem(MenuItemBase + "Boolean.AntiGapClose.Use.On." + enemy.ChampionName, "Use R Antigapclose On " + enemy.ChampionName).SetValue(true));
                 }
 

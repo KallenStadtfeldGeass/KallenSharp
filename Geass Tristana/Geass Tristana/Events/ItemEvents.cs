@@ -38,10 +38,10 @@ namespace Geass_Tristana.Events
 
             var inCombo = CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo;
 
-            if (SMenu.Item(MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(_itemsOffensive.Botrk.Id))
+            if (SMenu.Item(MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(GeassLib.Data.Items.Offensive.Botrk.Id))
             // If enabled and has item
             {
-                if (_itemsOffensive.Botrk.IsReady())
+                if (GeassLib.Data.Items.Offensive.Botrk.IsReady())
                 {
                     if (
                         target.IsValidTarget(Champion.Player.AttackRange + Champion.Player.BoundingRadius) || Champion.Player.HealthPercent < SMenu.Item(MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
@@ -59,17 +59,17 @@ namespace Geass_Tristana.Events
                              SMenu.Item(MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Items.UseItem(_itemsOffensive.Botrk.Id, target);
+                            Items.UseItem(GeassLib.Data.Items.Offensive.Botrk.Id, target);
                             return;
                         }
                     }
                 }
             }
 
-            if (SMenu.Item(MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(_itemsOffensive.Cutless.Id))
+            if (SMenu.Item(MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(GeassLib.Data.Items.Offensive.Cutless.Id))
             // If enabled and has item
             {
-                if (_itemsOffensive.Cutless.IsReady())
+                if (GeassLib.Data.Items.Offensive.Cutless.IsReady())
                 {
                     if (
                         target.IsValidTarget(Champion.Player.AttackRange +
@@ -92,23 +92,23 @@ namespace Geass_Tristana.Events
                              SMenu.Item(MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Items.UseItem(_itemsOffensive.Cutless.Id, target);
+                            Items.UseItem(GeassLib.Data.Items.Offensive.Cutless.Id, target);
                             return;
                         }
                     }
                 }
             }
 
-            if (SMenu.Item(MenuOffensiveItemBase + "Boolean.Youmuu").GetValue<bool>() && Items.HasItem(_itemsOffensive.GhostBlade.Id))
+            if (SMenu.Item(MenuOffensiveItemBase + "Boolean.Youmuu").GetValue<bool>() && Items.HasItem(GeassLib.Data.Items.Offensive.GhostBlade.Id))
             // If enabled and has item
             {
-                if (_itemsOffensive.GhostBlade.IsReady() &&
+                if (GeassLib.Data.Items.Offensive.GhostBlade.IsReady() &&
                     target.IsValidTarget(Champion.Player.AttackRange + Champion.Player.BoundingRadius))
                 // Is ready and target is in auto range
                 {
                     if (inCombo)
                     {
-                        Items.UseItem(_itemsOffensive.GhostBlade.Id);
+                        Items.UseItem(GeassLib.Data.Items.Offensive.GhostBlade.Id);
                         return;
                     }
                 }
@@ -118,33 +118,33 @@ namespace Geass_Tristana.Events
 
             #region Defensive
 
-            if (SMenu.Item(MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && Items.HasItem(_itemsDefensive.Qss.Id))
+            if (SMenu.Item(MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && Items.HasItem(GeassLib.Data.Items.Defensive.Qss.Id))
             {
                 if (SMenu.Item(MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && inCombo ||
                     !SMenu.Item(MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
-                    if (_itemsDefensive.Qss.IsReady())
+                    if (GeassLib.Data.Items.Defensive.Qss.IsReady())
                     {
                         foreach (var buff in Bufftype.Where(buff => SMenu.Item(MenuDefensiveItemBase + "Boolean.QSS." + buff).GetValue<bool>()))
                         {
                             if (Champion.Player.HasBuffOfType(buff))
-                                Utility.DelayAction.Add(SMenu.Item(MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value, () => Items.UseItem(_itemsDefensive.Qss.Id));
+                                Utility.DelayAction.Add(SMenu.Item(MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value, () => Items.UseItem(GeassLib.Data.Items.Defensive.Qss.Id));
                         }
                     }
                 }
             }
 
-            if (SMenu.Item(MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && Items.HasItem(_itemsDefensive.Merc.Id))
+            if (SMenu.Item(MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && Items.HasItem(GeassLib.Data.Items.Defensive.Merc.Id))
             {
                 if (SMenu.Item(MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && inCombo ||
                     !SMenu.Item(MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
-                    if (_itemsDefensive.Merc.IsReady())
+                    if (GeassLib.Data.Items.Defensive.Merc.IsReady())
                     {
                         foreach (var buff in Bufftype.Where(buff => SMenu.Item(MenuDefensiveItemBase + "Boolean.Merc." + buff).GetValue<bool>()))
                         {
                             if (Champion.Player.HasBuffOfType(buff))
-                                Utility.DelayAction.Add(SMenu.Item(MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value, () => Items.UseItem(_itemsDefensive.Qss.Id));
+                                Utility.DelayAction.Add(SMenu.Item(MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value, () => Items.UseItem(GeassLib.Data.Items.Defensive.Qss.Id));
                         }
                     }
                 }
@@ -153,7 +153,6 @@ namespace Geass_Tristana.Events
             #endregion Defensive
         }
 
-        private readonly GeassLib.Data.Items.Defensive _itemsDefensive = new GeassLib.Data.Items.Defensive();
-        private readonly GeassLib.Data.Items.Offensive _itemsOffensive = new GeassLib.Data.Items.Offensive();
+   
     }
 }
