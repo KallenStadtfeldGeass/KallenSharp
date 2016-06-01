@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GeassLib">
-      <HintPath>C:\Riot Games\PlaySharp\System\GeassLib.dll</HintPath>
+      <HintPath>..\..\GeassLib\GeassLib\bin\Debug\GeassLib.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp">
       <HintPath>C:\Riot Games\PlaySharp\System\LeagueSharp.dll</HintPath>

@@ -3,4 +3,5 @@
   &lt;Assembly Path="C:\Riot Games\LeagueSharp\System\LeagueSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Riot Games\PlaySharp\System\LeagueSharp.Common.dll" /&gt;&#xD;
   &lt;Assembly Path="D:\Coding\GitHub\KallenSharp\GeassLib\GeassLib\bin\Debug\GeassLib.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Riot Games\PlaySharp\System\GeassLib.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

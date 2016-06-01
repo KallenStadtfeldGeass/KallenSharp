@@ -2,6 +2,8 @@
 using LeagueSharp.Common;
 using System;
 using System.Linq;
+using GeassLib.Drawing.Champions;
+using SharpDX;
 using Color = System.Drawing.Color;
 using Damage = Geass_Tristana.Other.Damage;
 
@@ -11,6 +13,7 @@ namespace Geass_Tristana.Drawing
     {
         public const string MenuItemBase = ".Champions.";
         public const string MenuNameBase = ".Champions Menu";
+        private readonly GeassLib.Drawing.Champions.HealthBarDamageRender HPBarRender = new HealthBarDamageRender();
 
         private Utility.HpBarDamageIndicator.DamageToUnitDelegate _damageToEnemy;
 
@@ -21,36 +24,18 @@ namespace Geass_Tristana.Drawing
 
             foreach (var unit in HeroManager.Enemies.Where(unit => unit.IsValid && unit.IsHPBarRendered && Champion.Player.Distance(unit) < 1000))
             {
-                const int xOffset = 10;
-                const int yOffset = 20;
-                const int width = 103;
-                const int height = 8;
-
-                var barPos = unit.HPBarPosition;
                 var damage = Damage.CalculateDamage(unit);
-                var percentHealthAfterDamage = Math.Max(0, unit.Health - damage) / unit.MaxHealth;
-                var yPos = barPos.Y + yOffset;
-                var xPosDamage = barPos.X + xOffset + width * percentHealthAfterDamage;
-                var xPosCurrentHp = barPos.X + xOffset + width * unit.Health / unit.MaxHealth;
+               
 
-                if (SMenu.Item(MenuItemBase + "Boolean.DrawOnEnemy.KillableColor").GetValue<Circle>().Active &&
-                    damage > unit.Health)
-                    LeagueSharp.Drawing.DrawText(barPos.X + xOffset, barPos.Y + yOffset - 13,
+                if (SMenu.Item(MenuItemBase + "Boolean.DrawOnEnemy.KillableColor").GetValue<Circle>().Active && damage > unit.Health)
+                    LeagueSharp.Drawing.DrawText(unit.HPBarPosition.X + 10, unit.HPBarPosition.Y + 3,
                         SMenu.Item(MenuItemBase + "Boolean.DrawOnEnemy.KillableColor").GetValue<Circle>().Color,
                         "Killable");
-
-                LeagueSharp.Drawing.DrawLine(xPosDamage, yPos, xPosDamage, yPos + height, 1, Color.LightGray);
+;
 
                 if (!SMenu.Item(MenuItemBase + "Boolean.DrawOnEnemy.FillColor").GetValue<Circle>().Active) return;
-
-                var differenceInHp = xPosCurrentHp - xPosDamage;
-                var pos1 = barPos.X + 9 + (107 * percentHealthAfterDamage);
-
-                for (var i = 0; i < differenceInHp; i++)
-                {
-                    LeagueSharp.Drawing.DrawLine(pos1 + i, yPos, pos1 + i, yPos + height, 1,
-                        SMenu.Item(MenuItemBase + "Boolean.DrawOnEnemy.FillColor").GetValue<Circle>().Color);
-                }
+                var c = SMenu.Item(MenuItemBase + "Boolean.DrawOnEnemy.FillColor").GetValue<Circle>().Color;
+                HPBarRender.DrawDamageOnEnemy(unit, damage, new ColorBGRA(c.R,c.G,c.B,100));
             }
         }
 

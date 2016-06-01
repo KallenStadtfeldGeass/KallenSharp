@@ -15,7 +15,8 @@ namespace Geass_Tristana.Events
 
             TickManager.UseTick($"{HumanizeEvents.ItemBase}Slider.TrinketDelay");
 
-            if (!SMenu.Item(MenuItemBase + "Boolean.BuyOrb").GetValue<bool>() || Champion.Player.Level < 9) return;
+            if (!SMenu.Item(MenuItemBase + "Boolean.BuyOrb").GetValue<bool>()) return;
+                if(Champion.Player.Level < 9) return;
             if (!Champion.Player.InShop() || Items.HasItem(GeassLib.Data.Items.Trinkets.Orb.Id))
                 return;
 
