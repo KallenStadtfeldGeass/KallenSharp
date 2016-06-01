@@ -14,7 +14,7 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady() && ComboUseE())
             {
-                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellE.Range)).OrderBy(hp => hp.Health)))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellE.Range)).OrderBy(hp => hp.Health)))
                 {
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
                     Champion.GetSpellE.Cast(enemy);
@@ -24,7 +24,7 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady() && ComboUseQ())
             {
-                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellQ.Range)).OrderBy(hp => hp.Health)))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellQ.Range)).OrderBy(hp => hp.Health)))
                 {
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(enemy);
@@ -34,7 +34,7 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>())
             {
-                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellQ.Range) && e.HasBuff("TristanaECharge")).OrderBy(hp => hp.Health)))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellQ.Range) && e.HasBuff("TristanaECharge")).OrderBy(hp => hp.Health)))
                 {
                     CommonOrbwalker.ForceTarget(enemy);
                     break;
@@ -43,12 +43,12 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>() && Champion.GetSpellR.IsReady() && ComboUseR())
             {
-                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsEnemy && !e.IsDead && e.IsValidTarget(Champion.GetSpellR.Range)).OrderBy(hp => hp.Health)))
+                foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellR.Range)).OrderBy(hp => hp.Health)))
                 {
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
                     if (_damageLib.CalculateDamage(enemy) < enemy.Health) continue;
                     Champion.GetSpellR.Cast(enemy);
-                    break;
+                    return;
                 }
             }
         }
@@ -62,10 +62,8 @@ namespace Geass_Tristana.Events
 
             if (validMonsters.Count <= 0) return Result.Failure;
 
-            foreach (var monster in validMonsters.Where(name => !name.Name.ToLower().Contains("mini") && !name.SkinName.ToLower().Contains("mini")).OrderBy(hp => hp.Health))
+            foreach (var monster in validMonsters.Where(name => !name.Name.ToLower().Contains("mini") && !name.SkinName.ToLower().Contains("mini") && name.IsValidTarget(Champion.GetSpellE.Range)).OrderBy(hp => hp.Health))
             {
-                if (!monster.IsValidTarget(Champion.GetSpellE.Range)) continue;
-
                 if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>() && ClearUseE())
                 {
                     Champion.GetSpellE.Cast(monster);
@@ -75,6 +73,7 @@ namespace Geass_Tristana.Events
                 {
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(monster);
+                    return Result.Success;
                 }
             }
 
@@ -103,14 +102,9 @@ namespace Geass_Tristana.Events
             {
                 Obj_AI_Base target = null;
                 var bestInRange = 0;
-                foreach (var minon in validMinons)
+                foreach (var minon in validMinons.Where(minon => minon.IsValidTarget(Champion.GetSpellE.Range)))
                 {
-                    var inRange = 1;
-                    if (!minon.IsValidTarget(Champion.GetSpellE.Range)) continue;
-                    foreach (var minon2 in validMinons)
-                    {
-                        if (minon2.Distance(minon) < 125) inRange++;
-                    }
+                    var inRange = 1 + validMinons.Count(minon2 => minon.Distance(minon) < 125);
                     if (inRange <= bestInRange) continue;
                     bestInRange = inRange;
                     target = minon;
@@ -124,12 +118,17 @@ namespace Geass_Tristana.Events
 
             if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Minons").GetValue<bool>() && Champion.GetSpellQ.IsReady() && ClearUseQ())
             {
-                Champion.GetSpellQ.Cast();
-
-                var focusMinions = validMinons.Where(charge => charge.HasBuff("TristanaECharge"));
-                var minon = focusMinions.First();
-                if (minon != null)
-                    CommonOrbwalker.ForceTarget(minon);
+                foreach (
+                    var minion in
+                        validMinons.Where(
+                            charge =>
+                                charge.HasBuff("TristanaECharge") && 
+                                charge.IsValidTarget(Champion.GetSpellQ.Range)).OrderBy(hp => hp.Health))
+                {
+                    Champion.GetSpellQ.Cast();
+                    CommonOrbwalker.ForceTarget(minion);
+                    return Result.Success;
+                }
             }
 
             return Result.Success;
@@ -141,16 +140,14 @@ namespace Geass_Tristana.Events
 
         private void Mixed()
         {
+            var minValue = SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value;
             if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady() && MixedUseE())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.HealthPercent))
+
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellE.Range - minValue)).OrderBy(hp => hp.HealthPercent))
                 {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
-                    if (!enemy.IsValidTarget(Champion.GetSpellE.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
-                    // Game.PrintChat("In range");
                     if (!SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
-                    // Game.PrintChat("CAST Check");
+
                     Champion.GetSpellE.Cast(enemy);
                     CommonOrbwalker.ForceTarget(enemy);
 
@@ -158,20 +155,17 @@ namespace Geass_Tristana.Events
                     {
                         if (Champion.GetSpellQ.IsReady())
                             Champion.GetSpellQ.Cast();
-
-                        return;
                     }
+                    return;
                 }
             }
             else if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseQ").GetValue<bool>() && Champion.GetSpellQ.IsReady() && MixedUseQ())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health))
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellQ.Range - minValue)).OrderBy(hp => hp.Health))
                 {
-                    if (enemy.IsDead) continue;
-                    if (!enemy.IsEnemy) continue;
-                    if (!enemy.IsValidTarget(Champion.GetSpellQ.Range - SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value)) continue;
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(enemy);
+                    return;
                 }
             }
 
@@ -197,7 +191,8 @@ namespace Geass_Tristana.Events
 
             var validTurets = ObjectManager.Get<Obj_AI_Turret>().OrderBy(dis => dis.ServerPosition.Distance(Champion.Player.ServerPosition));
 
-            var target = validTurets.Where(turret => turret.IsEnemy).Where(turret => !turret.IsDead).FirstOrDefault(turret => turret.IsValidTarget(Champion.GetSpellQ.Range));
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var target = validTurets.Where(turret => turret.IsValidTarget(Champion.GetSpellQ.Range)) as Obj_AI_Base;
             if (target == null) return Result.Failure;
 
             if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>() && ClearUseE())

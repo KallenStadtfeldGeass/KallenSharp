@@ -47,10 +47,10 @@ namespace Geass_Tristana.Events
                 foreach (
                     var minon in
                         MinionManager.GetMinions(Champion.Player.Position, Champion.GetSpellQ.Range,
-                            MinionTypes.All, MinionTeam.NotAlly).Where(charge => charge.HasBuff("TristanaECharge")))
+                            MinionTypes.All, MinionTeam.NotAlly).Where(charge => charge.HasBuff("TristanaECharge") && charge.IsValidTarget(Champion.GetSpellQ.Range)))
                 {
                     CommonOrbwalker.ForceTarget(minon);
-                    break;
+                    return;
                 }
             }
             else if (CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Mixed
@@ -58,9 +58,10 @@ namespace Geass_Tristana.Events
                CommonOrbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
                SMenu.Item(MenuNameBase + "Combo.Boolean.FocusETarget").GetValue<bool>())
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().OrderBy(hp => hp.Health).Where(target => target.HasBuff("TristanaECharge")))
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(target => target.HasBuff("TristanaECharge") && target.IsValidTarget(Champion.GetSpellQ.Range)))
                 {
                     CommonOrbwalker.ForceTarget(enemy);
+                    return;
                 }
             }
 
