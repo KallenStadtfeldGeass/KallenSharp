@@ -11,7 +11,7 @@ namespace Geass_Tristana.Other
 
         //Global External Classes and Variables
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
-
+        public static Damage DamageLib = new Damage();
         public static Menu SMenu { get; set; } = new Menu(AssemblyName, AssemblyName, true);
 
         //Hold Global Data and Functions

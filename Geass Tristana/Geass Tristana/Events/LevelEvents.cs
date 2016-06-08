@@ -42,7 +42,11 @@ namespace Geass_Tristana.Events
             }
 
             if (SMenu.Item(MenuItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
+            {
+                //Libaries.Logger.Write($"Level Spells");
                 LevelUpSpells();
+
+            }
         }
 
         private int _lastLevel = 1;

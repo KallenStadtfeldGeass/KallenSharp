@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GeassLib">
-      <HintPath>..\..\GeassLib\GeassLib\bin\Debug\GeassLib.dll</HintPath>
+    <Reference Include="GeassLib, Version=1.4.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Riot Games\PlaySharp\System\GeassLib.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp">
       <HintPath>C:\Riot Games\PlaySharp\System\LeagueSharp.dll</HintPath>
@@ -63,8 +64,10 @@
     <Compile Include="Events\OrbwalkerEvents.Mode.cs" />
     <Compile Include="Events\OrbwalkerEvents.ManaManager.cs" />
     <Compile Include="Libaries\Loader.cs" />
+    <Compile Include="Libaries\Logger.cs" />
     <Compile Include="Menus\ChampionMenu.cs" />
     <Compile Include="Menus\AntiMenu.cs" />
+    <Compile Include="Menus\LoggerMenu.cs" />
     <Compile Include="Menus\OrbwalkerMenu.cs" />
     <Compile Include="Other\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />

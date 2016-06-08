@@ -20,6 +20,7 @@ namespace Geass_Tristana.Events
 
             if (user.Sender.Distance(Champion.Player) > Champion.GetSpellR.Range) return;
 
+            Libaries.Logger.Write($"Interrupt Gap R on : {user.Sender}");
             Champion.GetSpellR.Cast(user.Sender);
         }
 
@@ -36,6 +37,7 @@ namespace Geass_Tristana.Events
 
             if (sender.Distance(Champion.Player) > Champion.GetSpellR.Range) return;
 
+            Libaries.Logger.Write($"Interrupt Cast R on : {sender}");
             Champion.GetSpellR.Cast(sender);
         }
     }

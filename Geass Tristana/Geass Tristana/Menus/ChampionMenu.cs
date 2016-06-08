@@ -29,7 +29,6 @@ namespace Geass_Tristana.Menus
         {
             SMenu.AddSubMenu(GetMenu());
             var champs = new Drawing.Champs();
-            champs.DamageToEnemy = champs.Damage.CalculateDamage;
 
             LeagueSharp.Drawing.OnDraw += champs.OnDrawEnemy;
             LeagueSharp.Drawing.OnDraw += champs.OnDrawSelf;

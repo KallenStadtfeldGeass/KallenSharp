@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
+using System.Linq;
 
 namespace GeassLib.Functions.Calculations
 {
@@ -50,6 +50,6 @@ namespace GeassLib.Functions.Calculations
 
         private const string ShieldNames = "blindmonkwoneshield,evelynnrshield,EyeOfTheStorm,ItemSeraphsEmbrace,JarvanIVGoeldenAegis,KarmaSolKimShield,lulufarieshield,luxprismaticwaveshieldself,manabarrier,mordekaiserironman,nautiluspiercinggazeshield,orianaredactshield,rumbleshieldbuff,Shenstandunitedshield,SkarnerExoskeleton,summonerbarrier,tahmkencheshield,udyrturtleactivation,UrgotTerrorCapacitorActive2,ViktorPowerTransfer,dianashield,malphiteshieldeffect,RivenFeint,ShenStandUnited,sionwshieldstacks,vipassivebuff";
 
-        static readonly string[] ShieldBuffNames = ShieldNames.Split(',');
+        private static readonly string[] ShieldBuffNames = ShieldNames.Split(',');
     }
 }

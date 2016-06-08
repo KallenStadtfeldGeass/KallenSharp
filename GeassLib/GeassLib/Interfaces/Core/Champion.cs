@@ -13,6 +13,5 @@ namespace GeassLib.Interfaces.Core
         Spell GetSpellR { get; set; }
         Spell GetSpellW { get; set; }
         Obj_AI_Hero Player { get; set; }
-
     }
 }

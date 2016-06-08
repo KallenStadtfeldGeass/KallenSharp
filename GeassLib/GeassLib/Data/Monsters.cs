@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
 using SharpDX;
+using System.Collections.Generic;
 
 namespace GeassLib.Data
 {

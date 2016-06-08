@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SharpDX;
+using System;
 using System.Collections.Generic;
-using SharpDX;
 
 namespace GeassLib.Humanizer
 {
-    public class TickManager 
+    public class TickManager
     {
         private readonly Assembly _assembly;
         private float _randomMax;
@@ -60,7 +60,7 @@ namespace GeassLib.Humanizer
             if (key.Length <= 0) return;
 
             if (Ticks.ContainsKey(key))
-                Ticks[key].UseTick(_assembly.AssemblyTime(),_rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
+                Ticks[key].UseTick(_assembly.AssemblyTime(), _rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
             else
                 Console.WriteLine($"Key {key} not found");
         }
