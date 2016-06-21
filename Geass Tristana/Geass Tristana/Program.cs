@@ -17,6 +17,7 @@ namespace Geass_Tristana
             if (ObjectManager.Player.ChampionName != "Tristana")
                 return;
 
+            GeassLib.Loader.Load();
             Libaries.Loader.LoadAssembly();
         }
     }

@@ -19,7 +19,7 @@ namespace Geass_Tristana.Drawing
             {
                 if (Champion.Player.GetAutoAttackDamage(minion) > minion.Health) // Is killable
                 {
-                    //Libaries.Logger.Write($"Draw Minon Killabel Circle");
+                    // Logger.WriteLog($"Draw Minon Killabel Circle");
                     Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + 100, SMenu.Item(MenuItemBase + "Boolean.DrawOnMinions.MarkerKillableColor").GetValue<Circle>().Color, 2);
                 }
             }

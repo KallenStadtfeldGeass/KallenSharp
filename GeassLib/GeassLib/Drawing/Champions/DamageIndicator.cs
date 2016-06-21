@@ -11,14 +11,19 @@ namespace GeassLib.Drawing.Champions
     public class DamageIndicator
     {
         private const int Width = 104;
+/*
         private const int Thinkness = 9;
+*/
+        // ReSharper disable once NotAccessedField.Local
         private readonly bool _debugger;
         private readonly Utility.HpBarDamageIndicator.DamageToUnitDelegate _damageToUnitDelegate;
+/*
         private static readonly Vector2 BarOffset = new Vector2(10, 25);
+*/
 
 
-        public static Device dxDevice = LeagueSharp.Drawing.Direct3DDevice;
-        public static Line dxLine;
+        public static Device DxDevice = LeagueSharp.Drawing.Direct3DDevice;
+        public static Line DxLine;
 
  
 
@@ -40,7 +45,7 @@ namespace GeassLib.Drawing.Champions
 
         public DamageIndicator(Utility.HpBarDamageIndicator.DamageToUnitDelegate _delegate,int range,bool debugger = false)
         {
-            dxLine = new Line(dxDevice) { Width = 9 };
+            DxLine = new Line(DxDevice) { Width = 9 };
             _debugger = debugger;
             Range = range;
             _damageToUnitDelegate = _delegate;
@@ -82,17 +87,17 @@ namespace GeassLib.Drawing.Champions
 
         private static void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
         {
-            dxLine.Dispose();
+            DxLine.Dispose();
         }
 
         private static void DrawingOnOnPostReset(EventArgs args)
         {
-            dxLine.OnResetDevice();
+            DxLine.OnResetDevice();
         }
 
         private static void DrawingOnOnPreReset(EventArgs args)
         {
-            dxLine.OnLostDevice();
+            DxLine.OnLostDevice();
         }
 
 
@@ -123,13 +128,13 @@ namespace GeassLib.Drawing.Champions
 
         private void fillHPBar(Vector2 from, Vector2 to, ColorBGRA color)
         {
-            dxLine.Begin();
+            DxLine.Begin();
 
-            dxLine.Draw(new[] {
+            DxLine.Draw(new[] {
                 new Vector2((int) from.X, (int) from.Y + 4f),
                 new Vector2((int) to.X, (int) to.Y + 4f) }, color);
 
-            dxLine.End();
+            DxLine.End();
         }
 
         private void Drawing_OnDraw(EventArgs args)

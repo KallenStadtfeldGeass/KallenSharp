@@ -20,7 +20,7 @@ namespace Geass_Tristana.Events
             if (!Champion.Player.InShop() || Items.HasItem(GeassLib.Data.Items.Trinkets.Orb.Id))
                 return;
 
-           Libaries.Logger.Write("Buy Orb");
+            Logger.WriteLog("Buy Orb");
            GeassLib.Data.Items.Trinkets.Orb.Buy();
         }
     }

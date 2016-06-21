@@ -64,17 +64,14 @@
     <Compile Include="Events\OrbwalkerEvents.Mode.cs" />
     <Compile Include="Events\OrbwalkerEvents.ManaManager.cs" />
     <Compile Include="Libaries\Loader.cs" />
-    <Compile Include="Libaries\Logger.cs" />
     <Compile Include="Menus\ChampionMenu.cs" />
     <Compile Include="Menus\AntiMenu.cs" />
-    <Compile Include="Menus\LoggerMenu.cs" />
     <Compile Include="Menus\OrbwalkerMenu.cs" />
     <Compile Include="Other\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />
     <Compile Include="Drawing\Minons.cs" />
     <Compile Include="Drawing\Monsters.cs" />
     <Compile Include="Events\ItemEvents.cs" />
-    <Compile Include="Events\LevelEvents.cs" />
     <Compile Include="Events\TrinketEvents.cs" />
     <Compile Include="Libaries\Assembly.cs" />
     <Compile Include="Libaries\Champion.cs" />

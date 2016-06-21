@@ -59,7 +59,7 @@ namespace Geass_Tristana.Events
                              SMenu.Item(MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Libaries.Logger.Write($"Use Bork on {target}");
+                             Logger.WriteLog($"Use Bork on {target}");
                             Items.UseItem(GeassLib.Data.Items.Offensive.Botrk.Id, target);
                             return;
                         }
@@ -94,7 +94,7 @@ namespace Geass_Tristana.Events
                         //Player hp less then
                         {
 
-                            Libaries.Logger.Write($"Use Cutless on {target}");
+                             Logger.WriteLog($"Use Cutless on {target}");
                             Items.UseItem(GeassLib.Data.Items.Offensive.Cutless.Id, target);
                             return;
                         }
@@ -112,7 +112,7 @@ namespace Geass_Tristana.Events
                     if (inCombo)
                     {
 
-                        Libaries.Logger.Write($"Use Ghostblade on {target}");
+                         Logger.WriteLog($"Use Ghostblade on {target}");
                         Items.UseItem(GeassLib.Data.Items.Offensive.GhostBlade.Id);
                         return;
                     }
@@ -135,7 +135,7 @@ namespace Geass_Tristana.Events
                             if (Champion.Player.HasBuffOfType(buff))
                             {
 
-                                Libaries.Logger.Write($"Use QSS Reason {buff}");
+                                 Logger.WriteLog($"Use QSS Reason {buff}");
                                 Utility.DelayAction.Add(
                                     SMenu.Item(MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value,
                                     () => Items.UseItem(GeassLib.Data.Items.Defensive.Qss.Id));
@@ -157,7 +157,7 @@ namespace Geass_Tristana.Events
                         {
                             if (Champion.Player.HasBuffOfType(buff))
                             {
-                                Libaries.Logger.Write($"Use Merc Reason {buff}");
+                                 Logger.WriteLog($"Use Merc Reason {buff}");
                                 Utility.DelayAction.Add(
                                     SMenu.Item(MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value,
                                     () => Items.UseItem(GeassLib.Data.Items.Defensive.Qss.Id));

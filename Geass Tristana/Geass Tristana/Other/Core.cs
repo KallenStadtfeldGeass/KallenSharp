@@ -1,6 +1,6 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
-using GeassLib;
+
 namespace Geass_Tristana.Other
 {
 #pragma warning disable RECS0014 // If all fields, properties and methods members are static, the class can be made static.
@@ -13,7 +13,7 @@ namespace Geass_Tristana.Other
         public static Orbwalking.Orbwalker CommonOrbwalker { get; set; }
         public static Damage DamageLib = new Damage();
         public static Menu SMenu { get; set; } = new Menu(AssemblyName, AssemblyName, true);
-
+        public static GeassLib.Functions.Logging.Logger Logger = new GeassLib.Functions.Logging.Logger("Geass Tristana");
         //Hold Global Data and Functions
         public static Libaries.Champion Champion = new Libaries.Champion(550f, 900f, 625f, 700f);
 

@@ -17,7 +17,7 @@ namespace Geass_Tristana.Events
 
         private void OrbwalkModeHandler()
         {
-           // Libaries.Logger.Write($"Orbwalker mode {CommonOrbwalker.ActiveMode}");
+           //  Logger.WriteLog($"Orbwalker mode {CommonOrbwalker.ActiveMode}");
             switch (CommonOrbwalker.ActiveMode)
             {
                 case Orbwalking.OrbwalkingMode.Combo:
@@ -50,7 +50,7 @@ namespace Geass_Tristana.Events
                         MinionManager.GetMinions(Champion.Player.Position, Champion.GetSpellQ.Range,
                             MinionTypes.All, MinionTeam.NotAlly).Where(charge => charge.HasBuff("TristanaECharge") && charge.IsValidTarget(Champion.GetSpellQ.Range)))
                 {
-                    Libaries.Logger.Write($"Orbwalker Force Target {minon.Name}");
+                     Logger.WriteLog($"Orbwalker Force Target {minon.Name}");
                     CommonOrbwalker.ForceTarget(minon);
                     return;
                 }
@@ -62,7 +62,7 @@ namespace Geass_Tristana.Events
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(target => target.HasBuff("TristanaECharge") && target.IsValidTarget(Champion.GetSpellQ.Range)))
                 {
-                    Libaries.Logger.Write($"Orbwalker Force Target {enemy.Name}");
+                     Logger.WriteLog($"Orbwalker Force Target {enemy.Name}");
                     CommonOrbwalker.ForceTarget(enemy);
                     return;
                 }

@@ -54,12 +54,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembly.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Data\Items\Trinkets.cs" />
     <Compile Include="Data\Monsters.cs" />
     <Compile Include="Drawing\Champions\DamageIndicator.cs" />
     <Compile Include="Drawing\Render\Polygon.cs" />
+    <Compile Include="Events\DelayHandler.cs" />
+    <Compile Include="Events\OnLevel.cs" />
     <Compile Include="Functions\Calculations\Damage.cs" />
+    <Compile Include="Functions\Logging\Logger.cs" />
     <Compile Include="Functions\Menu.cs" />
     <Compile Include="Functions\Objects\Heroes.cs" />
     <Compile Include="Functions\Objects\Minions.cs" />
@@ -72,10 +75,10 @@
     <Compile Include="Data\Items\Defensive.cs" />
     <Compile Include="Data\Items\Offensive.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structures\Level.cs" />
     <Compile Include="ThirdParty\clipper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Structures\" />
     <Folder Include="Wrapper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

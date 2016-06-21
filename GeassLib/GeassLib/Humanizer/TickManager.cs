@@ -6,7 +6,7 @@ namespace GeassLib.Humanizer
 {
     public class TickManager
     {
-        private readonly Assembly _assembly;
+
         private float _randomMax;
         private float _randomMin;
         private readonly Random _rnd;
@@ -15,7 +15,6 @@ namespace GeassLib.Humanizer
 
         public TickManager()
         {
-            _assembly = new Assembly();
             _rnd = new Random();
         }
 
@@ -38,7 +37,7 @@ namespace GeassLib.Humanizer
             if (key.Length <= 0)
                 Console.WriteLine("Check Key an not be null");
             if (Ticks.ContainsKey(key))
-                return Ticks[key].IsReady(_assembly.AssemblyTime());
+                return Ticks[key].IsReady(Loader.AssemblyTime());
 
             Console.WriteLine($"Key {key} not found");
             return false;
@@ -60,7 +59,7 @@ namespace GeassLib.Humanizer
             if (key.Length <= 0) return;
 
             if (Ticks.ContainsKey(key))
-                Ticks[key].UseTick(_assembly.AssemblyTime(), _rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
+                Ticks[key].UseTick(Loader.AssemblyTime(), _rnd.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) + _rnd.NextFloat(_randomMin, _randomMax));
             else
                 Console.WriteLine($"Key {key} not found");
         }

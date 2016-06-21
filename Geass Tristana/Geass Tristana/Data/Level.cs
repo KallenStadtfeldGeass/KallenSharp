@@ -13,7 +13,7 @@ namespace Geass_Tristana.Data
         private const short R = E + 1;
         private const short W = Q + 1;
 
-        public readonly int[] AbilitySequence ={
+        public static readonly int[] AbilitySequence ={
             E,W,Q,E,
             E,R,E,Q,
             E,Q,R,Q,

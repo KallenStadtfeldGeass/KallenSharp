@@ -16,7 +16,6 @@ namespace Geass_Tristana.Libaries
             var champMenu = new Menus.ChampionMenu();
             var orbwalkerMenu = new Menus.OrbwalkerMenu();
             var antiMenu = new Menus.AntiMenu();
-            var loggerMenu = new Menus.LoggerMenu();
 
             //Load Data
             Champion.Player = ObjectManager.Player;
@@ -29,7 +28,6 @@ namespace Geass_Tristana.Libaries
             levelMenu.Load();
             champMenu.Load();
             orbwalkerMenu.Load();
-            loggerMenu.Load();
             //_Assembly.CheckVersion();
 
             //Add SMenu to main menu

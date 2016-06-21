@@ -17,7 +17,7 @@ namespace Geass_Tristana.Events
                 foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellE.Range)).OrderBy(hp => hp.Health)))
                 {
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
-                    Libaries.Logger.Write($"Combo Use E on {enemy}");
+                     Logger.WriteLog($"Combo Use E on {enemy}");
                     Champion.GetSpellE.Cast(enemy);
                     break;
                 }
@@ -27,7 +27,7 @@ namespace Geass_Tristana.Events
             {
                 foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellQ.Range)).OrderBy(hp => hp.Health)))
                 {
-                    Libaries.Logger.Write($"Combo Use Q on {enemy}");
+                     Logger.WriteLog($"Combo Use Q on {enemy}");
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(enemy);
                     break;
@@ -38,7 +38,7 @@ namespace Geass_Tristana.Events
             {
                 foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellQ.Range) && e.HasBuff("TristanaECharge")).OrderBy(hp => hp.Health)))
                 {
-                    Libaries.Logger.Write($"Force target {enemy}");
+                     Logger.WriteLog($"Force target {enemy}");
                     CommonOrbwalker.ForceTarget(enemy);
                     break;
                 }
@@ -50,7 +50,7 @@ namespace Geass_Tristana.Events
                 {
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
                     if (_damageLib.CalculateDamage(enemy) < enemy.Health) continue;
-                    Libaries.Logger.Write($"Combo Use R on {enemy}");
+                     Logger.WriteLog($"Combo Use R on {enemy}");
                     Champion.GetSpellR.Cast(enemy);
                     return;
                 }
@@ -70,13 +70,13 @@ namespace Geass_Tristana.Events
             {
                 if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Monsters").GetValue<bool>() && ClearUseE())
                 {
-                    Libaries.Logger.Write($"Jungle Use E on {monster.Name}");
+                     Logger.WriteLog($"Jungle Use E on {monster.Name}");
                     Champion.GetSpellE.Cast(monster);
                     CommonOrbwalker.ForceTarget(monster);
                 }
                 if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Monsters").GetValue<bool>() && ClearUseQ())
                 {
-                    Libaries.Logger.Write($"Jungle Use Q on {monster.Name}");
+                     Logger.WriteLog($"Jungle Use Q on {monster.Name}");
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(monster);
                     return Result.Success;
@@ -117,7 +117,7 @@ namespace Geass_Tristana.Events
                 }
                 if (target != null && bestInRange >= SMenu.Item(MenuNameBase + "Clear.Minons.Slider.MinMinons").GetValue<Slider>().Value)
                 {
-                    Libaries.Logger.Write($"Laneclear Use E on {target.Name} in range {bestInRange}");
+                     Logger.WriteLog($"Laneclear Use E on {target.Name} in range {bestInRange}");
                     Champion.GetSpellE.Cast(target);
                     CommonOrbwalker.ForceTarget(target);
                 }
@@ -132,7 +132,7 @@ namespace Geass_Tristana.Events
                                 charge.HasBuff("TristanaECharge") && 
                                 charge.IsValidTarget(Champion.GetSpellQ.Range)).OrderBy(hp => hp.Health))
                 {
-                    Libaries.Logger.Write($"Force target {minion.Name}");
+                     Logger.WriteLog($"Force target {minion.Name}");
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(minion);
                     return Result.Success;
@@ -156,7 +156,7 @@ namespace Geass_Tristana.Events
                 {
                     if (!SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE.On." + enemy.ChampionName).GetValue<bool>()) continue;
 
-                    Libaries.Logger.Write($"Mixed Use E on {enemy.Name}");
+                     Logger.WriteLog($"Mixed Use E on {enemy.Name}");
                     Champion.GetSpellE.Cast(enemy);
                     CommonOrbwalker.ForceTarget(enemy);
 
@@ -164,7 +164,7 @@ namespace Geass_Tristana.Events
                     {
                         if (Champion.GetSpellQ.IsReady())
                         {
-                            Libaries.Logger.Write($"Mixed Use Q on {enemy.Name}");
+                             Logger.WriteLog($"Mixed Use Q on {enemy.Name}");
                             Champion.GetSpellQ.Cast();
 
 }
@@ -176,7 +176,7 @@ namespace Geass_Tristana.Events
             {
                 foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellQ.Range - minValue)).OrderBy(hp => hp.Health))
                 {
-                    Libaries.Logger.Write($"Mixed Use Q on {enemy.Name}");
+                     Logger.WriteLog($"Mixed Use Q on {enemy.Name}");
                     Champion.GetSpellQ.Cast();
                     CommonOrbwalker.ForceTarget(enemy);
                     return;
@@ -209,20 +209,20 @@ namespace Geass_Tristana.Events
             
             if (target == null)
             {
-               // Libaries.Logger.Write($"No vlaid turret");
+               //  Logger.WriteLog($"No vlaid turret");
                 return Result.Failure;
             }
 
             if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseE.Turret").GetValue<bool>() && ClearUseE())
             {
-                Libaries.Logger.Write($"Turret Clear Use E on {target.Name}");
+                 Logger.WriteLog($"Turret Clear Use E on {target.Name}");
                 Champion.GetSpellE.Cast(target);
                 CommonOrbwalker.ForceTarget(target);
             }
 
             if (SMenu.Item(MenuNameBase + "Clear.Boolean.UseQ.Turret").GetValue<bool>() && ClearUseQ())
             {
-                Libaries.Logger.Write($"Turret Clear Use Q on {target.Name}");
+                 Logger.WriteLog($"Turret Clear Use Q on {target.Name}");
                 Champion.GetSpellQ.Cast();
                 CommonOrbwalker.ForceTarget(target);
             }
