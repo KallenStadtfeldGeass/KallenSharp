@@ -8,6 +8,7 @@ namespace Geass_Tristana.Events
     {
         private void Combo()
         {
+            GeassLib.Globals.Variables.InCombo = true;
             if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseQ").GetValue<bool>() &&
                 !SMenu.Item(MenuNameBase + "Combo.Boolean.UseE").GetValue<bool>() &&
                 !SMenu.Item(MenuNameBase + "Combo.Boolean.UseR").GetValue<bool>()) return;
@@ -88,6 +89,7 @@ namespace Geass_Tristana.Events
 
         private void LaneClear()
         {
+            GeassLib.Globals.Variables.InCombo = false;
             if (!Champion.GetSpellE.IsReady() && !Champion.GetSpellQ.IsReady()) return;
 
             if (TurretClear() == Result.Success) { }
@@ -144,10 +146,12 @@ namespace Geass_Tristana.Events
 
         private void LastHit()
         {
+            GeassLib.Globals.Variables.InCombo = false;
         }
 
         private void Mixed()
         {
+            GeassLib.Globals.Variables.InCombo = false;
             var minValue = SMenu.Item(MenuNameBase + "Mixed.Slider.MaxDistance").GetValue<Slider>().Value;
             if (SMenu.Item(MenuNameBase + "Mixed.Boolean.UseE").GetValue<bool>() && Champion.GetSpellE.IsReady() && MixedUseE())
             {

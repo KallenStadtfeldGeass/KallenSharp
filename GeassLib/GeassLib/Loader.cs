@@ -7,13 +7,14 @@ namespace GeassLib
 {
     public class Loader
     {
+        // ReSharper disable once NotAccessedField.Local
         private  Menus.OnLevel _onLevelMenu;
-       
-        private  Menus.Trinket _trinket;
-       
-        private  Menus.Items _items;
-        
-        private  Menus.Drawing _drawing;
+        // ReSharper disable once NotAccessedField.Local
+        private Menus.Trinket _trinket;
+        // ReSharper disable once NotAccessedField.Local
+        private Menus.Items _items;
+        // ReSharper disable once NotAccessedField.Local
+        private Menus.Drawing _drawing;
 
         public Loader(string ext,bool useTrinket = false,bool useOnLevel = false, int[] abiSeq = null,bool useDrawing=false,bool useItems=false)
         {

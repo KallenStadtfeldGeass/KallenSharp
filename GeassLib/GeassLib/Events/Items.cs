@@ -25,7 +25,6 @@ namespace GeassLib.Events
 
         }
 
-        public static bool InCombo = false;
         public void OnUpdate(EventArgs args)
         {
             #region Offensive
@@ -46,7 +45,7 @@ namespace GeassLib.Events
                         target.IsValidTarget(Globals.Objects.Player.AttackRange + Globals.Objects.Player.BoundingRadius) || Globals.Objects.Player.HealthPercent < Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
-                        if (Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && InCombo &&
+                        if (Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Globals.Variables.InCombo &&
                             target.HealthPercent < Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
                             //in combo and target hp less then
                             ||
@@ -78,7 +77,7 @@ namespace GeassLib.Events
                        Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
-                        if (Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && InCombo &&
+                        if (Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Globals.Variables.InCombo &&
                             target.HealthPercent <
                             Globals.Objects.GeassLibMenu.Item(Names.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
                             //in combo and target hp less then
@@ -108,7 +107,7 @@ namespace GeassLib.Events
                     target.IsValidTarget(Globals.Objects.Player.AttackRange + Globals.Objects.Player.BoundingRadius))
                 // Is ready and target is in auto range
                 {
-                    if (InCombo)
+                    if (Globals.Variables.InCombo)
                     {
 
                         Globals.Objects.Logger.WriteLog($"Use Ghostblade on {target}");
@@ -124,7 +123,7 @@ namespace GeassLib.Events
 
             if (Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Defensive.Qss.Id))
             {
-                if (Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && InCombo ||
+                if (Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Globals.Variables.InCombo ||
                     !Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
                     if (Data.Items.Defensive.Qss.IsReady())
@@ -147,7 +146,7 @@ namespace GeassLib.Events
 
             if (Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Defensive.Merc.Id))
             {
-                if (Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && InCombo ||
+                if (Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Globals.Variables.InCombo ||
                     !Globals.Objects.GeassLibMenu.Item(Names.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
                     if (Data.Items.Defensive.Merc.IsReady())
