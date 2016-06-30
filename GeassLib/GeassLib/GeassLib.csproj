@@ -54,12 +54,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Buffs.cs" />
+    <Compile Include="Events\Drawing\Minon\LastHitHelper.cs" />
+    <Compile Include="Events\Items.cs" />
+    <Compile Include="Events\Trinket.cs" />
+    <Compile Include="Globals\Objects.cs" />
+    <Compile Include="Globals\Variables.cs" />
+    <Compile Include="Menus\Drawing.cs" />
+    <Compile Include="Menus\Items.cs" />
+    <Compile Include="Menus\Names.cs" />
+    <Compile Include="Menus\OnLevel.cs" />
+    <Compile Include="Menus\Trinket.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Data\Items\Trinkets.cs" />
     <Compile Include="Data\Monsters.cs" />
     <Compile Include="Drawing\Champions\DamageIndicator.cs" />
     <Compile Include="Drawing\Render\Polygon.cs" />
-    <Compile Include="Events\DelayHandler.cs" />
+    <Compile Include="Events\Handler\DelayHandler.cs" />
     <Compile Include="Events\OnLevel.cs" />
     <Compile Include="Functions\Calculations\Damage.cs" />
     <Compile Include="Functions\Logging\Logger.cs" />

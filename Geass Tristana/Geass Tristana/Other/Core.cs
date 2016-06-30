@@ -19,16 +19,6 @@ namespace Geass_Tristana.Other
 
         public static GeassLib.Humanizer.TickManager TickManager = new GeassLib.Humanizer.TickManager();
 
-        public static readonly BuffType[] Bufftype =
-         {
-            BuffType.Snare,
-            BuffType.Blind,
-            BuffType.Charm,
-            BuffType.Stun,
-            BuffType.Fear,
-            BuffType.Slow,
-            BuffType.Taunt,
-            BuffType.Suppression
-        };
+        public static readonly BuffType[] Bufftype = GeassLib.Data.Buffs.GetTypes;
     }
 }

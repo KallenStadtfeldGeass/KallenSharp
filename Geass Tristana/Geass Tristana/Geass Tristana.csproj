@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GeassLib, Version=1.4.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="GeassLib, Version=1.5.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Riot Games\PlaySharp\System\GeassLib.dll</HintPath>
     </Reference>
@@ -69,18 +69,10 @@
     <Compile Include="Menus\OrbwalkerMenu.cs" />
     <Compile Include="Other\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />
-    <Compile Include="Drawing\Minons.cs" />
-    <Compile Include="Drawing\Monsters.cs" />
-    <Compile Include="Events\ItemEvents.cs" />
-    <Compile Include="Events\TrinketEvents.cs" />
     <Compile Include="Libaries\Assembly.cs" />
     <Compile Include="Libaries\Champion.cs" />
     <Compile Include="Other\Damage.cs" />
     <Compile Include="Menus\HumanizerMenu.cs" />
-    <Compile Include="Menus\ItemsMenu.cs" />
-    <Compile Include="Menus\LevelMenu.cs" />
-    <Compile Include="Menus\MinonsMenu.cs" />
-    <Compile Include="Menus\TrinketMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

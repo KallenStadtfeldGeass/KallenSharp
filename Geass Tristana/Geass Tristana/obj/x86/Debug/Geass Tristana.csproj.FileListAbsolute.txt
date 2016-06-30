@@ -16,3 +16,4 @@ D:\Coding\GitHub\KallenSharp\Geass Tristana\Geass Tristana\bin\Debug\LeagueSharp
 D:\Coding\GitHub\KallenSharp\Geass Tristana\Geass Tristana\bin\Debug\LeagueSharp.Data.pdb
 D:\Coding\GitHub\KallenSharp\Geass Tristana\Geass Tristana\obj\x86\Debug\Geass Tristana.exe
 D:\Coding\GitHub\KallenSharp\Geass Tristana\Geass Tristana\obj\x86\Debug\Geass Tristana.pdb
+D:\Coding\GitHub\KallenSharp\Geass Tristana\Geass Tristana\bin\Debug\LeagueSharp.Sandbox.pdb

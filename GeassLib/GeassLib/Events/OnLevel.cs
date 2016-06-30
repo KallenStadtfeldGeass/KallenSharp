@@ -5,14 +5,14 @@ namespace GeassLib.Events
 {
     public class OnLevel
     {
-         public bool Enabled { get; set; }
+  
          readonly int[] _abilitySequences;
          private int _lastLevel;
-        public OnLevel(int[] sequence , bool enable = true)
+
+        public OnLevel(int[] sequence)
         {
             if(!DelayHandler.Loaded)DelayHandler.Load();
 
-            Enabled = enable;
             _abilitySequences = sequence;
             Game.OnUpdate += OnUpdate;
         }
@@ -22,11 +22,12 @@ namespace GeassLib.Events
         {
             if (DelayHandler.CheckOnLevel())
             {
+                if (!Globals.Objects.GeassLibMenu.Item(Menus.Names.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>()) return;
                 DelayHandler.UseOnLevel();
 
-                if (_lastLevel != Loader.Player.Level && Enabled)
+                if (_lastLevel != Globals.Objects.Player.Level)
                 {
-                    _lastLevel = Loader.Player.Level;
+                    _lastLevel = Globals.Objects.Player.Level;
                     LevelUpSpells();
                 }
             }
@@ -34,23 +35,23 @@ namespace GeassLib.Events
 
         void LevelUpSpells()
         {
-            var qL = Loader.Player.Spellbook.GetSpell(SpellSlot.Q).Level + _qOff;
-            var wL = Loader.Player.Spellbook.GetSpell(SpellSlot.W).Level + _wOff;
-            var eL = Loader.Player.Spellbook.GetSpell(SpellSlot.E).Level + _eOff;
-            var rL = Loader.Player.Spellbook.GetSpell(SpellSlot.R).Level + _rOff;
+            var qL = Globals.Objects.Player.Spellbook.GetSpell(SpellSlot.Q).Level + _qOff;
+            var wL = Globals.Objects.Player.Spellbook.GetSpell(SpellSlot.W).Level + _wOff;
+            var eL = Globals.Objects.Player.Spellbook.GetSpell(SpellSlot.E).Level + _eOff;
+            var rL = Globals.Objects.Player.Spellbook.GetSpell(SpellSlot.R).Level + _rOff;
 
 
-            if (qL + wL + eL + rL >= Loader.Player.Level) return;
+            if (qL + wL + eL + rL >= Globals.Objects.Player.Level) return;
 
             int[] level = { 0, 0, 0, 0 };
 
-            for (var i = 0; i < Loader.Player.Level; i++)
+            for (var i = 0; i < Globals.Objects.Player.Level; i++)
                 level[_abilitySequences[i] - 1] = level[_abilitySequences[i] - 1] + 1;
 
-            if (qL < level[0]) Loader.Player.Spellbook.LevelSpell(SpellSlot.Q);
-            if (wL < level[1]) Loader.Player.Spellbook.LevelSpell(SpellSlot.W);
-            if (eL < level[2]) Loader.Player.Spellbook.LevelSpell(SpellSlot.E);
-            if (rL < level[3]) Loader.Player.Spellbook.LevelSpell(SpellSlot.R);
+            if (qL < level[0]) Globals.Objects.Player.Spellbook.LevelSpell(SpellSlot.Q);
+            if (wL < level[1]) Globals.Objects.Player.Spellbook.LevelSpell(SpellSlot.W);
+            if (eL < level[2]) Globals.Objects.Player.Spellbook.LevelSpell(SpellSlot.E);
+            if (rL < level[3]) Globals.Objects.Player.Spellbook.LevelSpell(SpellSlot.R);
         }
 
 #pragma warning disable RECS0122 // Initializing field with default value is redundant

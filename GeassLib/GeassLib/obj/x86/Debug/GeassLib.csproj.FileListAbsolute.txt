@@ -13,3 +13,4 @@ D:\Coding\GitHub\KallenSharp\GeassLib\GeassLib\bin\Debug\LeagueSharp.Data.pdb
 D:\Coding\GitHub\KallenSharp\GeassLib\GeassLib\obj\x86\Debug\GeassLib.dll
 D:\Coding\GitHub\KallenSharp\GeassLib\GeassLib\obj\x86\Debug\GeassLib.pdb
 D:\Coding\GitHub\KallenSharp\GeassLib\GeassLib\obj\x86\Debug\GeassLib.csprojResolveAssemblyReference.cache
+D:\Coding\GitHub\KallenSharp\GeassLib\GeassLib\bin\Debug\LeagueSharp.Sandbox.pdb
