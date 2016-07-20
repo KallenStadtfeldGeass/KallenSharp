@@ -43,7 +43,10 @@ namespace Geass_Tristana.Menus
             var subMenuCombo = new Menu(".Combo", "comboMenu");
             subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseQ", "Use Q").SetValue(true));
             subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseE", "Use E").SetValue(true));
-            subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.UseR", "Use R (Killable)").SetValue(true));
+            subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean." +
+                                              "UseR" +
+                                              "" +
+                                              "", "Use R (Killable)").SetValue(true));
             subMenuCombo.AddItem(new MenuItem(MenuNameBase + "Combo.Boolean.FocusETarget", "Focus E target").SetValue(false));
             var subEComboMenu = new Menu(".Combo.EChamps", "comboEMenu");
             foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>())
@@ -95,7 +98,6 @@ namespace Geass_Tristana.Menus
         }
         public void Load()
         {
-            TickManager.AddTick($"{MenuNameBase}.OrbwalkDelay", 50, 100);
             SMenu.AddSubMenu(GetMenu());
             var orbwalkHandler = new Events.OrbwalkerEvents();
             CommonOrbwalker = new Orbwalking.Orbwalker(SMenu.SubMenu(".CommonOrbwalker"));

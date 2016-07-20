@@ -6,6 +6,40 @@ namespace GeassLib.Functions.Calculations
 {
     public static class Damage
     {
+
+
+        public static float CalcRealDamage(Obj_AI_Base target,float fakeDamage)
+        {
+            if (GeassLib.Functions.Calculations.Damage.CheckNoDamageBuffs((Obj_AI_Hero)target)) return 0f;
+
+            var defuffer = 1f;
+
+            if (target.HasBuff("FerociousHowl") || target.HasBuff("GarenW"))
+                defuffer *= .7f;
+
+            if (target.HasBuff("Medidate"))
+                defuffer *= .5f - target.Spellbook.GetSpell(SpellSlot.E).Level * .05f;
+
+            if (target.HasBuff("gragaswself"))
+                defuffer *= .9f - target.Spellbook.GetSpell(SpellSlot.W).Level * .02f;
+
+            if (target.Name.Contains("Baron") && Globals.Objects.Player.HasBuff("barontarget"))
+                defuffer *= 0.5f;
+
+            if (Globals.Objects.Player.HasBuff("summonerexhaust"))
+                defuffer *= .4f;
+
+            if (!target.IsChampion()) return (fakeDamage * defuffer);
+
+            var healthDebuffer = 0f;
+            var hero = (Obj_AI_Hero)target;
+
+            if (hero.ChampionName == "Blitzcrank" && !target.HasBuff("BlitzcrankManaBarrierCD") && !target.HasBuff("ManaBarrier"))
+                healthDebuffer += target.Mana / 2;
+
+            return (fakeDamage * defuffer) - (healthDebuffer + GeassLib.Functions.Calculations.Damage.GetShield(target) + target.FlatHPRegenMod + 10);
+        }
+
         public static bool CheckNoDamageBuffs(Obj_AI_Hero target)
         {
             foreach (var b in target.Buffs.Where(b => b.IsValidBuff()))

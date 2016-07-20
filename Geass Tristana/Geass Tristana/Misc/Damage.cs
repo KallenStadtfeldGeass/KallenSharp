@@ -1,8 +1,7 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
-using System.Linq;
 
-namespace Geass_Tristana.Other
+namespace Geass_Tristana.Misc
 {
     internal class Damage : Core
     {
@@ -39,40 +38,9 @@ namespace Geass_Tristana.Other
 
             return damage;
         }
-
-        public float CalculateDamage(Obj_AI_Base target)
+        public float CalcDamage(Obj_AI_Base target)
         {
-            if (GeassLib.Functions.Calculations.Damage.CheckNoDamageBuffs((Obj_AI_Hero)target)) return 0f;
-
-            var defuffer = 1f;
-
-            if (target.HasBuff("FerociousHowl") || target.HasBuff("GarenW"))
-                defuffer *= .7f;
-
-            if (target.HasBuff("Medidate"))
-                defuffer *= .5f - target.Spellbook.GetSpell(SpellSlot.E).Level * .05f;
-
-            if (target.HasBuff("gragaswself"))
-                defuffer *= .9f - target.Spellbook.GetSpell(SpellSlot.W).Level * .02f;
-
-            if (target.Name.Contains("Baron") && Champion.Player.HasBuff("barontarget"))
-                defuffer *= 0.5f;
-
-            if (target.Name.Contains("Dragon") && Champion.Player.HasBuff("s5test_dragonslayerbuff"))
-                defuffer *= (1 - (.07f * Champion.Player.GetBuffCount("s5test_dragonslayerbuff")));
-
-            if (Champion.Player.HasBuff("summonerexhaust"))
-                defuffer *= .4f;
-
-            if (!target.IsChampion()) return (GetComboDamage(target) * defuffer);
-
-            var healthDebuffer = 0f;
-            var hero = (Obj_AI_Hero)target;
-
-            if (hero.ChampionName == "Blitzcrank" && !target.HasBuff("BlitzcrankManaBarrierCD") && !target.HasBuff("ManaBarrier"))
-                healthDebuffer += target.Mana / 2;
-
-            return (GetComboDamage(target) * defuffer) - (healthDebuffer + GeassLib.Functions.Calculations.Damage.GetShield(target) + target.FlatHPRegenMod + 15);
+            return GeassLib.Functions.Calculations.Damage.CalcRealDamage(target, GetComboDamage(target));
         }
     }
 }

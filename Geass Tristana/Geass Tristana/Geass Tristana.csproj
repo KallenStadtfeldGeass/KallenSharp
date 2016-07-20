@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GeassLib, Version=1.5.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="GeassLib, Version=1.5.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\GeassLib\GeassLib\bin\Debug\GeassLib.dll</HintPath>
     </Reference>
@@ -58,21 +58,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Level.cs" />
-    <Compile Include="Events\HumanizeEvents.cs" />
-    <Compile Include="Events\AntiEvents.cs" />
+    <Compile Include="Events\AutoEvents.cs" />
     <Compile Include="Events\OrbwalkerEvents.cs" />
     <Compile Include="Events\OrbwalkerEvents.Mode.cs" />
     <Compile Include="Events\OrbwalkerEvents.ManaManager.cs" />
     <Compile Include="Libaries\Loader.cs" />
     <Compile Include="Menus\ChampionMenu.cs" />
-    <Compile Include="Menus\AntiMenu.cs" />
+    <Compile Include="Menus\AutoMenu.cs" />
     <Compile Include="Menus\OrbwalkerMenu.cs" />
-    <Compile Include="Other\Core.cs" />
+    <Compile Include="Misc\Core.cs" />
     <Compile Include="Drawing\Champs.cs" />
     <Compile Include="Libaries\Assembly.cs" />
     <Compile Include="Libaries\Champion.cs" />
-    <Compile Include="Other\Damage.cs" />
-    <Compile Include="Menus\HumanizerMenu.cs" />
+    <Compile Include="Misc\Damage.cs" />
+    <Compile Include="Misc\DelayHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

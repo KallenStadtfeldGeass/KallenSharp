@@ -1,0 +1,2 @@
+D:\Coding\GitHub\KallenSharp\GeassBlitz\GeassBlitz\bin\Debug\GeassBlitz.exe.config
+D:\Coding\GitHub\KallenSharp\GeassBlitz\GeassBlitz\obj\Debug\GeassBlitz.csprojResolveAssemblyReference.cache

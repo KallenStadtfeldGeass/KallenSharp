@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Geass_Tristana.Data
+﻿namespace Geass_Tristana.Data
 {
     internal sealed class Level
     {

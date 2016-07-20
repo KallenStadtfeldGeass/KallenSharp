@@ -1,4 +1,4 @@
-﻿using Geass_Tristana.Other;
+﻿using Geass_Tristana.Misc;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;

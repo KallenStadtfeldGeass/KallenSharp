@@ -1,4 +1,4 @@
-﻿using Geass_Tristana.Other;
+﻿using Geass_Tristana.Misc;
 using LeagueSharp.Common;
 using System;
 using GeassLib.Drawing.Champions;
@@ -9,7 +9,7 @@ namespace Geass_Tristana.Drawing
         public const string MenuItemBase = ".Champions.";
         public const string MenuNameBase = ".Champions Menu";
 
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(DamageLib.CalculateDamage, 1000,true);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(DamageLib.CalcDamage, 1000,true);
 
         public void OnDrawEnemy(EventArgs args)
         {

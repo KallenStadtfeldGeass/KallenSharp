@@ -6,6 +6,7 @@ namespace Geass_Tristana.Events
     {
         private bool ComboUseQ()
         {
+            return true;
             if (!SMenu.Item(ManaMenuItemBase + "Use.ManaManager").GetValue<bool>()) return true;
             return SMenu.Item(ManaMenuItemBase + "Combo.Slider.MinMana.Q").GetValue<Slider>().Value <=
                    Champion.GetManaPercent;
@@ -29,6 +30,7 @@ namespace Geass_Tristana.Events
 
         private bool MixedUseQ()
         {
+            return true;
             if (!SMenu.Item(ManaMenuItemBase + "Use.ManaManager").GetValue<bool>()) return true;
 
             return SMenu.Item(ManaMenuItemBase + "Mixed.Slider.MinMana.Q").GetValue<Slider>().Value <=
@@ -53,6 +55,7 @@ namespace Geass_Tristana.Events
 
         private bool ClearUseQ()
         {
+            return true;
             if (!SMenu.Item(ManaMenuItemBase + "Use.ManaManager").GetValue<bool>()) return true;
 
             return SMenu.Item(ManaMenuItemBase + "Clear.Slider.MinMana.Q").GetValue<Slider>().Value <=

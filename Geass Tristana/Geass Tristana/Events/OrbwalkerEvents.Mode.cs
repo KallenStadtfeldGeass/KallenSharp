@@ -50,7 +50,7 @@ namespace Geass_Tristana.Events
                 foreach (var enemy in (ObjectManager.Get<Obj_AI_Hero>().Where(e => e.IsValidTarget(Champion.GetSpellR.Range)).OrderBy(hp => hp.Health)))
                 {
                     if (!SMenu.Item(MenuNameBase + "Combo.Boolean.UseR.On." + enemy.ChampionName).GetValue<bool>()) continue;
-                    if (_damageLib.CalculateDamage(enemy) < enemy.Health) continue;
+                    if (_damageLib.CalcDamage(enemy) < enemy.Health) continue;
                      Logger.WriteLog($"Combo Use R on {enemy}");
                     Champion.GetSpellR.Cast(enemy);
                     return;

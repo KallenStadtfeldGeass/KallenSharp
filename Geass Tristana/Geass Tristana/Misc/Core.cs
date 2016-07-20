@@ -1,7 +1,7 @@
 ﻿using LeagueSharp;
 using LeagueSharp.Common;
 
-namespace Geass_Tristana.Other
+namespace Geass_Tristana.Misc
 {
 #pragma warning disable RECS0014 // If all fields, properties and methods members are static, the class can be made static.
     internal class Core
