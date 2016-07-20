@@ -37,13 +37,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LeagueSharp">
-      <HintPath>C:\LeagueSharp\System\LeagueSharp.dll</HintPath>
+      <HintPath>C:\Riot Games\PlaySharp\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
-      <HintPath>C:\LeagueSharp\System\LeagueSharp.Common.dll</HintPath>
+      <HintPath>C:\Riot Games\PlaySharp\System\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\LeagueSharp\System\SharpDX.dll</HintPath>
+      <HintPath>C:\Riot Games\PlaySharp\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -75,7 +75,6 @@
     <Compile Include="Libaries\Git.cs" />
     <Compile Include="Libaries\LukeSkywalker.cs" />
     <Compile Include="Libaries\RendCheck.cs" />
-    <Compile Include="Libaries\VectorHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structures\Items.cs" />
