@@ -2,5 +2,11 @@
 {
     internal class Vars
     {
+        public bool InCombo { get; set; }
+
+        public Vars()
+        {
+            InCombo = false;
+        }
     }
 }

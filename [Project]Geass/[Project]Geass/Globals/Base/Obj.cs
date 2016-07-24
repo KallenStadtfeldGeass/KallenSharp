@@ -17,10 +17,10 @@ namespace _Project_Geass.Globals.Base
         public Obj()
         {
             ProjectLogger = new Logger(Constants.Names.ProjectName);
-            SettingsMenu = new Menu(Constants.Names.ProjectName, Constants.Names.ProjectName, true);
-
-            AssemblyLoadTime = DateTime.Now;
+            SettingsMenu = new Menu(Constants.Names.SettingsName, Constants.Names.SettingsName, true);
             Player = ObjectManager.Player;
+            ProjectMenu = new Menu($"{Constants.Names.ProjectName}.{Player.ChampionName}", $"{Constants.Names.ProjectName}.{Player.ChampionName}", true);
+            AssemblyLoadTime = DateTime.Now;
         }
     }
 }

@@ -56,10 +56,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
+    <Compile Include="Bootloaders\Champions\Corki\SkillSequence.cs" />
+    <Compile Include="Bootloaders\Champions\Tristana\SkillSequence.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
-    <Compile Include="Bootloaders\Core\Menus\Drawing.cs" />
+    <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
+    <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
+    <Compile Include="Bootloaders\Core\Events\OnUpdate\TrinketEvent.cs" />
+    <Compile Include="Bootloaders\Core\Menus\ItemsMenu.cs" />
+    <Compile Include="Bootloaders\Core\Menus\LastHitMenu.cs" />
+    <Compile Include="Bootloaders\Core\Menus\OnLevelMenu.cs" />
+    <Compile Include="Bootloaders\Core\Menus\TrinketMenu.cs" />
     <Compile Include="Bootloaders\Initializer.cs" />
-    <Compile Include="Bootloaders\Base\Menus\InitializerMenu.cs" />
+    <Compile Include="Bootloaders\Base\Menus\SettingsMenu.cs" />
     <Compile Include="Constants\Names.cs" />
     <Compile Include="Data\Buffs.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
@@ -75,6 +84,7 @@
     <Compile Include="Globals\Base\Obj.cs" />
     <Compile Include="Globals\Static.cs" />
     <Compile Include="Globals\Base\Vars.cs" />
+    <Compile Include="Humanizer\DelayHandler.cs" />
     <Compile Include="Humanizer\Tick.cs" />
     <Compile Include="Humanizer\TickManager.cs" />
     <Compile Include="Logging\Logger.cs" />
@@ -86,7 +96,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Bootloaders\Champions\" />
     <Folder Include="Drawing\Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

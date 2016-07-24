@@ -1,31 +1,55 @@
 ﻿using _Project_Geass.Bootloaders.Base.Menus;
+using _Project_Geass.Bootloaders.Core.Menus;
 using _Project_Geass.Constants;
-using LeagueSharp.Common;
+using _Project_Geass.Globals;
 
 namespace _Project_Geass.Bootloaders
 {
     internal class Initializer
     {
+        private int[] getAbilitySequence(string name)
+        {
+            switch (name)
+            {
+                case "Corki":
+                    return Champions.Corki.SkillSequence.AbilitySequence;
+                case "Tristana":
+                    return Champions.Corki.SkillSequence.AbilitySequence;
+            }
+            return null;
+        }
+
         public Initializer()
         {
             //Load Base Menu(What champs to use)
-            var initializerMenu = new InitializerMenu();
-            Globals.Static.Objects.SettingsMenu.AddToMainMenu();
+            // ReSharper disable once UnusedVariable
+            var initializerMenu = new SettingsMenu();
+            Static.Objects.SettingsMenu.AddToMainMenu();
 
-            if (
-                !Globals.Static.Objects.SettingsMenu.Item(Names.Menu.BaseName +
-                                                          Globals.Static.Objects.Player.ChampionName).GetValue<bool>())
-            {
-                Globals.Static.Objects.ProjectMenu = new Menu(Constants.Names.ProjectName + $".{Globals.Static.Objects.Player.ChampionName}.Disabled", Constants.Names.ProjectName + $".{Globals.Static.Objects.Player.ChampionName}.Disabled", true);
-                Globals.Static.Objects.ProjectMenu.AddToMainMenu();
-                return;
-            }
-
-            Globals.Static.Objects.ProjectMenu = new Menu(Constants.Names.ProjectName + $".{Globals.Static.Objects.Player.ChampionName}", Constants.Names.ProjectName + $".{Globals.Static.Objects.Player.ChampionName}", true);
+            Humanizer.DelayHandler.Load();
+            if (!Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.Enable").GetValue<bool>()) return;
 
             //Initilize Menus
 
-            Globals.Static.Objects.ProjectMenu.AddToMainMenu();
+            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.LastHitHelperMenu").GetValue<bool>())
+            {
+                // ReSharper disable once UnusedVariable
+                var menu = new LastHitMenu();
+            }
+
+            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>())
+            {
+                // ReSharper disable once UnusedVariable
+                var menu = new ItemsMenu();
+            }
+
+            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.OnLevelMenu").GetValue<bool>())
+            {
+                // ReSharper disable once UnusedVariable
+                var menu = new OnLevelMenu(getAbilitySequence(Static.Objects.Player.ChampionName));
+            }
+
+            Static.Objects.ProjectMenu.AddToMainMenu();
         }
     }
 }

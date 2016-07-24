@@ -1,4 +1,4 @@
-﻿using LeagueSharp;
+﻿using _Project_Geass.Globals;
 using LeagueSharp.Common;
 using System;
 
@@ -8,18 +8,20 @@ namespace _Project_Geass.Bootloaders.Core.Events.Drawing.Minions
     {
         public LastHitHelper()
         {
-            Game.OnUpdate += OnMinionDraw;
+            LeagueSharp.Drawing.OnDraw += OnMinionDraw;
         }
 
         public void OnMinionDraw(EventArgs args)
         {
-            if (Globals.Static.Objects.Player.IsDead) return;
-            if (!Globals.Static.Objects.ProjectMenu.Item(Constants.Names.Menu.DrawingItemBase + ".Minion." + "Boolean.LastHitHelper").GetValue<bool>()) return;
+            if (Static.Objects.Player.IsDead) return;
+            if (!Static.Objects.ProjectMenu.Item(Constants.Names.Menu.LastHitHelperItemBase + ".Minion." + "Boolean.LastHitHelper").GetValue<bool>()) return;
 
-            foreach (var minion in Functions.Objects.Minions.GetEnemyMinions(Globals.Static.Objects.ProjectMenu.Item(Constants.Names.Menu.DrawingItemBase + ".Minion." + "Slider.RenderDistance").GetValue<Slider>().Value))
+            foreach (var minion in Functions.Objects.Minions.GetEnemyMinions(Static.Objects.Player.AttackRange + 150))
             {
-                if (Globals.Static.Objects.Player.GetAutoAttackDamage(minion) - 5 > minion.Health) // Is killable
-                    Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius + 100, Globals.Static.Objects.ProjectMenu.Item(Constants.Names.Menu.DrawingItemBase + ".Minion." + "Circle.KillableColor").GetValue<Circle>().Color, 2);
+                if (Static.Objects.Player.GetAutoAttackDamage(minion) - 5 > minion.Health) // Is killable
+                {
+                    Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius - 10, Static.Objects.ProjectMenu.Item(Constants.Names.Menu.LastHitHelperItemBase + ".Minion." + "Circle.KillableColor").GetValue<Circle>().Color, 3);
+                }
             }
         }
     }

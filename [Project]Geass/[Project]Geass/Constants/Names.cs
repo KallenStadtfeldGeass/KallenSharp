@@ -8,12 +8,12 @@
         };
 
         public static readonly string ProjectName = "[Project]Geass";
-        public static readonly string SettingsName = "[Project]Geass.ChampionSettings";
+        public static readonly string SettingsName = "[Project]Geass.Settings";
 
         public static class Menu
         {
-            public static string BaseItem = "Base.";
-            public static string BaseName = "Base Menu";
+            public static string BaseItem = "MenuSettings.";
+            public static string BaseName = "Menu Settings";
 
             public static string LevelItemBase = "Level.";
             public static string LevelNameBase = "Level Menu";
@@ -23,6 +23,9 @@
 
             public static string DrawingItemBase = "Drawing.";
             public static string DrawingNameBase = "Drawing Menu";
+
+            public static string LastHitHelperItemBase = "LastHitHelper.";
+            public static string LastHitHelperNameBase = "LastHit Helper Menu";
 
             public static string MenuDefensiveItemBase = ItemNameBase + "Defensive.";
             public static string MenuDefensiveNameBase = "Defensive Menu";
