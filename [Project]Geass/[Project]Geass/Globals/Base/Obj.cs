@@ -2,6 +2,7 @@
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
+using _Project_Geass.Data;
 
 namespace _Project_Geass.Globals.Base
 {
@@ -16,10 +17,10 @@ namespace _Project_Geass.Globals.Base
 
         public Obj()
         {
-            ProjectLogger = new Logger(Constants.Names.ProjectName);
-            SettingsMenu = new Menu(Constants.Names.SettingsName, Constants.Names.SettingsName, true);
+            ProjectLogger = new Logger(Names.ProjectName);
+            SettingsMenu = new Menu(Names.SettingsName, Names.SettingsName, true);
             Player = ObjectManager.Player;
-            ProjectMenu = new Menu($"{Constants.Names.ProjectName}.{Player.ChampionName}", $"{Constants.Names.ProjectName}.{Player.ChampionName}", true);
+            ProjectMenu = new Menu($"{Names.ProjectName}.{Player.ChampionName}", $"{Names.ProjectName}.{Player.ChampionName}", true);
             AssemblyLoadTime = DateTime.Now;
         }
     }

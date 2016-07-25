@@ -1,5 +1,6 @@
 ﻿using System;
 using LeagueSharp;
+using _Project_Geass.Data;
 using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
 
@@ -24,7 +25,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
         {
             if (DelayHandler.CheckOnLevel())
             {
-                if (!Static.Objects.ProjectMenu.Item(Constants.Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>()) return;
+                if (!Static.Objects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>()) return;
                 DelayHandler.UseOnLevel();
 
                 if (_lastLevel != Static.Objects.Player.Level)

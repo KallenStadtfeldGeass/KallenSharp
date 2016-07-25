@@ -1,4 +1,4 @@
-﻿namespace _Project_Geass.Constants
+﻿namespace _Project_Geass.Data
 {
     internal static class Names
     {
@@ -26,6 +26,9 @@
 
             public static string LastHitHelperItemBase = "LastHitHelper.";
             public static string LastHitHelperNameBase = "LastHit Helper Menu";
+
+            public static string ManaItemBase = "Mana.";
+            public static string ManaNameBase = "Mana Menu";
 
             public static string MenuDefensiveItemBase = ItemNameBase + "Defensive.";
             public static string MenuDefensiveNameBase = "Defensive Menu";

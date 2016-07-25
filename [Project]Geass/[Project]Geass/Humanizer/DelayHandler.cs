@@ -1,4 +1,4 @@
-﻿using _Project_Geass.Constants;
+﻿using _Project_Geass.Data;
 
 namespace _Project_Geass.Humanizer
 {

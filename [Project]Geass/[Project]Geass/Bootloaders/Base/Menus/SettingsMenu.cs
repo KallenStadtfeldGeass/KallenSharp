@@ -1,6 +1,7 @@
 ﻿using _Project_Geass.Globals;
 using LeagueSharp.Common;
 using System.Collections.Generic;
+using _Project_Geass.Data;
 
 namespace _Project_Geass.Bootloaders.Base.Menus
 {
@@ -8,11 +9,11 @@ namespace _Project_Geass.Bootloaders.Base.Menus
     {
         public SettingsMenu()
         {
-            foreach (var champ in Constants.Names.ChampionBundled)
+            foreach (var champ in Names.ChampionBundled)
             {
-                var temp = new Menu(champ, Constants.Names.Menu.BaseItem + champ);
+                var temp = new Menu(champ, Names.Menu.BaseItem + champ);
 
-                foreach (var element in GenerateSettingsList(Constants.Names.Menu.BaseItem + champ))
+                foreach (var element in GenerateSettingsList(Names.Menu.BaseItem + champ))
                 {
                     Static.Objects.ProjectLogger.WriteLog(element.Name);
                     temp.AddItem(element);
@@ -27,11 +28,11 @@ namespace _Project_Geass.Bootloaders.Base.Menus
             var items = new List<MenuItem>
             {
                 new MenuItem($"{basename}.Enable", "Enable Champion").SetValue(true),
-                new MenuItem($"{basename}.ManaMenu", "Mana Manager").SetValue(true),
-                new MenuItem($"{basename}.ItemMenu", "Item Manager").SetValue(true),
-                new MenuItem($"{basename}.OnLevelMenu", "OnLevel Manager").SetValue(true),
+                new MenuItem($"{basename}.ManaMenu", "Mana Menu").SetValue(true),
+                new MenuItem($"{basename}.ItemMenu", "Item Menu").SetValue(true),
+                new MenuItem($"{basename}.OnLevelMenu", "OnLevel Menu").SetValue(true),
                 new MenuItem($"{basename}.TrinketMenu", "Trinket Menu").SetValue(true),
-                new MenuItem($"{basename}.LastHitHelperMenu", "LastHit Helper").SetValue(true),
+                new MenuItem($"{basename}.LastHitHelperMenu", "LastHitHelper Menu").SetValue(true),
             };
 
             return items;

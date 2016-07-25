@@ -1,6 +1,6 @@
-﻿using _Project_Geass.Constants;
-using _Project_Geass.Globals;
+﻿using _Project_Geass.Globals;
 using LeagueSharp.Common;
+using _Project_Geass.Data;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
 {
@@ -25,9 +25,9 @@ namespace _Project_Geass.Bootloaders.Core.Menus
             qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS", "Use QSS").SetValue(true));
             qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Slider.QSS.Delay", "QSS Delay").SetValue(new Slider(300, 250, 1500)));
 
-            foreach (var buff in Data.Buffs.GetTypes)
+            foreach (var buff in Buffs.GetTypes)
             {
-                qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS." + buff, "Use QSS On" + buff).SetValue(true));
+                qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS." + buff, "On " + buff).SetValue(true));
             }
 
             var mercMenu = new Menu(".Merc Menu", "MercMenu");
@@ -35,9 +35,9 @@ namespace _Project_Geass.Bootloaders.Core.Menus
             mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc", "Use Merc").SetValue(true));
             mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Slider.Merc.Delay", "Merc Delay").SetValue(new Slider(300, 250, 1500)));
 
-            foreach (var buff in Data.Buffs.GetTypes)
+            foreach (var buff in Buffs.GetTypes)
             {
-                mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc." + buff, "Use Merc On" + buff).SetValue(true));
+                mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc." + buff, "On " + buff).SetValue(true));
             }
 
             defensiveMenu.AddSubMenu(qssMenu);

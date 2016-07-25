@@ -1,6 +1,6 @@
 ﻿using _Project_Geass.Bootloaders.Base.Menus;
 using _Project_Geass.Bootloaders.Core.Menus;
-using _Project_Geass.Constants;
+using _Project_Geass.Data;
 using _Project_Geass.Globals;
 
 namespace _Project_Geass.Bootloaders
@@ -12,9 +12,21 @@ namespace _Project_Geass.Bootloaders
             switch (name)
             {
                 case "Corki":
-                    return Champions.Corki.SkillSequence.AbilitySequence;
+                    return Data.Champions.AbilitySequences.Corki;
                 case "Tristana":
-                    return Champions.Corki.SkillSequence.AbilitySequence;
+                    return Data.Champions.AbilitySequences.Tristana;
+            }
+            return null;
+        }
+
+        private int[,] GetManaOptions(string name)
+        {
+            switch (name)
+            {
+                case "Corki":
+                    return Data.Champions.ManaManager.Corki;
+                case "Tristana":
+                    return Data.Champions.ManaManager.Tristana;
             }
             return null;
         }
@@ -37,6 +49,13 @@ namespace _Project_Geass.Bootloaders
                 var menu = new LastHitMenu();
             }
 
+            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>())
+            {
+                // ReSharper disable once UnusedVariable
+                var menu = new ManaMenu(GetManaOptions(Static.Objects.Player.ChampionName));
+            }
+
+
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
@@ -47,6 +66,14 @@ namespace _Project_Geass.Bootloaders
             {
                 // ReSharper disable once UnusedVariable
                 var menu = new OnLevelMenu(getAbilitySequence(Static.Objects.Player.ChampionName));
+            }
+
+        
+
+            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>())
+            {
+                // ReSharper disable once UnusedVariable
+                var menu = new TrinketMenu();
             }
 
             Static.Objects.ProjectMenu.AddToMainMenu();

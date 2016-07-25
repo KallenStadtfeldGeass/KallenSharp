@@ -1,5 +1,5 @@
 ﻿using LeagueSharp.Common;
-using _Project_Geass.Constants;
+using _Project_Geass.Data;
 using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
 

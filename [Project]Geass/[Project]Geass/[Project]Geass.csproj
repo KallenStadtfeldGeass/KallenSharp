@@ -57,20 +57,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
-    <Compile Include="Bootloaders\Champions\Corki\SkillSequence.cs" />
-    <Compile Include="Bootloaders\Champions\Tristana\SkillSequence.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\TrinketEvent.cs" />
     <Compile Include="Bootloaders\Core\Menus\ItemsMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\LastHitMenu.cs" />
+    <Compile Include="Bootloaders\Core\Menus\ManaMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\OnLevelMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\TrinketMenu.cs" />
     <Compile Include="Bootloaders\Initializer.cs" />
     <Compile Include="Bootloaders\Base\Menus\SettingsMenu.cs" />
-    <Compile Include="Constants\Names.cs" />
+    <Compile Include="Data\Champions\ManaManager.cs" />
+    <Compile Include="Data\Names.cs" />
     <Compile Include="Data\Buffs.cs" />
+    <Compile Include="Data\Champions\AbilitySequences.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
     <Compile Include="Data\Items\Offensive.cs" />
     <Compile Include="Data\Items\Trinkets.cs" />
@@ -90,12 +91,13 @@
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Structures\Level.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Bootloaders\Champions\Corki\" />
+    <Folder Include="Bootloaders\Champions\Tristana\" />
     <Folder Include="Drawing\Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

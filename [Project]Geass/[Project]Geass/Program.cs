@@ -2,6 +2,7 @@
 using LeagueSharp.Common;
 using System;
 using System.Linq;
+using _Project_Geass.Data;
 
 namespace _Project_Geass
 {
@@ -14,7 +15,7 @@ namespace _Project_Geass
 
         private static void OnLoad(EventArgs args)
         {
-            if (Constants.Names.ChampionBundled.Any(champ => ObjectManager.Player.ChampionName == champ))
+            if (Names.ChampionBundled.Any(champ => ObjectManager.Player.ChampionName == champ))
             {
                 // ReSharper disable once UnusedVariable
                 var init = new Bootloaders.Initializer();
