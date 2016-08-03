@@ -7,34 +7,13 @@ namespace _Project_Geass.Bootloaders
 {
     internal class Initializer
     {
-        private int[] getAbilitySequence(string name)
-        {
-            switch (name)
-            {
-                case "Corki":
-                    return Data.Champions.AbilitySequences.Corki;
-                case "Tristana":
-                    return Data.Champions.AbilitySequences.Tristana;
-            }
-            return null;
-        }
-
-        private int[,] GetManaOptions(string name)
-        {
-            switch (name)
-            {
-                case "Corki":
-                    return Data.Champions.ManaManager.Corki;
-                case "Tristana":
-                    return Data.Champions.ManaManager.Tristana;
-            }
-            return null;
-        }
 
         public Initializer()
         {
             //Load Base Menu(What champs to use)
             // ReSharper disable once UnusedVariable
+            var aioChamp = new Data.Champions.AioChampion();
+
             var initializerMenu = new SettingsMenu();
             Static.Objects.SettingsMenu.AddToMainMenu();
 
@@ -47,12 +26,14 @@ namespace _Project_Geass.Bootloaders
             {
                 // ReSharper disable once UnusedVariable
                 var menu = new LastHitMenu();
+                Static.Objects.ProjectLogger.WriteLog("LasthitMenu");
             }
 
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new ManaMenu(GetManaOptions(Static.Objects.Player.ChampionName));
+                var menu = new ManaMenu(aioChamp.GetManaSettings);
+                Static.Objects.ProjectLogger.WriteLog("Mana Menu");
             }
 
 
@@ -60,12 +41,14 @@ namespace _Project_Geass.Bootloaders
             {
                 // ReSharper disable once UnusedVariable
                 var menu = new ItemsMenu();
+                Static.Objects.ProjectLogger.WriteLog("Item");
             }
 
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.OnLevelMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new OnLevelMenu(getAbilitySequence(Static.Objects.Player.ChampionName));
+                var menu = new OnLevelMenu(aioChamp.GetAbilities);
+                Static.Objects.ProjectLogger.WriteLog("Auto Level Menu");
             }
 
         
@@ -73,7 +56,9 @@ namespace _Project_Geass.Bootloaders
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
+
                 var menu = new TrinketMenu();
+                Static.Objects.ProjectLogger.WriteLog("Trinket Menu");
             }
 
             Static.Objects.ProjectMenu.AddToMainMenu();

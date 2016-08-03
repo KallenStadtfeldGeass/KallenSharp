@@ -3,8 +3,9 @@
     internal static class Names
     {
         public static readonly string[] ChampionBundled = {
-            "Tristana",
-            "Kalista"
+            "Ezreal",
+            "Corki",
+            "Ashe"
         };
 
         public static readonly string ProjectName = "[Project]Geass";

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootloaders\Champions\Ashe.cs" />
     <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
@@ -68,10 +69,10 @@
     <Compile Include="Bootloaders\Core\Menus\TrinketMenu.cs" />
     <Compile Include="Bootloaders\Initializer.cs" />
     <Compile Include="Bootloaders\Base\Menus\SettingsMenu.cs" />
-    <Compile Include="Data\Champions\ManaManager.cs" />
+    <Compile Include="Data\Champions\Base.cs" />
+    <Compile Include="Data\Champions\AioChampion.cs" />
     <Compile Include="Data\Names.cs" />
     <Compile Include="Data\Buffs.cs" />
-    <Compile Include="Data\Champions\AbilitySequences.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
     <Compile Include="Data\Items\Offensive.cs" />
     <Compile Include="Data\Items\Trinkets.cs" />
@@ -97,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bootloaders\Champions\Corki\" />
-    <Folder Include="Bootloaders\Champions\Tristana\" />
+    <Folder Include="Bootloaders\Champions\Ezreal\" />
     <Folder Include="Drawing\Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

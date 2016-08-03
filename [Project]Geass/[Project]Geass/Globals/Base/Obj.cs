@@ -15,6 +15,9 @@ namespace _Project_Geass.Globals.Base
         public Obj_AI_Hero Player { get; set; }
         public DateTime AssemblyLoadTime;
 
+        /// <summary>
+        /// Create Objects for use later
+        /// </summary>
         public Obj()
         {
             ProjectLogger = new Logger(Names.ProjectName);
