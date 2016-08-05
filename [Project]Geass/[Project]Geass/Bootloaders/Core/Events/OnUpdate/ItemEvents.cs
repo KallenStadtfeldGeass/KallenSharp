@@ -1,10 +1,10 @@
-﻿using _Project_Geass.Globals;
+﻿using _Project_Geass.Data;
+using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
 using System.Linq;
-using _Project_Geass.Data;
 
 namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 {

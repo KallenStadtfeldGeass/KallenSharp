@@ -2,9 +2,8 @@
 
 namespace _Project_Geass.Data.Champions
 {
-    class AioChampion : Base
+    internal class AioChampion : Base
     {
-
         public int[] GetAbilities { get; set; }
 
         public int[,] GetManaSettings { get; set; }
@@ -22,8 +21,7 @@ namespace _Project_Geass.Data.Champions
                     W, W
                 };
 
-                GetManaSettings = new[,] {{20, -1, 40, 15}, {30, -1, 50, 35}, {35, -1, 40, 35}};
-
+                GetManaSettings = new[,] { { 20, -1, 40, 15 }, { 30, -1, 50, 35 }, { 35, -1, 40, 35 } };
             }
             else if (Static.Objects.Player.ChampionName == "Ezreal")
             {
@@ -36,10 +34,9 @@ namespace _Project_Geass.Data.Champions
                     W, W
                 };
 
-                GetManaSettings = new[,] {{20, 30, -1, 35}, {30, 40, -1, 15}, {50, -1, -1, -1}};
+                GetManaSettings = new[,] { { 20, 30, -1, 35 }, { 30, 40, -1, 15 }, { 50, -1, -1, -1 } };
             }
-
-            else if (Static.Objects.Player.ChampionName== "Ashe")
+            else if (Static.Objects.Player.ChampionName == "Ashe")
             {
                 GetAbilities = new int[]
                 {
@@ -48,7 +45,6 @@ namespace _Project_Geass.Data.Champions
                     W,Q,R,Q,
                     Q,E,E,R,
                     E,E
-                    
                 };
 
                 GetManaSettings = new[,] { { 25, 30, -1, 30 }, { 25, 35, -1, 35 }, { 40, 65, -1, -1 } };

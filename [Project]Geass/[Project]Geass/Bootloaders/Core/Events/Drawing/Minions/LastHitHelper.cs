@@ -1,7 +1,7 @@
-﻿using _Project_Geass.Globals;
+﻿using _Project_Geass.Data;
+using _Project_Geass.Globals;
 using LeagueSharp.Common;
 using System;
-using _Project_Geass.Data;
 
 namespace _Project_Geass.Bootloaders.Core.Events.Drawing.Minions
 {
@@ -17,7 +17,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.Drawing.Minions
             if (Static.Objects.Player.IsDead) return;
             if (!Static.Objects.ProjectMenu.Item(Names.Menu.LastHitHelperItemBase + ".Minion." + "Boolean.LastHitHelper").GetValue<bool>()) return;
 
-            foreach (var minion in Functions.Objects.Minions.GetEnemyMinions(Static.Objects.Player.AttackRange + 150))
+            foreach (var minion in _Project_Geass.Functions.Objects.Minions.GetEnemyMinions(Static.Objects.Player.AttackRange + 150))
             {
                 if (Static.Objects.Player.GetAutoAttackDamage(minion) - 5 > minion.Health) // Is killable
                 {

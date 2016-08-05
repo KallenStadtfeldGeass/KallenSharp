@@ -1,20 +1,19 @@
-﻿using System;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
+using System;
 
 namespace _Project_Geass.Bootloaders.Champions
 {
-    class Ashe : Base.Champion
+    internal class Ashe : Base.Champion
     {
-
         public Ashe()
         {
-           GetSpellQ = new Spell(SpellSlot.Q);
-           GetSpellW = new Spell(SpellSlot.W,1200);
-           GetSpellR = new Spell(SpellSlot.R,2200);
+            GetSpellQ = new Spell(SpellSlot.Q);
+            GetSpellW = new Spell(SpellSlot.W, 1200);
+            GetSpellR = new Spell(SpellSlot.R, 2200);
 
-           GetSpellW.SetSkillshot(.25f,57.5f,2000,true,SkillshotType.SkillshotCone);
-           GetSpellR.SetSkillshot(.25f,250,1600,false,SkillshotType.SkillshotLine);
+            GetSpellW.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
+            GetSpellR.SetSkillshot(.25f, 250, 1600, false, SkillshotType.SkillshotLine);
 
             Game.OnUpdate += OnUpdate;
             LeagueSharp.Drawing.OnDraw += OnDraw;
@@ -25,27 +24,22 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void OnUpdate(EventArgs args)
         {
-            
         }
 
         private void AfterAttack(AttackableUnit unit, AttackableUnit target)
         {
-            
         }
 
         private void OnGapcloser(ActiveGapcloser gapcloser)
         {
-            
         }
 
-        private void OnInterruptable(Obj_AI_Hero sender,Interrupter2.InterruptableTargetEventArgs args)
+        private void OnInterruptable(Obj_AI_Hero sender, Interrupter2.InterruptableTargetEventArgs args)
         {
-            
         }
 
         private void OnDraw(EventArgs args)
         {
-            
         }
     }
 }

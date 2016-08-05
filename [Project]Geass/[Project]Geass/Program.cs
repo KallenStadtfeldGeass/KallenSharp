@@ -1,8 +1,8 @@
-﻿using LeagueSharp;
+﻿using _Project_Geass.Data;
+using LeagueSharp;
 using LeagueSharp.Common;
 using System;
 using System.Linq;
-using _Project_Geass.Data;
 
 namespace _Project_Geass
 {
@@ -20,7 +20,7 @@ namespace _Project_Geass
         /// Raises the <see cref="E:Load" /> event.
         /// </summary>
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
-        
+
         private static void OnLoad(EventArgs args)
         {
             if (Names.ChampionBundled.Any(champ => ObjectManager.Player.ChampionName == champ))

@@ -7,7 +7,6 @@ namespace _Project_Geass.Bootloaders
 {
     internal class Initializer
     {
-
         public Initializer()
         {
             //Load Base Menu(What champs to use)
@@ -36,7 +35,6 @@ namespace _Project_Geass.Bootloaders
                 Static.Objects.ProjectLogger.WriteLog("Mana Menu");
             }
 
-
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
@@ -50,8 +48,6 @@ namespace _Project_Geass.Bootloaders
                 var menu = new OnLevelMenu(aioChamp.GetAbilities);
                 Static.Objects.ProjectLogger.WriteLog("Auto Level Menu");
             }
-
-        
 
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>())
             {

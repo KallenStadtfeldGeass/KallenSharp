@@ -1,8 +1,8 @@
-﻿using _Project_Geass.Logging;
+﻿using _Project_Geass.Data;
+using _Project_Geass.Logging;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
-using _Project_Geass.Data;
 
 namespace _Project_Geass.Globals.Base
 {

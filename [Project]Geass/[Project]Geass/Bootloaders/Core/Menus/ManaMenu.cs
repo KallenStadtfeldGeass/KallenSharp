@@ -1,14 +1,13 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Bootloaders.Core.Events.Drawing.Minions;
+﻿using _Project_Geass.Bootloaders.Core.Events.Drawing.Minions;
 using _Project_Geass.Data;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
 {
-    class ManaMenu
+    internal class ManaMenu
     {
         private Menu GetMenu(int[,] options)
         {
-
             var menu = new Menu(Names.Menu.ManaNameBase, "ManaManager");
             menu.AddItem(new MenuItem(Names.Menu.ManaItemBase + "Use.ManaManager", "Use ManaManager").SetValue(true));
 
@@ -19,7 +18,6 @@ namespace _Project_Geass.Bootloaders.Core.Menus
                 {
                     if (options[index, i] != -1)
                         subMenu.AddItem(new MenuItem($"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[index]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[i]}", $"Min Mana% {Data.Champions.Base.ManaAbilities[i]}").SetValue(new Slider(options[index, i])));
-
                 }
                 menu.AddSubMenu(subMenu);
             }

@@ -9,6 +9,7 @@
         /// The maximum seed
         /// </summary>
         private float _maxDelay;
+
         /// <summary>
         /// The minimum seed
         /// </summary>

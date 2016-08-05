@@ -1,6 +1,6 @@
-﻿using _Project_Geass.Globals;
+﻿using _Project_Geass.Data;
+using _Project_Geass.Globals;
 using LeagueSharp.Common;
-using _Project_Geass.Data;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
 {

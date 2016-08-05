@@ -1,20 +1,21 @@
-﻿using System;
-using LeagueSharp;
-using LeagueSharp.Common;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
+using LeagueSharp;
+using LeagueSharp.Common;
+using System;
 
 namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 {
-    class TrinketEvent
+    internal class TrinketEvent
     {
         public TrinketEvent()
         {
             if (!DelayHandler.Loaded) DelayHandler.Load();
             Game.OnUpdate += OnUpdate;
         }
-        void OnUpdate(EventArgs args)
+
+        private void OnUpdate(EventArgs args)
         {
             if (DelayHandler.CheckTrinket())
             {
@@ -29,6 +30,5 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
                 Data.Items.Trinkets.Orb.Buy();
             }
         }
-
     }
 }

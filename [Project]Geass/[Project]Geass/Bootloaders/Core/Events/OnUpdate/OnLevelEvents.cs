@@ -1,15 +1,14 @@
-﻿using System;
-using LeagueSharp;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
+using LeagueSharp;
+using System;
 
 namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 {
-    class OnLevelEvents
+    internal class OnLevelEvents
     {
-
-        readonly int[] _abilitySequences;
+        private readonly int[] _abilitySequences;
         private int _lastLevel;
 
         public OnLevelEvents(int[] sequence)
@@ -20,8 +19,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
             Game.OnUpdate += OnUpdate;
         }
 
-
-        void OnUpdate(EventArgs args)
+        private void OnUpdate(EventArgs args)
         {
             if (DelayHandler.CheckOnLevel())
             {
@@ -36,13 +34,12 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
             }
         }
 
-        void LevelUpSpells()
+        private void LevelUpSpells()
         {
             var qL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.Q).Level + _qOff;
             var wL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.W).Level + _wOff;
             var eL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.E).Level + _eOff;
             var rL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.R).Level + _rOff;
-
 
             if (qL + wL + eL + rL >= Static.Objects.Player.Level) return;
 
@@ -58,11 +55,10 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
         }
 
 #pragma warning disable RECS0122 // Initializing field with default value is redundant
-        readonly int _qOff = 0;
-        readonly int _wOff = 0;
-        readonly int _eOff = 0;
-        readonly int _rOff = 0;
+        private readonly int _qOff = 0;
+        private readonly int _wOff = 0;
+        private readonly int _eOff = 0;
+        private readonly int _rOff = 0;
 #pragma warning restore RECS0122 // Initializing field with default value is redundant
-
     }
 }

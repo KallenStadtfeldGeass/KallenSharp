@@ -1,6 +1,6 @@
 ﻿using _Project_Geass.Bootloaders.Core.Events.Drawing.Minions;
-using LeagueSharp.Common;
 using _Project_Geass.Data;
+using LeagueSharp.Common;
 using Color = System.Drawing.Color;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
