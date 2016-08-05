@@ -1,4 +1,5 @@
 ﻿using _Project_Geass.Bootloaders.Base.Menus;
+using _Project_Geass.Bootloaders.Champions;
 using _Project_Geass.Bootloaders.Core.Menus;
 using _Project_Geass.Data;
 using _Project_Geass.Globals;
@@ -57,6 +58,10 @@ namespace _Project_Geass.Bootloaders
                 Static.Objects.ProjectLogger.WriteLog("Trinket Menu");
             }
 
+            if (Static.Objects.Player.ChampionName == "Ashe")
+            {
+                var sAshe = new Ashe();
+            }
             Static.Objects.ProjectMenu.AddToMainMenu();
         }
     }

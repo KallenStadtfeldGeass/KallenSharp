@@ -8,31 +8,30 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
     {
         public Ashe()
         {
-            Static.Objects.SettingsMenu.AddSubMenu(Combo());
-            Static.Objects.SettingsMenu.AddSubMenu(Mixed());
-            Static.Objects.SettingsMenu.AddSubMenu(Clear());
-            Static.Objects.SettingsMenu.AddSubMenu(Auto());
+            Static.Objects.ProjectMenu.AddSubMenu(Combo());
+            Static.Objects.ProjectMenu.AddSubMenu(Mixed());
+            Static.Objects.ProjectMenu.AddSubMenu(Clear());
+            Static.Objects.ProjectMenu.AddSubMenu(Auto());
         }
 
-        private string BaseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
-
+        private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
 
         private Menu Auto()
         {
-            string basename = BaseName + "Auto.";
+            string basename = _baseName + "Auto.";
 
             var mainMenu = new Menu(basename, "Auto");
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose", "Use W on gapclose").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose", "Use R on gapclose").SetValue(false));
 
-            var wMenu = new Menu(basename + "GapCloseW", "GapClose W Settings");
+            var wMenu = new Menu("GapClose W Settings", basename + "GapCloseW");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
                 wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose{enemy}", $"On {enemy}").SetValue(true));
             }
 
-            var rMenu = new Menu(basename + "GapCloseR", "GapClose R Settings");
+            var rMenu = new Menu("GapClose R Settings", basename + "GapCloseR");
 
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
@@ -45,9 +44,10 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             return mainMenu;
         }
+
         private Menu Combo()
         {
-            string basename = BaseName + "Combo.";
+            string basename = _baseName + "Combo.";
 
             var mainMenu = new Menu(basename, "Combo");
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
@@ -62,7 +62,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
                 "Very High", "High" ,"Immobile"
             })));
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.Range", "R Range").SetValue(new Slider(1000, 500, 1750)));
-            var rMenu = new Menu(basename + "R Settings", "R Settings");
+            var rMenu = new Menu("R Settings", basename + "R Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
@@ -76,7 +76,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Mixed()
         {
-            string basename = BaseName + "Mixed.";
+            string basename = _baseName + "Mixed.";
             var mainMenu = new Menu(basename, "Mixed");
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
@@ -89,7 +89,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Clear()
         {
-            string basename = BaseName + "Clear.";
+            string basename = _baseName + "Clear.";
             var mainMenu = new Menu(basename, "Clear");
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
