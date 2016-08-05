@@ -16,7 +16,7 @@ namespace _Project_Geass.Globals.Base
         public DateTime AssemblyLoadTime;
 
         /// <summary>
-        /// Create Objects for use later
+        /// Initializes a new instance of the <see cref="Obj"/> class.
         /// </summary>
         public Obj()
         {

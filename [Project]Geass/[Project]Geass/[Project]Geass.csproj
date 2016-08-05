@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Bootloaders\Champions\Ashe.cs" />
     <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
+    <Compile Include="Bootloaders\Champions\Menus\Ashe.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
@@ -98,8 +99,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Bootloaders\Champions\Corki\" />
-    <Folder Include="Bootloaders\Champions\Ezreal\" />
     <Folder Include="Drawing\Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

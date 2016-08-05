@@ -15,6 +15,9 @@ namespace _Project_Geass.Bootloaders.Champions
             GetSpellW.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
             GetSpellR.SetSkillshot(.25f, 250, 1600, false, SkillshotType.SkillshotLine);
 
+            // ReSharper disable once UnusedVariable
+            var temp = new Menus.Ashe();
+
             Game.OnUpdate += OnUpdate;
             LeagueSharp.Drawing.OnDraw += OnDraw;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
@@ -24,6 +27,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void OnUpdate(EventArgs args)
         {
+
         }
 
         private void AfterAttack(AttackableUnit unit, AttackableUnit target)

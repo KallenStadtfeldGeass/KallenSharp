@@ -12,8 +12,10 @@ namespace _Project_Geass.Humanizer
         /// </summary>
         public static void Load()
         {
-            MyTicker.AddTick($"{Names.ProjectName}.OnLevel", 125, 175);
+            if (Loaded) return;
+            MyTicker.AddTick($"{Names.ProjectName}.OnLevel", 150, 200);
             MyTicker.AddTick($"{Names.ProjectName}.UseItems", 75, 125);
+            MyTicker.AddTick($"{Names.ProjectName}.TrinketBuy", 200, 275);
             Loaded = true;
         }
 
@@ -21,33 +23,33 @@ namespace _Project_Geass.Humanizer
         /// Checks the on level.
         /// </summary>
         /// <returns></returns>
-        public static bool CheckOnLevel() => MyTicker.CheckTick("GeassLib.OnLevel");
+        public static bool CheckOnLevel() => MyTicker.CheckTick($"{Names.ProjectName}.OnLevel");
 
         /// <summary>
         /// Uses the on level.
         /// </summary>
-        public static void UseOnLevel() => MyTicker.UseTick("GeassLib.OnLevel");
+        public static void UseOnLevel() => MyTicker.UseTick($"{Names.ProjectName}.OnLevel");
 
         /// <summary>
         /// Checks the trinket.
         /// </summary>
         /// <returns></returns>
-        public static bool CheckTrinket() => MyTicker.CheckTick("GeassLib.TrinketBuy");
+        public static bool CheckTrinket() => MyTicker.CheckTick($"{Names.ProjectName}.TrinketBuy");
 
         /// <summary>
         /// Uses the trinket.
         /// </summary>
-        public static void UseTrinket() => MyTicker.UseTick("GeassLib.TrinketBuy");
+        public static void UseTrinket() => MyTicker.UseTick($"{Names.ProjectName}.TrinketBuy");
 
         /// <summary>
         /// Checks the items.
         /// </summary>
         /// <returns></returns>
-        public static bool CheckItems() => MyTicker.CheckTick("GeassLib.Items");
+        public static bool CheckItems() => MyTicker.CheckTick($"{Names.ProjectName}.UseItems");
 
         /// <summary>
         /// Uses the items.
         /// </summary>
-        public static void UseItems() => MyTicker.UseTick("GeassLib.Items");
+        public static void UseItems() => MyTicker.UseTick($"{Names.ProjectName}.UseItems");
     }
 }
