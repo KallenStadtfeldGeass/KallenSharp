@@ -17,16 +17,16 @@ namespace _Project_Geass.Bootloaders
             var initializerMenu = new SettingsMenu();
             Static.Objects.SettingsMenu.AddToMainMenu();
 
-            Humanizer.DelayHandler.Load();
+            Humanizer.DelayHandler.Load(Core.Functions.MenuOptions.HumanizerEnabled());
             if (!Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.Enable").GetValue<bool>()) return;
 
             //Initilize Menus
 
-            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.LastHitHelperMenu").GetValue<bool>())
+            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.DrawingMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new LastHitMenu();
-                Static.Objects.ProjectLogger.WriteLog("LasthitMenu");
+                var menu = new DrawingMenu();
+                Static.Objects.ProjectLogger.WriteLog("DrawingMenu");
             }
 
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>())

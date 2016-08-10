@@ -28,15 +28,14 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose{enemy}", $"On {enemy}").SetValue(true));
+                wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy}", $"On {enemy}").SetValue(true));
             }
 
             var rMenu = new Menu("GapClose R Settings", basename + "GapCloseR");
 
-
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose{enemy}", $"On {enemy}").SetValue(true));
+                rMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose.{enemy}", $"On {enemy}").SetValue(true));
             }
 
             mainMenu.AddSubMenu(wMenu);
@@ -54,14 +53,15 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
 
-            mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(new StringList(new[] { "Very High", "High" })));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(
+                    new StringList(Core.Functions.Prediction.GetHitChanceNames())));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR", "Use R").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseR.Prediction", "R Prediction").SetValue(new StringList(new[]
-            {
-                "Very High", "High" ,"Immobile"
-            })));
+            mainMenu.AddItem(
+                new MenuItem($"{basename}.UseR.Prediction", "R Prediction").SetValue(
+                    new StringList(Core.Functions.Prediction.GetHitChanceNames())));
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.Range", "R Range").SetValue(new Slider(1000, 500, 1750)));
+
             var rMenu = new Menu("R Settings", basename + "R Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
@@ -82,7 +82,8 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
 
-            mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(new StringList(new[] { "Very High", "High" })));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(
+                    new StringList(Core.Functions.Prediction.GetHitChanceNames())));
 
             return mainMenu;
         }
@@ -95,9 +96,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.Minions", "Minons Hit").SetValue(new Slider(4, 3, 10)));
 
-
             return mainMenu;
         }
-
     }
 }

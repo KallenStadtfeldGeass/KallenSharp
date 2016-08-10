@@ -9,6 +9,10 @@ namespace _Project_Geass.Bootloaders.Base.Menus
     {
         public SettingsMenu()
         {
+            var core = new Menu("Core", Names.Menu.BaseItem + "Core");
+            core.AddItem(new MenuItem($"{Names.Menu.BaseItem }.Humanizer", "Enable Minimalist Humanizer(Reload Required)").SetValue(true));
+            Static.Objects.SettingsMenu.AddSubMenu(core);
+
             foreach (var champ in Names.ChampionBundled)
             {
                 var temp = new Menu(champ, Names.Menu.BaseItem + champ);
@@ -32,7 +36,7 @@ namespace _Project_Geass.Bootloaders.Base.Menus
                 new MenuItem($"{basename}.ItemMenu", "Item Menu").SetValue(true),
                 new MenuItem($"{basename}.OnLevelMenu", "OnLevel Menu").SetValue(true),
                 new MenuItem($"{basename}.TrinketMenu", "Trinket Menu").SetValue(true),
-                new MenuItem($"{basename}.LastHitHelperMenu", "LastHitHelper Menu").SetValue(true),
+                new MenuItem($"{basename}.DrawingMenu", "Drawing Menu").SetValue(true),
             };
 
             return items;

@@ -5,18 +5,20 @@ namespace _Project_Geass.Humanizer
     internal class DelayHandler
     {
         private static readonly TickManager MyTicker = new TickManager();
-        public static bool Loaded;
 
         /// <summary>
-        /// Loads this instance.
+        /// Loads the specified humanize.
         /// </summary>
-        public static void Load()
+        /// <param name="humanize">if set to <c>true</c> [humanize].</param>
+        public static void Load(bool humanize)
         {
-            if (Loaded) return;
-            MyTicker.AddTick($"{Names.ProjectName}.OnLevel", 150, 200);
-            MyTicker.AddTick($"{Names.ProjectName}.UseItems", 75, 125);
-            MyTicker.AddTick($"{Names.ProjectName}.TrinketBuy", 200, 275);
-            Loaded = true;
+            var offset = 0;
+            if (humanize)
+                offset = 100;
+
+            MyTicker.AddTick($"{Names.ProjectName}.OnLevel", 50 + offset, 75 + offset);
+            MyTicker.AddTick($"{Names.ProjectName}.UseItems", offset, 25 + offset);
+            MyTicker.AddTick($"{Names.ProjectName}.TrinketBuy", 50 + offset, 100 + offset);
         }
 
         /// <summary>

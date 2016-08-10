@@ -13,8 +13,6 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 
         public OnLevelEvents(int[] sequence)
         {
-            if (!DelayHandler.Loaded) DelayHandler.Load();
-
             _abilitySequences = sequence;
             Game.OnUpdate += OnUpdate;
         }

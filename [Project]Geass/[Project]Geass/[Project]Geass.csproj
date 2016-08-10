@@ -34,16 +34,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LeagueSharp">
-      <HintPath>C:\Riot Games\PlaySharp\References\LeagueSharp.dll</HintPath>
+      <HintPath>C:\Riot Games\nMC9D7Fyn\References\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
       <HintPath>C:\Riot Games\PlaySharp\References\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Riot Games\PlaySharp\References\SharpDX.dll</HintPath>
+      <HintPath>C:\Riot Games\nMC9D7Fyn\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>C:\Riot Games\PlaySharp\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\Riot Games\nMC9D7Fyn\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,13 +59,16 @@
     <Compile Include="Bootloaders\Champions\Ashe.cs" />
     <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
     <Compile Include="Bootloaders\Champions\Menus\Ashe.cs" />
+    <Compile Include="Bootloaders\Core\Events\Drawing\Champion\OnDraw.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\TrinketEvent.cs" />
     <Compile Include="Bootloaders\Core\Functions\Mana.cs" />
+    <Compile Include="Bootloaders\Core\Functions\MenuOptions.cs" />
+    <Compile Include="Bootloaders\Core\Functions\Prediction.cs" />
+    <Compile Include="Bootloaders\Core\Menus\DrawingMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\ItemsMenu.cs" />
-    <Compile Include="Bootloaders\Core\Menus\LastHitMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\ManaMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\OnLevelMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\TrinketMenu.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Humanizer\Tick.cs" />
     <Compile Include="Humanizer\TickManager.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Extensions\OrbwalkerExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

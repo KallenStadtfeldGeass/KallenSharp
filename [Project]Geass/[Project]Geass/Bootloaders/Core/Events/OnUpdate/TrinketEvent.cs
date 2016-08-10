@@ -11,7 +11,6 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
     {
         public TrinketEvent()
         {
-            if (!DelayHandler.Loaded) DelayHandler.Load();
             Game.OnUpdate += OnUpdate;
         }
 

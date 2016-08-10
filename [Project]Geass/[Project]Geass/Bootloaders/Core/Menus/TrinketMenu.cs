@@ -1,6 +1,5 @@
 ﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
-using _Project_Geass.Humanizer;
 using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
@@ -18,7 +17,6 @@ namespace _Project_Geass.Bootloaders.Core.Menus
 
         public TrinketMenu()
         {
-            if (!DelayHandler.Loaded) DelayHandler.Load();
             Static.Objects.ProjectMenu.AddSubMenu(GetMenu());
             // ReSharper disable once UnusedVariable
             var trinket = new Events.OnUpdate.TrinketEvent();
