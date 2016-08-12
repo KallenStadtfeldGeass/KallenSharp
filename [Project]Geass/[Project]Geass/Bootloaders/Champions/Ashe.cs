@@ -106,6 +106,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
                         foreach (var pos in validPos.OrderBy(x => x.Health))
                         {
+                            if(pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) || pos.HasBuffOfType(BuffType.SpellShield))continue;
                             GetSpellW.Cast(pos.Position);
                             break;
                         }
@@ -134,6 +135,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
                         foreach (var pos in validPos.OrderBy(x => x.Health))
                         {
+                            if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) || pos.HasBuffOfType(BuffType.SpellShield)) continue;
                             GetSpellR.Cast(pos.Position);
                             break;
                         }
@@ -163,6 +165,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
                     foreach (var pos in validPos.OrderBy(x => x.Health))
                     {
+                        if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) || pos.HasBuffOfType(BuffType.SpellShield)) continue;
                         GetSpellW.Cast(pos.Position);
                         break;
                     }
@@ -226,9 +229,12 @@ namespace _Project_Geass.Bootloaders.Champions
                         {
                             if (Static.Objects.ProjectMenu.Item($"{Names.Menu.BaseItem}.Humanizer").GetValue<bool>())
                             {
+
+                                if (gapcloser.Sender.HasBuffOfType(BuffType.Invulnerability) || gapcloser.Sender.HasBuffOfType(BuffType.SpellImmunity) || gapcloser.Sender.HasBuffOfType(BuffType.SpellShield)) return;
                                 Utility.DelayAction.Add(Math.Abs(_rng.Next() * (150 - 50 - Game.Ping) + 50 - Game.Ping),
                                     () =>
                                     {
+
                                         GetSpellR.Cast(gapcloser.End);
                                     });
                             }
@@ -251,6 +257,7 @@ namespace _Project_Geass.Bootloaders.Champions
                         {
                             if (Static.Objects.ProjectMenu.Item($"{Names.Menu.BaseItem}.Humanizer").GetValue<bool>())
                             {
+                                if (gapcloser.Sender.HasBuffOfType(BuffType.Invulnerability) || gapcloser.Sender.HasBuffOfType(BuffType.SpellImmunity) || gapcloser.Sender.HasBuffOfType(BuffType.SpellShield)) return;
                                 Utility.DelayAction.Add(
                                     Math.Abs(_rng.Next() * (200 - 100 - Game.Ping) + 100 - Game.Ping), () =>
                                       {
@@ -273,8 +280,10 @@ namespace _Project_Geass.Bootloaders.Champions
         {
             if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
             {
+                if(GetSpellW.Level > 0)
                 if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
                     Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+                if(GetSpellR.Level > 0)
                 if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
                     Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
             }

@@ -60,7 +60,7 @@ namespace _Project_Geass.Bootloaders
 
             if (Static.Objects.Player.ChampionName == "Ashe")
             {
-                var mAshe = new Champions.Menus.Ashe();
+               // var mAshe = new Champions.Menus.Ashe();
                 var eAshe = new Ashe();
 
             }

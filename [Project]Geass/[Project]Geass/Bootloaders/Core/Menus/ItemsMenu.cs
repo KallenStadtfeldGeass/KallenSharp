@@ -10,13 +10,13 @@ namespace _Project_Geass.Bootloaders.Core.Menus
         {
             var menu = new Menu(Names.Menu.ItemMenuBase, "itemMenu");
 
-            var offensiveMenu = new Menu(Names.Menu.MenuOffensiveNameBase, "offensiveMenu");
-            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.Bork", "Use BotRK/Cutlass").SetValue(true));
-            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.Youmuu", "Use Youmuu's").SetValue(true));
-            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Slider.Bork.MinHp", "(BotRK/Cutlass) Min% HP Remaining(Target)").SetValue(new Slider(20)));
-            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Slider.Bork.MaxHp", "(BotRK/Cutlass) Max% HP Remaining(Target)").SetValue(new Slider(55)));
-            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Slider.Bork.MinHp.Player", "(BotRK/Cutlass) Min% HP Remaining(Player)").SetValue(new Slider(20)));
-            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly", "Only use offensive items in combo").SetValue(true));
+            var offensiveMenu = new Menu(Names.Menu.MenuOffensiveItemBase, "offensiveMenu");
+            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuOffensiveItemBase + "Boolean.Bork", "Use BotRK/Cutlass").SetValue(true));
+            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuOffensiveItemBase + "Boolean.Youmuu", "Use Youmuu's").SetValue(true));
+            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp", "(BotRK/Cutlass) Min% HP Remaining(Target)").SetValue(new Slider(20)));
+            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp", "(BotRK/Cutlass) Max% HP Remaining(Target)").SetValue(new Slider(55)));
+            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player", "(BotRK/Cutlass) Min% HP Remaining(Player)").SetValue(new Slider(20)));
+            offensiveMenu.AddItem(new MenuItem(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly", "Only use offensive items in combo").SetValue(true));
 
             var defensiveMenu = new Menu(Names.Menu.MenuDefensiveNameBase, "defensiveMenu");
 
