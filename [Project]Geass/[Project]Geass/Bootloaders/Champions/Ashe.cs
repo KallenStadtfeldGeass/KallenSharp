@@ -121,7 +121,7 @@ namespace _Project_Geass.Bootloaders.Champions
                     {
                         var enemies = Functions.Objects.Heroes.GetEnemies(Static.Objects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value);
 
-                        var validEnemies = (enemies.OrderBy(x => x.HealthPercent).Where(enemy => Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy}").GetValue<bool>()).Where(enemy => !(Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy}.HpMin").GetValue<Slider>().Value > enemy.HealthPercent) && !(Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy}.HpMax").GetValue<Slider>().Value < enemy.HealthPercent)));
+                        var validEnemies = (enemies.OrderBy(x => x.HealthPercent).Where(enemy => Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}").GetValue<bool>()).Where(enemy => !(Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}.HpMin").GetValue<Slider>().Value > enemy.HealthPercent) && !(Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}.HpMax").GetValue<Slider>().Value < enemy.HealthPercent)));
 
                         var validPos =
                             validEnemies.Where(
@@ -224,7 +224,7 @@ namespace _Project_Geass.Bootloaders.Champions
                     {
                         if (gapcloser.End.Distance(ObjectManager.Player.Position) < 300)
                         {
-                            if (Core.Functions.MenuOptions.HumanizerEnabled())
+                            if (Static.Objects.ProjectMenu.Item($"{Names.Menu.BaseItem}.Humanizer").GetValue<bool>())
                             {
                                 Utility.DelayAction.Add(Math.Abs(_rng.Next() * (150 - 50 - Game.Ping) + 50 - Game.Ping),
                                     () =>
@@ -249,7 +249,7 @@ namespace _Project_Geass.Bootloaders.Champions
                     {
                         if (gapcloser.End.Distance(ObjectManager.Player.Position) < 200)
                         {
-                            if (Core.Functions.MenuOptions.HumanizerEnabled())
+                            if (Static.Objects.ProjectMenu.Item($"{Names.Menu.BaseItem}.Humanizer").GetValue<bool>())
                             {
                                 Utility.DelayAction.Add(
                                     Math.Abs(_rng.Next() * (200 - 100 - Game.Ping) + 100 - Game.Ping), () =>
@@ -271,21 +271,15 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void OnDraw(EventArgs args)
         {
-            if (Core.Functions.MenuOptions.DrawingOnSelfEnabled())
+            if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
             {
-                if (Core.Functions.MenuOptions.DrawQRangeEnabled())
-                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellQ.Range, Core.Functions.MenuOptions.DrawQRangeColor(), 2);
-
-                if (Core.Functions.MenuOptions.DrawWRangeEnabled())
-                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Core.Functions.MenuOptions.DrawWRangeColor(), 2);
-
-                if (Core.Functions.MenuOptions.DrawERangeEnabled())
-                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellE.Range, Core.Functions.MenuOptions.DrawERangeColor(), 2);
-
-                if (Core.Functions.MenuOptions.DrawRRangeEnabled())
-                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellR.Range, Core.Functions.MenuOptions.DrawRRangeColor(), 2);
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
             }
         }
+
 
         public void OnDrawEnemy(EventArgs args)
         {

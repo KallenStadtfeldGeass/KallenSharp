@@ -65,7 +65,6 @@
     <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\TrinketEvent.cs" />
     <Compile Include="Bootloaders\Core\Functions\Mana.cs" />
-    <Compile Include="Bootloaders\Core\Functions\MenuOptions.cs" />
     <Compile Include="Bootloaders\Core\Functions\Prediction.cs" />
     <Compile Include="Bootloaders\Core\Menus\DrawingMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\ItemsMenu.cs" />

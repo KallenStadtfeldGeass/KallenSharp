@@ -13,11 +13,11 @@ namespace _Project_Geass.Bootloaders
             //Load Base Menu(What champs to use)
             // ReSharper disable once UnusedVariable
             var aioChamp = new Data.Champions.AioChampion();
-
+            //Humanizer.DelayHandler.Load(Core.Functions.MenuOptions.HumanizerEnabled());
+            Humanizer.DelayHandler.Load(true);
             var initializerMenu = new SettingsMenu();
             Static.Objects.SettingsMenu.AddToMainMenu();
 
-            Humanizer.DelayHandler.Load(Core.Functions.MenuOptions.HumanizerEnabled());
             if (!Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.Enable").GetValue<bool>()) return;
 
             //Initilize Menus
@@ -60,7 +60,9 @@ namespace _Project_Geass.Bootloaders
 
             if (Static.Objects.Player.ChampionName == "Ashe")
             {
-                var sAshe = new Ashe();
+                var mAshe = new Champions.Menus.Ashe();
+                var eAshe = new Ashe();
+
             }
             Static.Objects.ProjectMenu.AddToMainMenu();
         }

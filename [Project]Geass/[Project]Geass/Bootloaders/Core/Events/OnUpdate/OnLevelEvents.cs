@@ -3,6 +3,7 @@ using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
 using LeagueSharp;
 using System;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 {
@@ -10,7 +11,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
     {
         private readonly int[] _abilitySequences;
         private int _lastLevel;
-
+        Random _rnd = new Random();
         public OnLevelEvents(int[] sequence)
         {
             _abilitySequences = sequence;
@@ -46,10 +47,23 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
             for (var i = 0; i < Static.Objects.Player.Level; i++)
                 level[_abilitySequences[i] - 1] = level[_abilitySequences[i] - 1] + 1;
 
-            if (qL < level[0]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.Q);
-            if (wL < level[1]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.W);
-            if (eL < level[2]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.E);
-            if (rL < level[3]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.R);
+            if (Static.Objects.ProjectMenu.Item($"{Names.Menu.BaseItem}.Humanizer").GetValue<bool>())
+                Utility.DelayAction.Add(
+                                    Math.Abs(_rnd.Next() * (200 - 100 - Game.Ping) + 100 - Game.Ping), () =>
+                                      {
+                                          if (qL < level[0]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.Q);
+                                          if (wL < level[1]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.W);
+                                          if (eL < level[2]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.E);
+                                          if (rL < level[3]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.R);
+                                      });
+
+            else
+            {
+                if (qL < level[0]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.Q);
+                if (wL < level[1]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.W);
+                if (eL < level[2]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.E);
+                if (rL < level[3]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.R);
+            }
         }
 
 #pragma warning disable RECS0122 // Initializing field with default value is redundant

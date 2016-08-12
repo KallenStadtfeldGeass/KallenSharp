@@ -28,14 +28,14 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy}", $"On {enemy}").SetValue(true));
+                wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
             }
 
             var rMenu = new Menu("GapClose R Settings", basename + "GapCloseR");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose.{enemy}", $"On {enemy}").SetValue(true));
+                rMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
             }
 
             mainMenu.AddSubMenu(wMenu);
@@ -66,10 +66,10 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                var temp = new Menu($"R Settings {enemy}", basename + $"RSettings.{enemy}");
-                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}", $"Enable").SetValue(true));
-                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}.HpMin", $"Min Hp%").SetValue(new Slider(15)));
-                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}.HpMax", $"Max Hp%").SetValue(new Slider(60)));
+                var temp = new Menu($"R Settings {enemy.ChampionName}", basename + $"RSettings.{enemy.ChampionName}");
+                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"Enable").SetValue(true));
+                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}.HpMin", $"Min Hp%").SetValue(new Slider(15)));
+                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}.HpMax", $"Max Hp%").SetValue(new Slider(60)));
                 rMenu.AddSubMenu(temp);
             }
 

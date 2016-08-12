@@ -7,8 +7,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
     {
         public static string[] GetHitChanceNames()
         {
-            var names = Enum.GetNames(typeof(LeagueSharp.Common.HitChance));
-            return new[] { names[2], names[3], names[4], names[0] };
+           return Enum.GetNames(typeof(LeagueSharp.Common.HitChance));
         }
 
         public static HitChance GetHitChance(string value) => (HitChance)Enum.Parse(typeof(HitChance), value);

@@ -35,7 +35,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Data.Items.Offensive.Botrk.Id))
+            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.Bork").GetValue<bool>() && Items.HasItem(Data.Items.Offensive.Botrk.Id))
             // If enabled and has item
             {
                 if (Data.Items.Offensive.Botrk.IsReady())
