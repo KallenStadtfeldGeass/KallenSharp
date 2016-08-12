@@ -66,7 +66,11 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}", $"On {enemy}").SetValue(true));
+                var temp = new Menu($"R Settings {enemy}", basename + $"RSettings.{enemy}");
+                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}", $"Enable").SetValue(true));
+                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}.HpMin", $"Min Hp%").SetValue(new Slider(15)));
+                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy}.HpMax", $"Max Hp%").SetValue(new Slider(60)));
+                rMenu.AddSubMenu(temp);
             }
 
             mainMenu.AddSubMenu(rMenu);
@@ -93,6 +97,8 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             string basename = _baseName + "Clear.";
             var mainMenu = new Menu(basename, "Clear");
 
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minons In AA Range").SetValue(new Slider(4, 3, 10)));
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.Minions", "Minons Hit").SetValue(new Slider(4, 3, 10)));
 

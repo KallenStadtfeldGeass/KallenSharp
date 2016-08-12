@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeagueSharp.Common;
+using System;
 
 namespace _Project_Geass.Bootloaders.Core.Functions
 {
@@ -9,5 +10,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             var names = Enum.GetNames(typeof(LeagueSharp.Common.HitChance));
             return new[] { names[2], names[3], names[4], names[0] };
         }
+
+        public static HitChance GetHitChance(string value) => (HitChance)Enum.Parse(typeof(HitChance), value);
     }
 }

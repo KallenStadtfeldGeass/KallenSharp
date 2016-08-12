@@ -10,5 +10,7 @@ namespace _Project_Geass.Functions.Objects
         public static List<Obj_AI_Minion> GetEnemyMinions() => ObjectManager.Get<Obj_AI_Minion>().Where(enemy => enemy.IsEnemy).ToList();
 
         public static List<Obj_AI_Minion> GetEnemyMinions(float range) => GetEnemyMinions().Where(minion => minion.IsValidTarget(range)).ToList();
+
+        public static List<Obj_AI_Base> GetEnemyMinions2(float range) => MinionManager.GetMinions(range);
     }
 }

@@ -19,7 +19,18 @@ namespace _Project_Geass.Humanizer
             MyTicker.AddTick($"{Names.ProjectName}.OnLevel", 50 + offset, 75 + offset);
             MyTicker.AddTick($"{Names.ProjectName}.UseItems", offset, 25 + offset);
             MyTicker.AddTick($"{Names.ProjectName}.TrinketBuy", 50 + offset, 100 + offset);
+            MyTicker.AddTick($"{Names.ProjectName}.Orbwalker", 10 + offset, 25 + offset);
         }
+
+        /// <summary>
+        /// Checks the orbwalker.
+        /// </summary>
+        public static bool CheckOrbwalker() => MyTicker.CheckTick($"{Names.ProjectName}.Orbwalker");
+
+        /// <summary>
+        /// Uses the orbwalker.
+        /// </summary>
+        public static void UseOrbwalker() => MyTicker.UseTick($"{Names.ProjectName}.Orbwalker");
 
         /// <summary>
         /// Checks the on level.

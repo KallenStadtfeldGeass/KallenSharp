@@ -3,14 +3,21 @@ using _Project_Geass.Globals;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
+using System.Linq;
+using _Project_Geass.Drawing.Champions;
 
 namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Ashe : Base.Champion
     {
         private readonly Random _rng;
+
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private Orbwalking.Orbwalker Orbwalker { get; set; }
+
         private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000, true);
+
 
         public Ashe()
         {
@@ -27,6 +34,7 @@ namespace _Project_Geass.Bootloaders.Champions
             Game.OnUpdate += OnUpdate;
 
             LeagueSharp.Drawing.OnDraw += OnDraw;
+            LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
             Interrupter2.OnInterruptableTarget += OnInterruptable;
@@ -37,6 +45,161 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void OnUpdate(EventArgs args)
         {
+            if (Humanizer.DelayHandler.CheckOrbwalker())
+            {
+                switch (Orbwalker.ActiveMode)
+                {
+                    case Orbwalking.OrbwalkingMode.Combo:
+                        {
+                            Combo();
+                            break;
+                        }
+                    case Orbwalking.OrbwalkingMode.Mixed:
+                        {
+                            Mixed();
+                            break;
+                        }
+                    case Orbwalking.OrbwalkingMode.LaneClear:
+                        {
+                            Clear();
+                            break;
+                        }
+                }
+                Humanizer.DelayHandler.UseOrbwalker();
+            }
+        }
+
+        private void Combo()
+        {
+            string basename = _baseName + "Combo.";
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
+            {
+                if (Core.Functions.Mana.CheckComboQ())
+                {
+                    if (GetSpellQ.IsReady())
+                    {
+                        if (Functions.Objects.Heroes.GetEnemies(Static.Objects.Player.AttackRange - 30).Count > 0)
+                        {
+                            GetSpellQ.Cast();
+                        }
+                    }
+                }
+            }
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
+            {
+                if (Core.Functions.Mana.CheckComboW())
+                {
+                    if (GetSpellW.IsReady())
+                    {
+                        var enemies = Functions.Objects.Heroes.GetEnemies(GetSpellW.Range);
+
+                        var validPos =
+                            enemies.Where(
+                                x =>
+                                    GetSpellW.GetPrediction(x).Hitchance >=
+                                    Core.Functions.Prediction.GetHitChance(
+                                        Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
+                                            .GetValue<StringList>()
+                                            .SelectedValue));
+
+                        foreach (var pos in validPos.OrderBy(x => x.Health))
+                        {
+                            GetSpellW.Cast(pos.Position);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
+            {
+                if (Core.Functions.Mana.CheckComboR())
+                {
+                    if (GetSpellR.IsReady())
+                    {
+                        var enemies = Functions.Objects.Heroes.GetEnemies(Static.Objects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value);
+
+                        var validEnemies = (enemies.OrderBy(x => x.HealthPercent).Where(enemy => Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy}").GetValue<bool>()).Where(enemy => !(Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy}.HpMin").GetValue<Slider>().Value > enemy.HealthPercent) && !(Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy}.HpMax").GetValue<Slider>().Value < enemy.HealthPercent)));
+
+                        var validPos =
+                            validEnemies.Where(
+                                x =>
+                                    GetSpellR.GetPrediction(x).Hitchance >=
+                                    Core.Functions.Prediction.GetHitChance(
+                                        Static.Objects.ProjectMenu.Item($"{basename}.UseR.Prediction")
+                                            .GetValue<StringList>()
+                                            .SelectedValue));
+
+                        foreach (var pos in validPos.OrderBy(x => x.Health))
+                        {
+                            GetSpellR.Cast(pos.Position);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Mixed()
+        {
+            string basename = _baseName + "Mixed.";
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
+            {
+                if (Core.Functions.Mana.CheckMixedW())
+                {
+                    var enemies = Functions.Objects.Heroes.GetEnemies(GetSpellW.Range);
+
+                    var validPos =
+                        enemies.Where(
+                            x =>
+                                GetSpellW.GetPrediction(x).Hitchance >=
+                                Core.Functions.Prediction.GetHitChance(
+                                    Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
+                                        .GetValue<StringList>()
+                                        .SelectedValue));
+
+                    foreach (var pos in validPos.OrderBy(x => x.Health))
+                    {
+                        GetSpellW.Cast(pos.Position);
+                        break;
+                    }
+                }
+            }
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
+                if (Core.Functions.Mana.CheckMixedQ())
+                    if (Functions.Objects.Heroes.GetEnemies(Static.Objects.Player.AttackRange - 50).Count >= 1)
+                        GetSpellQ.Cast();
+        }
+
+        private void Clear()
+        {
+            var basename = _baseName + "Clear.";
+
+            var validMinions = Functions.Objects.Minions.GetEnemyMinions2(GetSpellW.Range);
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
+                if (Core.Functions.Mana.CheckClearW())
+                    if (GetSpellW.IsReady())
+                    {
+                        var pos = GetSpellW.GetLineFarmLocation(validMinions);
+
+                        if (pos.MinionsHit >= Static.Objects.ProjectMenu.Item($"{basename}.UseW.Minions").GetValue<Slider>().Value)
+                            GetSpellW.Cast(pos.Position);
+                    }
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
+                if (Core.Functions.Mana.CheckClearQ())
+                {
+                    var aaMinons = validMinions.Where(x => x.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange);
+                    if (GetSpellQ.IsReady())
+                        if (aaMinons.Count() >=
+                            Static.Objects.ProjectMenu.Item($"{basename}.UseQ.Minions").GetValue<Slider>().Value)
+                            GetSpellQ.Cast();
+                }
         }
 
         private void AfterAttack(AttackableUnit unit, AttackableUnit target)
@@ -108,6 +271,55 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void OnDraw(EventArgs args)
         {
+            if (Core.Functions.MenuOptions.DrawingOnSelfEnabled())
+            {
+                if (Core.Functions.MenuOptions.DrawQRangeEnabled())
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellQ.Range, Core.Functions.MenuOptions.DrawQRangeColor(), 2);
+
+                if (Core.Functions.MenuOptions.DrawWRangeEnabled())
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Core.Functions.MenuOptions.DrawWRangeColor(), 2);
+
+                if (Core.Functions.MenuOptions.DrawERangeEnabled())
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellE.Range, Core.Functions.MenuOptions.DrawERangeColor(), 2);
+
+                if (Core.Functions.MenuOptions.DrawRRangeEnabled())
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellR.Range, Core.Functions.MenuOptions.DrawRRangeColor(), 2);
+            }
+        }
+
+        public void OnDrawEnemy(EventArgs args)
+        {
+            if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnEnemy").GetValue<bool>())
+            {
+                _damageIndicator.SetFillEnabled(false);
+                _damageIndicator.SetKillableEnabled(false);
+                return;
+            }
+
+            _damageIndicator.SetFillEnabled(Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnEnemy.FillColor").GetValue<Circle>().Active);
+            _damageIndicator.SetFill(Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnEnemy.FillColor").GetValue<Circle>().Color);
+
+
+            _damageIndicator.SetKillableEnabled(false);
+        }
+
+
+        static float GetDamage(Obj_AI_Hero target)
+        {
+            var damage = 0f;
+            if (target.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange - 25 &&
+                Static.Objects.Player.CanAttack && !Static.Objects.Player.IsWindingUp)
+                damage += (float)Static.Objects.Player.GetAutoAttackDamage(target) - 10;
+            
+
+            if (GetSpellW.IsReady())
+               damage += damage += (float) GetSpellW.GetDamage(target);
+
+            if (GetSpellR.IsReady())
+                damage += damage += (float)GetSpellR.GetDamage(target);
+
+            return Functions.Calculations.Damage.CalcRealDamage(target,damage);
+
         }
     }
 }
