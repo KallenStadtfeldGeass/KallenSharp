@@ -59,6 +59,7 @@
     <Compile Include="Bootloaders\Champions\Ashe.cs" />
     <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
     <Compile Include="Bootloaders\Champions\Menus\Ashe.cs" />
+    <Compile Include="Bootloaders\Champions\Menus\Ezreal.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Champion\OnDraw.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Bootloaders\Core\Menus\ManaMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\OnLevelMenu.cs" />
     <Compile Include="Bootloaders\Core\Menus\TrinketMenu.cs" />
+    <Compile Include="Bootloaders\Champions\Ezreal.cs" />
     <Compile Include="Bootloaders\Initializer.cs" />
     <Compile Include="Bootloaders\Base\Menus\SettingsMenu.cs" />
     <Compile Include="Data\Champions\Base.cs" />

@@ -26,7 +26,6 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 
                 LevelUpSpells();
             }
-
         }
 
         private void LevelUpSpells()
