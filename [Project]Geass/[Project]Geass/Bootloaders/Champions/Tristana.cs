@@ -92,7 +92,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void Combo()
         {
-            string basename = BaseName + "Combo.";
+            var basename = BaseName + "Combo.";
 
             var enemies = Functions.Objects.Heroes.GetEnemies(E.Range);
 
@@ -140,7 +140,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void Mixed()
         {
-            string basename = BaseName + "Mixed.";
+            var basename = BaseName + "Mixed.";
 
             var enemies = Functions.Objects.Heroes.GetEnemies(E.Range);
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())

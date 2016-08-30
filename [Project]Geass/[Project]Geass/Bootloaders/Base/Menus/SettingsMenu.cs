@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using LeagueSharp.Common;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
+using LeagueSharp.Common;
+using System.Collections.Generic;
 
 namespace _Project_Geass.Bootloaders.Base.Menus
 {
@@ -9,7 +9,7 @@ namespace _Project_Geass.Bootloaders.Base.Menus
     {
         public SettingsMenu()
         {
-            var core = new Menu("Core", Names.Menu.BaseItem + "Core");
+            var core = new Menu(nameof(Core), Names.Menu.BaseItem + nameof(Core));
             core.AddItem(
                 new MenuItem($"{Names.Menu.BaseItem}.Humanizer", "Enable Minimalist Humanizer(Reload Required)")
                     .SetValue(true));
@@ -29,7 +29,7 @@ namespace _Project_Geass.Bootloaders.Base.Menus
             }
         }
 
-        private IEnumerable<MenuItem> GenerateSettingsList(string basename)
+        private static IEnumerable<MenuItem> GenerateSettingsList(string basename)
         {
             var items = new List<MenuItem>
             {

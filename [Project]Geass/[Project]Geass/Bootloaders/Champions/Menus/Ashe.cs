@@ -18,9 +18,9 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Auto()
         {
-            string basename = _baseName + "Auto.";
+            var basename = _baseName + "Auto.";
 
-            var mainMenu = new Menu(basename, "Auto");
+            var mainMenu = new Menu(basename, nameof(Auto));
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose", "Use W on gapclose").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose", "Use R on gapclose").SetValue(false));
 
@@ -46,9 +46,9 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Combo()
         {
-            string basename = _baseName + "Combo.";
+            var basename = _baseName + "Combo.";
 
-            var mainMenu = new Menu(basename, "Combo");
+            var mainMenu = new Menu(basename, nameof(Combo));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
@@ -80,8 +80,8 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Mixed()
         {
-            string basename = _baseName + "Mixed.";
-            var mainMenu = new Menu(basename, "Mixed");
+            var basename = _baseName + "Mixed.";
+            var mainMenu = new Menu(basename, nameof(Mixed));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
@@ -95,7 +95,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
         private Menu Clear()
         {
             string basename = _baseName + "Clear.";
-            var mainMenu = new Menu(basename, "Clear");
+            var mainMenu = new Menu(basename, nameof(Clear));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minons In AA Range").SetValue(new Slider(4, 3, 10)));

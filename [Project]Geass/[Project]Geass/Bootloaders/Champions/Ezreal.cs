@@ -44,12 +44,6 @@ namespace _Project_Geass.Bootloaders.Champions
         private static float _lastTick;
         private static float _lastMana;
         private static bool _tearFull;
-
-        /// <summary>
-        /// Called when [process spell cast].
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs"/> instance containing the event data.</param>
         private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (_tearFull) return;
@@ -120,7 +114,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void Combo()
         {
-            string basename = BaseName + "Combo.";
+            var basename = BaseName + "Combo.";
 
             var enemies = Functions.Objects.Heroes.GetEnemies(Q.Range);
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
@@ -212,7 +206,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void Mixed()
         {
-            string basename = BaseName + "Mixed.";
+            var basename = BaseName + "Mixed.";
             var enemies = Functions.Objects.Heroes.GetEnemies(Q.Range);
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {

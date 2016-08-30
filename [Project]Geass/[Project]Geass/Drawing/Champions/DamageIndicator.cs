@@ -143,7 +143,7 @@ namespace _Project_Geass.Drawing.Champions
                 if (damage <= 0) continue;
 
                 if (damage > enemy.Health && KillableEnabled)
-                    LeagueSharp.Drawing.DrawText(enemy.HPBarPosition.X + 10, enemy.HPBarPosition.Y + 3, Killable, "Killable");
+                    LeagueSharp.Drawing.DrawText(enemy.HPBarPosition.X + 10, enemy.HPBarPosition.Y + 3, Killable, nameof(Killable));
 
                 if (FillEnabled)
                 {

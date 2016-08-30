@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using _Project_Geass.Humanizer;
 using SharpDX;
-using _Project_Geass.Humanizer;
+using System;
+using System.Collections.Generic;
 
 namespace _Project_Geass.Logging
 {

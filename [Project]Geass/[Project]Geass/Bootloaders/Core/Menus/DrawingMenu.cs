@@ -17,7 +17,7 @@ namespace _Project_Geass.Bootloaders.Core.Menus
             Static.Objects.ProjectLogger.WriteLog("Drawing Menu and events loaded.");
         }
 
-        public Menu GetDrawingMenu(bool [] drawingOptions)
+        public Menu GetDrawingMenu(bool[] drawingOptions)
         {
             var menu = new Menu(Names.Menu.DrawingNameBase, "enemyMenu");
 
@@ -29,7 +29,7 @@ namespace _Project_Geass.Bootloaders.Core.Menus
             selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf", "Draw On Self").SetValue(true));
 
             if (drawingOptions[0])
-            selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
             if (drawingOptions[1])
                 selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor", "W Range").SetValue(new Circle(true, Color.LightGreen)));
             if (drawingOptions[2])

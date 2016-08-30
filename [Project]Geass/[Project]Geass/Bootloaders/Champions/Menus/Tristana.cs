@@ -18,7 +18,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Auto()
         {
-            string basename = _baseName + "Auto.";
+            var basename = _baseName + "Auto.";
 
             var mainMenu = new Menu(basename, "Auto KS(R)");
             mainMenu.AddItem(new MenuItem($"{basename}.UseR", "Use R").SetValue(false));
@@ -37,9 +37,9 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Combo()
         {
-            string basename = _baseName + "Combo.";
+            var basename = _baseName + "Combo.";
 
-            var mainMenu = new Menu(basename, "Combo");
+            var mainMenu = new Menu(basename, nameof(Combo));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
@@ -68,8 +68,8 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Mixed()
         {
-            string basename = _baseName + "Mixed.";
-            var mainMenu = new Menu(basename, "Mixed");
+            var basename = _baseName + "Mixed.";
+            var mainMenu = new Menu(basename, nameof(Mixed));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             var eMenu = new Menu("E Settings", basename + "E Settings");
@@ -85,8 +85,8 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Clear()
         {
-            string basename = _baseName + "Clear.";
-            var mainMenu = new Menu(basename, "Clear");
+            var basename = _baseName + "Clear.";
+            var mainMenu = new Menu(basename, nameof(Clear));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnMinions", "Use Q On Minons").SetValue(true));

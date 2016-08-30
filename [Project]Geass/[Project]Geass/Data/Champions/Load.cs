@@ -13,7 +13,7 @@ namespace _Project_Geass.Data.Champions
         {
             switch (Static.Objects.Player.ChampionName)
             {
-                case "Tristana":
+                case nameof(Tristana):
                     GetAbilities = new int[]
                     {
                         E, W, Q, E,
@@ -24,12 +24,12 @@ namespace _Project_Geass.Data.Champions
                     };
 
                     GetManaSettings = new[,] { { -1, -1, 35, 25 }, { -1, -1, 35, -1 }, { -1, -1, 50, -1 } };
-                    GetDrawing = new[] {false, false, true, true};
+                    GetDrawing = new[] { false, false, true, true };
                     // ReSharper disable once UnusedVariable
                     var a = new Tristana();
                     break;
 
-                case "Ezreal":
+                case nameof(Ezreal):
                     GetAbilities = new int[]
                     {
                         Q, E, W, Q,
@@ -45,7 +45,7 @@ namespace _Project_Geass.Data.Champions
                     var b = new Ezreal();
                     break;
 
-                case "Ashe":
+                case nameof(Ashe):
                     GetAbilities = new int[]
                     {
                         W,Q,W,E,
