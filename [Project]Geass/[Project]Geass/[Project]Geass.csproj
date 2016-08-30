@@ -78,7 +78,7 @@
     <Compile Include="Bootloaders\Initializer.cs" />
     <Compile Include="Bootloaders\Base\Menus\SettingsMenu.cs" />
     <Compile Include="Data\Champions\Base.cs" />
-    <Compile Include="Data\Champions\AioChampion.cs" />
+    <Compile Include="Data\Champions\Load.cs" />
     <Compile Include="Data\Names.cs" />
     <Compile Include="Data\Buffs.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="Globals\Static.cs" />
     <Compile Include="Humanizer\DelayHandler.cs" />
     <Compile Include="Humanizer\Tick.cs" />
-    <Compile Include="Humanizer\TickManager.cs" />
+    <Compile Include="Logging\TickManager.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Extensions\OrbwalkerExtension.cs" />
     <Compile Include="Program.cs" />

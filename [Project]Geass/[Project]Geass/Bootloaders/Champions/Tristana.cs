@@ -1,15 +1,14 @@
-﻿using System;
-using System.Linq;
-using LeagueSharp;
-using LeagueSharp.Common;
-using _Project_Geass.Bootloaders.Core.Functions;
+﻿using _Project_Geass.Bootloaders.Core.Functions;
 using _Project_Geass.Data;
 using _Project_Geass.Drawing.Champions;
 using _Project_Geass.Globals;
+using LeagueSharp;
+using LeagueSharp.Common;
+using System;
+using System.Linq;
 
 namespace _Project_Geass.Bootloaders.Champions
 {
-
     internal class Tristana : Base.Champion
     {
         private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000, true);
@@ -74,7 +73,6 @@ namespace _Project_Geass.Bootloaders.Champions
 
                 if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
                 {
-
                     var enemies = Functions.Objects.Heroes.GetEnemies(R.Range);
                     foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)).OrderBy(hp => hp.Health))
                     {
@@ -87,11 +85,11 @@ namespace _Project_Geass.Bootloaders.Champions
                         R.Cast(enemy);
                         break;
                     }
-
                 }
                 Humanizer.DelayHandler.UseAutoEvent();
             }
         }
+
         private void Combo()
         {
             string basename = BaseName + "Combo.";
@@ -114,7 +112,7 @@ namespace _Project_Geass.Bootloaders.Champions
                 }
             }
 
-                if (Static.Objects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
             {
                 if (Mana.CheckComboE())
                 {
@@ -138,13 +136,11 @@ namespace _Project_Geass.Bootloaders.Champions
                 Q.Cast();
                 Orbwalker.ForceTarget(validTargets.FirstOrDefault());
             }
-
         }
 
         private void Mixed()
         {
             string basename = BaseName + "Mixed.";
-
 
             var enemies = Functions.Objects.Heroes.GetEnemies(E.Range);
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
@@ -167,13 +163,11 @@ namespace _Project_Geass.Bootloaders.Champions
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {
-                    var validTargets = enemies.Where(x => x.HasBuff("TristanaECharge"));
-                    Q.Cast();
-                    Orbwalker.ForceTarget(validTargets.FirstOrDefault());
+                var validTargets = enemies.Where(x => x.HasBuff("TristanaECharge"));
+                Q.Cast();
+                Orbwalker.ForceTarget(validTargets.FirstOrDefault());
             }
         }
-
-
 
         private void Clear()
         {
@@ -197,7 +191,6 @@ namespace _Project_Geass.Bootloaders.Champions
                             var target = objAiTurrets.FirstOrDefault();
                             E.Cast(target);
 
-                        
                             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
                                 if (Static.Objects.ProjectMenu.Item($"{basename}.OnTurrets").GetValue<bool>())
                                     Q.Cast();
@@ -206,7 +199,6 @@ namespace _Project_Geass.Bootloaders.Champions
                             return;
                         }
                     }
-
 
                     if (Static.Objects.ProjectMenu.Item($"{basename}.UseE.OnJungle").GetValue<bool>())
                     {
@@ -263,16 +255,14 @@ namespace _Project_Geass.Bootloaders.Champions
             }
         }
 
-
-
         private
             void OnDraw(EventArgs args)
         {
             if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
             {
-                if (W.Level > 0)
-                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+                if (E.Level > 0)
+                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Active)
+                        Render.Circle.DrawCircle(Static.Objects.Player.Position, E.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Color, 2);
                 if (R.Level > 0)
                     if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
                         Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
@@ -316,9 +306,7 @@ namespace _Project_Geass.Bootloaders.Champions
                 if (Static.Objects.Player.Distance(target) < E.Range)
                     damage += (float)(E.GetDamage(target) * 0.30) + E.GetDamage(target); // 1 auto charge
 
-
             return Functions.Calculations.Damage.CalcRealDamage(target, damage);
         }
     }
-
-    }
+}

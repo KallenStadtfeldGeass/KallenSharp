@@ -1,6 +1,6 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Champions.Menus
 {
@@ -44,7 +44,6 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
 
-
             var eMenu = new Menu("E Settings", basename + "E Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
@@ -80,7 +79,6 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
                 eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
             }
 
-
             mainMenu.AddSubMenu(eMenu);
             return mainMenu;
         }
@@ -99,7 +97,6 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnMinions", "Use E On Minons").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnTurrets", "Use E On Turrets").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnJungle", "Use E On Monsters").SetValue(true));
-
 
             mainMenu.AddItem(new MenuItem($"{basename}.MinionsInRange", "Minons In Range").SetValue(new Slider(4, 3, 10)));
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.Focus", "Focus E target").SetValue(true));

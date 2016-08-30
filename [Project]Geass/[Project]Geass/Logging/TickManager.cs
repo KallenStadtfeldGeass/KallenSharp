@@ -1,8 +1,9 @@
-﻿using SharpDX;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SharpDX;
+using _Project_Geass.Humanizer;
 
-namespace _Project_Geass.Humanizer
+namespace _Project_Geass.Logging
 {
     internal class TickManager
     {

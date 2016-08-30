@@ -1,4 +1,5 @@
 ﻿using _Project_Geass.Data;
+using _Project_Geass.Logging;
 
 namespace _Project_Geass.Humanizer
 {

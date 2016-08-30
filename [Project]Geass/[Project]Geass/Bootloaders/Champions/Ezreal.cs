@@ -45,22 +45,26 @@ namespace _Project_Geass.Bootloaders.Champions
         private static float _lastMana;
         private static bool _tearFull;
 
+        /// <summary>
+        /// Called when [process spell cast].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs"/> instance containing the event data.</param>
         private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (_tearFull) return;
             if (!sender.IsMe) return;
-            if (!(args.Slot.HasFlag(SpellSlot.Q) ||
-                  args.Slot.HasFlag(SpellSlot.W) ||
-                  args.Slot.HasFlag(SpellSlot.E) ||
-                  args.Slot.HasFlag(SpellSlot.R))) return;
+
+            if (args.Slot < SpellSlot.Q || args.Slot > SpellSlot.R) return; // 0-3 (Q-R)
 
             if (DelayCheck + _lastTick > Functions.AssemblyTime.CurrentTime())
-                if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
-                    Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
+                if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id))
+                {
                     _tearFull = _lastMana >= Static.Objects.Player.MaxMana;
+                    _lastMana = Static.Objects.Player.MaxMana;
+                }
 
             _lastTick = Functions.AssemblyTime.CurrentTime();
-            _lastMana = Static.Objects.Player.MaxMana;
         }
 
         private void AutoEvents(EventArgs args)
@@ -298,12 +302,12 @@ namespace _Project_Geass.Bootloaders.Champions
         {
             if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
             {
+                if (Q.Level > 0)
+                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active)
+                        Render.Circle.DrawCircle(Static.Objects.Player.Position, Q.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
                 if (W.Level > 0)
                     if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
                         Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
-                if (R.Level > 0)
-                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
             }
         }
 

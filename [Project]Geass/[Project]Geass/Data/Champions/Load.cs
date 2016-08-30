@@ -1,14 +1,15 @@
-﻿using _Project_Geass.Globals;
+﻿using _Project_Geass.Bootloaders.Champions;
+using _Project_Geass.Globals;
 
 namespace _Project_Geass.Data.Champions
 {
-    internal class AioChampion : Base
+    internal class Load : Base
     {
         public int[] GetAbilities { get; set; }
-
+        public bool[] GetDrawing { get; set; }
         public int[,] GetManaSettings { get; set; }
 
-        public AioChampion()
+        public Load()
         {
             switch (Static.Objects.Player.ChampionName)
             {
@@ -23,7 +24,11 @@ namespace _Project_Geass.Data.Champions
                     };
 
                     GetManaSettings = new[,] { { -1, -1, 35, 25 }, { -1, -1, 35, -1 }, { -1, -1, 50, -1 } };
+                    GetDrawing = new[] {false, false, true, true};
+                    // ReSharper disable once UnusedVariable
+                    var a = new Tristana();
                     break;
+
                 case "Ezreal":
                     GetAbilities = new int[]
                     {
@@ -35,7 +40,11 @@ namespace _Project_Geass.Data.Champions
                     };
 
                     GetManaSettings = new[,] { { 20, 30, -1, 35 }, { 30, 40, -1, 15 }, { 50, -1, -1, -1 } };
+                    GetDrawing = new[] { true, true, false, false };
+                    // ReSharper disable once UnusedVariable
+                    var b = new Ezreal();
                     break;
+
                 case "Ashe":
                     GetAbilities = new int[]
                     {
@@ -47,6 +56,9 @@ namespace _Project_Geass.Data.Champions
                     };
 
                     GetManaSettings = new[,] { { 25, 30, -1, 30 }, { 25, 35, -1, 35 }, { 40, 65, -1, -1 } };
+                    GetDrawing = new[] { false, true, false, true };
+                    // ReSharper disable once UnusedVariable
+                    var c = new Ashe();
                     break;
             }
         }
