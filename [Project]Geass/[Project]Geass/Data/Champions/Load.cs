@@ -61,7 +61,6 @@ namespace _Project_Geass.Data.Champions
                     var c = new Ashe();
                     break;
 
-
                 case nameof(Kalista):
                     GetAbilities = new int[]
                     {
@@ -77,7 +76,6 @@ namespace _Project_Geass.Data.Champions
                     // ReSharper disable once UnusedVariable
                     var d = new Kalista();
                     break;
-
             }
         }
     }

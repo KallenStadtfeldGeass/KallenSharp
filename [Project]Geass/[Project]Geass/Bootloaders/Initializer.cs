@@ -37,7 +37,7 @@ namespace _Project_Geass.Bootloaders
             {
                 // ReSharper disable once UnusedVariable
                 var menu = new ManaMenu(champ.GetManaSettings);
-              //  Static.Objects.ProjectLogger.WriteLog("Mana Menu");
+                //  Static.Objects.ProjectLogger.WriteLog("Mana Menu");
             }
 
             if (
@@ -46,7 +46,7 @@ namespace _Project_Geass.Bootloaders
             {
                 // ReSharper disable once UnusedVariable
                 var menu = new ItemsMenu();
-              //  Static.Objects.ProjectLogger.WriteLog("Item");
+                //  Static.Objects.ProjectLogger.WriteLog("Item");
             }
 
             if (
@@ -55,7 +55,7 @@ namespace _Project_Geass.Bootloaders
             {
                 // ReSharper disable once UnusedVariable
                 var menu = new OnLevelMenu(champ.GetAbilities);
-              //  Static.Objects.ProjectLogger.WriteLog("Auto Level Menu");
+                //  Static.Objects.ProjectLogger.WriteLog("Auto Level Menu");
             }
 
             if (
@@ -65,7 +65,7 @@ namespace _Project_Geass.Bootloaders
                 // ReSharper disable once UnusedVariable
 
                 var menu = new TrinketMenu();
-              //  Static.Objects.ProjectLogger.WriteLog("Trinket Menu");
+                //  Static.Objects.ProjectLogger.WriteLog("Trinket Menu");
             }
 
             Static.Objects.ProjectMenu.AddToMainMenu();

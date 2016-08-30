@@ -34,13 +34,14 @@ namespace _Project_Geass.Bootloaders.Champions
 
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new OrbwalkingEx.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         private const float DelayCheck = 8000;
         private static float _lastTick;
         private static float _lastMana;
         private static bool _tearFull;
+
         private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (_tearFull) return;
@@ -88,21 +89,21 @@ namespace _Project_Geass.Bootloaders.Champions
 
             switch (Orbwalker.ActiveMode)
             {
-                case Orbwalking.OrbwalkingMode.Combo:
-                {
-                    Combo();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.Mixed:
-                {
-                    Mixed();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.LaneClear:
-                {
-                    Clear();
-                    break;
-                }
+                case OrbwalkingEx.OrbwalkingMode.Combo:
+                    {
+                        Combo();
+                        break;
+                    }
+                case OrbwalkingEx.OrbwalkingMode.Mixed:
+                    {
+                        Mixed();
+                        break;
+                    }
+                case OrbwalkingEx.OrbwalkingMode.LaneClear:
+                    {
+                        Clear();
+                        break;
+                    }
             }
             Humanizer.DelayHandler.UseOrbwalker();
         }
@@ -267,8 +268,6 @@ namespace _Project_Geass.Bootloaders.Champions
                             Q.Cast(validMinions.FirstOrDefault());
                 }
         }
-
- 
 
         private void OnDraw(EventArgs args)
         {

@@ -1,11 +1,10 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Champions.Menus
 {
-  
-    class Kalista : Base.Champion
+    internal class Kalista : Base.Champion
     {
         public Kalista()
         {
@@ -35,13 +34,11 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             var eOther = new Menu($"{basename}EMenu.Other", "Other");
 
-
             eMenu.AddSubMenu(eAutoKill);
             eMenu.AddSubMenu(eOther);
 
             var rMenu = new Menu($"{basename}.RMenu", "R Menu");
             rMenu.AddItem(new MenuItem($"{basename}.UseR", "Enable").SetValue(true));
-
 
             mainMenu.AddSubMenu(rMenu);
 
@@ -68,7 +65,6 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
                 qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
 
-
             mainMenu.AddSubMenu(qMenu);
             return mainMenu;
         }
@@ -85,14 +81,12 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.Stacks", "E Stacks").SetValue(new Slider(4, 1, 10)));
 
-
             var qMenu = new Menu("Q Settings", basename + "Q Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
                 qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
-
 
             mainMenu.AddSubMenu(qMenu);
             return mainMenu;

@@ -106,7 +106,7 @@ namespace _Project_Geass.Drawing.Champions
         private Color Fill { get; set; }
         private Color Killable { get; set; }
 
-        void FillHpBar(Vector2 from, Vector2 to, ColorBGRA color)
+        private void FillHpBar(Vector2 from, Vector2 to, ColorBGRA color)
         {
             DxLine.Begin();
 

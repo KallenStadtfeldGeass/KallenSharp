@@ -44,7 +44,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
                         target.IsValidTarget(Static.Objects.Player.AttackRange + Static.Objects.Player.BoundingRadius) || Static.Objects.Player.HealthPercent < Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
-                        if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
+                        if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == OrbwalkingEx.OrbwalkingMode.Combo &&
                             target.HealthPercent < Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
                             //in combo and target hp less then
                             ||
@@ -76,7 +76,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
                        Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
-                        if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
+                        if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == OrbwalkingEx.OrbwalkingMode.Combo &&
                             target.HealthPercent <
                             Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
                             //in combo and target hp less then
@@ -105,7 +105,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
                     target.IsValidTarget(Static.Objects.Player.AttackRange + Static.Objects.Player.BoundingRadius))
                 // Is ready and target is in auto range
                 {
-                    if (Champions.Base.Champion.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
+                    if (Champions.Base.Champion.Orbwalker.ActiveMode == OrbwalkingEx.OrbwalkingMode.Combo)
                     {
                         Static.Objects.ProjectLogger.WriteLog($"Use Ghostblade on {target}");
                         Items.UseItem(Data.Items.Offensive.GhostBlade.Id);
@@ -120,7 +120,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 
             if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && Items.HasItem(Data.Items.Defensive.Qss.Id))
             {
-                if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo ||
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == OrbwalkingEx.OrbwalkingMode.Combo ||
                     !Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
                     if (Data.Items.Defensive.Qss.IsReady())
@@ -142,7 +142,7 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
             // ReSharper disable once RedundantNameQualifier
             if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Defensive.Merc.Id))
             {
-                if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo ||
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Champions.Base.Champion.Orbwalker.ActiveMode == OrbwalkingEx.OrbwalkingMode.Combo ||
                     !Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
                     if (Data.Items.Defensive.Merc.IsReady())

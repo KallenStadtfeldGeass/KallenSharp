@@ -28,7 +28,7 @@ namespace _Project_Geass.Bootloaders.Champions
             LeagueSharp.Drawing.OnDraw += OnDraw;
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new OrbwalkingEx.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         protected virtual void UpdateChampionRange(int level)
@@ -46,21 +46,21 @@ namespace _Project_Geass.Bootloaders.Champions
 
             switch (Orbwalker.ActiveMode)
             {
-                case Orbwalking.OrbwalkingMode.Combo:
-                {
-                    Combo();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.Mixed:
-                {
-                    Mixed();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.LaneClear:
-                {
-                    Clear();
-                    break;
-                }
+                case OrbwalkingEx.OrbwalkingMode.Combo:
+                    {
+                        Combo();
+                        break;
+                    }
+                case OrbwalkingEx.OrbwalkingMode.Mixed:
+                    {
+                        Mixed();
+                        break;
+                    }
+                case OrbwalkingEx.OrbwalkingMode.LaneClear:
+                    {
+                        Clear();
+                        break;
+                    }
             }
             Humanizer.DelayHandler.UseOrbwalker();
         }

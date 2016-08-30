@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using LeagueSharp;
-using LeagueSharp.Common;
-using _Project_Geass.Bootloaders.Champions.Base;
+﻿using _Project_Geass.Bootloaders.Champions.Base;
 using _Project_Geass.Bootloaders.Core.Functions;
 using _Project_Geass.Data;
 using _Project_Geass.Drawing.Champions;
 using _Project_Geass.Functions.Objects;
 using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
+using LeagueSharp;
+using LeagueSharp.Common;
+using System;
+using System.Linq;
 using Damage = _Project_Geass.Functions.Calculations.Damage;
 using Prediction = _Project_Geass.Bootloaders.Core.Functions.Prediction;
 
@@ -36,7 +36,7 @@ namespace _Project_Geass.Bootloaders.Champions
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new OrbwalkingEx.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         private void OnUpdate(EventArgs args)
@@ -45,21 +45,21 @@ namespace _Project_Geass.Bootloaders.Champions
 
             switch (Orbwalker.ActiveMode)
             {
-                case Orbwalking.OrbwalkingMode.Combo:
-                {
-                    Combo();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.Mixed:
-                {
-                    Mixed();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.LaneClear:
-                {
-                    Clear();
-                    break;
-                }
+                case OrbwalkingEx.OrbwalkingMode.Combo:
+                    {
+                        Combo();
+                        break;
+                    }
+                case OrbwalkingEx.OrbwalkingMode.Mixed:
+                    {
+                        Mixed();
+                        break;
+                    }
+                case OrbwalkingEx.OrbwalkingMode.LaneClear:
+                    {
+                        Clear();
+                        break;
+                    }
             }
             DelayHandler.UseOrbwalker();
         }
@@ -243,7 +243,7 @@ namespace _Project_Geass.Bootloaders.Champions
                                 if (gapcloser.Sender.HasBuffOfType(BuffType.Invulnerability) ||
                                     gapcloser.Sender.HasBuffOfType(BuffType.SpellImmunity) ||
                                     gapcloser.Sender.HasBuffOfType(BuffType.SpellShield)) return;
-                                Utility.DelayAction.Add(Math.Abs(Rng.Next()*(150 - 50 - Game.Ping) + 50 - Game.Ping),
+                                Utility.DelayAction.Add(Math.Abs(Rng.Next() * (150 - 50 - Game.Ping) + 50 - Game.Ping),
                                     () => { R.Cast(gapcloser.End); });
                             }
                             else
@@ -269,7 +269,7 @@ namespace _Project_Geass.Bootloaders.Champions
                                     gapcloser.Sender.HasBuffOfType(BuffType.SpellImmunity) ||
                                     gapcloser.Sender.HasBuffOfType(BuffType.SpellShield)) return;
                                 Utility.DelayAction.Add(
-                                    Math.Abs(Rng.Next()*(200 - 100 - Game.Ping) + 100 - Game.Ping),
+                                    Math.Abs(Rng.Next() * (200 - 100 - Game.Ping) + 100 - Game.Ping),
                                     () => { W.Cast(gapcloser.End); });
                             }
                             else
@@ -279,7 +279,6 @@ namespace _Project_Geass.Bootloaders.Champions
                 }
             }
         }
-
 
         private void OnDraw(EventArgs args)
         {
@@ -330,7 +329,7 @@ namespace _Project_Geass.Bootloaders.Champions
             var damage = 0f;
             if (target.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange - 25 &&
                 Static.Objects.Player.CanAttack && !Static.Objects.Player.IsWindingUp)
-                damage += (float) Static.Objects.Player.GetAutoAttackDamage(target) - 10;
+                damage += (float)Static.Objects.Player.GetAutoAttackDamage(target) - 10;
 
             if (W.IsReady())
                 damage += W.GetDamage(target);

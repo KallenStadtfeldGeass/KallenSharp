@@ -1,12 +1,10 @@
-﻿ // ReSharper disable once CheckNamespace
+﻿// ReSharper disable once CheckNamespace
 namespace LeagueSharp.Common
 {
+    using SharpDX;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    using SharpDX;
-
     using Color = System.Drawing.Color;
 
     /// <summary>
@@ -150,7 +148,7 @@ namespace LeagueSharp.Common
         /// </summary>
         private static bool _missileLaunched;
 
-        #endregion
+        #endregion Static Fields
 
         #region Constructors and Destructors
 
@@ -167,7 +165,7 @@ namespace LeagueSharp.Common
 
             if (_championName == "Rengar")
             {
-                Obj_AI_Base.OnPlayAnimation += delegate(Obj_AI_Base sender, GameObjectPlayAnimationEventArgs args)
+                Obj_AI_Base.OnPlayAnimation += delegate (Obj_AI_Base sender, GameObjectPlayAnimationEventArgs args)
                     {
                         if (sender.IsMe && args.Animation == "Spell5")
                         {
@@ -184,7 +182,7 @@ namespace LeagueSharp.Common
             }
         }
 
-        #endregion
+        #endregion Constructors and Destructors
 
         #region Delegates
 
@@ -221,7 +219,7 @@ namespace LeagueSharp.Common
         /// <param name="newTarget">The new target.</param>
         public delegate void OnTargetChangeH(AttackableUnit oldTarget, AttackableUnit newTarget);
 
-        #endregion
+        #endregion Delegates
 
         #region Public Events
 
@@ -250,7 +248,7 @@ namespace LeagueSharp.Common
         /// </summary>
         public static event OnTargetChangeH OnTargetChange;
 
-        #endregion
+        #endregion Public Events
 
         #region Enums
 
@@ -295,7 +293,7 @@ namespace LeagueSharp.Common
             None
         }
 
-        #endregion
+        #endregion Enums
 
         #region Public Methods and Operators
 
@@ -632,7 +630,7 @@ namespace LeagueSharp.Common
             _delay = delay;
         }
 
-        #endregion
+        #endregion Public Methods and Operators
 
         #region Methods
 
@@ -672,10 +670,7 @@ namespace LeagueSharp.Common
         /// <param name="target">The target.</param>
         private static void FireOnAttack(AttackableUnit unit, AttackableUnit target)
         {
-            if (OnAttack != null)
-            {
-                OnAttack(unit, target);
-            }
+            OnAttack?.Invoke(unit, target);
         }
 
         /// <summary>
@@ -802,7 +797,7 @@ namespace LeagueSharp.Common
             }
         }
 
-        #endregion
+        #endregion Methods
 
         /// <summary>
         ///     The before attack event arguments.
@@ -826,7 +821,7 @@ namespace LeagueSharp.Common
             /// </summary>
             private bool _process = true;
 
-            #endregion
+            #endregion Fields
 
             #region Public Properties
 
@@ -847,7 +842,7 @@ namespace LeagueSharp.Common
                 }
             }
 
-            #endregion
+            #endregion Public Properties
         }
 
         /// <summary>
@@ -863,7 +858,7 @@ namespace LeagueSharp.Common
             /// </summary>
             private const float LaneClearWaitTimeMod = 2f;
 
-            #endregion
+            #endregion Constants
 
             #region Static Fields
 
@@ -877,7 +872,7 @@ namespace LeagueSharp.Common
             /// </summary>
             private static Menu _config;
 
-            #endregion
+            #endregion Static Fields
 
             #region Fields
 
@@ -911,7 +906,7 @@ namespace LeagueSharp.Common
             /// </summary>
             private string CustomModeName;
 
-            #endregion
+            #endregion Fields
 
             #region Constructors and Destructors
 
@@ -991,7 +986,7 @@ namespace LeagueSharp.Common
                 Instances.Add(this);
             }
 
-            #endregion
+            #endregion Constructors and Destructors
 
             #region Public Properties
 
@@ -1072,7 +1067,7 @@ namespace LeagueSharp.Common
                 }
             }
 
-            #endregion
+            #endregion Public Properties
 
             #region Properties
 
@@ -1088,7 +1083,7 @@ namespace LeagueSharp.Common
                 }
             }
 
-            #endregion
+            #endregion Properties
 
             #region Public Methods and Operators
 
@@ -1530,7 +1525,7 @@ namespace LeagueSharp.Common
                                       HealthPrediction.LaneClearHealthPrediction(
                                           minion,
                                           (int)(this.Player.AttackDelay * 1000 * LaneClearWaitTimeMod),
-                                          this.FarmDelay)-AttackOffset
+                                          this.FarmDelay) - AttackOffset
                                   where
                                       predHealth >= 2 * this.Player.GetAutoAttackDamage(minion)
                                       || Math.Abs(predHealth - minion.Health) < float.Epsilon
@@ -1618,7 +1613,7 @@ namespace LeagueSharp.Common
                                 this.FarmDelay) <= this.Player.GetAutoAttackDamage(minion) - AttackOffset);
             }
 
-            #endregion
+            #endregion Public Methods and Operators
 
             #region Methods
 
@@ -1751,7 +1746,7 @@ namespace LeagueSharp.Common
                                 this.FarmDelay) - AttackOffset <= this.Player.GetAutoAttackDamage(minion));
             }
 
-            #endregion
+            #endregion Methods
         }
     }
 }
