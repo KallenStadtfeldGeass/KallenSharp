@@ -1,19 +1,38 @@
-﻿using _Project_Geass.Globals;
+﻿using _Project_Geass.Data;
+using _Project_Geass.Globals;
 using LeagueSharp.Common;
+using System;
+using System.Collections.Generic;
 
 namespace _Project_Geass.Bootloaders.Champions.Base
 {
     internal class Champion
     {
-        public static Spell GetSpellE { get; set; }
+        public static Dictionary<object, object> Spells { get; } = new Dictionary<object, object>();
 
-        public static Spell GetSpellQ { get; set; }
+        public static Spell Q { get; set; }
+        public static Spell W { get; set; }
+        public static Spell E { get; set; }
+        public static Spell R { get; set; }
 
-        public static Spell GetSpellR { get; set; }
+        public readonly Random Rng;
 
-        public static Spell GetSpellW { get; set; }
+        public static Orbwalking.Orbwalker Orbwalker { get; set; }
 
-        public static int GetManaPercent => (int)(Static.Objects.Player.Mana / Static.Objects.Player.MaxMana * 100);
-        public static int HealthPercent => (int)(Static.Objects.Player.Health / Static.Objects.Player.MaxHealth * 100);
+        public Champion(Spell q, Spell w, Spell e, Spell r, Random rng)
+        {
+            Rng = rng;
+            Q = q;
+            W = w;
+            E = e;
+            R = r;
+        }
+
+        public Champion()
+        {
+            Rng = new Random();
+        }
+
+        public readonly string BaseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
     }
 }

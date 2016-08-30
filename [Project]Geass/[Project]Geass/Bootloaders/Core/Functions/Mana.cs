@@ -8,6 +8,14 @@ namespace _Project_Geass.Bootloaders.Core.Functions
     {
         #region Combo
 
+        public static int GetManaPercent => (int)(Static.Objects.Player.Mana / Static.Objects.Player.MaxMana * 100);
+        public static int HealthPercent => (int)(Static.Objects.Player.Health / Static.Objects.Player.MaxHealth * 100);
+
+        public static double ManaTillTearStack()
+        {
+            return 0;
+        }
+
         public static bool CheckComboQ()
         {
             if (Static.Objects.ProjectMenu.Item(
@@ -17,7 +25,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckComboW()
@@ -29,7 +37,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckComboE()
@@ -41,7 +49,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckComboR()
@@ -53,7 +61,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         #endregion Combo
@@ -69,7 +77,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckMixedW()
@@ -81,7 +89,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckMixedE()
@@ -93,7 +101,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckMixedR()
@@ -105,7 +113,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         #endregion Mixed
@@ -121,7 +129,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckClearW()
@@ -133,7 +141,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckClearE()
@@ -145,7 +153,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         public static bool CheckClearR()
@@ -157,7 +165,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
             return Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}")
                 .GetValue<Slider>()
-                .Value <= Bootloaders.Champions.Base.Champion.GetManaPercent;
+                .Value <= GetManaPercent;
         }
 
         #endregion Clear

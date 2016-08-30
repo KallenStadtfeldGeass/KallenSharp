@@ -4,9 +4,8 @@
     {
         public static readonly string[] ChampionBundled = {
             "Ashe",
-            "Caitlyn",
             "Ezreal",
-            "Graves"
+            "Tristana"
         };
 
         public static readonly string ProjectName = "[Project]Geass";

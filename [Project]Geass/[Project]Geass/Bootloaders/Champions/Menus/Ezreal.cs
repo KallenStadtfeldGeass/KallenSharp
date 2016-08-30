@@ -1,6 +1,6 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Champions.Menus
 {
@@ -22,7 +22,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             var mainMenu = new Menu(basename, "Misc");
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack", "Use Q to tear stack (when no enemy in range)").SetValue(true));
-
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack.MinMana", "Min Mana%").SetValue(new Slider(70)));
             return mainMenu;
         }
 
@@ -51,14 +51,14 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"Enable").SetValue(true));
+                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
 
             var wMenu = new Menu("W Settings", basename + "W Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"Enable").SetValue(true));
+                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.Range", "R Range").SetValue(new Slider(1000, 500, 1750)));
@@ -67,7 +67,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"Enable").SetValue(true));
+                rMenu.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
 
             mainMenu.AddSubMenu(qMenu);
@@ -82,7 +82,6 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             string basename = _baseName + "Mixed.";
             var mainMenu = new Menu(basename, "Mixed");
 
-
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
@@ -93,24 +92,22 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(
                    new StringList(Core.Functions.Prediction.GetHitChanceNames())));
 
-
             var qMenu = new Menu("Q Settings", basename + "Q Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"Enable").SetValue(true));
+                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
 
             var wMenu = new Menu("W Settings", basename + "W Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
             {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"Enable").SetValue(true));
+                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
             }
 
             mainMenu.AddSubMenu(qMenu);
             mainMenu.AddSubMenu(wMenu);
-
 
             return mainMenu;
         }
@@ -120,10 +117,9 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             string basename = _baseName + "Clear.";
             var mainMenu = new Menu(basename, "Clear");
 
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q to last hit").SetValue(false));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q to last hit").SetValue(true));
 
             return mainMenu;
         }
     }
-
 }

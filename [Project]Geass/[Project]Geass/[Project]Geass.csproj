@@ -60,6 +60,8 @@
     <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
     <Compile Include="Bootloaders\Champions\Menus\Ashe.cs" />
     <Compile Include="Bootloaders\Champions\Menus\Ezreal.cs" />
+    <Compile Include="Bootloaders\Champions\Menus\Tristana.cs" />
+    <Compile Include="Bootloaders\Champions\Tristana.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Champion\OnDraw.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
@@ -91,7 +93,6 @@
     <Compile Include="Functions\Objects\Minions.cs" />
     <Compile Include="Globals\Base\Obj.cs" />
     <Compile Include="Globals\Static.cs" />
-    <Compile Include="Globals\Base\Vars.cs" />
     <Compile Include="Humanizer\DelayHandler.cs" />
     <Compile Include="Humanizer\Tick.cs" />
     <Compile Include="Humanizer\TickManager.cs" />

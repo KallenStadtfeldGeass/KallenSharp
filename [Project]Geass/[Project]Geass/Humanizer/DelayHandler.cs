@@ -20,7 +20,19 @@ namespace _Project_Geass.Humanizer
             MyTicker.AddTick($"{Names.ProjectName}.UseItems", offset, 25 + offset);
             MyTicker.AddTick($"{Names.ProjectName}.TrinketBuy", 50 + offset, 100 + offset);
             MyTicker.AddTick($"{Names.ProjectName}.Orbwalker", 10 + offset, 25 + offset);
+            MyTicker.AddTick($"{Names.ProjectName}.AutoEvent", 10 + offset, 25 + offset);
         }
+
+        /// <summary>
+        /// Checks the tear stack.
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckAutoEvents() => MyTicker.CheckTick($"{Names.ProjectName}.AutoEvent");
+
+        /// <summary>
+        /// Uses the tear stack.
+        /// </summary>
+        public static void UseAutoEvent() => MyTicker.UseTick($"{Names.ProjectName}.AutoEvent");
 
         /// <summary>
         /// Checks the orbwalker.

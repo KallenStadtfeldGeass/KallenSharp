@@ -1,8 +1,5 @@
-﻿using _Project_Geass.Data;
-using LeagueSharp;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
 using System;
-using System.Linq;
 
 namespace _Project_Geass
 {
@@ -23,11 +20,8 @@ namespace _Project_Geass
 
         private static void OnLoad(EventArgs args)
         {
-            if (Names.ChampionBundled.Any(champ => ObjectManager.Player.ChampionName == champ))
-            {
-                // ReSharper disable once UnusedVariable
-                var init = new Bootloaders.Initializer();
-            }
+            // ReSharper disable once UnusedVariable
+            var init = new Bootloaders.Initializer();
         }
     }
 }

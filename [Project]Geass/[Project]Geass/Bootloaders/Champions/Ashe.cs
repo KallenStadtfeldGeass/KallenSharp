@@ -10,26 +10,20 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Ashe : Base.Champion
     {
-        private readonly Random _rng;
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
-        private Orbwalking.Orbwalker Orbwalker { get; set; }
-
-        private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
         private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000, true);
 
         public Ashe()
         {
-            GetSpellQ = new Spell(SpellSlot.Q);
-            GetSpellW = new Spell(SpellSlot.W, 1200);
-            GetSpellR = new Spell(SpellSlot.R, 2200);
+            Q = new Spell(SpellSlot.Q);
+            W = new Spell(SpellSlot.W, 1200);
+            R = new Spell(SpellSlot.R, 2200);
 
-            GetSpellW.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
-            GetSpellR.SetSkillshot(.25f, 250, 1600, false, SkillshotType.SkillshotLine);
+            Q.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
+            R.SetSkillshot(.25f, 250, 1600, false, SkillshotType.SkillshotLine);
 
             // ReSharper disable once UnusedVariable
             var temp = new Menus.Ashe();
-            _rng = new Random();
+
             Game.OnUpdate += OnUpdate;
 
             LeagueSharp.Drawing.OnDraw += OnDraw;
@@ -70,17 +64,17 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void Combo()
         {
-            string basename = _baseName + "Combo.";
+            string basename = BaseName + "Combo.";
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {
                 if (Core.Functions.Mana.CheckComboQ())
                 {
-                    if (GetSpellQ.IsReady())
+                    if (Q.IsReady())
                     {
                         if (Functions.Objects.Heroes.GetEnemies(Static.Objects.Player.AttackRange - 30).Count > 0)
                         {
-                            GetSpellQ.Cast();
+                            Q.Cast();
                         }
                     }
                 }
@@ -90,14 +84,14 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Core.Functions.Mana.CheckComboW())
                 {
-                    if (GetSpellW.IsReady())
+                    if (W.IsReady())
                     {
-                        var enemies = Functions.Objects.Heroes.GetEnemies(GetSpellW.Range);
+                        var enemies = Functions.Objects.Heroes.GetEnemies(W.Range);
 
                         var validPos =
                             enemies.Where(
                                 x =>
-                                    GetSpellW.GetPrediction(x).Hitchance >=
+                                    W.GetPrediction(x).Hitchance >=
                                     Core.Functions.Prediction.GetHitChance(
                                         Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
                                             .GetValue<StringList>()
@@ -106,7 +100,7 @@ namespace _Project_Geass.Bootloaders.Champions
                         foreach (var pos in validPos.OrderBy(x => x.Health))
                         {
                             if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) || pos.HasBuffOfType(BuffType.SpellShield)) continue;
-                            GetSpellW.Cast(pos.Position);
+                            W.Cast(pos.Position);
                             break;
                         }
                     }
@@ -117,7 +111,7 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Core.Functions.Mana.CheckComboR())
                 {
-                    if (GetSpellR.IsReady())
+                    if (R.IsReady())
                     {
                         var enemies = Functions.Objects.Heroes.GetEnemies(Static.Objects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value);
 
@@ -126,7 +120,7 @@ namespace _Project_Geass.Bootloaders.Champions
                         var validPos =
                             validEnemies.Where(
                                 x =>
-                                    GetSpellR.GetPrediction(x).Hitchance >=
+                                    R.GetPrediction(x).Hitchance >=
                                     Core.Functions.Prediction.GetHitChance(
                                         Static.Objects.ProjectMenu.Item($"{basename}.UseR.Prediction")
                                             .GetValue<StringList>()
@@ -135,7 +129,7 @@ namespace _Project_Geass.Bootloaders.Champions
                         foreach (var pos in validPos.OrderBy(x => x.Health))
                         {
                             if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) || pos.HasBuffOfType(BuffType.SpellShield)) continue;
-                            GetSpellR.Cast(pos.Position);
+                            R.Cast(pos.Position);
                             break;
                         }
                     }
@@ -145,18 +139,18 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void Mixed()
         {
-            string basename = _baseName + "Mixed.";
+            string basename = BaseName + "Mixed.";
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
             {
                 if (Core.Functions.Mana.CheckMixedW())
                 {
-                    var enemies = Functions.Objects.Heroes.GetEnemies(GetSpellW.Range);
+                    var enemies = Functions.Objects.Heroes.GetEnemies(W.Range);
 
                     var validPos =
                         enemies.Where(
                             x =>
-                                GetSpellW.GetPrediction(x).Hitchance >=
+                                W.GetPrediction(x).Hitchance >=
                                 Core.Functions.Prediction.GetHitChance(
                                     Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
                                         .GetValue<StringList>()
@@ -165,7 +159,7 @@ namespace _Project_Geass.Bootloaders.Champions
                     foreach (var pos in validPos.OrderBy(x => x.Health))
                     {
                         if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) || pos.HasBuffOfType(BuffType.SpellShield)) continue;
-                        GetSpellW.Cast(pos.Position);
+                        W.Cast(pos.Position);
                         break;
                     }
                 }
@@ -174,33 +168,33 @@ namespace _Project_Geass.Bootloaders.Champions
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
                 if (Core.Functions.Mana.CheckMixedQ())
                     if (Functions.Objects.Heroes.GetEnemies(Static.Objects.Player.AttackRange - 50).Count >= 1)
-                        GetSpellQ.Cast();
+                        Q.Cast();
         }
 
         private void Clear()
         {
-            var basename = _baseName + "Clear.";
+            var basename = BaseName + "Clear.";
 
-            var validMinions = Functions.Objects.Minions.GetEnemyMinions2(GetSpellW.Range);
+            var validMinions = Functions.Objects.Minions.GetEnemyMinions2(W.Range);
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
                 if (Core.Functions.Mana.CheckClearW())
-                    if (GetSpellW.IsReady())
+                    if (W.IsReady())
                     {
-                        var pos = GetSpellW.GetLineFarmLocation(validMinions);
+                        var pos = W.GetLineFarmLocation(validMinions);
 
                         if (pos.MinionsHit >= Static.Objects.ProjectMenu.Item($"{basename}.UseW.Minions").GetValue<Slider>().Value)
-                            GetSpellW.Cast(pos.Position);
+                            W.Cast(pos.Position);
                     }
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
                 if (Core.Functions.Mana.CheckClearQ())
                 {
                     var aaMinons = validMinions.Where(x => x.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange);
-                    if (GetSpellQ.IsReady())
+                    if (Q.IsReady())
                         if (aaMinons.Count() >=
                             Static.Objects.ProjectMenu.Item($"{basename}.UseQ.Minions").GetValue<Slider>().Value)
-                            GetSpellQ.Cast();
+                            Q.Cast();
                 }
         }
 
@@ -214,9 +208,9 @@ namespace _Project_Geass.Bootloaders.Champions
         /// <param name="gapcloser">The gapcloser.</param>
         private void OnGapcloser(ActiveGapcloser gapcloser)
         {
-            var basename = _baseName + "Auto.";
+            var basename = BaseName + "Auto.";
 
-            if (GetSpellR.IsReady())
+            if (R.IsReady())
             {
                 if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.OnGapClose").GetValue<bool>())
                 {
@@ -229,20 +223,20 @@ namespace _Project_Geass.Bootloaders.Champions
                             if (Static.Objects.ProjectMenu.Item($"{Names.Menu.BaseItem}.Humanizer").GetValue<bool>())
                             {
                                 if (gapcloser.Sender.HasBuffOfType(BuffType.Invulnerability) || gapcloser.Sender.HasBuffOfType(BuffType.SpellImmunity) || gapcloser.Sender.HasBuffOfType(BuffType.SpellShield)) return;
-                                Utility.DelayAction.Add(Math.Abs(_rng.Next() * (150 - 50 - Game.Ping) + 50 - Game.Ping),
+                                Utility.DelayAction.Add(Math.Abs(Rng.Next() * (150 - 50 - Game.Ping) + 50 - Game.Ping),
                                     () =>
                                     {
-                                        GetSpellR.Cast(gapcloser.End);
+                                        R.Cast(gapcloser.End);
                                     });
                             }
                             else
-                                GetSpellR.Cast(gapcloser.End);
+                                R.Cast(gapcloser.End);
                         }
                     }
                 }
             }
 
-            if (GetSpellW.IsReady())
+            if (W.IsReady())
             {
                 if (Static.Objects.ProjectMenu.Item($"{basename}.UseW.OnGapClose").GetValue<bool>())
                 {
@@ -256,13 +250,13 @@ namespace _Project_Geass.Bootloaders.Champions
                             {
                                 if (gapcloser.Sender.HasBuffOfType(BuffType.Invulnerability) || gapcloser.Sender.HasBuffOfType(BuffType.SpellImmunity) || gapcloser.Sender.HasBuffOfType(BuffType.SpellShield)) return;
                                 Utility.DelayAction.Add(
-                                    Math.Abs(_rng.Next() * (200 - 100 - Game.Ping) + 100 - Game.Ping), () =>
+                                    Math.Abs(Rng.Next() * (200 - 100 - Game.Ping) + 100 - Game.Ping), () =>
                                       {
-                                          GetSpellW.Cast(gapcloser.End);
+                                          W.Cast(gapcloser.End);
                                       });
                             }
                             else
-                                GetSpellW.Cast(gapcloser.End);
+                                W.Cast(gapcloser.End);
                         }
                     }
                 }
@@ -277,12 +271,12 @@ namespace _Project_Geass.Bootloaders.Champions
         {
             if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
             {
-                if (GetSpellW.Level > 0)
+                if (W.Level > 0)
                     if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
-                if (GetSpellR.Level > 0)
+                        Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+                if (R.Level > 0)
                     if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, GetSpellW.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
+                        Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
             }
         }
 
@@ -308,11 +302,11 @@ namespace _Project_Geass.Bootloaders.Champions
                 Static.Objects.Player.CanAttack && !Static.Objects.Player.IsWindingUp)
                 damage += (float)Static.Objects.Player.GetAutoAttackDamage(target) - 10;
 
-            if (GetSpellW.IsReady())
-                damage += GetSpellW.GetDamage(target);
+            if (W.IsReady())
+                damage += W.GetDamage(target);
 
-            if (GetSpellR.IsReady())
-                damage += GetSpellR.GetDamage(target);
+            if (R.IsReady())
+                damage += R.GetDamage(target);
 
             return Functions.Calculations.Damage.CalcRealDamage(target, damage);
         }
