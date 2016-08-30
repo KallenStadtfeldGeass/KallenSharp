@@ -16,7 +16,7 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Ashe : Champion
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000, true);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000);
 
         public Ashe()
         {
@@ -36,36 +36,32 @@ namespace _Project_Geass.Bootloaders.Champions
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
-            Interrupter2.OnInterruptableTarget += OnInterruptable;
-            Orbwalking.AfterAttack += AfterAttack;
-
             Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         private void OnUpdate(EventArgs args)
         {
-            if (DelayHandler.CheckOrbwalker())
+            if (!DelayHandler.CheckOrbwalker()) return;
+
+            switch (Orbwalker.ActiveMode)
             {
-                switch (Orbwalker.ActiveMode)
+                case Orbwalking.OrbwalkingMode.Combo:
                 {
-                    case Orbwalking.OrbwalkingMode.Combo:
-                    {
-                        Combo();
-                        break;
-                    }
-                    case Orbwalking.OrbwalkingMode.Mixed:
-                    {
-                        Mixed();
-                        break;
-                    }
-                    case Orbwalking.OrbwalkingMode.LaneClear:
-                    {
-                        Clear();
-                        break;
-                    }
+                    Combo();
+                    break;
                 }
-                DelayHandler.UseOrbwalker();
+                case Orbwalking.OrbwalkingMode.Mixed:
+                {
+                    Mixed();
+                    break;
+                }
+                case Orbwalking.OrbwalkingMode.LaneClear:
+                {
+                    Clear();
+                    break;
+                }
             }
+            DelayHandler.UseOrbwalker();
         }
 
         private void Combo()
@@ -224,10 +220,6 @@ namespace _Project_Geass.Bootloaders.Champions
                 }
         }
 
-        private void AfterAttack(AttackableUnit unit, AttackableUnit target)
-        {
-        }
-
         /// <summary>
         ///     Called when [gapcloser].
         /// </summary>
@@ -288,33 +280,28 @@ namespace _Project_Geass.Bootloaders.Champions
             }
         }
 
-        private void OnInterruptable(Obj_AI_Hero sender, Interrupter2.InterruptableTargetEventArgs args)
-        {
-        }
 
         private void OnDraw(EventArgs args)
         {
-            if (
-                Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
-                                                ".Boolean.DrawOnSelf").GetValue<bool>())
-            {
-                if (W.Level > 0)
-                    if (
-                        Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
-                                                        ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range,
-                            Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase +
-                                                            Static.Objects.Player.ChampionName +
-                                                            ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
-                if (R.Level > 0)
-                    if (
-                        Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
-                                                        ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range,
-                            Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase +
-                                                            Static.Objects.Player.ChampionName +
-                                                            ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
-            }
+            if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
+                                                 ".Boolean.DrawOnSelf").GetValue<bool>()) return;
+
+            if (W.Level > 0)
+                if (
+                    Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
+                                                    ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range,
+                        Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase +
+                                                        Static.Objects.Player.ChampionName +
+                                                        ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+            if (R.Level > 0)
+                if (
+                    Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
+                                                    ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range,
+                        Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase +
+                                                        Static.Objects.Player.ChampionName +
+                                                        ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
         }
 
         public void OnDrawEnemy(EventArgs args)

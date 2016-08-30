@@ -94,7 +94,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
 
         private Menu Clear()
         {
-            string basename = _baseName + "Clear.";
+            var basename = _baseName + "Clear.";
             var mainMenu = new Menu(basename, nameof(Clear));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));

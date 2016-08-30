@@ -12,7 +12,7 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Ezreal : Base.Champion
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000, true);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000);
 
         public Ezreal()
         {
@@ -31,11 +31,8 @@ namespace _Project_Geass.Bootloaders.Champions
             Game.OnUpdate += AutoEvents;
             LeagueSharp.Drawing.OnDraw += OnDraw;
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
-            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-            // AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
-            // Interrupter2.OnInterruptableTarget += OnInterruptable;
-            Orbwalking.AfterAttack += AfterAttack;
+            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
 
             Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
@@ -63,53 +60,51 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void AutoEvents(EventArgs args)
         {
-            if (Humanizer.DelayHandler.CheckAutoEvents())
-            {
-                if (!_tearFull)
-                {
-                    if (!Static.Objects.Player.IsRecalling())
-                    {
-                        var basename = BaseName + "Misc.";
+            if (!Humanizer.DelayHandler.CheckAutoEvents()) return;
 
-                        if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() &&
-                            Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana")
-                                .GetValue<Slider>()
-                                .Value > Mana.GetManaPercent)
-                            if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
-                                Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
-                                if (Functions.Objects.Minions.GetEnemyMinions2(1000).Count < 1 &&
-                                    Functions.Objects.Heroes.GetEnemies(1000).Count < 1 && Mana.GetManaPercent > 75)
-                                    Q.Cast();
-                    }
+            if (!_tearFull)
+            {
+                if (!Static.Objects.Player.IsRecalling())
+                {
+                    var basename = BaseName + "Misc.";
+
+                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() &&
+                        Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana")
+                            .GetValue<Slider>()
+                            .Value > Mana.GetManaPercent)
+                        if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
+                            Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
+                            if (Functions.Objects.Minions.GetEnemyMinions2(1000).Count < 1 &&
+                                Functions.Objects.Heroes.GetEnemies(1000).Count < 1 && Mana.GetManaPercent > 75)
+                                Q.Cast();
                 }
-                Humanizer.DelayHandler.UseAutoEvent();
             }
+            Humanizer.DelayHandler.UseAutoEvent();
         }
 
         private void OnUpdate(EventArgs args)
         {
-            if (Humanizer.DelayHandler.CheckOrbwalker())
+            if (!Humanizer.DelayHandler.CheckOrbwalker()) return;
+
+            switch (Orbwalker.ActiveMode)
             {
-                switch (Orbwalker.ActiveMode)
+                case Orbwalking.OrbwalkingMode.Combo:
                 {
-                    case Orbwalking.OrbwalkingMode.Combo:
-                        {
-                            Combo();
-                            break;
-                        }
-                    case Orbwalking.OrbwalkingMode.Mixed:
-                        {
-                            Mixed();
-                            break;
-                        }
-                    case Orbwalking.OrbwalkingMode.LaneClear:
-                        {
-                            Clear();
-                            break;
-                        }
+                    Combo();
+                    break;
                 }
-                Humanizer.DelayHandler.UseOrbwalker();
+                case Orbwalking.OrbwalkingMode.Mixed:
+                {
+                    Mixed();
+                    break;
+                }
+                case Orbwalking.OrbwalkingMode.LaneClear:
+                {
+                    Clear();
+                    break;
+                }
             }
+            Humanizer.DelayHandler.UseOrbwalker();
         }
 
         private void Combo()
@@ -273,36 +268,18 @@ namespace _Project_Geass.Bootloaders.Champions
                 }
         }
 
-        private void AfterAttack(AttackableUnit unit, AttackableUnit target)
-        {
-        }
-
-        /*
-                /// <summary>
-                /// Called when [gapcloser].
-                /// </summary>
-                /// <param name="gapcloser">The gapcloser.</param>
-                private void OnGapcloser(ActiveGapcloser gapcloser)
-                {
-                    var basename = BaseName + "Auto.";
-                }
-
-                private void OnInterruptable(Obj_AI_Hero sender, Interrupter2.InterruptableTargetEventArgs args)
-                {
-                }
-                */
+ 
 
         private void OnDraw(EventArgs args)
         {
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
-            {
-                if (Q.Level > 0)
-                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, Q.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
-                if (W.Level > 0)
-                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
-            }
+            if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
+                                                 ".Boolean.DrawOnSelf").GetValue<bool>()) return;
+            if (Q.Level > 0)
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, Q.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
+            if (W.Level > 0)
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
         }
 
         public void OnDrawEnemy(EventArgs args)

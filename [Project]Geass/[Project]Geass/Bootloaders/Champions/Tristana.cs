@@ -11,7 +11,7 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Tristana : Base.Champion
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000, true);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000);
 
         public Tristana()
         {
@@ -31,7 +31,7 @@ namespace _Project_Geass.Bootloaders.Champions
             Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
-        public void UpdateChampionRange(int level)
+        protected virtual void UpdateChampionRange(int level)
         {
             Q.Range = 550 + (9 * (level - 1));
             E.Range = 625 + (9 * (level - 1));
@@ -40,54 +40,53 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void OnUpdate(EventArgs args)
         {
-            if (Humanizer.DelayHandler.CheckOrbwalker())
+            if (!Humanizer.DelayHandler.CheckOrbwalker()) return;
+
+            UpdateChampionRange(Static.Objects.Player.Level);
+
+            switch (Orbwalker.ActiveMode)
             {
-                UpdateChampionRange(Static.Objects.Player.Level);
-                switch (Orbwalker.ActiveMode)
+                case Orbwalking.OrbwalkingMode.Combo:
                 {
-                    case Orbwalking.OrbwalkingMode.Combo:
-                        {
-                            Combo();
-                            break;
-                        }
-                    case Orbwalking.OrbwalkingMode.Mixed:
-                        {
-                            Mixed();
-                            break;
-                        }
-                    case Orbwalking.OrbwalkingMode.LaneClear:
-                        {
-                            Clear();
-                            break;
-                        }
+                    Combo();
+                    break;
                 }
-                Humanizer.DelayHandler.UseOrbwalker();
+                case Orbwalking.OrbwalkingMode.Mixed:
+                {
+                    Mixed();
+                    break;
+                }
+                case Orbwalking.OrbwalkingMode.LaneClear:
+                {
+                    Clear();
+                    break;
+                }
             }
+            Humanizer.DelayHandler.UseOrbwalker();
         }
 
         private void AutoEvents(EventArgs args)
         {
-            if (Humanizer.DelayHandler.CheckAutoEvents())
+            if (!Humanizer.DelayHandler.CheckAutoEvents()) return;
+
+            var basename = BaseName + "Auto.";
+
+            if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
             {
-                string basename = BaseName + "Auto.";
-
-                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
+                var enemies = Functions.Objects.Heroes.GetEnemies(R.Range);
+                foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)).OrderBy(hp => hp.Health))
                 {
-                    var enemies = Functions.Objects.Heroes.GetEnemies(R.Range);
-                    foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)).OrderBy(hp => hp.Health))
-                    {
-                        if (
-                            !Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}")
-                                .GetValue<bool>())
-                            continue;
+                    if (
+                        !Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}")
+                            .GetValue<bool>())
+                        continue;
 
-                        if (GetDamage(enemy) < enemy.Health) continue;
-                        R.Cast(enemy);
-                        break;
-                    }
+                    if (GetDamage(enemy) < enemy.Health) continue;
+                    R.Cast(enemy);
+                    break;
                 }
-                Humanizer.DelayHandler.UseAutoEvent();
             }
+            Humanizer.DelayHandler.UseAutoEvent();
         }
 
         private void Combo()
@@ -258,15 +257,14 @@ namespace _Project_Geass.Bootloaders.Champions
         private
             void OnDraw(EventArgs args)
         {
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf").GetValue<bool>())
-            {
-                if (E.Level > 0)
-                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, E.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Color, 2);
-                if (R.Level > 0)
-                    if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
-                        Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
-            }
+            if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
+                                                 ".Boolean.DrawOnSelf").GetValue<bool>()) return;
+            if (E.Level > 0)
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, E.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Color, 2);
+            if (R.Level > 0)
+                if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(Static.Objects.Player.Position, R.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
         }
 
         public void OnDrawEnemy(EventArgs args)

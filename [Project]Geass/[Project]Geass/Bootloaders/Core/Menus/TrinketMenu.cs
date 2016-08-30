@@ -4,7 +4,7 @@ using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
 {
-    internal class TrinketMenu
+    internal sealed class TrinketMenu
     {
         // ReSharper disable once NotAccessedField.Local
 

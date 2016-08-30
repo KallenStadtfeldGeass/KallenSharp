@@ -21,7 +21,6 @@ namespace _Project_Geass.Bootloaders.Base.Menus
 
                 foreach (var element in GenerateSettingsList(Names.Menu.BaseItem + champ))
                 {
-                    Static.Objects.ProjectLogger.WriteLog(element.Name);
                     temp.AddItem(element);
                 }
 

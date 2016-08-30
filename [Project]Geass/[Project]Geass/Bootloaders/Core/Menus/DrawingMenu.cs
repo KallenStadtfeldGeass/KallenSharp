@@ -6,7 +6,7 @@ using Color = System.Drawing.Color;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
 {
-    internal class DrawingMenu
+    internal sealed class DrawingMenu
     {
         public DrawingMenu(bool[] drawingOptions)
         {

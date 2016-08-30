@@ -4,7 +4,7 @@ using LeagueSharp.Common;
 
 namespace _Project_Geass.Bootloaders.Core.Menus
 {
-    internal class ItemsMenu
+    internal sealed class ItemsMenu
     {
         private Menu GetMenu()
         {

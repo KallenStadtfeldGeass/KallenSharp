@@ -62,7 +62,6 @@
     <Compile Include="Bootloaders\Champions\Menus\Ezreal.cs" />
     <Compile Include="Bootloaders\Champions\Menus\Tristana.cs" />
     <Compile Include="Bootloaders\Champions\Tristana.cs" />
-    <Compile Include="Bootloaders\Core\Events\Drawing\Champion\OnDraw.cs" />
     <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
     <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
@@ -95,7 +94,7 @@
     <Compile Include="Globals\Static.cs" />
     <Compile Include="Humanizer\DelayHandler.cs" />
     <Compile Include="Humanizer\Tick.cs" />
-    <Compile Include="Logging\TickManager.cs" />
+    <Compile Include="Humanizer\TickManager.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Extensions\OrbwalkerExtension.cs" />
     <Compile Include="Program.cs" />
@@ -107,6 +106,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Bootloaders\Core\Events\Drawing\Champion\" />
     <Folder Include="Drawing\Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

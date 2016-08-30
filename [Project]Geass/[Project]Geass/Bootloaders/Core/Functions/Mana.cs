@@ -11,11 +11,6 @@ namespace _Project_Geass.Bootloaders.Core.Functions
         public static int GetManaPercent => (int)(Static.Objects.Player.Mana / Static.Objects.Player.MaxMana * 100);
         public static int HealthPercent => (int)(Static.Objects.Player.Health / Static.Objects.Player.MaxHealth * 100);
 
-        public static double ManaTillTearStack()
-        {
-            return 0;
-        }
-
         public static bool CheckComboQ()
         {
             if (Static.Objects.ProjectMenu.Item(

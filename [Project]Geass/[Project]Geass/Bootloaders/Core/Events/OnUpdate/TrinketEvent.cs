@@ -16,18 +16,17 @@ namespace _Project_Geass.Bootloaders.Core.Events.OnUpdate
 
         private void OnUpdate(EventArgs args)
         {
-            if (DelayHandler.CheckTrinket())
-            {
-                if (!Static.Objects.ProjectMenu.Item(Names.Menu.TrinketItemBase + "Boolean.BuyOrb").GetValue<bool>()) return;
-                DelayHandler.UseTrinket();
+            if (!DelayHandler.CheckTrinket()) return;
 
-                if (Static.Objects.Player.Level < 9) return;
-                if (!Static.Objects.Player.InShop() || Items.HasItem(Data.Items.Trinkets.Orb.Id))
-                    return;
+            if (!Static.Objects.ProjectMenu.Item(Names.Menu.TrinketItemBase + "Boolean.BuyOrb").GetValue<bool>()) return;
+            DelayHandler.UseTrinket();
 
-                Static.Objects.ProjectLogger.WriteLog("Buy Orb");
-                Data.Items.Trinkets.Orb.Buy();
-            }
+            if (Static.Objects.Player.Level < 9) return;
+            if (!Static.Objects.Player.InShop() || Items.HasItem(Data.Items.Trinkets.Orb.Id))
+                return;
+
+            Static.Objects.ProjectLogger.WriteLog("Buy Orb");
+            Data.Items.Trinkets.Orb.Buy();
         }
     }
 }
