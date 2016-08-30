@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#OnNonKillableMinion" Kind="Event" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2016-08-30 08:12:10Z" FixCategory="Breaking">
+            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2016-08-30 10:42:33Z" FixCategory="Breaking">
              <Issue Name="First" Certainty="95" Level="Error">Declare the first parameter of 'Orbwalking.OnNonKillableMinionH' as an object named 'sender'.</Issue>
              <Issue Name="Second" Certainty="95" Level="Error">Declare the second parameter of 'Orbwalking.OnNonKillableMinionH' as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Issue>
             </Message>
@@ -20,7 +20,7 @@
           </Member>
           <Member Name="#OnTargetChange" Kind="Event" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2016-08-30 08:12:10Z" FixCategory="Breaking">
+            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2016-08-30 10:42:33Z" FixCategory="Breaking">
              <Issue Name="First" Certainty="95" Level="Error">Declare the first parameter of 'Orbwalking.OnTargetChangeH' as an object named 'sender'.</Issue>
              <Issue Name="Second" Certainty="95" Level="Error">Declare the second parameter of 'Orbwalking.OnTargetChangeH' as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Issue>
             </Message>

@@ -16,11 +16,11 @@ namespace _Project_Geass.Data.Champions
                 case nameof(Tristana):
                     GetAbilities = new int[]
                     {
-                        E, W, Q, E,
-                        E, R, E, Q,
-                        E, Q, R, Q,
-                        Q, W, W, R,
-                        W, W
+                       E,W,Q,E,
+                       E,R,E,Q,
+                       E,Q,R,Q,
+                       Q,W,W,R,
+                       W,W
                     };
 
                     GetManaSettings = new[,] { { -1, -1, 35, 25 }, { -1, -1, 35, -1 }, { -1, -1, 50, -1 } };
@@ -32,11 +32,11 @@ namespace _Project_Geass.Data.Champions
                 case nameof(Ezreal):
                     GetAbilities = new int[]
                     {
-                        Q, E, W, Q,
-                        Q, R, Q, E,
-                        Q, E, R, E,
-                        E, W, W, R,
-                        W, W
+                        Q,E,W,Q,
+                        Q,R,Q,E,
+                        Q,E,R,E,
+                        E,W,W,R,
+                        W,W
                     };
 
                     GetManaSettings = new[,] { { 20, 30, -1, 35 }, { 30, 40, -1, 15 }, { 50, -1, -1, -1 } };
@@ -60,6 +60,24 @@ namespace _Project_Geass.Data.Champions
                     // ReSharper disable once UnusedVariable
                     var c = new Ashe();
                     break;
+
+
+                case nameof(Kalista):
+                    GetAbilities = new int[]
+                    {
+                        E,W,Q,E,
+                        E,R,E,Q,
+                        E,Q,R,Q,
+                        Q,W,W,R,
+                        W,W
+                    };
+
+                    GetManaSettings = new[,] { { 40, -1, 25, 15 }, { -1, -1, 45, -1 }, { -1, -1, 60, -1 } };
+                    GetDrawing = new[] { true, false, true, true };
+                    // ReSharper disable once UnusedVariable
+                    var d = new Kalista();
+                    break;
+
             }
         }
     }
