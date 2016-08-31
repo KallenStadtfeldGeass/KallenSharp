@@ -117,7 +117,8 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
             var basename = _baseName + "Clear.";
             var mainMenu = new Menu(nameof(Clear),basename);
 
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q to last hit").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnJungle", "Use Q on mosters").SetValue(true));
 
             return mainMenu;
         }

@@ -72,13 +72,11 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Mana.CheckComboQ())
                 {
-                    if (Q.IsReady())
-                    {
-                        if (Heroes.GetEnemies(Static.Objects.Player.AttackRange - 30).Count > 0)
-                        {
-                            Q.Cast();
-                        }
-                    }
+
+                   if (Heroes.GetEnemies(Static.Objects.Player.AttackRange - 30).Count > 0)
+                       Q.Cast();
+                        
+                    
                 }
             }
 
@@ -86,27 +84,34 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Mana.CheckComboW())
                 {
-                    if (W.IsReady())
-                    {
-                        var enemies = Heroes.GetEnemies(W.Range);
+                        var minHitChance =
+                            Prediction.GetHitChance(
+                                Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
+                                    .GetValue<StringList>()
+                                    .SelectedValue);
 
-                        var validPos =
-                            enemies.Where(
-                                x =>
-                                    W.GetPrediction(x).Hitchance >=
-                                    Prediction.GetHitChance(
-                                        Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
-                                            .GetValue<StringList>()
-                                            .SelectedValue));
 
-                        foreach (var pos in validPos.OrderBy(x => x.Health))
+                        //Check if the target in target selector is valid (best target)
+                        var focusTarget = TargetSelector.GetTarget(W.Range, W.DamageType);
+                        if (focusTarget != null)
                         {
-                            if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) ||
-                                pos.HasBuffOfType(BuffType.SpellShield)) continue;
-                            W.Cast(pos.Position);
-                            break;
+                            var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, W.Delay, W.Speed);
+                            if (Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
+                                W.Cast(pred.UnitPosition);
                         }
-                    }
+                        if (W.IsReady())
+                        {
+                            var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance);
+
+                            foreach (var output in validOutputs)
+                            {
+                                if (!Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{output.Champion.ChampionName}").GetValue<bool>()) continue;
+                                W.Cast(output.Prediction.UnitPosition);
+                                break;
+
+                            }
+                        }
+                    
                 }
             }
 
@@ -114,44 +119,44 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Mana.CheckComboR())
                 {
-                    if (R.IsReady())
+
+                    if (Mana.CheckComboR())
                     {
-                        var enemies =
-                            Heroes.GetEnemies(
-                                Static.Objects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value);
+                        var minHitChance =
+                            Core.Functions.Prediction.GetHitChance(
+                                Static.Objects.ProjectMenu.Item($"{basename}.UseR.Prediction")
+                                    .GetValue<StringList>()
+                                    .SelectedValue);
 
-                        var validEnemies =
-                            enemies.OrderBy(x => x.HealthPercent)
-                                .Where(
-                                    enemy =>
-                                        Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}")
-                                            .GetValue<bool>())
-                                .Where(
-                                    enemy =>
-                                        !(Static.Objects.ProjectMenu.Item(
-                                            $"{basename}.UseR.On.{enemy.ChampionName}.HpMin").GetValue<Slider>().Value >
-                                          enemy.HealthPercent) &&
-                                        !(Static.Objects.ProjectMenu.Item(
-                                            $"{basename}.UseR.On.{enemy.ChampionName}.HpMax").GetValue<Slider>().Value <
-                                          enemy.HealthPercent));
-
-                        var validPos =
-                            validEnemies.Where(
-                                x =>
-                                    R.GetPrediction(x).Hitchance >=
-                                    Prediction.GetHitChance(
-                                        Static.Objects.ProjectMenu.Item($"{basename}.UseR.Prediction")
-                                            .GetValue<StringList>()
-                                            .SelectedValue));
-
-                        foreach (var pos in validPos.OrderBy(x => x.Health))
+                        //Check if the target in target selector is valid (best target)
+                        var focusTarget = TargetSelector.GetTarget(Static.Objects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value, R.DamageType);
+                        if (focusTarget != null)
                         {
-                            if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) ||
-                                pos.HasBuffOfType(BuffType.SpellShield)) continue;
-                            R.Cast(pos.Position);
-                            break;
+                            var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, R.Delay, R.Speed);
+
+                            if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
+                            {
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}.HpMin").GetValue<Slider>().Value > focusTarget.HealthPercent)
+                                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}.HpMax").GetValue<Slider>().Value < focusTarget.HealthPercent)
+                                        R.Cast(pred.UnitPosition);
+                            }
                         }
-                    }
+
+                        if (R.IsReady())
+                        {
+                            var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance);
+
+                            foreach (var output in validOutputs)
+                            {
+                                if (!Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{output.Champion.ChampionName}").GetValue<bool>()) continue;
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{output.Champion.ChampionName}.HpMin").GetValue<Slider>().Value > output.Champion.HealthPercent) continue;
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{output.Champion.ChampionName}.HpMax").GetValue<Slider>().Value < output.Champion.HealthPercent) continue;
+                                R.Cast(output.Prediction.UnitPosition);
+                                break;
+                            }
+                        }
+                    }    
+                    
                 }
             }
         }
@@ -164,23 +169,32 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Mana.CheckMixedW())
                 {
-                    var enemies = Heroes.GetEnemies(W.Range);
+                    var minHitChance =
+                        Core.Functions.Prediction.GetHitChance(
+                            Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
+                                .GetValue<StringList>()
+                                .SelectedValue);
 
-                    var validPos =
-                        enemies.Where(
-                            x =>
-                                W.GetPrediction(x).Hitchance >=
-                                Prediction.GetHitChance(
-                                    Static.Objects.ProjectMenu.Item($"{basename}.UseW.Prediction")
-                                        .GetValue<StringList>()
-                                        .SelectedValue));
 
-                    foreach (var pos in validPos.OrderBy(x => x.Health))
+                    //Check if the target in target selector is valid (best target)
+                    var focusTarget = TargetSelector.GetTarget(W.Range, W.DamageType);
+                    if (focusTarget != null)
                     {
-                        if (pos.HasBuffOfType(BuffType.Invulnerability) || pos.HasBuffOfType(BuffType.SpellImmunity) ||
-                            pos.HasBuffOfType(BuffType.SpellShield)) continue;
-                        W.Cast(pos.Position);
-                        break;
+                        var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, W.Delay, W.Speed);
+                        if (Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
+                            W.Cast(pred.UnitPosition);
+                    }
+                    if (W.IsReady())
+                    {
+                        var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance);
+
+                        foreach (var output in validOutputs)
+                        {
+                            if (!Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{output.Champion.ChampionName}").GetValue<bool>()) continue;
+                            W.Cast(output.Prediction.UnitPosition);
+                            break;
+
+                        }
                     }
                 }
             }

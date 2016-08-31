@@ -13,6 +13,8 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckComboQ()
         {
+            if (!Champions.Base.Champion.Q.IsReady()) return false;
+
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}") ==
                 null) return true;
@@ -25,6 +27,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckComboW()
         {
+            if (!Champions.Base.Champion.W.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}") ==
                 null) return true;
@@ -37,6 +40,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckComboE()
         {
+            if (!Champions.Base.Champion.E.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}") ==
                 null) return true;
@@ -49,6 +53,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckComboR()
         {
+            if (!Champions.Base.Champion.R.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}") ==
                 null) return true;
@@ -65,6 +70,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckMixedQ()
         {
+            if (!Champions.Base.Champion.Q.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}") ==
                 null) return true;
@@ -77,6 +83,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckMixedW()
         {
+            if (!Champions.Base.Champion.W.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}") ==
                 null) return true;
@@ -89,6 +96,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckMixedE()
         {
+            if (!Champions.Base.Champion.E.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}") ==
                 null) return true;
@@ -101,6 +109,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckMixedR()
         {
+            if (!Champions.Base.Champion.R.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}") ==
                 null) return true;
@@ -117,6 +126,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckClearQ()
         {
+            if (!Champions.Base.Champion.Q.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}") ==
                 null) return true;
@@ -129,6 +139,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckClearW()
         {
+            if (!Champions.Base.Champion.W.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}") ==
                 null) return true;
@@ -141,6 +152,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckClearE()
         {
+            if (!Champions.Base.Champion.E.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}") ==
                 null) return true;
@@ -153,6 +165,7 @@ namespace _Project_Geass.Bootloaders.Core.Functions
 
         public static bool CheckClearR()
         {
+            if (!Champions.Base.Champion.R.IsReady()) return false;
             if (Static.Objects.ProjectMenu.Item(
                 $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}") ==
                 null) return true;

@@ -104,12 +104,14 @@
     <Compile Include="Data\Items\Offensive.cs" />
     <Compile Include="Data\Items\Trinkets.cs" />
     <Compile Include="Data\Monsters.cs" />
+    <Compile Include="Data\Prediction.cs" />
     <Compile Include="Drawing\Champions\DamageIndicator.cs" />
     <Compile Include="Functions\AssemblyTime.cs" />
     <Compile Include="Functions\Calculations\Damage.cs" />
     <Compile Include="Functions\Menu.cs" />
     <Compile Include="Functions\Objects\Heroes.cs" />
     <Compile Include="Functions\Objects\Minions.cs" />
+    <Compile Include="Functions\Targeting.cs" />
     <Compile Include="Globals\Base\Obj.cs" />
     <Compile Include="Globals\Static.cs" />
     <Compile Include="Humanizer\DelayHandler.cs" />
@@ -126,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bootloaders\Core\Events\Drawing\Champion\" />
+    <Folder Include="Data\Structures\" />
     <Folder Include="Drawing\Rendering\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
