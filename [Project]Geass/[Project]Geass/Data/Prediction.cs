@@ -10,12 +10,12 @@ namespace _Project_Geass.Data
 {
     class Prediction
     {
-        public struct ChampionPrefiction
+        public struct ChampionPrediction
         {
             public Obj_AI_Hero Champion;
             public PredictionOutput Prediction;
 
-            public ChampionPrefiction(Obj_AI_Hero champ, PredictionOutput pred)
+            public ChampionPrediction(Obj_AI_Hero champ, PredictionOutput pred)
             {
                 Champion = champ;
                 Prediction = pred;

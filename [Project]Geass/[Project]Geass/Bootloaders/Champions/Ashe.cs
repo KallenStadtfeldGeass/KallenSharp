@@ -8,6 +8,7 @@ using _Project_Geass.Humanizer;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Damage = _Project_Geass.Functions.Calculations.Damage;
 using Prediction = _Project_Geass.Bootloaders.Core.Functions.Prediction;
@@ -99,18 +100,27 @@ namespace _Project_Geass.Bootloaders.Champions
                             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
                                 W.Cast(pred.UnitPosition);
                         }
+
                         if (W.IsReady())
                         {
-                            var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance);
+                                var validChamp = new List<string>();
 
-                            foreach (var output in validOutputs)
-                            {
-                                if (!Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{output.Champion.ChampionName}").GetValue<bool>()) continue;
-                                W.Cast(output.Prediction.UnitPosition);
-                                break;
+                                foreach (var enemy in Heroes.GetEnemies(W.Range))
+                                {
+                                    if (!Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{enemy.ChampionName}").GetValue<bool>()) continue;
+                                    validChamp.Add(enemy.ChampionName);
+                                }
 
-                            }
-                        }
+
+                                var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance, validChamp);
+
+
+                                foreach (var output in validOutputs)
+                                {
+                                    W.Cast(output.UnitPosition);
+                                    break;
+                                }   
+                       }
                     
                 }
             }
@@ -123,7 +133,7 @@ namespace _Project_Geass.Bootloaders.Champions
                     if (Mana.CheckComboR())
                     {
                         var minHitChance =
-                            Core.Functions.Prediction.GetHitChance(
+                            Prediction.GetHitChance(
                                 Static.Objects.ProjectMenu.Item($"{basename}.UseR.Prediction")
                                     .GetValue<StringList>()
                                     .SelectedValue);
@@ -144,14 +154,23 @@ namespace _Project_Geass.Bootloaders.Champions
 
                         if (R.IsReady())
                         {
-                            var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance);
+                            var validChamp = new List<string>();
+
+                            foreach (var enemy in Heroes.GetEnemies(R.Range))
+                            {
+                                if (!Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}").GetValue<bool>()) continue;
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}.HpMin").GetValue<Slider>().Value > enemy.HealthPercent) continue;
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}.HpMax").GetValue<Slider>().Value < enemy.HealthPercent) continue;
+                                validChamp.Add(enemy.ChampionName);
+                            }
+
+
+                            var validOutputs = Functions.Targeting.GetTargetPredictions(R, minHitChance,validChamp);
+
 
                             foreach (var output in validOutputs)
                             {
-                                if (!Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{output.Champion.ChampionName}").GetValue<bool>()) continue;
-                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{output.Champion.ChampionName}.HpMin").GetValue<Slider>().Value > output.Champion.HealthPercent) continue;
-                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{output.Champion.ChampionName}.HpMax").GetValue<Slider>().Value < output.Champion.HealthPercent) continue;
-                                R.Cast(output.Prediction.UnitPosition);
+                                R.Cast(output.UnitPosition);
                                 break;
                             }
                         }
@@ -186,14 +205,25 @@ namespace _Project_Geass.Bootloaders.Champions
                     }
                     if (W.IsReady())
                     {
-                        var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance);
-
-                        foreach (var output in validOutputs)
+                        if (W.IsReady())
                         {
-                            if (!Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{output.Champion.ChampionName}").GetValue<bool>()) continue;
-                            W.Cast(output.Prediction.UnitPosition);
-                            break;
+                            var validChamp = new List<string>();
 
+                            foreach (var enemy in Heroes.GetEnemies(W.Range))
+                            {
+                                if (!Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{enemy.ChampionName}").GetValue<bool>()) continue;
+                                validChamp.Add(enemy.ChampionName);
+                            }
+
+
+                            var validOutputs = Functions.Targeting.GetTargetPredictions(W, minHitChance, validChamp);
+
+
+                            foreach (var output in validOutputs)
+                            {
+                                W.Cast(output.UnitPosition);
+                                break;
+                            }
                         }
                     }
                 }
