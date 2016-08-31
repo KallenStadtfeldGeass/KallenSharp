@@ -12,7 +12,7 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Ezreal : Base.Champion
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 2000);
 
         public Ezreal()
         {
@@ -34,7 +34,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
 
-            Orbwalker = new OrbwalkingEx.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         private const float DelayCheck = 8000;
@@ -61,23 +61,24 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private void AutoEvents(EventArgs args)
         {
+          
             if (!Humanizer.DelayHandler.CheckAutoEvents()) return;
-
             if (!_tearFull)
             {
                 if (!Static.Objects.Player.IsRecalling())
                 {
                     var basename = BaseName + "Misc.";
 
-                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() &&
-                        Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana")
-                            .GetValue<Slider>()
-                            .Value > Mana.GetManaPercent)
+
+                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() && Mana.GetManaPercent >= Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value)
+                    {
+
                         if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
                             Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
                             if (Functions.Objects.Minions.GetEnemyMinions2(1000).Count < 1 &&
-                                Functions.Objects.Heroes.GetEnemies(1000).Count < 1 && Mana.GetManaPercent > 75)
+                                Functions.Objects.Heroes.GetEnemies(1000).Count < 1)
                                 Q.Cast();
+                    }
                 }
             }
             Humanizer.DelayHandler.UseAutoEvent();
@@ -89,17 +90,17 @@ namespace _Project_Geass.Bootloaders.Champions
 
             switch (Orbwalker.ActiveMode)
             {
-                case OrbwalkingEx.OrbwalkingMode.Combo:
+                case Orbwalking.OrbwalkingMode.Combo:
                     {
                         Combo();
                         break;
                     }
-                case OrbwalkingEx.OrbwalkingMode.Mixed:
+                case Orbwalking.OrbwalkingMode.Mixed:
                     {
                         Mixed();
                         break;
                     }
-                case OrbwalkingEx.OrbwalkingMode.LaneClear:
+                case Orbwalking.OrbwalkingMode.LaneClear:
                     {
                         Clear();
                         break;
@@ -186,6 +187,7 @@ namespace _Project_Geass.Bootloaders.Champions
 
                             if (GetRealRDamage(pos) < pos.Health) continue;
                             R.Cast(pos.Position);
+                            break;
                         }
                     }
                 }

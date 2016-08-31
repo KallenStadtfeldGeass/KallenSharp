@@ -20,7 +20,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
         {
             var basename = _baseName + "Misc.";
 
-            var mainMenu = new Menu(basename, nameof(Misc));
+            var mainMenu = new Menu(nameof(Misc), basename);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack", "Use Q to tear stack (when no enemy in range)").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack.MinMana", "Min Mana%").SetValue(new Slider(70)));
             return mainMenu;
@@ -30,7 +30,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
         {
             var basename = _baseName + "Combo.";
 
-            var mainMenu = new Menu(basename, nameof(Combo));
+            var mainMenu = new Menu(nameof(Combo), basename);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
@@ -80,7 +80,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
         private Menu Mixed()
         {
             var basename = _baseName + "Mixed.";
-            var mainMenu = new Menu(basename, nameof(Mixed));
+            var mainMenu = new Menu(nameof(Mixed), basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
@@ -115,7 +115,7 @@ namespace _Project_Geass.Bootloaders.Champions.Menus
         private Menu Clear()
         {
             var basename = _baseName + "Clear.";
-            var mainMenu = new Menu(basename, nameof(Clear));
+            var mainMenu = new Menu(nameof(Clear),basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q to last hit").SetValue(true));
 

@@ -16,7 +16,7 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Ashe : Champion
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 2000);
 
         public Ashe()
         {
@@ -36,7 +36,7 @@ namespace _Project_Geass.Bootloaders.Champions
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
-            Orbwalker = new OrbwalkingEx.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         private void OnUpdate(EventArgs args)
@@ -45,17 +45,17 @@ namespace _Project_Geass.Bootloaders.Champions
 
             switch (Orbwalker.ActiveMode)
             {
-                case OrbwalkingEx.OrbwalkingMode.Combo:
+                case Orbwalking.OrbwalkingMode.Combo:
                     {
                         Combo();
                         break;
                     }
-                case OrbwalkingEx.OrbwalkingMode.Mixed:
+                case Orbwalking.OrbwalkingMode.Mixed:
                     {
                         Mixed();
                         break;
                     }
-                case OrbwalkingEx.OrbwalkingMode.LaneClear:
+                case Orbwalking.OrbwalkingMode.LaneClear:
                     {
                         Clear();
                         break;

@@ -11,12 +11,12 @@ namespace _Project_Geass.Bootloaders.Champions
 {
     internal class Tristana : Base.Champion
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 1000);
+        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 2000);
 
         public Tristana()
         {
             Q = new Spell(SpellSlot.Q, 550);
-            E = new Spell(SpellSlot.W, 625);
+            E = new Spell(SpellSlot.E, 625);
             R = new Spell(SpellSlot.R, 517);
 
             // ReSharper disable once UnusedVariable
@@ -28,7 +28,7 @@ namespace _Project_Geass.Bootloaders.Champions
             LeagueSharp.Drawing.OnDraw += OnDraw;
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
 
-            Orbwalker = new OrbwalkingEx.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
         }
 
         protected virtual void UpdateChampionRange(int level)
@@ -46,17 +46,17 @@ namespace _Project_Geass.Bootloaders.Champions
 
             switch (Orbwalker.ActiveMode)
             {
-                case OrbwalkingEx.OrbwalkingMode.Combo:
+                case Orbwalking.OrbwalkingMode.Combo:
                     {
                         Combo();
                         break;
                     }
-                case OrbwalkingEx.OrbwalkingMode.Mixed:
+                case Orbwalking.OrbwalkingMode.Mixed:
                     {
                         Mixed();
                         break;
                     }
-                case OrbwalkingEx.OrbwalkingMode.LaneClear:
+                case Orbwalking.OrbwalkingMode.LaneClear:
                     {
                         Clear();
                         break;
@@ -73,12 +73,9 @@ namespace _Project_Geass.Bootloaders.Champions
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
             {
-                var enemies = Functions.Objects.Heroes.GetEnemies(R.Range);
-                foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)).OrderBy(hp => hp.Health))
+                foreach (var enemy in Functions.Objects.Heroes.GetEnemies(R.Range).OrderBy(hp => hp.Health))
                 {
-                    if (
-                        !Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}")
-                            .GetValue<bool>())
+                    if (!Static.Objects.ProjectMenu.Item($"{basename}.UseR.{enemy.ChampionName}").GetValue<bool>())
                         continue;
 
                     if (GetDamage(enemy) < enemy.Health) continue;
@@ -93,13 +90,13 @@ namespace _Project_Geass.Bootloaders.Champions
         {
             var basename = BaseName + "Combo.";
 
-            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range);
+            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range).OrderBy(hp => hp.Health);
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
             {
                 if (Mana.CheckComboR())
                 {
-                    foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)).OrderBy(hp => hp.Health))
+                    foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)))
                     {
                         if (!Static.Objects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}").GetValue<bool>())
                             continue;
@@ -115,7 +112,7 @@ namespace _Project_Geass.Bootloaders.Champions
             {
                 if (Mana.CheckComboE())
                 {
-                    foreach (var target in enemies.OrderBy(x => x.Health))
+                    foreach (var target in enemies)
                     {
                         if (!Static.Objects.ProjectMenu.Item($"{basename}.UseE.On.{target.ChampionName}").GetValue<bool>())
                             continue;
@@ -131,9 +128,12 @@ namespace _Project_Geass.Bootloaders.Champions
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {
-                var validTargets = enemies.Where(x => x.HasBuff("TristanaECharge"));
-                Q.Cast();
-                Orbwalker.ForceTarget(validTargets.FirstOrDefault());
+                foreach (var target in enemies.Where(x => x.HasBuff("TristanaECharge")))
+                {
+                    Q.Cast();
+                    Orbwalker.ForceTarget(target);
+                    break;
+                }
             }
         }
 
@@ -141,12 +141,12 @@ namespace _Project_Geass.Bootloaders.Champions
         {
             var basename = BaseName + "Mixed.";
 
-            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range);
+            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range).OrderBy(x => x.Health);
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
             {
                 if (Mana.CheckMixedE())
                 {
-                    foreach (var target in enemies.OrderBy(x => x.Health))
+                    foreach (var target in enemies)
                     {
                         if (!Static.Objects.ProjectMenu.Item($"{basename}.UseE.On.{target.ChampionName}").GetValue<bool>())
                             continue;
@@ -162,10 +162,13 @@ namespace _Project_Geass.Bootloaders.Champions
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {
-                var validTargets = enemies.Where(x => x.HasBuff("TristanaECharge"));
-                Q.Cast();
-                Orbwalker.ForceTarget(validTargets.FirstOrDefault());
+                foreach (var target in enemies.Where(x => x.HasBuff("TristanaECharge")))
+                {
+                    Q.Cast();
+                    Orbwalker.ForceTarget(target);
+                }
             }
+
         }
 
         private void Clear()
@@ -178,72 +181,60 @@ namespace _Project_Geass.Bootloaders.Champions
                 {
                     if (Static.Objects.ProjectMenu.Item($"{basename}.UseE.OnTurrets").GetValue<bool>())
                     {
-                        var turrets =
-                            ObjectManager.Get<Obj_AI_Turret>()
-                                .OrderBy(dis => dis.ServerPosition.Distance(Static.Objects.Player.ServerPosition));
-                        var validTurrets =
-                            turrets.Where(turret => turret.IsEnemy)
-                                .Where(turret => !turret.IsDead && turret.IsValidTarget(E.Range));
-                        var objAiTurrets = validTurrets as Obj_AI_Turret[] ?? validTurrets.ToArray();
-                        if (objAiTurrets.Any())
+                        var turrets = ObjectManager.Get<Obj_AI_Turret>().OrderBy(dis => dis.ServerPosition.Distance(Static.Objects.Player.ServerPosition));
+
+                        foreach (var turret in turrets.Where(turret => turret.IsEnemy).Where(turret => !turret.IsDead && turret.IsValidTarget(E.Range)))
                         {
-                            var target = objAiTurrets.FirstOrDefault();
-                            E.Cast(target);
+                            E.Cast(turret);
 
                             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                                if (Static.Objects.ProjectMenu.Item($"{basename}.OnTurrets").GetValue<bool>())
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.OnTurrets").GetValue<bool>())
                                     Q.Cast();
 
-                            Orbwalker.ForceTarget(target);
+                            Orbwalker.ForceTarget(turret);
                             return;
                         }
                     }
 
                     if (Static.Objects.ProjectMenu.Item($"{basename}.UseE.OnJungle").GetValue<bool>())
                     {
-                        var monsters = MinionManager.GetMinions(E.Range, MinionTypes.All, MinionTeam.Neutral);
+                        var bigmonsters = MinionManager.GetMinions(E.Range, MinionTypes.All, MinionTeam.Neutral).Where(name => !name.Name.ToLower().Contains("mini") && !name.SkinName.ToLower().Contains("mini")).OrderBy(hp => hp.Health);
 
-                        var validMonsters =
-                            monsters.Where(
-                                name =>
-                                    !name.Name.ToLower().Contains("mini") && !name.SkinName.ToLower().Contains("mini") &&
-                                    name.IsValidTarget(E.Range)).OrderBy(hp => hp.Health);
 
-                        if (validMonsters.Any())
+                        foreach (var monster in bigmonsters.Where(target => target.IsValidTarget(E.Range)))
                         {
-                            var target = validMonsters.FirstOrDefault();
-                            E.Cast(target);
+                            E.Cast(monster);
 
                             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                                if (Static.Objects.ProjectMenu.Item($"{basename}.OnJungle").GetValue<bool>())
+                                if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.OnJungle").GetValue<bool>())
                                     Q.Cast();
 
-                            Orbwalker.ForceTarget(target);
+                            Orbwalker.ForceTarget(monster);
                             return;
                         }
+
                     }
 
-                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseE.OnMinons").GetValue<bool>())
+                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseE.OnMinions").GetValue<bool>())
                     {
                         var validMinons = MinionManager.GetMinions(Static.Objects.Player.Position, E.Range - 50, MinionTypes.All, MinionTeam.NotAlly);
                         if (validMinons.Count >= Static.Objects.ProjectMenu.Item($"{basename}.MinionsInRange").GetValue<Slider>().Value)
                         {
                             Obj_AI_Base target = null;
                             var bestInRange = 0;
-                            foreach (
-                                var minon in
-                                    validMinons.Where(minon => minon.IsValidTarget(E.Range)))
+                            foreach (var minon in validMinons.Where(minon => minon.IsValidTarget(E.Range)))
                             {
                                 var inRange = 1 + validMinons.Count(minon2 => minon.Distance(minon) < 125);
                                 if (inRange <= bestInRange) continue;
                                 bestInRange = inRange;
                                 target = minon;
                             }
+
                             if (target != null && bestInRange >= Static.Objects.ProjectMenu.Item($"{basename}.MinionsInRange").GetValue<Slider>().Value)
                             {
                                 E.Cast(target);
                                 if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                                    if (Static.Objects.ProjectMenu.Item($"{basename}.OnMinons").GetValue<bool>())
+                                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.OnMinions").GetValue<bool>())
                                         Q.Cast();
 
                                 Orbwalker.ForceTarget(target);
@@ -257,8 +248,7 @@ namespace _Project_Geass.Bootloaders.Champions
         private
             void OnDraw(EventArgs args)
         {
-            if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
-                                                 ".Boolean.DrawOnSelf").GetValue<bool>()) return;
+            if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +".Boolean.DrawOnSelf").GetValue<bool>()) return;
             if (E.Level > 0)
                 if (Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Active)
                     Render.Circle.DrawCircle(Static.Objects.Player.Position, E.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor").GetValue<Circle>().Color, 2);
@@ -284,11 +274,14 @@ namespace _Project_Geass.Bootloaders.Champions
 
         private static float GetDamage(Obj_AI_Hero target)
         {
+
             var damage = 0f;
+            if (target.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange - 25 &&
+                Static.Objects.Player.CanAttack && !Static.Objects.Player.IsWindingUp)
+                damage += (float)Static.Objects.Player.GetAutoAttackDamage(target) - 10;
 
             if (R.IsReady())
-                if (Static.Objects.Player.Distance(target) < R.Range)
-                    damage += R.GetDamage(target);
+                damage += R.GetDamage(target);
 
             if (target.HasBuff("tristanaecharge"))
             {
@@ -300,7 +293,7 @@ namespace _Project_Geass.Bootloaders.Champions
                 damage += (float)(E.GetDamage(target) * (count * 0.30)) + E.GetDamage(target);
             }
 
-            if (E.IsReady())
+            else if (E.IsReady())
                 if (Static.Objects.Player.Distance(target) < E.Range)
                     damage += (float)(E.GetDamage(target) * 0.30) + E.GetDamage(target); // 1 auto charge
 

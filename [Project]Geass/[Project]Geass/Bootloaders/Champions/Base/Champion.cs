@@ -17,7 +17,7 @@ namespace _Project_Geass.Bootloaders.Champions.Base
 
         public readonly Random Rng;
 
-        public static OrbwalkingEx.Orbwalker Orbwalker { get; set; }
+        public static Orbwalking.Orbwalker Orbwalker { get; set; }
 
         public Champion(Spell q, Spell w, Spell e, Spell r, Random rng)
         {

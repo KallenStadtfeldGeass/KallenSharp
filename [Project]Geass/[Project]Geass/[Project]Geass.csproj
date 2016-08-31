@@ -115,7 +115,6 @@
     <Compile Include="Humanizer\DelayHandler.cs" />
     <Compile Include="Humanizer\Tick.cs" />
     <Compile Include="Humanizer\TickManager.cs" />
-    <Compile Include="Extensions\Orbwalking.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +127,7 @@
   <ItemGroup>
     <Folder Include="Bootloaders\Core\Events\Drawing\Champion\" />
     <Folder Include="Drawing\Rendering\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="1472572168_Zero.ico" />
