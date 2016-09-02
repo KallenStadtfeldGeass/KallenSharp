@@ -74,28 +74,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootloaders\Champions\Ashe.cs" />
-    <Compile Include="Bootloaders\Champions\Base\Champion.cs" />
-    <Compile Include="Bootloaders\Champions\Kalista.cs" />
-    <Compile Include="Bootloaders\Champions\Menus\Ashe.cs" />
-    <Compile Include="Bootloaders\Champions\Menus\Ezreal.cs" />
-    <Compile Include="Bootloaders\Champions\Menus\Kalista.cs" />
-    <Compile Include="Bootloaders\Champions\Menus\Tristana.cs" />
-    <Compile Include="Bootloaders\Champions\Tristana.cs" />
-    <Compile Include="Bootloaders\Core\Events\Drawing\Minions\LastHitHelper.cs" />
-    <Compile Include="Bootloaders\Core\Events\OnUpdate\ItemEvents.cs" />
-    <Compile Include="Bootloaders\Core\Events\OnUpdate\OnLevelEvents.cs" />
-    <Compile Include="Bootloaders\Core\Events\OnUpdate\TrinketEvent.cs" />
-    <Compile Include="Bootloaders\Core\Functions\Mana.cs" />
-    <Compile Include="Bootloaders\Core\Functions\Prediction.cs" />
-    <Compile Include="Bootloaders\Core\Menus\DrawingMenu.cs" />
-    <Compile Include="Bootloaders\Core\Menus\ItemsMenu.cs" />
-    <Compile Include="Bootloaders\Core\Menus\ManaMenu.cs" />
-    <Compile Include="Bootloaders\Core\Menus\OnLevelMenu.cs" />
-    <Compile Include="Bootloaders\Core\Menus\TrinketMenu.cs" />
-    <Compile Include="Bootloaders\Champions\Ezreal.cs" />
-    <Compile Include="Bootloaders\Initializer.cs" />
-    <Compile Include="Bootloaders\Base\Menus\SettingsMenu.cs" />
+    <Compile Include="Module\Champions\Heroes\Events\Ashe.cs" />
+    <Compile Include="Module\Champions\Core\Base.cs" />
+    <Compile Include="Module\Champions\Heroes\Events\Kalista.cs" />
+    <Compile Include="Module\Champions\Heroes\Menus\Ashe.cs" />
+    <Compile Include="Module\Champions\Heroes\Menus\Ezreal.cs" />
+    <Compile Include="Module\Champions\Heroes\Menus\Kalista.cs" />
+    <Compile Include="Module\Champions\Heroes\Menus\Tristana.cs" />
+    <Compile Include="Module\Champions\Heroes\Events\Tristana.cs" />
+    <Compile Include="Module\Core\Drawing\Events\LastHitHelper.cs" />
+    <Compile Include="Module\Core\Items\Events\Item.cs" />
+    <Compile Include="Module\Core\OnLevel\Events\Abilities.cs" />
+    <Compile Include="Module\Core\Items\Events\Trinket.cs" />
+    <Compile Include="Module\Core\Mana\Functions\Mana.cs" />
+    <Compile Include="Functions\Prediction.cs" />
+    <Compile Include="Module\Core\Drawing\Menus\Drawing.cs" />
+    <Compile Include="Module\Core\Items\Menus\Item.cs" />
+    <Compile Include="Module\Core\Mana\Menus\Mana.cs" />
+    <Compile Include="Module\Core\OnLevel\Menus\Abilities.cs" />
+    <Compile Include="Module\Core\Items\Menus\Trinket.cs" />
+    <Compile Include="Module\Champions\Heroes\Events\Ezreal.cs" />
+    <Compile Include="Module\Initializer.cs" />
+    <Compile Include="Module\PreLoad\Menus\PreLoadMenu.cs" />
     <Compile Include="Data\Champions\Base.cs" />
     <Compile Include="Data\Champions\Load.cs" />
     <Compile Include="Data\Names.cs" />
@@ -127,10 +127,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Bootloaders\Core\Events\Drawing\Champion\" />
     <Folder Include="Data\Structures\" />
     <Folder Include="Drawing\Rendering\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="1472572168_Zero.ico" />

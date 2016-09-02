@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace _Project_Geass.Functions
 {
-    class Targeting
+    internal class Targeting
     {
-
         public struct PredictionWithChampion
         {
             public PredictionWithChampion(Obj_AI_Hero champ, PredictionOutput prediction)
@@ -28,9 +27,9 @@ namespace _Project_Geass.Functions
             {
                 if (champion.HasBuffOfType(BuffType.Invulnerability) || champion.HasBuffOfType(BuffType.SpellImmunity) || champion.HasBuffOfType(BuffType.SpellShield)) continue;
 
-                var tempPred = Prediction.GetPrediction(champion, spell.Delay, spell.Speed);
+                var tempPred = LeagueSharp.Common.Prediction.GetPrediction(champion, spell.Delay, spell.Speed);
                 if (tempPred.Hitchance >= minHitChance)
-                    tempList.Add(new PredictionWithChampion(champion,tempPred));
+                    tempList.Add(new PredictionWithChampion(champion, tempPred));
             }
 
             return tempList.OrderBy(pred => pred.Prediction.Hitchance);
@@ -44,8 +43,8 @@ namespace _Project_Geass.Functions
             {
                 if (champion.HasBuffOfType(BuffType.Invulnerability) || champion.HasBuffOfType(BuffType.SpellImmunity) || champion.HasBuffOfType(BuffType.SpellShield)) continue;
 
-                var tempPred = Prediction.GetPrediction(champion, spell.Delay, spell.Speed);
-                if(tempPred.Hitchance >= minHitChance)
+                var tempPred = LeagueSharp.Common.Prediction.GetPrediction(champion, spell.Delay, spell.Speed);
+                if (tempPred.Hitchance >= minHitChance)
                     tempList.Add(tempPred);
             }
 

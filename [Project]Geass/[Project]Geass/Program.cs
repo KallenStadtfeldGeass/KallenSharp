@@ -1,4 +1,5 @@
-﻿using LeagueSharp.Common;
+﻿using _Project_Geass.Module;
+using LeagueSharp.Common;
 using System;
 
 namespace _Project_Geass
@@ -16,7 +17,7 @@ namespace _Project_Geass
         private static void OnLoad(EventArgs args)
         {
             // ReSharper disable once UnusedVariable
-            var init = new Bootloaders.Initializer();
+            var init = new Initializer();
         }
     }
 }

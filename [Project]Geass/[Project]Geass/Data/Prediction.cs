@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
 
 namespace _Project_Geass.Data
 {
-    class Prediction
+    internal class Prediction
     {
         public struct ChampionPrediction
         {
