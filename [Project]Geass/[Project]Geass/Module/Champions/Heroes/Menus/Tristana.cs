@@ -1,6 +1,6 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Data;
+﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
