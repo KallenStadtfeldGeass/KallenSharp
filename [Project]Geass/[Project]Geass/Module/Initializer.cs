@@ -23,13 +23,14 @@ namespace _Project_Geass.Module
             if (!Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.Enable").GetValue<bool>()) return;
 
             var champ = new Data.Champions.Load();
+            var coreMenu = new LeagueSharp.Common.Menu("Core Modules","CoreModulesMenu");
 
             //Initilize Menus
 
             if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.DrawingMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new Core.Drawing.Menus.Drawing(champ.GetDrawing);
+                var menu = new Core.Drawing.Menus.Drawing(coreMenu,champ.GetDrawing);
                 //Static.Objects.ProjectLogger.WriteLog("Drawing Menu");
             }
 
@@ -38,7 +39,7 @@ namespace _Project_Geass.Module
                     $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new ManaMenu(champ.GetManaSettings);
+                var menu = new ManaMenu(coreMenu,champ.GetManaSettings);
                 //  Static.Objects.ProjectLogger.WriteLog("Mana Menu");
             }
 
@@ -47,7 +48,7 @@ namespace _Project_Geass.Module
                     $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new Item();
+                var menu = new Item(coreMenu);
                 //  Static.Objects.ProjectLogger.WriteLog("Item");
             }
 
@@ -56,7 +57,7 @@ namespace _Project_Geass.Module
                     $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.OnLevelMenu").GetValue<bool>())
             {
                 // ReSharper disable once UnusedVariable
-                var menu = new Abilities(champ.GetAbilities);
+                var menu = new Abilities(coreMenu,champ.GetAbilities);
                 //  Static.Objects.ProjectLogger.WriteLog("Auto Level Menu");
             }
 
@@ -66,10 +67,10 @@ namespace _Project_Geass.Module
             {
                 // ReSharper disable once UnusedVariable
 
-                var menu = new Trinket();
+                var menu = new Trinket(coreMenu);
                 //  Static.Objects.ProjectLogger.WriteLog("Trinket Menu");
             }
-
+            Static.Objects.ProjectMenu.AddSubMenu(coreMenu);
             Static.Objects.ProjectMenu.AddToMainMenu();
         }
     }

@@ -8,9 +8,9 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
 {
     internal sealed class Drawing
     {
-        public Drawing(bool[] drawingOptions)
+        public Drawing(Menu menu,bool[] drawingOptions)
         {
-            Static.Objects.ProjectMenu.AddSubMenu(Menu(drawingOptions));
+            menu.AddSubMenu(Menu(drawingOptions));
             // ReSharper disable once UnusedVariable
             var helper = new LastHitHelper();
 

@@ -36,7 +36,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             //Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalker)));
         }
 
         //private const float DelayCheck = 8000;

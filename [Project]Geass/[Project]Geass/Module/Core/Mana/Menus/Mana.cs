@@ -24,9 +24,9 @@ namespace _Project_Geass.Module.Core.Mana.Menus
             return menu;
         }
 
-        public ManaMenu(int[,] options)
+        public ManaMenu(Menu menu, int[,] options)
         {
-            Globals.Static.Objects.ProjectMenu.AddSubMenu(Menu(options));
+            menu.AddSubMenu(Menu(options));
             // ReSharper disable once UnusedVariable
             var helper = new LastHitHelper();
 

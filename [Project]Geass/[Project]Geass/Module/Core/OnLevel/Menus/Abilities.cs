@@ -13,9 +13,9 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
             return menu;
         }
 
-        public Abilities(int[] abiSeq)
+        public Abilities(Menu menu,int[] abiSeq)
         {
-            Static.Objects.ProjectMenu.AddSubMenu(Menu());
+            menu.AddSubMenu(Menu());
 
             // ReSharper disable once UnusedVariable
             var onLevel = new Events.Abilities(abiSeq);

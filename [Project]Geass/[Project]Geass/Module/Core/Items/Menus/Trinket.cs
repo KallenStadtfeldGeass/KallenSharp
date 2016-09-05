@@ -14,9 +14,9 @@ namespace _Project_Geass.Module.Core.Items.Menus
             return menu;
         }
 
-        public Trinket()
+        public Trinket(Menu menu)
         {
-            Static.Objects.ProjectMenu.AddSubMenu(Menu());
+            menu.AddSubMenu(Menu());
             // ReSharper disable once UnusedVariable
             var trinket = new Events.Trinket();
             Static.Objects.ProjectLogger.WriteLog("Trinket Menu and events loaded.");

@@ -37,7 +37,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalker)));
         }
 
         private void OnUpdate(EventArgs args)

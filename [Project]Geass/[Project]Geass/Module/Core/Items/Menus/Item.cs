@@ -49,10 +49,10 @@ namespace _Project_Geass.Module.Core.Items.Menus
             return menu;
         }
 
-        public Item()
+        public Item(Menu menu)
         {
             Static.Objects.ProjectLogger.WriteLog("Item Menu and events loaded.");
-            Static.Objects.ProjectMenu.AddSubMenu(Menu());
+            menu.AddSubMenu(Menu());
             // ReSharper disable once UnusedVariable
             var items = new Events.Item();
         }

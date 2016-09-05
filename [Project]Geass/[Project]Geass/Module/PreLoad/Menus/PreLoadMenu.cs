@@ -9,11 +9,11 @@ namespace _Project_Geass.Module.PreLoad.Menus
     {
         public PreLoadMenu()
         {
-            var core = new Menu("Bootloaders.Core", Names.Menu.BaseItem + "Bootloaders.Core");
-            core.AddItem(
-                new MenuItem($"{Names.Menu.BaseItem}.Humanizer", "Enable Minimalist Humanizer(Reload Required)")
-                    .SetValue(true));
-            Static.Objects.SettingsMenu.AddSubMenu(core);
+            //var core = new Menu("Bootloaders.Core", Names.Menu.BaseItem + "Bootloaders.Core");
+            //core.AddItem(
+            //    new MenuItem($"{Names.Menu.BaseItem}.Humanizer", "Enable Minimalist Humanizer(Reload Required)")
+            //        .SetValue(true));
+            //Static.Objects.SettingsMenu.AddSubMenu(core);
 
             foreach (var champ in Names.ChampionBundled)
             {

@@ -29,7 +29,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             LeagueSharp.Drawing.OnDraw += OnDraw;
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(".CommonOrbwalker"));
+            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalker)));
         }
 
         protected virtual void UpdateChampionRange(int level)
