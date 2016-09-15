@@ -27,6 +27,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,13 +56,13 @@
       <HintPath>C:\Riot Games\nMC9D7Fyn\References\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
-      <HintPath>C:\Riot Games\nMC9D7Fyn\References\LeagueSharp.Common.dll</HintPath>
+      <HintPath>C:\Riot Games\nMC9D7Fyn\Cache\References\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Riot Games\nMC9D7Fyn\References\SharpDX.dll</HintPath>
+      <HintPath>C:\Riot Games\nMC9D7Fyn\Cache\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>C:\Riot Games\nMC9D7Fyn\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\Riot Games\nMC9D7Fyn\Cache\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,8 +77,10 @@
   <ItemGroup>
     <Compile Include="Module\Champions\Heroes\Events\Ashe.cs" />
     <Compile Include="Module\Champions\Core\Base.cs" />
+    <Compile Include="Module\Champions\Heroes\Events\Caitlyn.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Kalista.cs" />
     <Compile Include="Module\Champions\Heroes\Menus\Ashe.cs" />
+    <Compile Include="Module\Champions\Heroes\Menus\Caitlyn.cs" />
     <Compile Include="Module\Champions\Heroes\Menus\Ezreal.cs" />
     <Compile Include="Module\Champions\Heroes\Menus\Kalista.cs" />
     <Compile Include="Module\Champions\Heroes\Menus\Tristana.cs" />
@@ -96,8 +99,8 @@
     <Compile Include="Module\Champions\Heroes\Events\Ezreal.cs" />
     <Compile Include="Module\Initializer.cs" />
     <Compile Include="Module\PreLoad\Menus\PreLoadMenu.cs" />
-    <Compile Include="Data\Champions\Base.cs" />
-    <Compile Include="Data\Champions\Load.cs" />
+    <Compile Include="Data\Champions\SettingsBase.cs" />
+    <Compile Include="Data\Champions\Settings.cs" />
     <Compile Include="Data\Names.cs" />
     <Compile Include="Data\Buffs.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
@@ -108,7 +111,6 @@
     <Compile Include="Drawing\Champions\DamageIndicator.cs" />
     <Compile Include="Functions\AssemblyTime.cs" />
     <Compile Include="Functions\Calculations\Damage.cs" />
-    <Compile Include="Functions\Menu.cs" />
     <Compile Include="Functions\Objects\Heroes.cs" />
     <Compile Include="Functions\Objects\Minions.cs" />
     <Compile Include="Functions\Targeting.cs" />
@@ -153,4 +155,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>if /I "$(ConfigurationName)" == "Release" Eazfuscator.NET.exe "$(TargetPath)" --msbuild-project-path "$(ProjectPath)" --msbuild-project-configuration "$(ConfigurationName)" --msbuild-project-platform "$(PlatformName)" --msbuild-solution-path "$(SolutionPath)" -n --newline-flush -v 5.3</PostBuildEvent>
+  </PropertyGroup>
 </Project>

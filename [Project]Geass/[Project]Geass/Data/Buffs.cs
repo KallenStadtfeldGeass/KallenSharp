@@ -4,6 +4,7 @@ namespace _Project_Geass.Data
 {
     internal static class Buffs
     {
+
         public static BuffType[] GetTypes { get; } = {
             BuffType.Snare,
             BuffType.Blind,

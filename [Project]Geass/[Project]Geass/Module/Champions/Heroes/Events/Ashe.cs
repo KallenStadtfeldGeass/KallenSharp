@@ -17,9 +17,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 {
     internal class Ashe : Base
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 2000);
+        private readonly DamageIndicator _damageIndicator;
+        private readonly Mana _manaManager;
 
-        public Ashe()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ashe"/> class.
+        /// </summary>
+        /// <param name="manaEnabled">if set to <c>true</c> [mana enabled].</param>
+        /// <param name="orbwalker">The orbwalker.</param>
+        public Ashe(bool manaEnabled, Orbwalking.Orbwalker orbwalker)
         {
             Q = new Spell(SpellSlot.Q);
             W = new Spell(SpellSlot.W, 1200);
@@ -28,6 +34,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             Q.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
             R.SetSkillshot(.25f, 250, 1600, false, SkillshotType.SkillshotLine);
 
+            _manaManager = new Mana(Q, W, E, R, manaEnabled);
             // ReSharper disable once UnusedVariable
             var temp = new Menus.Ashe();
 
@@ -37,13 +44,19 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
             AntiGapcloser.OnEnemyGapcloser += OnGapcloser;
 
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalker)));
+            _damageIndicator = new DamageIndicator(GetDamage, 2000);
+            Orbwalker = orbwalker;
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:Update" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
-        {
+        {  
             if (!DelayHandler.CheckOrbwalker()) return;
 
+            
             switch (Orbwalker.ActiveMode)
             {
                 case Orbwalking.OrbwalkingMode.Combo:
@@ -65,13 +78,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             DelayHandler.UseOrbwalker();
         }
 
+        /// <summary>
+        /// On Combo
+        /// </summary>
         private void Combo()
         {
             var basename = BaseName + "Combo.";
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {
-                if (Mana.CheckComboQ())
+                if (_manaManager.CheckComboQ())
                 {
                     if (Functions.Objects.Heroes.GetEnemies(Static.Objects.Player.AttackRange - 30).Count > 0)
                         Q.Cast();
@@ -80,7 +96,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
             {
-                if (Mana.CheckComboW())
+                if (_manaManager.CheckComboW())
                 {
                     var minHitChance =
                         Prediction.GetHitChance(
@@ -120,9 +136,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
             {
-                if (Mana.CheckComboR())
+                if (_manaManager.CheckComboR())
                 {
-                    if (Mana.CheckComboR())
+                    if (_manaManager.CheckComboR())
                     {
                         var minHitChance =
                             Prediction.GetHitChance(
@@ -169,13 +185,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
         }
 
+        /// <summary>
+        /// On Mixed
+        /// </summary>
         private void Mixed()
         {
             var basename = BaseName + "Mixed.";
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
             {
-                if (Mana.CheckMixedW())
+                if (_manaManager.CheckMixedW())
                 {
                     var minHitChance =
                         Prediction.GetHitChance(
@@ -216,11 +235,14 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                if (Mana.CheckMixedQ())
+                if (_manaManager.CheckMixedQ())
                     if (Functions.Objects.Heroes.GetEnemies(Static.Objects.Player.AttackRange - 50).Count >= 1)
                         Q.Cast();
         }
 
+        /// <summary>
+        /// On Clear
+        /// </summary>
         private void Clear()
         {
             var basename = BaseName + "Clear.";
@@ -228,7 +250,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             var validMinions = Minions.GetEnemyMinions2(W.Range);
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
-                if (Mana.CheckClearW())
+                if (_manaManager.CheckClearW())
                     if (W.IsReady())
                     {
                         var pos = W.GetLineFarmLocation(validMinions);
@@ -239,7 +261,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     }
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                if (Mana.CheckClearQ())
+                if (_manaManager.CheckClearQ())
                 {
                     var aaMinons =
                         validMinions.Where(x => x.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange);
@@ -310,6 +332,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:Draw" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnDraw(EventArgs args)
         {
             if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
@@ -333,6 +359,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                                         ".Boolean.DrawOnSelf.RColor").GetValue<Circle>().Color, 2);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:DrawEnemy" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         public void OnDrawEnemy(EventArgs args)
         {
             if (
@@ -354,7 +384,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             _damageIndicator.SetKillableEnabled(false);
         }
 
-        private static float GetDamage(Obj_AI_Hero target)
+        /// <summary>
+        /// Returns estimated damage
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns></returns>
+        private float GetDamage(Obj_AI_Hero target)
         {
             var damage = 0f;
             if (target.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange - 25 &&

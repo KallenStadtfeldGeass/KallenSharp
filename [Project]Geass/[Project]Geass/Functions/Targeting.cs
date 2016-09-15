@@ -19,6 +19,13 @@ namespace _Project_Geass.Functions
             public Obj_AI_Hero Champion;
         }
 
+        /// <summary>
+        /// Gets and orders from best target with champion names
+        /// </summary>
+        /// <param name="spell">The spell.</param>
+        /// <param name="minHitChance">The minimum hit chance.</param>
+        /// <param name="validChampNames">The valid champ names.</param>
+        /// <returns></returns>
         public static IOrderedEnumerable<PredictionWithChampion> GetTargetPredictions2(Spell spell, HitChance minHitChance, List<string> validChampNames)
         {
             var tempList = new List<PredictionWithChampion>();
@@ -35,6 +42,13 @@ namespace _Project_Geass.Functions
             return tempList.OrderBy(pred => pred.Prediction.Hitchance);
         }
 
+        /// <summary>
+        /// Gets and orders from best target
+        /// </summary>
+        /// <param name="spell">The spell.</param>
+        /// <param name="minHitChance">The minimum hit chance.</param>
+        /// <param name="validChampNames">The valid champ names.</param>
+        /// <returns></returns>
         public static IOrderedEnumerable<PredictionOutput> GetTargetPredictions(Spell spell, HitChance minHitChance, List<string> validChampNames)
         {
             var tempList = new List<PredictionOutput>();

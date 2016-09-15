@@ -9,6 +9,7 @@ namespace _Project_Geass.Drawing.Champions
 {
     internal class DamageIndicator
     {
+        //
         private const int Width = 104;
         /*
                 private const int Thinkness = 9;
@@ -22,8 +23,8 @@ namespace _Project_Geass.Drawing.Champions
                 private static readonly Vector2 BarOffset = new Vector2(10, 25);
         */
 
-        public static Device DxDevice = LeagueSharp.Drawing.Direct3DDevice;
-        public static Line DxLine;
+        public Device DxDevice = LeagueSharp.Drawing.Direct3DDevice;
+        public Line DxLine;
 
         private Obj_AI_Hero Unit { get; set; }
 
@@ -78,17 +79,17 @@ namespace _Project_Geass.Drawing.Champions
             //fillHPBar((int)(hpPosNow.X - startPosition.X), (int)(hpPosAfter.X- startPosition.X), color);
         }
 
-        private static void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
+        private void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
         {
             DxLine.Dispose();
         }
 
-        private static void DrawingOnOnPostReset(EventArgs args)
+        private void DrawingOnOnPostReset(EventArgs args)
         {
             DxLine.OnResetDevice();
         }
 
-        private static void DrawingOnOnPreReset(EventArgs args)
+        private void DrawingOnOnPreReset(EventArgs args)
         {
             DxLine.OnLostDevice();
         }

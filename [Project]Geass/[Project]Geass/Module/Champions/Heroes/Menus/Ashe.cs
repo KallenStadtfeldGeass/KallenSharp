@@ -7,6 +7,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Ashe
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ashe"/> class.
+        /// </summary>
         public Ashe()
         {
             Static.Objects.ProjectMenu.AddSubMenu(Combo());
@@ -17,6 +20,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
 
+        /// <summary>
+        /// Automated events
+        /// </summary>
+        /// <returns></returns>
         private Menu Auto()
         {
             var basename = _baseName + "Auto.";
@@ -45,6 +52,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Combo
+        /// </summary>
+        /// <returns></returns>
         private Menu Combo()
         {
             var basename = _baseName + "Combo.";
@@ -86,6 +97,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Mixed
+        /// </summary>
+        /// <returns></returns>
         private Menu Mixed()
         {
             var basename = _baseName + "Mixed.";
@@ -108,6 +123,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Clear
+        /// </summary>
+        /// <returns></returns>
         private Menu Clear()
         {
             var basename = _baseName + "Clear.";

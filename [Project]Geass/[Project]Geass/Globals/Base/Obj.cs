@@ -8,6 +8,7 @@ namespace _Project_Geass.Globals.Base
 {
     internal class Obj
     {
+
         public Logger ProjectLogger { get; set; }
         public Menu ProjectMenu { get; set; }
         public Menu SettingsMenu { get; set; }

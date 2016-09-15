@@ -14,9 +14,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 {
     internal class Ezreal : Base
     {
-        private readonly DamageIndicator _damageIndicator = new DamageIndicator(GetDamage, 2000);
+        private readonly DamageIndicator _damageIndicator;
+        private readonly Mana _manaManager;
 
-        public Ezreal()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ezreal"/> class.
+        /// </summary>
+        /// <param name="manaEnabled">if set to <c>true</c> [mana enabled].</param>
+        /// <param name="orbwalker">The orbwalker.</param>
+        public Ezreal(bool manaEnabled, Orbwalking.Orbwalker orbwalker)
         {
             Q = new Spell(SpellSlot.Q, 1150);
             W = new Spell(SpellSlot.W, 1000);
@@ -26,6 +32,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             W.SetSkillshot(.25f, 80, 1550, false, SkillshotType.SkillshotLine);
             R.SetSkillshot(1, 160, 2000, false, SkillshotType.SkillshotLine);
 
+            _manaManager = new Mana(Q, W, E, R, manaEnabled);
             // ReSharper disable once UnusedVariable
             var temp = new Menus.Ezreal();
 
@@ -35,14 +42,14 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
 
             //Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-
-            Orbwalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalker)));
+            _damageIndicator = new DamageIndicator(GetDamage, 2000);
+            Orbwalker = orbwalker;
         }
 
         //private const float DelayCheck = 8000;
         //private static float _lastTick;
         //private static float _lastMana;
-        private static bool _tearFull = false;
+        private bool _tearFull = false;
 
         //private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         //{
@@ -61,6 +68,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         //    _lastTick = Functions.AssemblyTime.CurrentTime();
         //}
 
+        /// <summary>
+        /// Automated events.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void AutoEvents(EventArgs args)
         {
             if (!Humanizer.DelayHandler.CheckAutoEvents()) return;
@@ -70,7 +81,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                 {
                     var basename = BaseName + "Misc.";
 
-                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() && Mana.GetManaPercent >= Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value)
+                    if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() && _manaManager.ManaPercent >= Static.Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value)
                     {
                         if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
                             Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
@@ -84,6 +95,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             Humanizer.DelayHandler.UseAutoEvent();
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:Update" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
         {
             if (!Humanizer.DelayHandler.CheckOrbwalker()) return;
@@ -109,13 +124,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             Humanizer.DelayHandler.UseOrbwalker();
         }
 
+        /// <summary>
+        /// On Combo
+        /// </summary>
         private void Combo()
         {
             var basename = BaseName + "Combo.";
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
             {
-                if (Mana.CheckMixedQ())
+                if (_manaManager.CheckMixedQ())
                 {
                     var minHitChance =
                         Prediction.GetHitChance(
@@ -157,7 +175,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
             {
-                if (Mana.CheckMixedW())
+                if (_manaManager.CheckMixedW())
                 {
                     var minHitChance =
                          Prediction.GetHitChance(
@@ -199,7 +217,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
             {
-                if (Mana.CheckComboR())
+                if (_manaManager.CheckComboR())
                 {
                     var minHitChance =
                         Prediction.GetHitChance(
@@ -244,7 +262,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
         }
 
-        public static double GetRealRDamage(Obj_AI_Base target)
+        /// <summary>
+        /// Gets the real R damage.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns></returns>
+        public double GetRealRDamage(Obj_AI_Base target)
         {
             var damage = Static.Objects.Player.GetSpellDamage(target, SpellSlot.R);
             var hits = R.GetCollision(Static.Objects.Player.ServerPosition.To2D(), new List<SharpDX.Vector2> { target.ServerPosition.To2D() }).Count;
@@ -252,6 +275,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             return damage * (1 - (debuff * 10));
         }
 
+        /// <summary>
+        /// On Mixed
+        /// </summary>
         private void Mixed()
         {
             var basename = BaseName + "Mixed.";
@@ -298,7 +324,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
             {
-                if (Mana.CheckMixedW())
+                if (_manaManager.CheckMixedW())
                 {
                     var minHitChance =
                         Prediction.GetHitChance(
@@ -339,12 +365,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
         }
 
+        /// <summary>
+        /// On Clear
+        /// </summary>
         private void Clear()
         {
             var basename = BaseName + "Clear.";
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                if (Mana.CheckClearQ())
+                if (_manaManager.CheckClearQ())
                 {
                     foreach (var target in Functions.Objects.Minions.GetEnemyMinions2(Q.Range).Where(x => x.Health < Q.GetDamage(x) && x.Health > 30).OrderBy(hp => hp.Health))
                     {
@@ -360,6 +389,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                 }
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:Draw" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnDraw(EventArgs args)
         {
             if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName +
@@ -372,6 +405,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     Render.Circle.DrawCircle(Static.Objects.Player.Position, W.Range, Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:DrawEnemy" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         public void OnDrawEnemy(EventArgs args)
         {
             if (!Static.Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnEnemy").GetValue<bool>())
@@ -387,7 +424,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             _damageIndicator.SetKillableEnabled(false);
         }
 
-        private static float GetDamage(Obj_AI_Hero target)
+        /// <summary>
+        /// Gets esimated damage
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns></returns>
+        private float GetDamage(Obj_AI_Hero target)
         {
             var damage = 0f;
             if (target.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange - 25 &&

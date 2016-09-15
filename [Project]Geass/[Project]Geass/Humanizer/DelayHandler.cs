@@ -4,6 +4,9 @@ namespace _Project_Geass.Humanizer
 {
     internal class DelayHandler
     {
+        /// <summary>
+        /// My Tick Manager
+        /// </summary>
         private static readonly TickManager MyTicker = new TickManager();
 
         /// <summary>

@@ -7,6 +7,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Ezreal
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ezreal"/> class.
+        /// </summary>
         public Ezreal()
         {
             Static.Objects.ProjectMenu.AddSubMenu(Misc());
@@ -17,6 +20,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
 
+        /// <summary>
+        /// Miscs
+        /// </summary>
+        /// <returns></returns>
         private Menu Misc()
         {
             var basename = _baseName + "Misc.";
@@ -27,6 +34,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Combo
+        /// </summary>
+        /// <returns></returns>
         private Menu Combo()
         {
             var basename = _baseName + "Combo.";
@@ -78,6 +89,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Mixed
+        /// </summary>
+        /// <returns></returns>
         private Menu Mixed()
         {
             var basename = _baseName + "Mixed.";
@@ -113,6 +128,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Clear
+        /// </summary>
+        /// <returns></returns>
         private Menu Clear()
         {
             var basename = _baseName + "Clear.";

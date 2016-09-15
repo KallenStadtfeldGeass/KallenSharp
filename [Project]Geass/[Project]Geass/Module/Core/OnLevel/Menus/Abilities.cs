@@ -13,8 +13,10 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
             return menu;
         }
 
-        public Abilities(Menu menu,int[] abiSeq)
+        public Abilities(Menu menu, int[] abiSeq,bool enabled)
         {
+            if (!enabled) return;
+
             menu.AddSubMenu(Menu());
 
             // ReSharper disable once UnusedVariable

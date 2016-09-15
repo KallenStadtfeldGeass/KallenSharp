@@ -8,6 +8,13 @@ namespace _Project_Geass.Data
     {
         public struct MonsterBar
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MonsterBar"/> struct.
+            /// </summary>
+            /// <param name="barWidth">Width of the bar.</param>
+            /// <param name="xoffset">The xoffset.</param>
+            /// <param name="yOffsetBegin">The y offset begin.</param>
+            /// <param name="yOffsetEnd">The y offset end.</param>
             public MonsterBar(int barWidth, int xoffset, int yOffsetBegin, int yOffsetEnd)
             {
                 BarWidth = barWidth;
@@ -21,7 +28,9 @@ namespace _Project_Geass.Data
             public int YOffsetBegin { get; }
             public int YOffsetEnd { get; }
         }
-
+        /// <summary>
+        /// The monster locations
+        /// </summary>
         public static Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>
         {
             {"Neutral.Dragon",SummonersRift.River.Dragon},
@@ -33,13 +42,17 @@ namespace _Project_Geass.Data
             {"Order.Red",new Vector2(7862.244f, 4111.187f)},
             {"Order.Blue",new Vector2(3871.489f, 7901.054f)}
         };
-
+        /// <summary>
+        /// The big monsters
+        /// </summary>
         public static string[] BigMonsters =
         {
             "SRU_Red", "SRU_Blue", "SRU_Dragon", "SRU_Baron", "SRU_Crab", "SRU_Krug", "SRU_Gromp", "SRU_Murkwolf",
             "SRU_Razorbeak"
         };
-
+        /// <summary>
+        /// The monster bar dictionary
+        /// </summary>
         public static Dictionary<string, MonsterBar> MonsterBarDictionary = new Dictionary<string, MonsterBar>
         {
             {"SRU_Red",new MonsterBar(145,3,18,10)},

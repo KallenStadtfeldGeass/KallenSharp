@@ -6,11 +6,16 @@ using _Project_Geass.Module.Core.OnLevel.Menus;
 using _Project_Geass.Module.PreLoad.Menus;
 using LeagueSharp;
 using System.Linq;
+using LeagueSharp.Common;
+using _Project_Geass.Module.Champions.Heroes.Events;
 
 namespace _Project_Geass.Module
 {
     internal class Initializer
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Initializer"/> class.
+        /// </summary>
         public Initializer()
         {
             if (Names.ChampionBundled.All(p => ObjectManager.Player.ChampionName != p)) return;
@@ -22,56 +27,54 @@ namespace _Project_Geass.Module
 
             if (!Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.Enable").GetValue<bool>()) return;
 
-            var champ = new Data.Champions.Load();
-            var coreMenu = new LeagueSharp.Common.Menu("Core Modules","CoreModulesMenu");
+            var coreMenu = new Menu("Core Modules", "CoreModulesMenu");
 
-            //Initilize Menus
+            var drawingEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.DrawingMenu").GetValue<bool>();
+            var manaEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>();
+            var itemEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>();
+            var autoLevelEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.OnLevelMenu").GetValue<bool>();
+            var trinketEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>();
 
-            if (Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.DrawingMenu").GetValue<bool>())
-            {
-                // ReSharper disable once UnusedVariable
-                var menu = new Core.Drawing.Menus.Drawing(coreMenu,champ.GetDrawing);
-                //Static.Objects.ProjectLogger.WriteLog("Drawing Menu");
-            }
+            var orbWalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalking.Orbwalker)));
+            var championSettings = new Data.Champions.Settings();
+            // ReSharper disable once UnusedVariable
+            var manaMenu = new ManaMenu(coreMenu, championSettings.ManaSettings, manaEnabled);
+            // ReSharper disable once UnusedVariable
+            var drawingMeun = new Core.Drawing.Menus.Drawing(coreMenu, championSettings.DrawingSettings,drawingEnabled);
+            // ReSharper disable once UnusedVariable
+            var itemMenu = new Item(coreMenu,itemEnabled, orbWalker);
+            // ReSharper disable once UnusedVariable
+            var autoLevelMenu = new Abilities(coreMenu, championSettings.AbilitieSettings,autoLevelEnabled);
+            // ReSharper disable once UnusedVariable
+            var trinketMenu = new Trinket(coreMenu,trinketEnabled);
 
-            if (
-                Static.Objects.SettingsMenu.Item(
-                    $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>())
-            {
-                // ReSharper disable once UnusedVariable
-                var menu = new ManaMenu(coreMenu,champ.GetManaSettings);
-                //  Static.Objects.ProjectLogger.WriteLog("Mana Menu");
-            }
-
-            if (
-                Static.Objects.SettingsMenu.Item(
-                    $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>())
-            {
-                // ReSharper disable once UnusedVariable
-                var menu = new Item(coreMenu);
-                //  Static.Objects.ProjectLogger.WriteLog("Item");
-            }
-
-            if (
-                Static.Objects.SettingsMenu.Item(
-                    $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.OnLevelMenu").GetValue<bool>())
-            {
-                // ReSharper disable once UnusedVariable
-                var menu = new Abilities(coreMenu,champ.GetAbilities);
-                //  Static.Objects.ProjectLogger.WriteLog("Auto Level Menu");
-            }
-
-            if (
-                Static.Objects.SettingsMenu.Item(
-                    $"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>())
-            {
-                // ReSharper disable once UnusedVariable
-
-                var menu = new Trinket(coreMenu);
-                //  Static.Objects.ProjectLogger.WriteLog("Trinket Menu");
-            }
             Static.Objects.ProjectMenu.AddSubMenu(coreMenu);
             Static.Objects.ProjectMenu.AddToMainMenu();
+            LoadChampion(manaEnabled, orbWalker);
+
+        }
+
+#pragma warning disable CC0091 // Use static method
+        void LoadChampion(bool manaEnabled, Orbwalking.Orbwalker orbWalker)
+#pragma warning restore CC0091 // Use static method
+        {
+            switch (Static.Objects.Player.ChampionName)
+            {
+                case nameof(Tristana):
+                    // ReSharper disable once UnusedVariable
+                   var tristana = new Tristana(manaEnabled, orbWalker);
+                    break;
+
+                case nameof(Ezreal):
+                    // ReSharper disable once UnusedVariable
+                    var ezreal = new Ezreal(manaEnabled, orbWalker);
+                    break;
+
+                case nameof(Ashe):
+                    // ReSharper disable once UnusedVariable
+                    var ashe = new Ashe(manaEnabled, orbWalker);
+                    break;
+            }
         }
     }
 }

@@ -7,13 +7,11 @@ namespace _Project_Geass.Module.PreLoad.Menus
 {
     internal sealed class PreLoadMenu
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreLoadMenu"/> class.
+        /// </summary>
         public PreLoadMenu()
         {
-            //var core = new Menu("Bootloaders.Core", Names.Menu.BaseItem + "Bootloaders.Core");
-            //core.AddItem(
-            //    new MenuItem($"{Names.Menu.BaseItem}.Humanizer", "Enable Minimalist Humanizer(Reload Required)")
-            //        .SetValue(true));
-            //Static.Objects.SettingsMenu.AddSubMenu(core);
 
             foreach (var champ in Names.ChampionBundled)
             {
@@ -27,8 +25,12 @@ namespace _Project_Geass.Module.PreLoad.Menus
                 Static.Objects.SettingsMenu.AddSubMenu(temp);
             }
         }
-
-        private static IEnumerable<MenuItem> GenerateSettingsList(string basename)
+        /// <summary>
+        /// Generates the settings list.
+        /// </summary>
+        /// <param name="basename">The basename.</param>
+        /// <returns></returns>
+        private IEnumerable<MenuItem> GenerateSettingsList(string basename)
         {
             var items = new List<MenuItem>
             {

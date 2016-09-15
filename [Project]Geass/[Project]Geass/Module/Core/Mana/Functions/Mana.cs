@@ -1,6 +1,5 @@
 ﻿using _Project_Geass.Data;
 using _Project_Geass.Globals;
-using _Project_Geass.Module.Champions.Core;
 using LeagueSharp.Common;
 
 namespace _Project_Geass.Module.Core.Mana.Functions
@@ -9,172 +8,199 @@ namespace _Project_Geass.Module.Core.Mana.Functions
     {
         #region Combo
 
-        public static int GetManaPercent => (int)(Static.Objects.Player.Mana / Static.Objects.Player.MaxMana * 100);
-        public static int HealthPercent => (int)(Static.Objects.Player.Health / Static.Objects.Player.MaxHealth * 100);
+        public bool Enabled;
+        //
+        public int ManaPercent => (int)(Static.Objects.Player.Mana / Static.Objects.Player.MaxMana * 100);
+        public int HealthPercent => (int)(Static.Objects.Player.Health / Static.Objects.Player.MaxHealth * 100);
 
-        public static bool CheckComboQ()
+        public Spell Q { get; set; }
+        public Spell W { get; set; }
+        public Spell E { get; set; }
+        public Spell R { get; set; }
+
+        public Mana(Spell q, Spell w, Spell e, Spell r,bool enabled)
         {
-            if (!Base.Q.IsReady()) return false;
-
-            if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}") ==
-                null) return true;
-
-            return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}")
-                .GetValue<Slider>()
-                .Value <= GetManaPercent;
+            Q = q;
+            W = w;
+            E = e;
+            R = r;
+            Enabled = enabled;
         }
 
-        public static bool CheckComboW()
+        public bool CheckComboQ()
         {
-            if (!Base.W.IsReady()) return false;
+            if (!Q.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckComboE()
+        public bool CheckComboW()
         {
-            if (!Base.E.IsReady()) return false;
+            if (!W.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckComboR()
+        public bool CheckComboE()
         {
-            if (!Base.R.IsReady()) return false;
+            if (!E.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[0]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
+        }
+
+        public bool CheckComboR()
+        {
+            if (!R.IsReady()) return false;
+            if (!Enabled) return true;
+            if (Static.Objects.ProjectMenu.Item(
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}") ==
+                null) return true;
+
+            return Static.Objects.ProjectMenu.Item(
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}")
+                .GetValue<Slider>()
+                .Value <= ManaPercent;
         }
 
         #endregion Combo
 
         #region Mixed
 
-        public static bool CheckMixedQ()
+        public bool CheckMixedQ()
         {
-            if (!Base.Q.IsReady()) return false;
+            if (!Q.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckMixedW()
+        public bool CheckMixedW()
         {
-            if (!Base.W.IsReady()) return false;
+            if (!W.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckMixedE()
+        public bool CheckMixedE()
         {
-            if (!Base.E.IsReady()) return false;
+            if (!E.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckMixedR()
+        public bool CheckMixedR()
         {
-            if (!Base.R.IsReady()) return false;
+            if (!R.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[1]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
         #endregion Mixed
 
         #region Clear
 
-        public static bool CheckClearQ()
+        public bool CheckClearQ()
         {
-            if (!Base.Q.IsReady()) return false;
+            if (!Q.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[0]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckClearW()
+        public bool CheckClearW()
         {
-            if (!Base.W.IsReady()) return false;
+            if (!W.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[1]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckClearE()
+        public bool CheckClearE()
         {
-            if (!Base.E.IsReady()) return false;
+            if (!E.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[2]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
-        public static bool CheckClearR()
+        public bool CheckClearR()
         {
-            if (!Base.R.IsReady()) return false;
+            if (!R.IsReady()) return false;
+            if (!Enabled) return true;
             if (Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}") ==
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}") ==
                 null) return true;
 
             return Static.Objects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.Base.ManaModes[2]}.Slider.MinMana.{Data.Champions.Base.ManaAbilities[3]}")
+                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}")
                 .GetValue<Slider>()
-                .Value <= GetManaPercent;
+                .Value <= ManaPercent;
         }
 
         #endregion Clear

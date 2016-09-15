@@ -7,11 +7,18 @@ namespace _Project_Geass.Module.Core.Drawing.Events
 {
     internal class LastHitHelper
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LastHitHelper"/> class.
+        /// </summary>
         public LastHitHelper()
         {
             LeagueSharp.Drawing.OnDraw += OnDraw;
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:Draw" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         public void OnDraw(EventArgs args)
         {
             if (Static.Objects.Player.IsDead) return;

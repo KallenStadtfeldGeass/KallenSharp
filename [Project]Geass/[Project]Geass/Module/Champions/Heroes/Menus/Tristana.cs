@@ -6,8 +6,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Tristana
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Tristana"/> class.
+        /// </summary>
         public Tristana()
         {
+            Static.Objects.ProjectMenu.AddSubMenu(Drawing());
             Static.Objects.ProjectMenu.AddSubMenu(Combo());
             Static.Objects.ProjectMenu.AddSubMenu(Mixed());
             Static.Objects.ProjectMenu.AddSubMenu(Clear());
@@ -16,6 +20,24 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
 
+        /// <summary>
+        /// Drawings this instance.
+        /// </summary>
+        /// <returns></returns>
+        private Menu Drawing()
+        {
+            var basename = _baseName + "Drawing.";
+
+            var mainMenu = new Menu(nameof(Auto), basename);
+            mainMenu.AddItem(new MenuItem($"{basename}.DrawEStacks", "Draw E Stacks").SetValue(true));
+
+            return mainMenu;
+        }
+
+        /// <summary>
+        /// Automative events
+        /// </summary>
+        /// <returns></returns>
         private Menu Auto()
         {
             var basename = _baseName + "Auto.";
@@ -35,6 +57,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Combo
+        /// </summary>
+        /// <returns></returns>
         private Menu Combo()
         {
             var basename = _baseName + "Combo.";
@@ -66,6 +92,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Mixed
+        /// </summary>
+        /// <returns></returns>
         private Menu Mixed()
         {
             var basename = _baseName + "Mixed.";
@@ -83,6 +113,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
+        /// <summary>
+        /// On Clear
+        /// </summary>
+        /// <returns></returns>
         private Menu Clear()
         {
             var basename = _baseName + "Clear.";

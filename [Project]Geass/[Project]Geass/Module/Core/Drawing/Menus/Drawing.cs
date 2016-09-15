@@ -8,8 +8,16 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
 {
     internal sealed class Drawing
     {
-        public Drawing(Menu menu,bool[] drawingOptions)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Drawing"/> class.
+        /// </summary>
+        /// <param name="menu">The menu.</param>
+        /// <param name="drawingOptions">The drawing options.</param>
+        /// <param name="enabled">if set to <c>true</c> [enabled].</param>
+        public Drawing(Menu menu, bool[] drawingOptions,bool enabled)
         {
+            if (!enabled) return;
+
             menu.AddSubMenu(Menu(drawingOptions));
             // ReSharper disable once UnusedVariable
             var helper = new LastHitHelper();
@@ -17,6 +25,11 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
             Static.Objects.ProjectLogger.WriteLog("Drawing Menu and events loaded.");
         }
 
+        /// <summary>
+        /// Menus the specified drawing options.
+        /// </summary>
+        /// <param name="drawingOptions">The drawing options.</param>
+        /// <returns></returns>
         public Menu Menu(bool[] drawingOptions)
         {
             var menu = new Menu(Names.Menu.DrawingNameBase, "enemyMenu");
