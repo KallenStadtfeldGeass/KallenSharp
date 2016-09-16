@@ -308,7 +308,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.DrawEStacks").GetValue<bool>())
             {
-                var display = Functions.Objects.Heroes.GetEnemies(1000).Where(x => x.HasBuff("TristanaECharge")).Aggregate("Stacks On:", (current, target) => current + $"{target.ChampionName}:{target.GetBuffCount("tristanaecharge")}");
+                var stackedTarget = Functions.Objects.Heroes.GetEnemies(1000).FirstOrDefault(x => x.HasBuff("TristanaECharge"));
+                if (stackedTarget == null) return;
+
+                var display = ($"Stacks On:{stackedTarget.ChampionName}:{stackedTarget.GetBuffCount("TristanaECharge")}");
                 LeagueSharp.Drawing.DrawText(heroPosition.X + 20, heroPosition.Y - 30, System.Drawing.Color.MintCream, display);
             }
         }
