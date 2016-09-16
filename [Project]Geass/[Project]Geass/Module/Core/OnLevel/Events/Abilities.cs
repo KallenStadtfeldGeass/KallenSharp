@@ -12,7 +12,8 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
     {
         private readonly int[] _abilitySequences;
         private readonly Random _rng;
-        private int _lastLevel = 0;
+        private int _lastLevel;
+
         public Abilities(int[] sequence)
         {
             _abilitySequences = sequence;
@@ -32,7 +33,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
 
                     Game.OnUpdate -= OnUpdate;
                 }
-            Humanizer.DelayHandler.UseOnLevel();
+            DelayHandler.UseOnLevel();
         }
 
         private void Obj_AI_Base_OnLevelUp(Obj_AI_Base sender, EventArgs args)
@@ -40,14 +41,11 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
             if (!sender.IsMe || !Static.Objects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
                 return;
 
-            Static.Objects.ProjectLogger.WriteLog("Level UP");
-            LeagueSharp.Common.Utility.DelayAction.Add(_rng.Next(50,200) - Game.Ping, LevelUpSpells);
+            Utility.DelayAction.Add(_rng.Next(50,200) - Game.Ping, LevelUpSpells);
         }
 
         private void LevelUpSpells()
         {
-
-            Static.Objects.ProjectLogger.WriteLog("Event OnLevelUP");
 
             while (_lastLevel != Static.Objects.Player.Level)
             {

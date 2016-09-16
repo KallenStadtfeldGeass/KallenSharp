@@ -253,7 +253,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                 if (_manaManager.CheckClearW())
                     if (W.IsReady())
                     {
-                        var pos = W.GetLineFarmLocation(validMinions);
+                        var pos = W.GetCircularFarmLocation(validMinions);
 
                         if (pos.MinionsHit >=
                             Static.Objects.ProjectMenu.Item($"{basename}.UseW.Minions").GetValue<Slider>().Value)

@@ -8,9 +8,9 @@
         public static readonly string[] ChampionBundled = {
             "Ashe",
             "Ezreal",
-            "Caitlyn",
-            "Tristana",
-            "Kalista"
+         //   "Caitlyn",
+            "Tristana"
+          //  "Kalista"
         };
         /// <summary>
         /// The project name
