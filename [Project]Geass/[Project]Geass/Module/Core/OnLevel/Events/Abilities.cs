@@ -3,56 +3,68 @@ using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
 using LeagueSharp;
 using System;
+using LeagueSharp.Common;
+using _Project_Geass.Data.Champions;
 
 namespace _Project_Geass.Module.Core.OnLevel.Events
 {
-    internal class Abilities
+    internal class Abilities : SettingsBase
     {
         private readonly int[] _abilitySequences;
-
+        private readonly Random _rng;
+        private int _lastLevel = 0;
         public Abilities(int[] sequence)
         {
             _abilitySequences = sequence;
+            _rng = new Random();
+            Obj_AI_Base.OnLevelUp += Obj_AI_Base_OnLevelUp;
             Game.OnUpdate += OnUpdate;
+
         }
 
-        private void OnUpdate(EventArgs args)
+        public void OnUpdate(EventArgs args)
         {
             if (DelayHandler.CheckOnLevel())
-            {
-                if (!Static.Objects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
-                    return;
-                DelayHandler.UseOnLevel();
+                if (Static.Objects.Player.Level == 1)
+                {
+                    if (Static.Objects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
+                        LevelUpSpells();
 
-                LevelUpSpells();
-            }
+                    Game.OnUpdate -= OnUpdate;
+                }
+            Humanizer.DelayHandler.UseOnLevel();
+        }
+
+        private void Obj_AI_Base_OnLevelUp(Obj_AI_Base sender, EventArgs args)
+        {
+            if (!sender.IsMe || !Static.Objects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
+                return;
+
+            Static.Objects.ProjectLogger.WriteLog("Level UP");
+            LeagueSharp.Common.Utility.DelayAction.Add(_rng.Next(50,200) - Game.Ping, LevelUpSpells);
         }
 
         private void LevelUpSpells()
         {
-            var qL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.Q).Level + _qOff;
-            var wL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.W).Level + _wOff;
-            var eL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.E).Level + _eOff;
-            var rL = Static.Objects.Player.Spellbook.GetSpell(SpellSlot.R).Level + _rOff;
 
-            if (qL + wL + eL + rL >= Static.Objects.Player.Level) return;
+            Static.Objects.ProjectLogger.WriteLog("Event OnLevelUP");
 
-            int[] level = { 0, 0, 0, 0 };
+            while (_lastLevel != Static.Objects.Player.Level)
+            {
+                var ability = _abilitySequences[_lastLevel];
+                if (ability.Equals(Q))
+                    Static.Objects.Player.Spellbook.LevelUpSpell(SpellSlot.Q);
+                else if (ability.Equals(W))
+                    Static.Objects.Player.Spellbook.LevelUpSpell(SpellSlot.W);
+                else if (ability.Equals(E))
+                    Static.Objects.Player.Spellbook.LevelUpSpell(SpellSlot.E);
+                else if (ability.Equals(R))
+                    Static.Objects.Player.Spellbook.LevelUpSpell(SpellSlot.R);
 
-            for (var i = 0; i < Static.Objects.Player.Level; i++)
-                level[_abilitySequences[i] - 1] = level[_abilitySequences[i] - 1] + 1;
+                _lastLevel++;
+            }
 
-            if (qL < level[0]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.Q);
-            if (wL < level[1]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.W);
-            if (eL < level[2]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.E);
-            if (rL < level[3]) Static.Objects.Player.Spellbook.LevelSpell(SpellSlot.R);
         }
 
-#pragma warning disable RECS0122 // Initializing field with default value is redundant
-        private readonly int _qOff = 0;
-        private readonly int _wOff = 0;
-        private readonly int _eOff = 0;
-        private readonly int _rOff = 0;
-#pragma warning restore RECS0122 // Initializing field with default value is redundant
     }
 }

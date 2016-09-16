@@ -18,8 +18,9 @@ namespace _Project_Geass.Module
         /// </summary>
         public Initializer()
         {
+            Static.Objects.ProjectLogger.WriteLog("Loading...");
             if (Names.ChampionBundled.All(p => ObjectManager.Player.ChampionName != p)) return;
-
+            Static.Objects.ProjectLogger.WriteLog("Load Delays...");
             Humanizer.DelayHandler.Load(true);
             // ReSharper disable once UnusedVariable
             var initializerMenu = new PreLoadMenu();
@@ -29,12 +30,14 @@ namespace _Project_Geass.Module
 
             var coreMenu = new Menu("Core Modules", "CoreModulesMenu");
 
+
             var drawingEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.DrawingMenu").GetValue<bool>();
             var manaEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ManaMenu").GetValue<bool>();
             var itemEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.ItemMenu").GetValue<bool>();
             var autoLevelEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.OnLevelMenu").GetValue<bool>();
             var trinketEnabled = Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Static.Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>();
 
+            Static.Objects.ProjectLogger.WriteLog("Load Base Menu's...");
             var orbWalker = new Orbwalking.Orbwalker(Static.Objects.ProjectMenu.SubMenu(nameof(Orbwalking.Orbwalker)));
             var championSettings = new Data.Champions.Settings();
             // ReSharper disable once UnusedVariable

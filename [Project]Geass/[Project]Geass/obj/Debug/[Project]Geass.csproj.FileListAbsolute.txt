@@ -1,5 +1,3 @@
-D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.exe.config
-D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.exe
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.pdb
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\LeagueSharp.Common.dll
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\SharpDX.Direct3D9.dll
@@ -10,6 +8,9 @@ D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\Newtonsoft.
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\LeagueSharp.Common.pdb
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\LeagueSharp.Data.pdb
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.csprojResolveAssemblyReference.cache
-D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.exe
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.pdb
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\clipper_library.pdb
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.dll.config
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.dll
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.dll
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.exe.config
