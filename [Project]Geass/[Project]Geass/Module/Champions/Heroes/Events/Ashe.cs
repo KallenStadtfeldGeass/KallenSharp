@@ -204,16 +204,21 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                     //Check if the target in target selector is valid (best target)
                     var focusTarget = TargetSelector.GetTarget(W.Range, W.DamageType);
+                    var found = false;
                     if (focusTarget != null)
                     {
                         var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, W.Delay, W.Speed);
-                        if (Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
-                            W.Cast(pred.UnitPosition);
-                    }
-                    if (W.IsReady())
-                    {
-                        if (W.IsReady())
+                        if (
+                            Static.Objects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}")
+                                .GetValue<bool>() && pred.Hitchance >= minHitChance)
                         {
+                            W.Cast(pred.UnitPosition);
+                            found = true;
+                        }
+                    }
+
+                    if (!found)
+                    {
                             var validChamp = new List<string>();
 
                             foreach (var enemy in Functions.Objects.Heroes.GetEnemies(W.Range))
@@ -229,7 +234,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 W.Cast(output.UnitPosition);
                                 break;
                             }
-                        }
+                        
                     }
                 }
             }
@@ -251,7 +256,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
                 if (_manaManager.CheckClearW())
-                    if (W.IsReady())
                     {
                         var pos = W.GetCircularFarmLocation(validMinions);
 
@@ -261,11 +265,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     }
 
             if (Static.Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
+
                 if (_manaManager.CheckClearQ())
                 {
                     var aaMinons =
                         validMinions.Where(x => x.Distance(Static.Objects.Player) < Static.Objects.Player.AttackRange);
-                    if (Q.IsReady())
+
                         if (aaMinons.Count() >=
                             Static.Objects.ProjectMenu.Item($"{basename}.UseQ.Minions").GetValue<Slider>().Value)
                             Q.Cast();
