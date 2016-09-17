@@ -1,12 +1,9 @@
-﻿using _Project_Geass.Data;
-using _Project_Geass.Humanizer;
-using LeagueSharp;
+﻿using LeagueSharp;
 using System;
 using LeagueSharp.Common;
 using _Project_Geass.Data.Champions;
 using _Project_Geass.Functions;
-using _Project_Geass.Global;
-using _Project_Geass.Global.Data;
+using _Project_Geass.Humanizer.TickTock;
 
 namespace _Project_Geass.Module.Core.OnLevel.Events
 {
@@ -27,7 +24,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
 
         public void OnUpdate(EventArgs args)
         {
-            if (DelayHandler.CheckOnLevel())
+            if (Handler.CheckOnLevel())
                 if (StaticObjects.Player.Level == 1)
                 {
                     if (StaticObjects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
@@ -35,7 +32,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
 
                     Game.OnUpdate -= OnUpdate;
                 }
-            DelayHandler.UseOnLevel();
+            Handler.UseOnLevel();
         }
 
         private void Obj_AI_Base_OnLevelUp(Obj_AI_Base sender, EventArgs args)

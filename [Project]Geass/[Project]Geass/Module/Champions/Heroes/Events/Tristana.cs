@@ -55,7 +55,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
         {
-            if (!Humanizer.DelayHandler.CheckOrbwalker()) return;
+            if (!Humanizer.TickTock.Handler.CheckOrbwalker()) return;
 
             UpdateChampionRange(StaticObjects.Player.Level);
 
@@ -77,7 +77,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         break;
                     }
             }
-            Humanizer.DelayHandler.UseOrbwalker();
+            Humanizer.TickTock.Handler.UseOrbwalker();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void AutoEvents(EventArgs args)
         {
-            if (!Humanizer.DelayHandler.CheckAutoEvents()) return;
+            if (!Humanizer.TickTock.Handler.CheckAutoEvents()) return;
 
             var basename = BaseName + "Auto.";
 
@@ -108,7 +108,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     break;
                 }
             }
-            Humanizer.DelayHandler.UseAutoEvent();
+            Humanizer.TickTock.Handler.UseAutoEvent();
         }
 
         /// <summary>

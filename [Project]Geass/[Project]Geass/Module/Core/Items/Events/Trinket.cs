@@ -7,6 +7,7 @@ using _Project_Geass.Data.Items;
 using _Project_Geass.Functions;
 using _Project_Geass.Global;
 using _Project_Geass.Global.Data;
+using _Project_Geass.Humanizer.TickTock;
 
 namespace _Project_Geass.Module.Core.Items.Events
 {
@@ -28,10 +29,10 @@ namespace _Project_Geass.Module.Core.Items.Events
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
         {
-            if (!DelayHandler.CheckTrinket()) return;
+            if (!Handler.CheckTrinket()) return;
 
             if (!StaticObjects.ProjectMenu.Item(Names.Menu.TrinketItemBase + "Boolean.BuyOrb").GetValue<bool>()) return;
-            DelayHandler.UseTrinket();
+            Handler.UseTrinket();
 
             if (StaticObjects.Player.Level < 9) return;
             if (!StaticObjects.Player.InShop() || LeagueSharp.Common.Items.HasItem(_trinket.Orb.Id))

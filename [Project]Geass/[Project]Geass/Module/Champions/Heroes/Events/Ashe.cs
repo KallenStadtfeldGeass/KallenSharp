@@ -1,6 +1,5 @@
 ﻿using _Project_Geass.Drawing.Champions;
 using _Project_Geass.Functions.Objects;
-using _Project_Geass.Humanizer;
 using _Project_Geass.Module.Champions.Core;
 using _Project_Geass.Module.Core.Mana.Functions;
 using LeagueSharp;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Project_Geass.Functions;
+using _Project_Geass.Humanizer.TickTock;
 using Damage = _Project_Geass.Functions.Calculations.Damage;
 using Prediction = _Project_Geass.Functions.Prediction;
 
@@ -53,7 +53,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
         {
-            if (!DelayHandler.CheckOrbwalker()) return;
+            if (!Handler.CheckOrbwalker()) return;
 
             switch (Orbwalker.ActiveMode)
             {
@@ -73,7 +73,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         break;
                     }
             }
-            DelayHandler.UseOrbwalker();
+            Handler.UseOrbwalker();
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
                 if (_manaManager.CheckClearW())
                 {
-                    var pos = W.GetCircularFarmLocation(validMinions);
+                    var pos = W.GetLineFarmLocation(validMinions,W.Width);
 
                     if (pos.MinionsHit >=
                         StaticObjects.ProjectMenu.Item($"{basename}.UseW.Minions").GetValue<Slider>().Value)

@@ -1,4 +1,4 @@
-﻿namespace _Project_Geass.Humanizer
+﻿namespace _Project_Geass.Humanizer.TickTock
 {
     /// <summary>
     /// Base used for tick manager

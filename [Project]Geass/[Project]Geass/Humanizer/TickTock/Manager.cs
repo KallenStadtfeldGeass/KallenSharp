@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace _Project_Geass.Humanizer
+namespace _Project_Geass.Humanizer.TickTock
 {
-    internal class TickManager
+    internal class Manager
     {
         /// <summary>
         /// The random maximum
@@ -24,12 +24,12 @@ namespace _Project_Geass.Humanizer
         /// <summary>
         /// The ticks
         /// </summary>
-        public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
+        public readonly Dictionary<string, TickTock.Tick> Ticks = new Dictionary<string, TickTock.Tick>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TickManager"/> class.
+        /// Initializes a new instance of the <see cref="Manager"/> class.
         /// </summary>
-        public TickManager()
+        public Manager()
         {
             _rng = new Random();
         }
@@ -51,7 +51,7 @@ namespace _Project_Geass.Humanizer
                 return;
             }
 
-            Ticks.Add(keyName, new Tick(min, max));
+            Ticks.Add(keyName, new TickTock.Tick(min, max));
         }
 
         /// <summary>

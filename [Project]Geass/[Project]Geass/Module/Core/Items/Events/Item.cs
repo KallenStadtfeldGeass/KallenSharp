@@ -1,12 +1,11 @@
-﻿using _Project_Geass.Humanizer;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
 using System;
 using System.Linq;
 using _Project_Geass.Data.Items;
 using _Project_Geass.Functions;
-using _Project_Geass.Global;
 using _Project_Geass.Global.Data;
+using _Project_Geass.Humanizer.TickTock;
 
 namespace _Project_Geass.Module.Core.Items.Events
 {
@@ -46,9 +45,9 @@ namespace _Project_Geass.Module.Core.Items.Events
         {
             #region Offensive
 
-            if (!DelayHandler.CheckItems()) return;
+            if (!Handler.CheckItems()) return;
 
-            DelayHandler.UseItems();
+            Handler.UseItems();
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;
 

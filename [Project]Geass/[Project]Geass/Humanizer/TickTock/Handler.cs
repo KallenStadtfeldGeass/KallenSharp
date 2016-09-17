@@ -2,14 +2,14 @@
 using _Project_Geass.Functions;
 using _Project_Geass.Global.Data;
 
-namespace _Project_Geass.Humanizer
+namespace _Project_Geass.Humanizer.TickTock
 {
-    internal class DelayHandler
+    internal class Handler
     {
         /// <summary>
         /// My Tick Manager
         /// </summary>
-        private static readonly TickManager MyTicker = new TickManager();
+        private static readonly Manager MyTicker = new Manager();
 
         /// <summary>
         /// Loads the specified humanize.

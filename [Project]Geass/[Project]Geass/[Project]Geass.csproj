@@ -101,7 +101,7 @@
     <Compile Include="Module\Core\Items\Menus\Trinket.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Ezreal.cs" />
     <Compile Include="Module\Initializer.cs" />
-    <Compile Include="Module\PreLoad\Menus\PreLoadMenu.cs" />
+    <Compile Include="Functions\SettingsMenuGenerater.cs" />
     <Compile Include="Data\Champions\SettingsBase.cs" />
     <Compile Include="Data\Champions\Settings.cs" />
     <Compile Include="Functions\Names.cs" />
@@ -117,9 +117,9 @@
     <Compile Include="Functions\Objects\Minions.cs" />
     <Compile Include="Functions\Targeting.cs" />
     <Compile Include="Functions\StaticObjects.cs" />
-    <Compile Include="Humanizer\DelayHandler.cs" />
-    <Compile Include="Humanizer\Tick.cs" />
-    <Compile Include="Humanizer\TickManager.cs" />
+    <Compile Include="Humanizer\TickTock\Handler.cs" />
+    <Compile Include="Humanizer\TickTock\Tick.cs" />
+    <Compile Include="Humanizer\TickTock\Manager.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

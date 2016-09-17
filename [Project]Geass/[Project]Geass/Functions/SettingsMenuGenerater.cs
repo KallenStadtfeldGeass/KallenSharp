@@ -1,18 +1,14 @@
-﻿using _Project_Geass.Data;
+﻿using System.Collections.Generic;
 using LeagueSharp.Common;
-using System.Collections.Generic;
-using _Project_Geass.Functions;
-using _Project_Geass.Global;
-using _Project_Geass.Global.Data;
 
-namespace _Project_Geass.Module.PreLoad.Menus
+namespace _Project_Geass.Functions
 {
-    internal sealed class PreLoadMenu
+    internal sealed class SettingsMenuGenerater
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreLoadMenu"/> class.
+        /// Initializes a new instance of the <see cref="SettingsMenuGenerater"/> class.
         /// </summary>
-        public PreLoadMenu()
+        public SettingsMenuGenerater()
         {
 
             foreach (var champ in Names.ChampionBundled)

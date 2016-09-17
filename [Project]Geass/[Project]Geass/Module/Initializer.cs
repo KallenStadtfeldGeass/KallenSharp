@@ -1,7 +1,6 @@
 ﻿using _Project_Geass.Module.Core.Items.Menus;
 using _Project_Geass.Module.Core.Mana.Menus;
 using _Project_Geass.Module.Core.OnLevel.Menus;
-using _Project_Geass.Module.PreLoad.Menus;
 using LeagueSharp;
 using System.Linq;
 using LeagueSharp.Common;
@@ -21,9 +20,9 @@ namespace _Project_Geass.Module
             StaticObjects.ProjectLogger.WriteLog("Loading...");
             if (Names.ChampionBundled.All(p => ObjectManager.Player.ChampionName != p)) return;
             StaticObjects.ProjectLogger.WriteLog("Load Delays...");
-            Humanizer.DelayHandler.Load(true);
+            Humanizer.TickTock.Handler.Load(true);
             // ReSharper disable once UnusedVariable
-            var initializerMenu = new PreLoadMenu();
+            var initializerMenu = new SettingsMenuGenerater();
             StaticObjects.SettingsMenu.AddToMainMenu();
 
             if (!StaticObjects.SettingsMenu.Item($"{Names.Menu.BaseItem}{StaticObjects.Player.ChampionName}.Enable").GetValue<bool>()) return;
@@ -54,7 +53,6 @@ namespace _Project_Geass.Module
             StaticObjects.ProjectMenu.AddSubMenu(coreMenu);
             StaticObjects.ProjectMenu.AddToMainMenu();
             LoadChampion(manaEnabled, orbWalker);
-
         }
 
 #pragma warning disable CC0091 // Use static method
@@ -78,6 +76,8 @@ namespace _Project_Geass.Module
                     var ashe = new Ashe(manaEnabled, orbWalker);
                     break;
             }
+
         }
+
     }
 }
