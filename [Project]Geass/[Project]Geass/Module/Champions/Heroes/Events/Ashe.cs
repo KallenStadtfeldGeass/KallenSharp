@@ -250,7 +250,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         {
             var basename = BaseName + "Clear.";
 
-            var validMinions = MinionManager.GetMinions(StaticObjects.Player.ServerPosition, W.Range, MinionTypes.All, MinionTeam.Enemy);
+            var validMinions = Minions.GetEnemyMinions2(W.Range);
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
                 if (_manaManager.CheckClearW())
@@ -342,8 +342,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         private void OnDraw(EventArgs args)
         {
 
-          //  var heroPosition = LeagueSharp.Drawing.WorldToScreen(StaticObjects.Player.Position);
-          //  LeagueSharp.Drawing.DrawText(heroPosition.X + 20, heroPosition.Y - 30, System.Drawing.Color.MintCream, minonsHit.ToString());
+            var heroPosition = LeagueSharp.Drawing.WorldToScreen(StaticObjects.Player.Position);
+            LeagueSharp.Drawing.DrawText(heroPosition.X + 20, heroPosition.Y - 30, System.Drawing.Color.MintCream, minonsHit.ToString());
 
 
             if (W.Level > 0)
