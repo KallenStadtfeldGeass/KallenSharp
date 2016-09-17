@@ -1,9 +1,12 @@
 ﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
 using _Project_Geass.Humanizer;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
+using _Project_Geass.Data.Items;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Core.Items.Events
 {
@@ -12,8 +15,10 @@ namespace _Project_Geass.Module.Core.Items.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="Trinket"/> class.
         /// </summary>
+        private readonly Trinkets _trinket;
         public Trinket()
         {
+            _trinket = new Trinkets();
             Game.OnUpdate += OnUpdate;
         }
 
@@ -25,15 +30,15 @@ namespace _Project_Geass.Module.Core.Items.Events
         {
             if (!DelayHandler.CheckTrinket()) return;
 
-            if (!Static.Objects.ProjectMenu.Item(Names.Menu.TrinketItemBase + "Boolean.BuyOrb").GetValue<bool>()) return;
+            if (!StaticObjects.ProjectMenu.Item(Names.Menu.TrinketItemBase + "Boolean.BuyOrb").GetValue<bool>()) return;
             DelayHandler.UseTrinket();
 
-            if (Static.Objects.Player.Level < 9) return;
-            if (!Static.Objects.Player.InShop() || LeagueSharp.Common.Items.HasItem(Data.Items.Trinkets.Orb.Id))
+            if (StaticObjects.Player.Level < 9) return;
+            if (!StaticObjects.Player.InShop() || LeagueSharp.Common.Items.HasItem(_trinket.Orb.Id))
                 return;
 
-            Static.Objects.ProjectLogger.WriteLog("Buy Orb");
-            Data.Items.Trinkets.Orb.Buy();
+            StaticObjects.ProjectLogger.WriteLog("Buy Orb");
+            _trinket.Orb.Buy();
         }
     }
 }

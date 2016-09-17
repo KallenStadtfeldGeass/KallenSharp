@@ -1,4 +1,6 @@
 ﻿using _Project_Geass.Data;
+using _Project_Geass.Functions;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Humanizer
 {

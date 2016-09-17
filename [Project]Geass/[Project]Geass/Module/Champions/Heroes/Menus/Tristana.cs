@@ -1,6 +1,5 @@
-﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
+using _Project_Geass.Functions;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
@@ -11,14 +10,14 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         /// </summary>
         public Tristana()
         {
-            Static.Objects.ProjectMenu.AddSubMenu(Drawing());
-            Static.Objects.ProjectMenu.AddSubMenu(Combo());
-            Static.Objects.ProjectMenu.AddSubMenu(Mixed());
-            Static.Objects.ProjectMenu.AddSubMenu(Clear());
-            Static.Objects.ProjectMenu.AddSubMenu(Auto());
+            StaticObjects.ProjectMenu.AddSubMenu(Drawing());
+            StaticObjects.ProjectMenu.AddSubMenu(Combo());
+            StaticObjects.ProjectMenu.AddSubMenu(Mixed());
+            StaticObjects.ProjectMenu.AddSubMenu(Clear());
+            StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
 
-        private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
 
         /// <summary>
         /// Drawings this instance.

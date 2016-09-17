@@ -1,4 +1,5 @@
-﻿using LeagueSharp;
+﻿using _Project_Geass.Functions.Objects;
+using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using SharpDX.Direct3D9;
@@ -11,6 +12,9 @@ namespace _Project_Geass.Drawing.Champions
     {
         //
         private const int Width = 104;
+
+        private readonly Utility.HpBarDamageIndicator.DamageToUnitDelegate _damageToUnitDelegate;
+
         /*
                 private const int Thinkness = 9;
         */
@@ -18,7 +22,6 @@ namespace _Project_Geass.Drawing.Champions
         // ReSharper disable once NotAccessedField.Local
         private readonly bool _debugger;
 
-        private readonly Utility.HpBarDamageIndicator.DamageToUnitDelegate _damageToUnitDelegate;
         /*
                 private static readonly Vector2 BarOffset = new Vector2(10, 25);
         */
@@ -26,24 +29,10 @@ namespace _Project_Geass.Drawing.Champions
         public Device DxDevice = LeagueSharp.Drawing.Direct3DDevice;
         public Line DxLine;
 
-        private Obj_AI_Hero Unit { get; set; }
-
-        private Vector2 Offset
+        public DamageIndicator(Utility.HpBarDamageIndicator.DamageToUnitDelegate _delegate, int range,
+            bool debugger = false)
         {
-            get
-            {
-                if (Unit != null)
-                {
-                    return Unit.IsAlly ? new Vector2(34, 9) : new Vector2(10, 20);
-                }
-
-                return new Vector2();
-            }
-        }
-
-        public DamageIndicator(Utility.HpBarDamageIndicator.DamageToUnitDelegate _delegate, int range, bool debugger = false)
-        {
-            DxLine = new Line(DxDevice) { Width = 9 };
+            DxLine = new Line(DxDevice) {Width = 9};
             _debugger = debugger;
             Range = range;
             _damageToUnitDelegate = _delegate;
@@ -56,24 +45,43 @@ namespace _Project_Geass.Drawing.Champions
             AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnDomainUnload;
         }
 
-        private float GetHpProc(float dmg = 0)
-        {
-            float health = ((Unit.Health - dmg) > 0) ? (Unit.Health - dmg) : 0;
-            return (health / Unit.MaxHealth);
-        }
+        private Obj_AI_Hero Unit { get; set; }
 
-        private Vector2 GetHpPosAfterDmg(float dmg)
+        private Vector2 Offset
         {
-            float w = GetHpProc(dmg) * Width;
-            return new Vector2(StartPosition.X + w, StartPosition.Y);
+            get
+            {
+                if (Unit != null)
+                    return Unit.IsAlly ? new Vector2(34, 9) : new Vector2(10, 20);
+
+                return new Vector2();
+            }
         }
 
         public Vector2 StartPosition => new Vector2(Unit.HPBarPosition.X + Offset.X, Unit.HPBarPosition.Y + Offset.Y);
 
+        private bool FillEnabled { get; set; }
+        private bool KillableEnabled { get; set; }
+        private int Range { get; }
+        private Color Fill { get; set; }
+        private Color Killable { get; set; }
+
+        private float GetHpProc(float dmg = 0)
+        {
+            var health = Unit.Health - dmg > 0 ? Unit.Health - dmg : 0;
+            return health/Unit.MaxHealth;
+        }
+
+        private Vector2 GetHpPosAfterDmg(float dmg)
+        {
+            var w = GetHpProc(dmg)*Width;
+            return new Vector2(StartPosition.X + w, StartPosition.Y);
+        }
+
         public void DrawDmg(float dmg, ColorBGRA color)
         {
-            Vector2 hpPosNow = GetHpPosAfterDmg(0);
-            Vector2 hpPosAfter = GetHpPosAfterDmg(dmg);
+            var hpPosNow = GetHpPosAfterDmg(0);
+            var hpPosAfter = GetHpPosAfterDmg(dmg);
 
             fillHPBar(hpPosNow, hpPosAfter, color);
             //fillHPBar((int)(hpPosNow.X - startPosition.X), (int)(hpPosAfter.X- startPosition.X), color);
@@ -114,19 +122,15 @@ namespace _Project_Geass.Drawing.Champions
             Killable = color;
         }
 
-        private bool FillEnabled { get; set; }
-        private bool KillableEnabled { get; set; }
-        private int Range { get; set; }
-        private Color Fill { get; set; }
-        private Color Killable { get; set; }
-
         private void fillHPBar(Vector2 from, Vector2 to, ColorBGRA color)
         {
             DxLine.Begin();
 
-            DxLine.Draw(new[] {
+            DxLine.Draw(new[]
+            {
                 new Vector2((int) from.X, (int) from.Y + 4f),
-                new Vector2((int) to.X, (int) to.Y + 4f) }, color);
+                new Vector2((int) to.X, (int) to.Y + 4f)
+            }, color);
 
             DxLine.End();
         }
@@ -135,7 +139,7 @@ namespace _Project_Geass.Drawing.Champions
         {
             if (!FillEnabled && !KillableEnabled) return;
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies(Range))
+            foreach (var enemy in Heroes.GetEnemies(Range))
             {
                 // Get damage to unit
                 var damage = _damageToUnitDelegate(enemy);
@@ -143,14 +147,15 @@ namespace _Project_Geass.Drawing.Champions
                 // Continue on 0 damage
                 if (damage <= 0) continue;
 
-                if (damage > enemy.Health && KillableEnabled)
-                    LeagueSharp.Drawing.DrawText(enemy.HPBarPosition.X + 10, enemy.HPBarPosition.Y + 3, Killable, "Killable");
+                if ((damage > enemy.Health) && KillableEnabled)
+                    LeagueSharp.Drawing.DrawText(enemy.HPBarPosition.X + 10, enemy.HPBarPosition.Y + 3, Killable,
+                        "Killable");
 
                 if (FillEnabled)
                 {
                     Unit = enemy;
-                    Vector2 hpPosNow = GetHpPosAfterDmg(0);
-                    Vector2 hpPosAfter = GetHpPosAfterDmg(damage);
+                    var hpPosNow = GetHpPosAfterDmg(0);
+                    var hpPosAfter = GetHpPosAfterDmg(damage);
 
                     fillHPBar(hpPosNow, hpPosAfter, new ColorBGRA(Fill.B, Fill.G, Fill.R, 200));
 

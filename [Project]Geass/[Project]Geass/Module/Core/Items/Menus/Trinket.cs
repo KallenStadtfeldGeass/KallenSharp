@@ -1,6 +1,8 @@
 ﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
 using LeagueSharp.Common;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Core.Items.Menus
 {
@@ -24,7 +26,7 @@ namespace _Project_Geass.Module.Core.Items.Menus
             menu.AddSubMenu(Menu());
             // ReSharper disable once UnusedVariable
             var trinket = new Events.Trinket();
-            Static.Objects.ProjectLogger.WriteLog("Trinket Menu and events loaded.");
+            StaticObjects.ProjectLogger.WriteLog("Trinket Menu and events loaded.");
         }
     }
 }

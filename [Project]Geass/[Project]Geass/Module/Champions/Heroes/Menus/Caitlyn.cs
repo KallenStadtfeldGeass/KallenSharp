@@ -1,20 +1,22 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Data;
-using _Project_Geass.Globals;
+﻿using _Project_Geass.Data;
+using LeagueSharp.Common;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
-    class Caitlyn
+    internal class Caitlyn
     {
         public Caitlyn()
         {
-            Static.Objects.ProjectMenu.AddSubMenu(Combo());
-            Static.Objects.ProjectMenu.AddSubMenu(Mixed());
-            Static.Objects.ProjectMenu.AddSubMenu(Clear());
-            Static.Objects.ProjectMenu.AddSubMenu(Auto());
+            StaticObjects.ProjectMenu.AddSubMenu(Combo());
+            StaticObjects.ProjectMenu.AddSubMenu(Mixed());
+            StaticObjects.ProjectMenu.AddSubMenu(Clear());
+            StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
 
-        private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
 
         private Menu Auto()
         {

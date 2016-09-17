@@ -1,6 +1,8 @@
 ﻿using _Project_Geass.Data;
 using _Project_Geass.Module.Core.Drawing.Events;
 using LeagueSharp.Common;
+using _Project_Geass.Functions;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Core.Mana.Menus
 {

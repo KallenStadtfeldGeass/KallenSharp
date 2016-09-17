@@ -1,7 +1,8 @@
 ﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
-using _Project_Geass.Module.Core.Drawing.Events;
 using LeagueSharp.Common;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 using Color = System.Drawing.Color;
 
 namespace _Project_Geass.Module.Core.Drawing.Menus
@@ -20,9 +21,9 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
 
             menu.AddSubMenu(Menu(drawingOptions));
             // ReSharper disable once UnusedVariable
-            var helper = new LastHitHelper();
+            var helper = new Events.Drawing();
 
-            Static.Objects.ProjectLogger.WriteLog("Drawing Menu and events loaded.");
+            StaticObjects.ProjectLogger.WriteLog("Drawing Menu and events loaded.");
         }
 
         /// <summary>
@@ -32,33 +33,30 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
         /// <returns></returns>
         public Menu Menu(bool[] drawingOptions)
         {
-            var menu = new Menu(Names.Menu.DrawingNameBase, "enemyMenu");
+            var menu = new Menu(nameof(Drawing), Names.Menu.DrawingNameBase);
 
-            var enemyMenu = new Menu(".Enemys", "enemyMenu");
-            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnEnemy", "Draw On Enemys").SetValue(true));
-            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnEnemy.FillColor", "Combo Damage Fill").SetValue(new Circle(true, Color.DarkGray)));
+            var enemyMenu = new Menu("Enemys", Names.Menu.DrawingItemBase + "Enemy");
+            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnEnemy.ComboDamage", "Combo Damage Fill").SetValue(new Circle(true, Color.DarkGray)));
+            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnEnemy.DrawRange", "Draw Enemy AA Range").SetValue(new Circle(true, Color.Red)));
 
-            var selfMenu = new Menu(".Self", "selfMenu");
-            selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf", "Draw On Self").SetValue(true));
+
+
+            var selfMenu = new Menu("Self", Names.Menu.DrawingItemBase + "Self");
+            //selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf", "Draw On Self").SetValue(true));
 
             if (drawingOptions[0])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
             if (drawingOptions[1])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor", "W Range").SetValue(new Circle(true, Color.LightGreen)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor", "W Range").SetValue(new Circle(true, Color.LightGreen)));
             if (drawingOptions[2])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor", "E Range").SetValue(new Circle(true, Color.LightCoral)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.EColor", "E Range").SetValue(new Circle(true, Color.LightCoral)));
             if (drawingOptions[03])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor", "R Range").SetValue(new Circle(true, Color.LightSlateGray)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.RColor", "R Range").SetValue(new Circle(true, Color.LightSlateGray)));
 
-            var lastHitMenu = new Menu(Names.Menu.LastHitHelperNameBase, "minionMenu");
 
-            lastHitMenu.AddItem(
-                new MenuItem(Names.Menu.LastHitHelperItemBase + ".Minion." + "Boolean.LastHitHelper", "LastHit Helper").SetValue(
-                    false));
+            var lastHitMenu = new Menu("Minions", Names.Menu.DrawingItemBase + "Minions");
 
-            lastHitMenu.AddItem(
-                new MenuItem(Names.Menu.LastHitHelperItemBase + ".Minion." + "Circle.KillableColor", "Killable Color").SetValue(
-                    new Circle(true, Color.LightGray)));
+            lastHitMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + ".Minion." + "Circle.LastHitHelper", "LastHit Helper").SetValue(new Circle(true, Color.LightGray)));
 
             menu.AddSubMenu(lastHitMenu);
             menu.AddSubMenu(enemyMenu);

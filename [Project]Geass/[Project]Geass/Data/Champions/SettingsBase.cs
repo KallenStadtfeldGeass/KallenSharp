@@ -2,7 +2,6 @@
 {
     internal class SettingsBase
     {
-
         public static string[] ManaModes = { "Combo", "Mixed", "Clear" };
         public static string[] ManaAbilities = { $"Q", $"W", $"E", $"R" };
 

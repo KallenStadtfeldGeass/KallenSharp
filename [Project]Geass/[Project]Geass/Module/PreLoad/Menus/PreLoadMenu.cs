@@ -1,7 +1,9 @@
 ﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
 using LeagueSharp.Common;
 using System.Collections.Generic;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.PreLoad.Menus
 {
@@ -22,7 +24,7 @@ namespace _Project_Geass.Module.PreLoad.Menus
                     temp.AddItem(element);
                 }
 
-                Static.Objects.SettingsMenu.AddSubMenu(temp);
+                StaticObjects.SettingsMenu.AddSubMenu(temp);
             }
         }
         /// <summary>

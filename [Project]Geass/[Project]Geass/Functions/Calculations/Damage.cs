@@ -1,4 +1,5 @@
-﻿using LeagueSharp;
+﻿using _Project_Geass.Global;
+using LeagueSharp;
 using LeagueSharp.Common;
 using System.Linq;
 
@@ -6,9 +7,14 @@ namespace _Project_Geass.Functions.Calculations
 {
     public static class Damage
     {
+        private const string ShieldNames =
+            "blindmonkwoneshield,evelynnrshield,EyeOfTheStorm,ItemSeraphsEmbrace,JarvanIVGoeldenAegis,KarmaSolKimShield,lulufarieshield,luxprismaticwaveshieldself,manabarrier,mordekaiserironman,nautiluspiercinggazeshield,orianaredactshield,rumbleshieldbuff,Shenstandunitedshield,SkarnerExoskeleton,summonerbarrier,tahmkencheshield,udyrturtleactivation,UrgotTerrorCapacitorActive2,ViktorPowerTransfer,dianashield,malphiteshieldeffect,RivenFeint,ShenStandUnited,sionwshieldstacks,vipassivebuff";
+
+        private static readonly string[] ShieldBuffNames = ShieldNames.Split(',');
+
         public static float CalcRealDamage(Obj_AI_Base target, float fakeDamage)
         {
-            if (CheckNoDamageBuffs((Obj_AI_Hero)target)) return 0f;
+            if (CheckNoDamageBuffs((Obj_AI_Hero) target)) return 0f;
 
             var defuffer = 1f;
 
@@ -16,32 +22,32 @@ namespace _Project_Geass.Functions.Calculations
                 defuffer *= .7f;
 
             if (target.HasBuff("Medidate"))
-                defuffer *= .5f - target.Spellbook.GetSpell(SpellSlot.E).Level * .05f;
+                defuffer *= .5f - target.Spellbook.GetSpell(SpellSlot.E).Level*.05f;
 
             if (target.HasBuff("gragaswself"))
-                defuffer *= .9f - target.Spellbook.GetSpell(SpellSlot.W).Level * .02f;
+                defuffer *= .9f - target.Spellbook.GetSpell(SpellSlot.W).Level*.02f;
 
-            if (target.Name.Contains("Baron") && Globals.Static.Objects.Player.HasBuff("barontarget"))
+            if (target.Name.Contains("Baron") && StaticObjects.Player.HasBuff("barontarget"))
                 defuffer *= 0.5f;
 
-            if (Globals.Static.Objects.Player.HasBuff("summonerexhaust"))
+            if (StaticObjects.Player.HasBuff("summonerexhaust"))
                 defuffer *= .4f;
 
-            if (!target.IsChampion()) return (fakeDamage * defuffer);
+            if (!target.IsChampion()) return fakeDamage*defuffer;
 
             var healthDebuffer = 0f;
-            var hero = (Obj_AI_Hero)target;
+            var hero = (Obj_AI_Hero) target;
 
-            if (hero.ChampionName == "Blitzcrank" && !target.HasBuff("BlitzcrankManaBarrierCD") && !target.HasBuff("ManaBarrier"))
-                healthDebuffer += target.Mana / 2;
+            if ((hero.ChampionName == "Blitzcrank") && !target.HasBuff("BlitzcrankManaBarrierCD") &&
+                !target.HasBuff("ManaBarrier"))
+                healthDebuffer += target.Mana/2;
 
-            return (fakeDamage * defuffer) - (healthDebuffer + GetShield(target) + target.FlatHPRegenMod + 10);
+            return fakeDamage*defuffer - (healthDebuffer + GetShield(target) + target.FlatHPRegenMod + 10);
         }
 
         public static bool CheckNoDamageBuffs(Obj_AI_Hero target)
         {
             foreach (var b in target.Buffs.Where(b => b.IsValidBuff()))
-            {
                 switch (b.DisplayName)
                 {
                     case "Chrono Shift":
@@ -68,10 +74,9 @@ namespace _Project_Geass.Functions.Calculations
                     case "kindredrnodeathbuff":
                         return true;
                 }
-            }
 
-            return (target.HasBuffOfType(BuffType.Invulnerability)
-                    || target.HasBuffOfType(BuffType.SpellImmunity));
+            return target.HasBuffOfType(BuffType.Invulnerability)
+                   || target.HasBuffOfType(BuffType.SpellImmunity);
             // || target.HasBuffOfType(BuffType.SpellShield));
         }
 
@@ -79,9 +84,5 @@ namespace _Project_Geass.Functions.Calculations
         {
             return ShieldBuffNames.Any(target.HasBuff) ? target.AllShield : 0;
         }
-
-        private const string ShieldNames = "blindmonkwoneshield,evelynnrshield,EyeOfTheStorm,ItemSeraphsEmbrace,JarvanIVGoeldenAegis,KarmaSolKimShield,lulufarieshield,luxprismaticwaveshieldself,manabarrier,mordekaiserironman,nautiluspiercinggazeshield,orianaredactshield,rumbleshieldbuff,Shenstandunitedshield,SkarnerExoskeleton,summonerbarrier,tahmkencheshield,udyrturtleactivation,UrgotTerrorCapacitorActive2,ViktorPowerTransfer,dianashield,malphiteshieldeffect,RivenFeint,ShenStandUnited,sionwshieldstacks,vipassivebuff";
-
-        private static readonly string[] ShieldBuffNames = ShieldNames.Split(',');
     }
 }

@@ -10,7 +10,7 @@ D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\LeagueSharp
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.csprojResolveAssemblyReference.cache
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.pdb
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\clipper_library.pdb
-D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.dll.config
-D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.dll
-D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.dll
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.exe.config
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.exe
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\LeagueSharp.dll
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.exe

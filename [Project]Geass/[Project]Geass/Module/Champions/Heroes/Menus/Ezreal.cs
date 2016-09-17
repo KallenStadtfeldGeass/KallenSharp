@@ -1,6 +1,5 @@
-﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
+using _Project_Geass.Functions;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
@@ -12,13 +11,13 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         /// </summary>
         public Ezreal()
         {
-            Static.Objects.ProjectMenu.AddSubMenu(Misc());
-            Static.Objects.ProjectMenu.AddSubMenu(Combo());
-            Static.Objects.ProjectMenu.AddSubMenu(Mixed());
-            Static.Objects.ProjectMenu.AddSubMenu(Clear());
+            StaticObjects.ProjectMenu.AddSubMenu(Misc());
+            StaticObjects.ProjectMenu.AddSubMenu(Combo());
+            StaticObjects.ProjectMenu.AddSubMenu(Mixed());
+            StaticObjects.ProjectMenu.AddSubMenu(Clear());
         }
 
-        private readonly string _baseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
 
         /// <summary>
         /// Miscs

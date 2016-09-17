@@ -88,7 +88,7 @@
     <Compile Include="Module\Champions\Heroes\Menus\Kalista.cs" />
     <Compile Include="Module\Champions\Heroes\Menus\Tristana.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Tristana.cs" />
-    <Compile Include="Module\Core\Drawing\Events\LastHitHelper.cs" />
+    <Compile Include="Module\Core\Drawing\Events\Drawing.cs" />
     <Compile Include="Module\Core\Items\Events\Item.cs" />
     <Compile Include="Module\Core\OnLevel\Events\Abilities.cs" />
     <Compile Include="Module\Core\Items\Events\Trinket.cs" />
@@ -104,21 +104,19 @@
     <Compile Include="Module\PreLoad\Menus\PreLoadMenu.cs" />
     <Compile Include="Data\Champions\SettingsBase.cs" />
     <Compile Include="Data\Champions\Settings.cs" />
-    <Compile Include="Data\Names.cs" />
-    <Compile Include="Data\Buffs.cs" />
+    <Compile Include="Functions\Names.cs" />
+    <Compile Include="Functions\Buffs.cs" />
     <Compile Include="Data\Items\Defensive.cs" />
     <Compile Include="Data\Items\Offensive.cs" />
     <Compile Include="Data\Items\Trinkets.cs" />
-    <Compile Include="Data\Monsters.cs" />
-    <Compile Include="Data\Prediction.cs" />
+    <Compile Include="Functions\Monsters.cs" />
     <Compile Include="Drawing\Champions\DamageIndicator.cs" />
     <Compile Include="Functions\AssemblyTime.cs" />
     <Compile Include="Functions\Calculations\Damage.cs" />
     <Compile Include="Functions\Objects\Heroes.cs" />
     <Compile Include="Functions\Objects\Minions.cs" />
     <Compile Include="Functions\Targeting.cs" />
-    <Compile Include="Globals\Base\Obj.cs" />
-    <Compile Include="Globals\Static.cs" />
+    <Compile Include="Functions\StaticObjects.cs" />
     <Compile Include="Humanizer\DelayHandler.cs" />
     <Compile Include="Humanizer\Tick.cs" />
     <Compile Include="Humanizer\TickManager.cs" />
@@ -132,8 +130,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Structures\" />
     <Folder Include="Drawing\Rendering\" />
+    <Folder Include="Global\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="1472572168_Zero.ico" />

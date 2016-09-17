@@ -1,8 +1,10 @@
 ﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
 using LeagueSharp.Common;
 using System;
 using System.Collections.Generic;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Champions.Core
 {
@@ -16,7 +18,6 @@ namespace _Project_Geass.Module.Champions.Core
         /// </value>
         public Dictionary<object, object> Spells { get; } = new Dictionary<object, object>();
 
-        
         public Spell Q { get; set; }
         public Spell W { get; set; }
         public Spell E { get; set; }
@@ -60,6 +61,6 @@ namespace _Project_Geass.Module.Champions.Core
             Rng = new Random();
         }
 
-        public readonly string BaseName = Names.ProjectName + Static.Objects.Player.ChampionName + ".";
+        public readonly string BaseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
     }
 }

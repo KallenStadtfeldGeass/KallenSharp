@@ -1,17 +1,21 @@
-﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
-using _Project_Geass.Humanizer;
+﻿using _Project_Geass.Humanizer;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
 using System.Linq;
+using _Project_Geass.Data.Items;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Core.Items.Events
 {
     internal class Item
     {
         public Orbwalking.Orbwalker Orbwalker;
-
+        private readonly Offensive _offensive;
+        private readonly Defensive _defensive;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Item"/> class.
         /// </summary>
@@ -19,6 +23,8 @@ namespace _Project_Geass.Module.Core.Items.Events
         public Item(Orbwalking.Orbwalker orbwalker)
         {
             Orbwalker = orbwalker;
+            _offensive = new Offensive();
+            _defensive = new Defensive();
             Orbwalking.AfterAttack += After_Attack;
             Orbwalking.BeforeAttack += Before_Attack;
             Game.OnUpdate += OnUpdate;
@@ -46,80 +52,80 @@ namespace _Project_Geass.Module.Core.Items.Events
             var target = TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
             if (target == null) return;
 
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Offensive.Botrk.Id))
+            if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(_offensive.Botrk.Id))
             // If enabled and has item
             {
-                if (Data.Items.Offensive.Botrk.IsReady())
+                if (_offensive.Botrk.IsReady())
                 {
                     if (
-                        target.IsValidTarget(Static.Objects.Player.AttackRange + Static.Objects.Player.BoundingRadius) || Static.Objects.Player.HealthPercent < Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
+                        target.IsValidTarget(StaticObjects.Player.AttackRange + StaticObjects.Player.BoundingRadius) || StaticObjects.Player.HealthPercent < StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
-                        if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
-                            target.HealthPercent < Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
+                        if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
+                            target.HealthPercent < StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
                             //in combo and target hp less then
                             ||
-                            !Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() &&
-                            target.HealthPercent < Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp").GetValue<Slider>().Value
+                            !StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() &&
+                            target.HealthPercent < StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp").GetValue<Slider>().Value
                             //not in combo but target HP less then
                             ||
-                            (Static.Objects.Player.HealthPercent <
-                             Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveNameBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
+                            (StaticObjects.Player.HealthPercent <
+                             StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveNameBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Static.Objects.ProjectLogger.WriteLog($"Use Bork on {target}");
-                            LeagueSharp.Common.Items.UseItem(Data.Items.Offensive.Botrk.Id, target);
+                            StaticObjects.ProjectLogger.WriteLog($"Use Bork on {target}");
+                            LeagueSharp.Common.Items.UseItem(_offensive.Botrk.Id, target);
                             return;
                         }
                     }
                 }
             }
 
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Offensive.Cutless.Id))
+            if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Bork").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(_offensive.Cutless.Id))
             // If enabled and has item
             {
-                if (Data.Items.Offensive.Cutless.IsReady())
+                if (_offensive.Cutless.IsReady())
                 {
                     if (
-                        target.IsValidTarget(Static.Objects.Player.AttackRange +
-                                           Static.Objects.Player.BoundingRadius) ||
-                        Static.Objects.Player.HealthPercent <
-                       Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
+                        target.IsValidTarget(StaticObjects.Player.AttackRange +
+                                           StaticObjects.Player.BoundingRadius) ||
+                        StaticObjects.Player.HealthPercent <
+                       StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value)
                     {
                         // In auto Range or about to die
-                        if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
+                        if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo &&
                             target.HealthPercent <
-                            Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
+                            StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MaxHp").GetValue<Slider>().Value
                             //in combo and target hp less then
                             ||
-                            !Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() &&
+                            !StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() &&
                             target.HealthPercent <
-                            Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp").GetValue<Slider>().Value
+                            StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp").GetValue<Slider>().Value
                             //not in combo but target HP less then
                             ||
-                            (Static.Objects.Player.HealthPercent <
-                             Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
+                            (StaticObjects.Player.HealthPercent <
+                             StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
                         //Player hp less then
                         {
-                            Static.Objects.ProjectLogger.WriteLog($"Use Cutless on {target}");
-                            LeagueSharp.Common.Items.UseItem(Data.Items.Offensive.Cutless.Id, target);
+                            StaticObjects.ProjectLogger.WriteLog($"Use Cutless on {target}");
+                            LeagueSharp.Common.Items.UseItem(_offensive.Cutless.Id, target);
                             return;
                         }
                     }
                 }
             }
 
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Youmuu").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Offensive.GhostBlade.Id))
+            if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase + "Boolean.Youmuu").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(_offensive.GhostBlade.Id))
             // If enabled and has item
             {
-                if (Data.Items.Offensive.GhostBlade.IsReady() &&
-                    target.IsValidTarget(Static.Objects.Player.AttackRange + Static.Objects.Player.BoundingRadius))
+                if (_offensive.GhostBlade.IsReady() &&
+                    target.IsValidTarget(StaticObjects.Player.AttackRange + StaticObjects.Player.BoundingRadius))
                 // Is ready and target is in auto range
                 {
                     if (Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
                     {
-                        Static.Objects.ProjectLogger.WriteLog($"Use Ghostblade on {target}");
-                        LeagueSharp.Common.Items.UseItem(Data.Items.Offensive.GhostBlade.Id);
+                        StaticObjects.ProjectLogger.WriteLog($"Use Ghostblade on {target}");
+                        LeagueSharp.Common.Items.UseItem(_offensive.GhostBlade.Id);
                         return;
                     }
                 }
@@ -129,21 +135,21 @@ namespace _Project_Geass.Module.Core.Items.Events
 
             #region Defensive
 
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Defensive.Qss.Id))
+            if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(_defensive.Qss.Id))
             {
-                if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo ||
-                    !Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
+                if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo ||
+                    !StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
-                    if (Data.Items.Defensive.Qss.IsReady())
+                    if (_defensive.Qss.IsReady())
                     {
-                        foreach (var buff in Buffs.GetTypes.Where(buff => Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS." + buff).GetValue<bool>()))
+                        foreach (var buff in Buffs.GetTypes.Where(buff => StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.QSS." + buff).GetValue<bool>()))
                         {
-                            if (Static.Objects.Player.HasBuffOfType(buff))
+                            if (StaticObjects.Player.HasBuffOfType(buff))
                             {
-                                Static.Objects.ProjectLogger.WriteLog($"Use QSS Reason {buff}");
+                                StaticObjects.ProjectLogger.WriteLog($"Use QSS Reason {buff}");
                                 Utility.DelayAction.Add(
-                                    Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value,
-                                    () => LeagueSharp.Common.Items.UseItem(Data.Items.Defensive.Qss.Id));
+                                    StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Slider.QSS.Delay").GetValue<Slider>().Value,
+                                    () => LeagueSharp.Common.Items.UseItem(_defensive.Qss.Id));
                             }
                         }
                     }
@@ -151,21 +157,21 @@ namespace _Project_Geass.Module.Core.Items.Events
             }
 
             // ReSharper disable once RedundantNameQualifier
-            if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(Data.Items.Defensive.Merc.Id))
+            if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc").GetValue<bool>() && LeagueSharp.Common.Items.HasItem(_defensive.Merc.Id))
             {
-                if (Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo ||
-                    !Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
+                if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>() && Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo ||
+                    !StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.ComboOnly").GetValue<bool>())
                 {
-                    if (Data.Items.Defensive.Merc.IsReady())
+                    if (_defensive.Merc.IsReady())
                     {
-                        foreach (var buff in Buffs.GetTypes.Where(buff => Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc." + buff).GetValue<bool>()))
+                        foreach (var buff in Buffs.GetTypes.Where(buff => StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Boolean.Merc." + buff).GetValue<bool>()))
                         {
-                            if (Static.Objects.Player.HasBuffOfType(buff))
+                            if (StaticObjects.Player.HasBuffOfType(buff))
                             {
-                                Static.Objects.ProjectLogger.WriteLog($"Use Merc Reason {buff}");
+                                StaticObjects.ProjectLogger.WriteLog($"Use Merc Reason {buff}");
                                 Utility.DelayAction.Add(
-                                    Static.Objects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value,
-                                    () => LeagueSharp.Common.Items.UseItem(Data.Items.Defensive.Qss.Id));
+                                    StaticObjects.ProjectMenu.Item(Names.Menu.MenuDefensiveItemBase + "Slider.Merc.Delay").GetValue<Slider>().Value,
+                                    () => LeagueSharp.Common.Items.UseItem(_defensive.Qss.Id));
                             }
                         }
                     }

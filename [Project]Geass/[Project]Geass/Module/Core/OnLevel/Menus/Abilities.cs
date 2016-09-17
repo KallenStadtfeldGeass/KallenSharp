@@ -1,6 +1,8 @@
 ﻿using _Project_Geass.Data;
-using _Project_Geass.Globals;
 using LeagueSharp.Common;
+using _Project_Geass.Functions;
+using _Project_Geass.Global;
+using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Core.OnLevel.Menus
 {
@@ -22,7 +24,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
             // ReSharper disable once UnusedVariable
             var onLevel = new Events.Abilities(abiSeq);
 
-            Static.Objects.ProjectLogger.WriteLog("OnLevel Menu and events loaded.");
+            StaticObjects.ProjectLogger.WriteLog("OnLevel Menu and events loaded.");
         }
     }
 }
