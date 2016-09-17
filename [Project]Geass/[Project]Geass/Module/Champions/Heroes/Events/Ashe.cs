@@ -30,7 +30,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             W = new Spell(SpellSlot.W, 1200);
             R = new Spell(SpellSlot.R, 2200);
 
-            Q.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
+            W.SetSkillshot(.25f, 57.5f, 2000, true, SkillshotType.SkillshotCone);
             R.SetSkillshot(.25f, 250, 1600, false, SkillshotType.SkillshotLine);
 
             _manaManager = new Mana(Q, W, E, R, manaEnabled);
@@ -245,17 +245,18 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <summary>
         /// On Clear
         /// </summary>
+        private int minonsHit;
         private void Clear()
         {
             var basename = BaseName + "Clear.";
 
-            var validMinions = Minions.GetEnemyMinions2(W.Range);
+            var validMinions = MinionManager.GetMinions(StaticObjects.Player.ServerPosition, W.Range, MinionTypes.All, MinionTeam.Enemy);
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
                 if (_manaManager.CheckClearW())
                 {
-                    var pos = W.GetLineFarmLocation(validMinions,W.Width);
-
+                    var pos = W.GetLineFarmLocation(validMinions);
+                    minonsHit = pos.MinionsHit;
                     if (pos.MinionsHit >=
                         StaticObjects.ProjectMenu.Item($"{basename}.UseW.Minions").GetValue<Slider>().Value)
                         W.Cast(pos.Position);
@@ -340,6 +341,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnDraw(EventArgs args)
         {
+
+          //  var heroPosition = LeagueSharp.Drawing.WorldToScreen(StaticObjects.Player.Position);
+          //  LeagueSharp.Drawing.DrawText(heroPosition.X + 20, heroPosition.Y - 30, System.Drawing.Color.MintCream, minonsHit.ToString());
+
+
             if (W.Level > 0)
                 if (
                     StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
