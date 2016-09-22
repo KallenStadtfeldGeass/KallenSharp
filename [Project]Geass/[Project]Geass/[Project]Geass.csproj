@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module\Champions\Core\Bootloader.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Ashe.cs" />
     <Compile Include="Module\Champions\Core\Base.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Caitlyn.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Module\Core\OnLevel\Menus\Abilities.cs" />
     <Compile Include="Module\Core\Items\Menus\Trinket.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Ezreal.cs" />
-    <Compile Include="Module\Initializer.cs" />
+    <Compile Include="Initializer.cs" />
     <Compile Include="Functions\SettingsMenuGenerater.cs" />
     <Compile Include="Data\Champions\SettingsBase.cs" />
     <Compile Include="Data\Champions\Settings.cs" />

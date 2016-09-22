@@ -84,9 +84,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     {
                         if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
                             Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
-                            if (Functions.Objects.Minions.GetEnemyMinions2(1000).Count < 1 &&
-                                Functions.Objects.Heroes.GetEnemies(1000).Count < 1 &&
-                               MinionManager.GetMinions(1000, MinionTypes.All, MinionTeam.Neutral).Count < 1)
+                            if (Functions.Objects.Minions.GetEnemyMinions2(1500).Count < 1 &&
+                                Functions.Objects.Heroes.GetEnemies(1500).Count < 1 &&
+                               MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count < 1)
                                 Q.Cast(Game.CursorPos);
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LeagueSharp.Common;
 
 namespace _Project_Geass.Functions
@@ -11,11 +12,11 @@ namespace _Project_Geass.Functions
         public SettingsMenuGenerater()
         {
 
-            foreach (var champ in Names.ChampionBundled)
+            foreach (var champ in Module.Champions.Core.Bootloader.ChampionBundled.Where(x => x.Value))
             {
-                var temp = new Menu(champ, Names.Menu.BaseItem + champ);
+                var temp = new Menu(champ.Key, Names.Menu.BaseItem + champ);
 
-                foreach (var element in GenerateSettingsList(Names.Menu.BaseItem + champ))
+                foreach (var element in GenerateSettingsList(Names.Menu.BaseItem + champ.Key))
                 {
                     temp.AddItem(element);
                 }

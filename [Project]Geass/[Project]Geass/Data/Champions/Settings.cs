@@ -1,5 +1,4 @@
-﻿using _Project_Geass.Bootloaders.Champions;
-using _Project_Geass.Functions;
+﻿using _Project_Geass.Functions;
 using _Project_Geass.Module.Champions.Heroes.Events;
 
 namespace _Project_Geass.Data.Champions
