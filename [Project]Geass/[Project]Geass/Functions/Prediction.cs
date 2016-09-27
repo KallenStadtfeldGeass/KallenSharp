@@ -1,26 +1,113 @@
-﻿using LeagueSharp.Common;
-using System;
+﻿using _Project_Geass.Functions.Objects;
 using LeagueSharp;
+using LeagueSharp.Common;
+using SPrediction;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace _Project_Geass.Functions
 {
     internal class Prediction
     {
-        public struct ChampionPrediction
-        {
-            public Obj_AI_Hero Champion;
-            public PredictionOutput Prediction;
+        public static readonly int PredictionMethod =StaticObjects.SettingsMenu.Item($"{Names.Menu.BaseItem}.PredictionMethod").GetValue<StringList>().SelectedIndex;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ChampionPrediction"/> struct.
-            /// </summary>
-            /// <param name="champ">The champ.</param>
-            /// <param name="pred">The pred.</param>
-            public ChampionPrediction(Obj_AI_Hero champ, PredictionOutput pred)
+        public static bool CheckTarget(Obj_AI_Hero target, Spell spell,HitChance minHitChance, bool checkColision = false)
+        {
+            switch (PredictionMethod)
             {
-                Champion = champ;
-                Prediction = pred;
+                case 0:
+                {
+                    var prediction = spell.GetPrediction(target);
+
+                    if (checkColision && prediction.CollisionObjects.Any())
+                        return false;
+
+                    return spell.GetPrediction(target).Hitchance >= minHitChance;
+                }
+                case 1:
+                {
+                    var prediction = spell.GetSPrediction(target);
+
+                    if (checkColision && prediction.CollisionResult.Units.Any())
+                        return false;
+                
+                    return prediction.HitChance >= minHitChance;
+                }
             }
+
+            var sprediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+
+            if (checkColision && sprediction.CollisionObjects.Any())
+                return false;
+            return (HitChance)sprediction.Hitchance >= minHitChance;
+            
+        }
+
+        public static void DoCast(Spell spell, Obj_AI_Hero target)
+        {
+            switch (PredictionMethod)
+            {
+                case 0: //Common
+                        var cPos = spell.GetPrediction(target);
+                        spell.Cast(cPos.CastPosition);
+                        break;
+                case 1: //Sprediction
+                        var sPos = spell.GetSPrediction(target);
+                        spell.Cast(sPos.CastPosition);
+                        break;
+                case 2: //Sebby
+                        var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    
+            }
+        }
+        public static void DoCast(Spell spell, IOrderedEnumerable<Obj_AI_Hero> targets , HitChance minHitChance)
+        {
+            switch (PredictionMethod)
+            {
+                case 0: //Common
+                    foreach (var target in targets)
+                    {
+                        var pos = spell.GetPrediction(target);
+                        if (pos.Hitchance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+
+                    break;
+                case 1: //Sprediction
+                    foreach (var target in targets)
+                    {
+                        var pos = spell.GetSPrediction(target);
+                        if (pos.HitChance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+                    break;
+                case 2: //Sebby
+                    foreach (var target in targets)
+                    {
+                        var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+                        if ((HitChance)pos.Hitchance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+                    break;
+            }
+        } 
+
+        static bool ValidChampion(Obj_AI_Hero target)
+        {
+            return !target.HasBuffOfType(BuffType.Invulnerability) && !target.HasBuffOfType(BuffType.SpellImmunity) &&
+                   !target.HasBuffOfType(BuffType.SpellShield);
+        }
+        public static IOrderedEnumerable<Obj_AI_Hero> OrderTargets(Spell spell)
+        {
+            var tempList = new List<Obj_AI_Hero>();
+            var damageType = spell.DamageType == TargetSelector.DamageType.Physical ? true : false;
+            return damageType ? Heroes.GetEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentArmorMod) : Heroes.GetEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health / hp.PercentMagicReduction);
         }
 
         public static string[] GetHitChanceNames()
@@ -35,5 +122,13 @@ namespace _Project_Geass.Functions
         }
 
         public static HitChance GetHitChance(string value) => (HitChance) Enum.Parse(typeof(HitChance), value);
+
+        public struct PredictionWrapper
+        {
+            public Obj_AI_Hero Champion;
+            public PredictionOutput Prediction;
+            public SPrediction.Prediction.Result SPrediction;
+            public SebbyLib.Prediction.PredictionOutput SebbyPrediction;
+        }
     }
 }

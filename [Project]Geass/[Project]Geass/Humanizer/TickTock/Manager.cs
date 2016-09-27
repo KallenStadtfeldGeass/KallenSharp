@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using _Project_Geass.Functions;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 
@@ -7,27 +8,27 @@ namespace _Project_Geass.Humanizer.TickTock
     internal class Manager
     {
         /// <summary>
-        /// The random maximum
-        /// </summary>
-        private float _randomMax;
-
-        /// <summary>
-        /// The random minimum
-        /// </summary>
-        private float _randomMin;
-
-        /// <summary>
-        /// The RNG
+        ///     The RNG
         /// </summary>
         private readonly Random _rng;
 
         /// <summary>
-        /// The ticks
+        ///     The ticks
         /// </summary>
-        public readonly Dictionary<string, TickTock.Tick> Ticks = new Dictionary<string, TickTock.Tick>();
+        public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Manager"/> class.
+        ///     The random maximum
+        /// </summary>
+        private float _randomMax;
+
+        /// <summary>
+        ///     The random minimum
+        /// </summary>
+        private float _randomMin;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Manager" /> class.
         /// </summary>
         public Manager()
         {
@@ -35,7 +36,7 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        /// Adds the tick.
+        ///     Adds the tick.
         /// </summary>
         /// <param name="keyName">Name of the key.</param>
         /// <param name="min">The minimum.</param>
@@ -51,11 +52,11 @@ namespace _Project_Geass.Humanizer.TickTock
                 return;
             }
 
-            Ticks.Add(keyName, new TickTock.Tick(min, max));
+            Ticks.Add(keyName, new Tick(min, max));
         }
 
         /// <summary>
-        /// Checks the tick.
+        ///     Checks the tick.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
@@ -64,18 +65,18 @@ namespace _Project_Geass.Humanizer.TickTock
             if (key.Length <= 0)
                 Console.WriteLine("Check Key an not be null");
             if (Ticks.ContainsKey(key))
-                return Ticks[key].IsReady(Functions.AssemblyTime.CurrentTime());
+                return Ticks[key].IsReady(AssemblyTime.CurrentTime());
 
             Console.WriteLine($"Key {key} not found");
             return false;
         }
 
         /// <summary>
-        /// Determines whether the specified key is present.
+        ///     Determines whether the specified key is present.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>
-        ///   <c>true</c> if the specified key is present; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified key is present; otherwise, <c>false</c>.
         /// </returns>
         public bool IsPresent(string key)
         {
@@ -83,7 +84,7 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        /// Sets the randomizer.
+        ///     Sets the randomizer.
         /// </summary>
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum.</param>
@@ -94,7 +95,7 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        /// Uses the tick.
+        ///     Uses the tick.
         /// </summary>
         /// <param name="key">The key.</param>
         public void UseTick(string key)
@@ -102,7 +103,7 @@ namespace _Project_Geass.Humanizer.TickTock
             if (key.Length <= 0) return;
 
             if (Ticks.ContainsKey(key))
-                Ticks[key].UseTick(Functions.AssemblyTime.CurrentTime(),
+                Ticks[key].UseTick(AssemblyTime.CurrentTime(),
                     _rng.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay()) +
                     _rng.NextFloat(_randomMin, _randomMax));
             else

@@ -1,27 +1,27 @@
 ﻿namespace _Project_Geass.Humanizer.TickTock
 {
     /// <summary>
-    /// Base used for tick manager
+    ///     Base used for tick manager
     /// </summary>
     internal class Tick
     {
         /// <summary>
-        /// The maximum seed
+        ///     The maximum seed
         /// </summary>
         private float _maxDelay;
 
         /// <summary>
-        /// The minimum seed
+        ///     The minimum seed
         /// </summary>
         private float _minDelay;
 
         /// <summary>
-        /// The next tick
+        ///     The next tick
         /// </summary>
         private float _nextTick;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Tick"/> class.
+        ///     Initializes a new instance of the <see cref="Tick" /> class.
         /// </summary>
         /// <param name="currentTime">The current time.</param>
         /// <param name="min">The minimum.</param>
@@ -34,7 +34,7 @@
         }
 
         /// <summary>
-        /// Gets the maximum delay.
+        ///     Gets the maximum delay.
         /// </summary>
         /// <returns></returns>
         public float GetMaxDelay()
@@ -43,7 +43,7 @@
         }
 
         /// <summary>
-        /// Gets the minimum delay.
+        ///     Gets the minimum delay.
         /// </summary>
         /// <returns></returns>
         public float GetMinDelay()
@@ -52,11 +52,11 @@
         }
 
         /// <summary>
-        /// Determines whether the specified current time is ready.
+        ///     Determines whether the specified current time is ready.
         /// </summary>
         /// <param name="currentTime">The current time.</param>
         /// <returns>
-        ///   <c>true</c> if the specified current time is ready; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified current time is ready; otherwise, <c>false</c>.
         /// </returns>
         public bool IsReady(float currentTime)
         {
@@ -64,7 +64,7 @@
         }
 
         /// <summary>
-        /// Sets the minimum and maximum.
+        ///     Sets the minimum and maximum.
         /// </summary>
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum.</param>
@@ -75,7 +75,7 @@
         }
 
         /// <summary>
-        /// Uses the tick.
+        ///     Uses the tick.
         /// </summary>
         /// <param name="next">The next.</param>
         /// <param name="currentTime">The current time.</param>

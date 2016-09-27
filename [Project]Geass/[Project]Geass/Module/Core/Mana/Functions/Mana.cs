@@ -1,8 +1,6 @@
-﻿using _Project_Geass.Data;
-using LeagueSharp.Common;
+﻿using _Project_Geass.Data.Champions;
 using _Project_Geass.Functions;
-using _Project_Geass.Global;
-using _Project_Geass.Global.Data;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Module.Core.Mana.Functions
 {
@@ -11,16 +9,18 @@ namespace _Project_Geass.Module.Core.Mana.Functions
         #region Combo
 
         public bool Enabled;
+
         //
-        public int ManaPercent => (int)(StaticObjects.Player.Mana / StaticObjects.Player.MaxMana * 100);
-        public int HealthPercent => (int)(StaticObjects.Player.Health / StaticObjects.Player.MaxHealth * 100);
+        public int ManaPercent => (int) (StaticObjects.Player.Mana/StaticObjects.Player.MaxMana*100);
+
+        public int HealthPercent => (int) (StaticObjects.Player.Health/StaticObjects.Player.MaxHealth*100);
 
         public Spell Q { get; set; }
         public Spell W { get; set; }
         public Spell E { get; set; }
         public Spell R { get; set; }
 
-        public Mana(Spell q, Spell w, Spell e, Spell r,bool enabled)
+        public Mana(Spell q, Spell w, Spell e, Spell r, bool enabled)
         {
             Q = q;
             W = w;
@@ -34,13 +34,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!Q.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[0]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[0]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckComboW()
@@ -48,13 +48,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!W.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[1]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[1]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckComboE()
@@ -62,13 +62,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!E.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[2]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[2]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckComboR()
@@ -76,13 +76,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!R.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[3]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[0]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[0]}.Slider.MinMana.{SettingsBase.ManaAbilities[3]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         #endregion Combo
@@ -94,13 +94,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!Q.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[0]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[0]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckMixedW()
@@ -108,13 +108,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!W.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[1]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[1]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckMixedE()
@@ -122,13 +122,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!E.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[2]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[2]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckMixedR()
@@ -136,13 +136,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!R.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[3]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[1]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[1]}.Slider.MinMana.{SettingsBase.ManaAbilities[3]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         #endregion Mixed
@@ -154,13 +154,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!Q.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[0]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[0]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[0]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckClearW()
@@ -168,13 +168,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!W.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[1]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[1]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[1]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckClearE()
@@ -182,13 +182,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!E.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[2]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[2]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[2]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         public bool CheckClearR()
@@ -196,13 +196,13 @@ namespace _Project_Geass.Module.Core.Mana.Functions
             if (!R.IsReady()) return false;
             if (!Enabled) return true;
             if (StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}") ==
+                    $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[3]}") ==
                 null) return true;
 
             return StaticObjects.ProjectMenu.Item(
-                $"{Names.Menu.ManaItemBase}{Data.Champions.SettingsBase.ManaModes[2]}.Slider.MinMana.{Data.Champions.SettingsBase.ManaAbilities[3]}")
-                .GetValue<Slider>()
-                .Value <= ManaPercent;
+                           $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[2]}.Slider.MinMana.{SettingsBase.ManaAbilities[3]}")
+                       .GetValue<Slider>()
+                       .Value <= ManaPercent;
         }
 
         #endregion Clear

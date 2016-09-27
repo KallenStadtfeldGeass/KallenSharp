@@ -1,12 +1,18 @@
 ﻿using _Project_Geass.Drawing.Champions;
+using _Project_Geass.Functions;
+using _Project_Geass.Functions.Objects;
+using _Project_Geass.Humanizer.TickTock;
 using _Project_Geass.Module.Champions.Core;
 using _Project_Geass.Module.Core.Mana.Functions;
 using LeagueSharp;
 using LeagueSharp.Common;
+using SharpDX;
+using SPrediction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Project_Geass.Functions;
+using Damage = _Project_Geass.Functions.Calculations.Damage;
+using ItemData = LeagueSharp.Common.Data.ItemData;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Events
@@ -16,8 +22,13 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         private readonly DamageIndicator _damageIndicator;
         private readonly Mana _manaManager;
 
+        //private const float DelayCheck = 8000;
+        //private static float _lastTick;
+        //private static float _lastMana;
+        private readonly bool _tearFull = false;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Ezreal"/> class.
+        ///     Initializes a new instance of the <see cref="Ezreal" /> class.
         /// </summary>
         /// <param name="manaEnabled">if set to <c>true</c> [mana enabled].</param>
         /// <param name="orbwalker">The orbwalker.</param>
@@ -45,11 +56,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             Orbwalker = orbwalker;
         }
 
-        //private const float DelayCheck = 8000;
-        //private static float _lastTick;
-        //private static float _lastMana;
-        private bool _tearFull = false;
-
         //private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         //{
         //    if (_tearFull) return;
@@ -68,71 +74,68 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         //}
 
         /// <summary>
-        /// Automated events.
+        ///     Automated events.
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void AutoEvents(EventArgs args)
         {
-            if (!Humanizer.TickTock.Handler.CheckAutoEvents()) return;
+            if (!Handler.CheckAutoEvents()) return;
             if (!_tearFull)
-            {
                 if (!StaticObjects.Player.IsRecalling())
                 {
                     var basename = BaseName + "Misc.";
 
-                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() && _manaManager.ManaPercent >= StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value)
-                    {
-                        if (Items.HasItem(LeagueSharp.Common.Data.ItemData.Tear_of_the_Goddess.Id) ||
-                            Items.HasItem(LeagueSharp.Common.Data.ItemData.Manamune.Id))
-                            if (Functions.Objects.Minions.GetEnemyMinions2(1500).Count < 1 &&
-                                Functions.Objects.Heroes.GetEnemies(1500).Count < 1 &&
-                               MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count < 1)
+                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>() &&
+                        (_manaManager.ManaPercent >=
+                         StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value))
+                        if (Items.HasItem(ItemData.Tear_of_the_Goddess.Id) ||
+                            Items.HasItem(ItemData.Manamune.Id))
+                            if ((Minions.GetEnemyMinions2(1500).Count < 1) &&
+                                (Functions.Objects.Heroes.GetEnemies(1500).Count < 1) &&
+                                (MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count < 1))
                                 Q.Cast(Game.CursorPos);
-                    }
                 }
-            }
-            Humanizer.TickTock.Handler.UseAutoEvent();
+            Handler.UseAutoEvent();
         }
 
         /// <summary>
-        /// Raises the <see cref="E:Update" /> event.
+        ///     Raises the <see cref="E:Update" /> event.
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
         {
-            if (!Humanizer.TickTock.Handler.CheckOrbwalker()) return;
+            if (!Handler.CheckOrbwalker()) return;
 
             switch (Orbwalker.ActiveMode)
             {
                 case Orbwalking.OrbwalkingMode.Combo:
-                    {
-                        Combo();
-                        break;
-                    }
+                {
+                    Combo();
+                    break;
+                }
                 case Orbwalking.OrbwalkingMode.Mixed:
-                    {
-                        Mixed();
-                        break;
-                    }
+                {
+                    Mixed();
+                    break;
+                }
                 case Orbwalking.OrbwalkingMode.LaneClear:
-                    {
-                        Clear();
-                        break;
-                    }
+                {
+                    Clear();
+                    break;
+                }
             }
-            Humanizer.TickTock.Handler.UseOrbwalker();
+            Handler.UseOrbwalker();
         }
 
         /// <summary>
-        /// On Combo
+        ///     On Combo
         /// </summary>
         private void Combo()
         {
             var basename = BaseName + "Combo.";
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-            {
-                if (_manaManager.CheckMixedQ())
+                if (_manaManager.CheckComboQ())
                 {
                     var minHitChance =
                         Prediction.GetHitChance(
@@ -140,82 +143,88 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .GetValue<StringList>()
                                 .SelectedValue);
 
+                    var focusTargetValid = false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget = TargetSelector.GetTarget(Q.Range, Q.DamageType);
                     if (focusTarget != null)
                     {
-                        var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, Q.Delay, Q.Speed);
-
-                        if (!pred.CollisionObjects.Any())
-                            if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
-                                Q.Cast(pred.UnitPosition);
+                        if (
+                            StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}")
+                                .GetValue<bool>())
+                        {
+                            if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
+                            {
+                                focusTargetValid = true;
+                                Prediction.DoCast(Q, focusTarget);
+                            }
+                        }
                     }
-                    if (Q.IsReady())
+
+                    if (!focusTargetValid)
                     {
-                        var validChamp = new List<string>();
+                        var orderedTargets = Prediction.OrderTargets(Q);
 
-                        foreach (var enemy in Functions.Objects.Heroes.GetEnemies(Q.Range))
+
+                        if (
+                            orderedTargets.Where(
+                                    target =>
+                                        StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}")
+                                            .GetValue<bool>())
+                                .Any(target => Prediction.CheckTarget(target, Q, minHitChance, true)))
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{enemy.ChampionName}").GetValue<bool>()) continue;
-                            validChamp.Add(enemy.ChampionName);
-                        }
-
-                        var validOutputs = Targeting.GetTargetPredictions(Q, minHitChance, validChamp);
-
-                        foreach (var output in validOutputs)
-                        {
-                            if (output.CollisionObjects.Any()) continue;
-                            Q.Cast(output.UnitPosition);
-                            break;
+                            Prediction.DoCast(Q, focusTarget);
                         }
                     }
+
                 }
-            }
+
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
-            {
-                if (_manaManager.CheckMixedW())
+                if (_manaManager.CheckComboW())
                 {
                     var minHitChance =
-                         Prediction.GetHitChance(
-                             StaticObjects.ProjectMenu.Item($"{basename}.UseW.Prediction")
-                                 .GetValue<StringList>()
-                                 .SelectedValue);
+                        Prediction.GetHitChance(
+                            StaticObjects.ProjectMenu.Item($"{basename}.UseW.Prediction")
+                                .GetValue<StringList>()
+                                .SelectedValue);
 
+                    var focusTargetValid = false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget = TargetSelector.GetTarget(W.Range, W.DamageType);
-
                     if (focusTarget != null)
                     {
-                        var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, W.Delay, W.Speed);
-
-                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
-                            W.Cast(pred.UnitPosition);
+                        if (
+                            StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}")
+                                .GetValue<bool>())
+                        {
+                            if (Prediction.CheckTarget(focusTarget, W, minHitChance))
+                            {
+                                focusTargetValid = true;
+                                Prediction.DoCast(W, focusTarget);
+                            }
+                        }
                     }
 
-                    if (W.IsReady())
+                    if (!focusTargetValid)
                     {
-                        var validChamp = new List<string>();
+                        var orderedTargets = Prediction.OrderTargets(W);
 
-                        foreach (var enemy in Functions.Objects.Heroes.GetEnemies(W.Range))
+
+                        if (
+                            orderedTargets.Where(
+                                    target =>
+                                        StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}")
+                                            .GetValue<bool>())
+                                .Any(target => Prediction.CheckTarget(target, W, minHitChance, true)))
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{enemy.ChampionName}").GetValue<bool>()) continue;
-                            validChamp.Add(enemy.ChampionName);
-                        }
-
-                        var validOutputs = Targeting.GetTargetPredictions(W, minHitChance, validChamp);
-
-                        foreach (var output in validOutputs)
-                        {
-                            W.Cast(output.UnitPosition);
-                            break;
+                            Prediction.DoCast(W, focusTarget);
                         }
                     }
+
                 }
-            }
+
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
-            {
                 if (_manaManager.CheckComboR())
                 {
                     var minHitChance =
@@ -224,105 +233,107 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .GetValue<StringList>()
                                 .SelectedValue);
 
+                    var focusTargetValid = false;
                     //Check if the target in target selector is valid (best target)
-                    var focusTarget = TargetSelector.GetTarget(StaticObjects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value, R.DamageType);
-                    if (focusTarget != null && focusTarget.Distance(StaticObjects.Player) > Q.Range)
+                    var focusTarget = TargetSelector.GetTarget(R.Range, R.DamageType);
+                    if (focusTarget != null)
                     {
-                        var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, R.Delay, R.Speed);
-
-                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
+                        if (
+                            StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}")
+                                .GetValue<bool>())
                         {
-                            if (GetRealRDamage(focusTarget) > focusTarget.Health)
-                                R.Cast(pred.UnitPosition);
+                            if (Prediction.CheckTarget(focusTarget, R, minHitChance))
+                            {
+                                if (GetRealRDamage(focusTarget) > focusTarget.Health)
+                                {
+                                    focusTargetValid = true;
+                                    Prediction.DoCast(R, focusTarget);
+                                }
+                            }
                         }
                     }
 
-                    if (R.IsReady())
+                    if (!focusTargetValid)
                     {
-                        var validChamp = new List<string>();
+                        var orderedTargets = Prediction.OrderTargets(R);
 
-                        foreach (var enemy in Functions.Objects.Heroes.GetEnemies(R.Range))
+                        foreach (var target in orderedTargets)
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}").GetValue<bool>()) continue;
-                            validChamp.Add(enemy.ChampionName);
-                        }
-
-                        var validOutputs = Targeting.GetTargetPredictions2(R, minHitChance, validChamp);
-
-                        foreach (var output in validOutputs)
-                        {
-                            if (output.Champion.Health > GetRealRDamage(output.Champion)) continue;
-                            if (focusTarget.Distance(StaticObjects.Player) < Q.Range) continue;
-                            R.Cast(output.Prediction.UnitPosition);
-                            break;
+                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{target.ChampionName}").GetValue<bool>())continue;
+                            if (target.Health > GetRealRDamage(target)) continue;
+                            if (Prediction.CheckTarget(target, R, minHitChance))
+                            {
+                                Prediction.DoCast(R, target);
+                                break;
+                            }
                         }
                     }
+
                 }
-            }
         }
+   
 
         /// <summary>
-        /// Gets the real R damage.
+        ///     Gets the real R damage.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <returns></returns>
         public double GetRealRDamage(Obj_AI_Base target)
         {
             var damage = StaticObjects.Player.GetSpellDamage(target, SpellSlot.R);
-            var hits = R.GetCollision(StaticObjects.Player.ServerPosition.To2D(), new List<SharpDX.Vector2> { target.ServerPosition.To2D() }).Count;
-            var debuff = hits > 7 ? .7 : hits * .1;
-            return damage * (1 - (debuff * 10));
+            var hits =
+                R.GetCollision(StaticObjects.Player.ServerPosition.To2D(),
+                    new List<Vector2> {target.ServerPosition.To2D()}).Count;
+            var debuff = hits > 7 ? .7 : hits*.1;
+            return damage*(1 - debuff*10);
         }
 
         /// <summary>
-        /// On Mixed
+        ///     On Mixed
         /// </summary>
         private void Mixed()
         {
             var basename = BaseName + "Mixed.";
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-            {
-                var minHitChance =
-                                       Prediction.GetHitChance(
-                                           StaticObjects.ProjectMenu.Item($"{basename}.UseQ.Prediction")
-                                               .GetValue<StringList>()
-                                               .SelectedValue);
-
-                //Check if the target in target selector is valid (best target)
-                var focusTarget = TargetSelector.GetTarget(Q.Range, Q.DamageType);
-                if (focusTarget != null)
+                if (_manaManager.CheckMixedQ())
                 {
-                    var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, Q.Delay, Q.Speed);
+                    var minHitChance =
+                        Prediction.GetHitChance(
+                            StaticObjects.ProjectMenu.Item($"{basename}.UseQ.Prediction")
+                                .GetValue<StringList>()
+                                .SelectedValue);
 
-                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
-                        if (!pred.CollisionObjects.Any())
-                            Q.Cast(pred.UnitPosition);
-                }
-
-                if (Q.IsReady())
-                {
-                    var validChamp = new List<string>();
-
-                    foreach (var enemy in Functions.Objects.Heroes.GetEnemies(Q.Range))
+                    var focusTargetValid = false;
+                    //Check if the target in target selector is valid (best target)
+                    var focusTarget = TargetSelector.GetTarget(Q.Range, Q.DamageType);
+                    if (focusTarget != null)
                     {
-                        if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{enemy.ChampionName}").GetValue<bool>()) continue;
-                        validChamp.Add(enemy.ChampionName);
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
+                        {
+                            if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
+                            {
+                                focusTargetValid = true;
+                                Prediction.DoCast(Q, focusTarget);
+                            }
+                        }
                     }
 
-                    var validOutputs = Targeting.GetTargetPredictions(Q, minHitChance, validChamp);
-
-                    foreach (var output in validOutputs)
+                    if (!focusTargetValid)
                     {
-                        if (output.CollisionObjects.Any()) continue;
-                        Q.Cast(output.UnitPosition);
-                        break;
+                        var orderedTargets = Prediction.OrderTargets(Q);
+
+
+                        if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, Q, minHitChance, true)))
+                        {
+                            Prediction.DoCast(Q, focusTarget);
+                        }
                     }
+
                 }
-            }
+
 
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
-            {
                 if (_manaManager.CheckMixedW())
                 {
                     var minHitChance =
@@ -331,41 +342,37 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .GetValue<StringList>()
                                 .SelectedValue);
 
+                    var focusTargetValid = false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget = TargetSelector.GetTarget(W.Range, W.DamageType);
-
                     if (focusTarget != null)
                     {
-                        var pred = LeagueSharp.Common.Prediction.GetPrediction(focusTarget, W.Delay, W.Speed);
-
-                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>() && pred.Hitchance >= minHitChance)
-                            W.Cast(pred.UnitPosition);
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>())
+                        {
+                            if (Prediction.CheckTarget(focusTarget, W, minHitChance))
+                            {
+                                focusTargetValid = true;
+                                Prediction.DoCast(W, focusTarget);
+                            }
+                        }
                     }
 
-                    if (W.IsReady())
+                    if (!focusTargetValid)
                     {
-                        var validChamp = new List<string>();
+                        var orderedTargets = Prediction.OrderTargets(W);
 
-                        foreach (var enemy in Functions.Objects.Heroes.GetEnemies(W.Range))
+
+                        if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, W, minHitChance, true)))
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{enemy.ChampionName}").GetValue<bool>()) continue;
-                            validChamp.Add(enemy.ChampionName);
-                        }
-
-                        var validOutputs = Targeting.GetTargetPredictions(W, minHitChance, validChamp);
-
-                        foreach (var output in validOutputs)
-                        {
-                            W.Cast(output.UnitPosition);
-                            break;
+                            Prediction.DoCast(W, focusTarget);
                         }
                     }
+
                 }
-            }
         }
 
         /// <summary>
-        /// On Clear
+        ///     On Clear
         /// </summary>
         private void Clear()
         {
@@ -374,13 +381,21 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
                 if (_manaManager.CheckClearQ())
                 {
-                    foreach (var target in Functions.Objects.Minions.GetEnemyMinions2(Q.Range).Where(x => x.Health < Q.GetDamage(x) && x.Health > 30).OrderBy(hp => hp.Health))
+                    foreach (
+                        var target in
+                        Minions.GetEnemyMinions2(Q.Range)
+                            .Where(x => (x.Health < Q.GetDamage(x)) && (x.Health > 30))
+                            .OrderBy(hp => hp.Health))
                     {
                         Q.Cast(target);
                         return;
                     }
                     if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.OnJungle").GetValue<bool>()) return;
-                    foreach (var target in MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral).Where(x => x.IsValidTarget(Q.Range)).OrderBy(hp => hp.MaxHealth / hp.Health))
+                    foreach (
+                        var target in
+                        MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral)
+                            .Where(x => x.IsValidTarget(Q.Range))
+                            .OrderBy(hp => hp.MaxHealth/hp.Health))
                     {
                         Q.Cast(target);
                         return;
@@ -389,26 +404,36 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:Draw" /> event.
+        ///     Raises the <see cref="E:Draw" /> event.
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnDraw(EventArgs args)
         {
             if (Q.Level > 0)
-                if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active)
-                    Render.Circle.DrawCircle(StaticObjects.Player.Position, Q.Range, StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
+                if (
+                    StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                                   ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(StaticObjects.Player.Position, Q.Range,
+                        StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                                       ".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
             if (W.Level > 0)
-                if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
-                    Render.Circle.DrawCircle(StaticObjects.Player.Position, W.Range, StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+                if (
+                    StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                                   ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(StaticObjects.Player.Position, W.Range,
+                        StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                                       ".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
         }
 
         /// <summary>
-        /// Raises the <see cref="E:DrawEnemy" /> event.
+        ///     Raises the <see cref="E:DrawEnemy" /> event.
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public void OnDrawEnemy(EventArgs args)
         {
-            if (!StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Active)
+            if (
+                !StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                                ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Active)
             {
                 _damageIndicator.SetFillEnabled(false);
                 _damageIndicator.SetKillableEnabled(false);
@@ -416,22 +441,24 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
 
             _damageIndicator.SetFillEnabled(true);
-            _damageIndicator.SetFill(StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Color);
+            _damageIndicator.SetFill(
+                StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                               ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Color);
 
             _damageIndicator.SetKillableEnabled(false);
         }
 
         /// <summary>
-        /// Gets esimated damage
+        ///     Gets esimated damage
         /// </summary>
         /// <param name="target">The target.</param>
         /// <returns></returns>
         private float GetDamage(Obj_AI_Hero target)
         {
             var damage = 0f;
-            if (target.Distance(StaticObjects.Player) < StaticObjects.Player.AttackRange - 25 &&
+            if ((target.Distance(StaticObjects.Player) < StaticObjects.Player.AttackRange - 25) &&
                 StaticObjects.Player.CanAttack && !StaticObjects.Player.IsWindingUp)
-                damage += (float)StaticObjects.Player.GetAutoAttackDamage(target) - 10;
+                damage += (float) StaticObjects.Player.GetAutoAttackDamage(target) - 10;
 
             if (W.IsReady())
                 damage += W.GetDamage(target);
@@ -439,7 +466,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             if (R.IsReady())
                 damage += R.GetDamage(target);
 
-            return Functions.Calculations.Damage.CalcRealDamage(target, damage);
+            return Damage.CalcRealDamage(target, damage);
         }
     }
 }

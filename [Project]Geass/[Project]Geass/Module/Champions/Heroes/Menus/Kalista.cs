@@ -1,14 +1,13 @@
-﻿using _Project_Geass.Data;
+﻿using _Project_Geass.Functions;
 using LeagueSharp.Common;
-using _Project_Geass.Functions;
-using _Project_Geass.Global;
-using _Project_Geass.Global.Data;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Kalista
     {
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
         public Kalista()
         {
             StaticObjects.ProjectMenu.AddSubMenu(Combo());
@@ -16,8 +15,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Clear());
             StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
-
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
 
         //Auto Not DONE
         private Menu Auto()
@@ -56,7 +53,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Exploit", "Use Q AA Reset").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Prediction", "Q Prediction").SetValue(
-                 new StringList(Prediction.GetHitChanceNames())));
+                new StringList(Prediction.GetHitChanceNames())));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnKillable", "Use E OnKillable").SetValue(true));
@@ -64,9 +61,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var qMenu = new Menu("Q Settings", basename + "Q Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
-            }
+                qMenu.AddItem(
+                    new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
+                        true));
 
             mainMenu.AddSubMenu(qMenu);
             return mainMenu;
@@ -79,7 +76,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Exploit", "Use Q AA Reset").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Prediction", "Q Prediction").SetValue(
-                 new StringList(Prediction.GetHitChanceNames())));
+                new StringList(Prediction.GetHitChanceNames())));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.Stacks", "E Stacks").SetValue(new Slider(4, 1, 10)));
@@ -87,9 +84,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var qMenu = new Menu("Q Settings", basename + "Q Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
-            }
+                qMenu.AddItem(
+                    new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
+                        true));
 
             mainMenu.AddSubMenu(qMenu);
             return mainMenu;

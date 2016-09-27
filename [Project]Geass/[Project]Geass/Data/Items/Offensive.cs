@@ -1,16 +1,28 @@
-﻿using Item = LeagueSharp.Common.Items.Item;
-using ItemData = LeagueSharp.Common.Data.ItemData;
+﻿using LeagueSharp.Common.Data;
 
 namespace _Project_Geass.Data.Items
 {
     public class Offensive
     {
-        public Item Botrk { get; } = new Item(ItemData.Blade_of_the_Ruined_King.GetItem().Id);
-        public Item Cutless { get; } = new Item(ItemData.Bilgewater_Cutlass.GetItem().Id);
-        public Item Hydra { get; } = new Item(ItemData.Ravenous_Hydra_Melee_Only.GetItem().Id);
-        public Item Tiamat { get; } = new Item(ItemData.Tiamat_Melee_Only.GetItem().Id);
-        public Item GunBlade { get; } = new Item(ItemData.Hextech_Gunblade.GetItem().Id);
-        public Item Muraman { get; } = new Item(ItemData.Muramana.GetItem().Id);
-        public Item GhostBlade { get; } = new Item(ItemData.Youmuus_Ghostblade.GetItem().Id);
+        public LeagueSharp.Common.Items.Item Botrk { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Blade_of_the_Ruined_King.GetItem().Id);
+
+        public LeagueSharp.Common.Items.Item Cutless { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Bilgewater_Cutlass.GetItem().Id);
+
+        public LeagueSharp.Common.Items.Item Hydra { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Ravenous_Hydra_Melee_Only.GetItem().Id);
+
+        public LeagueSharp.Common.Items.Item Tiamat { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Tiamat_Melee_Only.GetItem().Id);
+
+        public LeagueSharp.Common.Items.Item GunBlade { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Hextech_Gunblade.GetItem().Id);
+
+        public LeagueSharp.Common.Items.Item Muraman { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Muramana.GetItem().Id);
+
+        public LeagueSharp.Common.Items.Item GhostBlade { get; } =
+            new LeagueSharp.Common.Items.Item(ItemData.Youmuus_Ghostblade.GetItem().Id);
     }
 }

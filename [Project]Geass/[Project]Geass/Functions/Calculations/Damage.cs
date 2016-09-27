@@ -1,5 +1,4 @@
-﻿using _Project_Geass.Global;
-using LeagueSharp;
+﻿using LeagueSharp;
 using LeagueSharp.Common;
 using System.Linq;
 

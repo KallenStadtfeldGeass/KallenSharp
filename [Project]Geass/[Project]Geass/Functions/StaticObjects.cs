@@ -1,7 +1,7 @@
-﻿using System;
+﻿using _Project_Geass.Logging;
 using LeagueSharp;
 using LeagueSharp.Common;
-using _Project_Geass.Logging;
+using System;
 
 namespace _Project_Geass.Functions
 {
@@ -12,7 +12,8 @@ namespace _Project_Geass.Functions
 
         public static Obj_AI_Hero Player = ObjectManager.Player;
         public static DateTime AssemblyLoadTime = DateTime.Now;
-        public static Menu ProjectMenu = new Menu($"{Names.ProjectName}.{Player.ChampionName}", $"{Names.ProjectName}.{Player.ChampionName}", true);
 
+        public static Menu ProjectMenu = new Menu($"{Names.ProjectName}.{Player.ChampionName}",
+            $"{Names.ProjectName}.{Player.ChampionName}", true);
     }
 }

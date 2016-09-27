@@ -1,43 +1,21 @@
-﻿using _Project_Geass.Data;
+﻿using _Project_Geass.Functions;
 using LeagueSharp.Common;
 using System;
 using System.Collections.Generic;
-using _Project_Geass.Functions;
-using _Project_Geass.Global;
-using _Project_Geass.Global.Data;
 
 namespace _Project_Geass.Module.Champions.Core
 {
     internal class Base
     {
-        /// <summary>
-        /// Champion Spells
-        /// </summary>
-        /// <value>
-        /// Champion spells.
-        /// </value>
-        public Dictionary<object, object> Spells { get; } = new Dictionary<object, object>();
-
-        public Spell Q { get; set; }
-        public Spell W { get; set; }
-        public Spell E { get; set; }
-        public Spell R { get; set; }
+        public readonly string BaseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
 
         /// <summary>
-        /// The RNG :D
+        ///     The RNG :D
         /// </summary>
         public readonly Random Rng;
 
         /// <summary>
-        /// Orbwalker
-        /// </summary>
-        /// <value>
-        /// The orbwalker.
-        /// </value>
-        public Orbwalking.Orbwalker Orbwalker { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Base"/> class.
+        ///     Initializes a new instance of the <see cref="Base" /> class.
         /// </summary>
         /// <param name="q">The q.</param>
         /// <param name="w">The w.</param>
@@ -54,13 +32,32 @@ namespace _Project_Geass.Module.Champions.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Base"/> class.
+        ///     Initializes a new instance of the <see cref="Base" /> class.
         /// </summary>
         public Base()
         {
             Rng = new Random();
         }
 
-        public readonly string BaseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+        /// <summary>
+        ///     Champion Spells
+        /// </summary>
+        /// <value>
+        ///     Champion spells.
+        /// </value>
+        public Dictionary<object, object> Spells { get; } = new Dictionary<object, object>();
+
+        public Spell Q { get; set; }
+        public Spell W { get; set; }
+        public Spell E { get; set; }
+        public Spell R { get; set; }
+
+        /// <summary>
+        ///     Orbwalker
+        /// </summary>
+        /// <value>
+        ///     The orbwalker.
+        /// </value>
+        public Orbwalking.Orbwalker Orbwalker { get; set; }
     }
 }

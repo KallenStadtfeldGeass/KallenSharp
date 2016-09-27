@@ -1,5 +1,4 @@
-﻿using _Project_Geass.Global;
-using System;
+﻿using System;
 
 namespace _Project_Geass.Functions
 {

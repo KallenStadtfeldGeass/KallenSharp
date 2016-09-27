@@ -7,7 +7,7 @@ namespace _Project_Geass.Logging
         private readonly string _baseName;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Logger"/> class.
+        ///     Initializes a new instance of the <see cref="Logger" /> class.
         /// </summary>
         /// <param name="_base">The base.</param>
         public Logger(string _base)
@@ -16,7 +16,7 @@ namespace _Project_Geass.Logging
         }
 
         /// <summary>
-        /// Writes the log.
+        ///     Writes the log.
         /// </summary>
         /// <param name="text">The text.</param>
         public void WriteLog(string text)
@@ -25,7 +25,7 @@ namespace _Project_Geass.Logging
         }
 
         /// <summary>
-        /// Writes the log.
+        ///     Writes the log.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="color">The color.</param>

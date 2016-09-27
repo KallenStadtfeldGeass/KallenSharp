@@ -1,5 +1,4 @@
-﻿using _Project_Geass.Module;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
 using System;
 
 namespace _Project_Geass
@@ -7,7 +6,7 @@ namespace _Project_Geass
     internal class Program
     {
         /// <summary>
-        /// Defines the entry point of the application.
+        ///     Defines the entry point of the application.
         /// </summary>
         private static void Main()
         {

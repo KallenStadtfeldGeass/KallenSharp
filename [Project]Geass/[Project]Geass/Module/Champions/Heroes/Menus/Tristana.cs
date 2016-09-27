@@ -1,12 +1,14 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Functions;
+﻿using _Project_Geass.Functions;
+using LeagueSharp.Common;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Tristana
     {
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Tristana"/> class.
+        ///     Initializes a new instance of the <see cref="Tristana" /> class.
         /// </summary>
         public Tristana()
         {
@@ -17,24 +19,22 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
 
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
-
         /// <summary>
-        /// Drawings this instance.
+        ///     Drawings this instance.
         /// </summary>
         /// <returns></returns>
         private Menu Drawing()
         {
             var basename = _baseName + "Drawing.";
 
-            var mainMenu = new Menu(nameof(Auto), basename);
+            var mainMenu = new Menu(nameof(basename), basename);
             mainMenu.AddItem(new MenuItem($"{basename}.DrawEStacks", "Draw E Stacks").SetValue(true));
 
             return mainMenu;
         }
 
         /// <summary>
-        /// Automative events
+        ///     Automative events
         /// </summary>
         /// <returns></returns>
         private Menu Auto()
@@ -47,9 +47,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var rMenu = new Menu("R Settings", basename + "RSettings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
-            }
+                rMenu.AddItem(
+                    new MenuItem($"{basename}.UseR.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(rMenu);
 
@@ -57,7 +56,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        /// On Combo
+        ///     On Combo
         /// </summary>
         /// <returns></returns>
         private Menu Combo()
@@ -72,18 +71,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var eMenu = new Menu("E Settings", basename + "E Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
-            }
+                eMenu.AddItem(
+                    new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR", "Use R (kill)").SetValue(true));
 
             var rMenu = new Menu("R Settings", basename + "R Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
-            }
+                rMenu.AddItem(
+                    new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(eMenu);
             mainMenu.AddSubMenu(rMenu);
@@ -92,7 +89,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        /// On Mixed
+        ///     On Mixed
         /// </summary>
         /// <returns></returns>
         private Menu Mixed()
@@ -104,16 +101,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var eMenu = new Menu("E Settings", basename + "E Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
-            }
+                eMenu.AddItem(
+                    new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(eMenu);
             return mainMenu;
         }
 
         /// <summary>
-        /// On Clear
+        ///     On Clear
         /// </summary>
         /// <returns></returns>
         private Menu Clear()

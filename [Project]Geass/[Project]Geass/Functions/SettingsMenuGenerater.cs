@@ -1,31 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using _Project_Geass.Module.Champions.Core;
 using LeagueSharp.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace _Project_Geass.Functions
 {
     internal sealed class SettingsMenuGenerater
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsMenuGenerater"/> class.
+        ///     Initializes a new instance of the <see cref="SettingsMenuGenerater" /> class.
         /// </summary>
         public SettingsMenuGenerater()
         {
+            StaticObjects.SettingsMenu.AddItem(new MenuItem($"{Names.Menu.BaseItem}.PredictionMethod",
+                "PredictionMethod")).SetValue(new StringList(Names.PredictionMethods.ToArray(), 2));
 
-            foreach (var champ in Module.Champions.Core.Bootloader.ChampionBundled.Where(x => x.Value))
+            foreach (var champ in Bootloader.ChampionBundled.Where(x => x.Value))
             {
                 var temp = new Menu(champ.Key, Names.Menu.BaseItem + champ);
 
                 foreach (var element in GenerateSettingsList(Names.Menu.BaseItem + champ.Key))
-                {
                     temp.AddItem(element);
-                }
 
                 StaticObjects.SettingsMenu.AddSubMenu(temp);
             }
         }
+
         /// <summary>
-        /// Generates the settings list.
+        ///     Generates the settings list.
         /// </summary>
         /// <param name="basename">The basename.</param>
         /// <returns></returns>

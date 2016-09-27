@@ -61,11 +61,17 @@
     <Reference Include="LeagueSharp.Common">
       <HintPath>C:\Riot Games\nMC9D7Fyn2\References\LeagueSharp.Common.dll</HintPath>
     </Reference>
+    <Reference Include="SebbyLib">
+      <HintPath>C:\Riot Games\nMC9D7Fyn2\References\SebbyLib.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX">
       <HintPath>C:\Riot Games\nMC9D7Fyn2\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <HintPath>C:\Riot Games\nMC9D7Fyn2\References\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SPrediction">
+      <HintPath>C:\Riot Games\nMC9D7Fyn2\References\SPrediction.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -116,7 +122,6 @@
     <Compile Include="Functions\Calculations\Damage.cs" />
     <Compile Include="Functions\Objects\Heroes.cs" />
     <Compile Include="Functions\Objects\Minions.cs" />
-    <Compile Include="Functions\Targeting.cs" />
     <Compile Include="Functions\StaticObjects.cs" />
     <Compile Include="Humanizer\TickTock\Handler.cs" />
     <Compile Include="Humanizer\TickTock\Tick.cs" />
@@ -132,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Rendering\" />
-    <Folder Include="Global\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="1472572168_Zero.ico" />

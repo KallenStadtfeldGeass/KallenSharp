@@ -1,22 +1,19 @@
-﻿using _Project_Geass.Data;
-using _Project_Geass.Humanizer;
+﻿using _Project_Geass.Data.Items;
+using _Project_Geass.Functions;
+using _Project_Geass.Humanizer.TickTock;
 using LeagueSharp;
 using LeagueSharp.Common;
 using System;
-using _Project_Geass.Data.Items;
-using _Project_Geass.Functions;
-using _Project_Geass.Global;
-using _Project_Geass.Global.Data;
-using _Project_Geass.Humanizer.TickTock;
 
 namespace _Project_Geass.Module.Core.Items.Events
 {
     internal class Trinket
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Trinket"/> class.
+        ///     Initializes a new instance of the <see cref="Trinket" /> class.
         /// </summary>
         private readonly Trinkets _trinket;
+
         public Trinket()
         {
             _trinket = new Trinkets();
@@ -24,9 +21,9 @@ namespace _Project_Geass.Module.Core.Items.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:Update" /> event.
+        ///     Raises the <see cref="E:Update" /> event.
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void OnUpdate(EventArgs args)
         {
             if (!Handler.CheckTrinket()) return;

@@ -1,19 +1,28 @@
-﻿namespace _Project_Geass.Functions
+﻿using System.Collections.Generic;
+
+namespace _Project_Geass.Functions
 {
     internal static class Names
     {
+        public static List<string> PredictionMethods = new List<string>
+        {
+            "Common",
+            "SPrediction",
+            "SebbyPrediction",
+        };
+
         /// <summary>
-        /// The project name
+        ///     The project name
         /// </summary>
         public static readonly string ProjectName = "[Project]Geass";
 
         /// <summary>
-        /// The settings name
+        ///     The settings name
         /// </summary>
         public static readonly string SettingsName = "[Project]Geass Modules";
 
         /// <summary>
-        /// Contains the menu names
+        ///     Contains the menu names
         /// </summary>
         public static class Menu
         {

@@ -1,13 +1,15 @@
-﻿using LeagueSharp.Common;
-using _Project_Geass.Functions;
+﻿using _Project_Geass.Functions;
+using LeagueSharp.Common;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Ashe
     {
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Ashe"/> class.
+        ///     Initializes a new instance of the <see cref="Ashe" /> class.
         /// </summary>
         public Ashe()
         {
@@ -17,10 +19,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
 
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
-
         /// <summary>
-        /// Automated events
+        ///     Automated events
         /// </summary>
         /// <returns></returns>
         private Menu Auto()
@@ -34,16 +34,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var wMenu = new Menu("GapClose W Settings", basename + "GapCloseW");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
-            }
+                wMenu.AddItem(
+                    new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}")
+                        .SetValue(true));
 
             var rMenu = new Menu("GapClose R Settings", basename + "GapCloseR");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                rMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
-            }
+                rMenu.AddItem(
+                    new MenuItem($"{basename}.UseR.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}")
+                        .SetValue(true));
 
             mainMenu.AddSubMenu(wMenu);
             mainMenu.AddSubMenu(rMenu);
@@ -52,7 +52,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        /// On Combo
+        ///     On Combo
         /// </summary>
         /// <returns></returns>
         private Menu Combo()
@@ -65,14 +65,14 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(
-                    new StringList(Prediction.GetHitChanceNames())));
+                new StringList(Prediction.GetHitChanceNames())));
 
             var wMenu = new Menu("W Settings", basename + "W Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
-            }
+                wMenu.AddItem(
+                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
+                        true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR", "Use R").SetValue(true));
             mainMenu.AddItem(
@@ -86,8 +86,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             {
                 var temp = new Menu($"R Settings {enemy.ChampionName}", basename + $"RSettings.{enemy.ChampionName}");
                 temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"Enable").SetValue(true));
-                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}.HpMin", $"Min Hp%").SetValue(new Slider(15)));
-                temp.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}.HpMax", $"Max Hp%").SetValue(new Slider(60)));
+                temp.AddItem(
+                    new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}.HpMin", $"Min Hp%").SetValue(new Slider(15)));
+                temp.AddItem(
+                    new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}.HpMax", $"Max Hp%").SetValue(new Slider(60)));
                 rMenu.AddSubMenu(temp);
             }
             mainMenu.AddSubMenu(wMenu);
@@ -97,7 +99,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        /// On Mixed
+        ///     On Mixed
         /// </summary>
         /// <returns></returns>
         private Menu Mixed()
@@ -109,21 +111,21 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.Prediction", "W Prediction").SetValue(
-                    new StringList(Prediction.GetHitChanceNames())));
+                new StringList(Prediction.GetHitChanceNames())));
 
             var wMenu = new Menu("W Settings", basename + "W Settings");
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-            {
-                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
-            }
+                wMenu.AddItem(
+                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
+                        true));
 
             mainMenu.AddSubMenu(wMenu);
             return mainMenu;
         }
 
         /// <summary>
-        /// On Clear
+        ///     On Clear
         /// </summary>
         /// <returns></returns>
         private Menu Clear()
@@ -132,7 +134,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var mainMenu = new Menu(nameof(Clear), basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minons In AA Range").SetValue(new Slider(4, 3, 10)));
+            mainMenu.AddItem(
+                new MenuItem($"{basename}.UseQ.Minions", "Minons In AA Range").SetValue(new Slider(4, 3, 10)));
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.Minions", "Minons Hit").SetValue(new Slider(4, 3, 10)));
 
