@@ -71,7 +71,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
                 wMenu.AddItem(
-                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
+                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(
                         true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR", "Use R").SetValue(true));
@@ -117,7 +117,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
                 wMenu.AddItem(
-                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
+                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(
                         true));
 
             mainMenu.AddSubMenu(wMenu);

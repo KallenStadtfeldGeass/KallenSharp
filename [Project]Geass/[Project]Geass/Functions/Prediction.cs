@@ -35,8 +35,8 @@ namespace _Project_Geass.Functions
                     return prediction.HitChance >= minHitChance;
                 }
             }
-
             var sprediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+
             if (checkColision)
                 return ((HitChance)sprediction.Hitchance >= minHitChance && sprediction.CollisionObjects.Count(h => h.IsEnemy && !h.IsDead && h is Obj_AI_Minion) < 2);
 
@@ -105,8 +105,7 @@ namespace _Project_Geass.Functions
         }
         public static IOrderedEnumerable<Obj_AI_Hero> OrderTargets(Spell spell)
         {
-            var tempList = new List<Obj_AI_Hero>();
-            var damageType = spell.DamageType == TargetSelector.DamageType.Physical ? true : false;
+            var damageType = spell.DamageType == TargetSelector.DamageType.Physical;
             return damageType ? Heroes.GetEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentArmorMod) : Heroes.GetEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health / hp.PercentMagicReduction);
         }
 
