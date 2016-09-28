@@ -14,3 +14,7 @@ D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Ge
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\[Project]Geass.exe
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\LeagueSharp.dll
 D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\obj\Debug\[Project]Geass.exe
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\SebbyLib.dll
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\SPrediction.dll
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\SebbyLib.pdb
+D:\Coding\GitHub\KallenSharp\[Project]Geass\[Project]Geass\bin\Debug\SPrediction.pdb
