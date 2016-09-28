@@ -114,7 +114,7 @@ namespace _Project_Geass.Functions
             var names = Enum.GetNames(typeof(HitChance));
             return new[]
             {
-                names[(int) HitChance.VeryHigh], names[(int) HitChance.High], names[(int) HitChance.Medium],
+                names[(int) HitChance.High],names[(int) HitChance.VeryHigh], names[(int) HitChance.Medium],
                 names[(int) HitChance.Low],
                 names[(int) HitChance.Immobile], names[(int) HitChance.Dashing]
             };
