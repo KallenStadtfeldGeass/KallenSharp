@@ -7,7 +7,6 @@ using _Project_Geass.Module.Core.Mana.Functions;
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
-using SPrediction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -233,9 +232,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .GetValue<StringList>()
                                 .SelectedValue);
 
+
                     var focusTargetValid = false;
                     //Check if the target in target selector is valid (best target)
-                    var focusTarget = TargetSelector.GetTarget(R.Range, R.DamageType);
+                    var focusTarget = TargetSelector.GetTarget(StaticObjects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value, R.DamageType);
                     if (focusTarget != null)
                     {
                         if (
@@ -244,10 +244,13 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         {
                             if (Prediction.CheckTarget(focusTarget, R, minHitChance))
                             {
-                                if (GetRealRDamage(focusTarget) > focusTarget.Health)
+                                if (focusTarget.Distance(StaticObjects.Player) > Q.Range)
                                 {
-                                    focusTargetValid = true;
-                                    Prediction.DoCast(R, focusTarget);
+                                    if (GetRealRDamage(focusTarget) > focusTarget.Health)
+                                    {
+                                        focusTargetValid = true;
+                                        Prediction.DoCast(R, focusTarget);
+                                    }
                                 }
                             }
                         }
@@ -261,6 +264,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         {
                             if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{target.ChampionName}").GetValue<bool>())continue;
                             if (target.Health > GetRealRDamage(target)) continue;
+                            if (Q.Range > target.Distance(StaticObjects.Player)) continue;
+
                             if (Prediction.CheckTarget(target, R, minHitChance))
                             {
                                 Prediction.DoCast(R, target);

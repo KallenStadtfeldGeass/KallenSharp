@@ -27,20 +27,23 @@ namespace _Project_Geass.Functions
                 }
                 case 1:
                 {
-                    var prediction = spell.GetSPrediction(target);
 
-                        if (checkColision && prediction.CollisionResult.Objects.HasFlag(Collision.Flags.Minions) || prediction.CollisionResult.Objects.HasFlag(Collision.Flags.YasuoWall))
-                        return false;
-                
-                    return prediction.HitChance >= minHitChance;
-                }
+                        var sebbyPrediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+
+                        if (checkColision)
+                            return ((HitChance)sebbyPrediction.Hitchance >= minHitChance && sebbyPrediction.CollisionObjects.Count(h => h.IsEnemy && !h.IsDead && h is Obj_AI_Minion) < 2);
+
+                        return (HitChance)sebbyPrediction.Hitchance >= minHitChance;
+                 }
             }
-            var sprediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
 
-            if (checkColision)
-                return ((HitChance)sprediction.Hitchance >= minHitChance && sprediction.CollisionObjects.Count(h => h.IsEnemy && !h.IsDead && h is Obj_AI_Minion) < 2);
 
-            return (HitChance)sprediction.Hitchance >= minHitChance;
+            var sprediction = spell.GetSPrediction(target);
+
+            if (checkColision && sprediction.CollisionResult.Objects.HasFlag(Collision.Flags.Minions) || sprediction.CollisionResult.Objects.HasFlag(Collision.Flags.YasuoWall))
+                return false;
+
+            return sprediction.HitChance >= minHitChance;
 
         }
 
@@ -52,15 +55,15 @@ namespace _Project_Geass.Functions
                         var cPos = spell.GetPrediction(target);
                         spell.Cast(cPos.CastPosition);
                         break;
-                case 1: //Sprediction
-                        var sPos = spell.GetSPrediction(target);
-                        spell.Cast(sPos.CastPosition);
-                        break;
-                case 2: //Sebby
+                case 1: //Sebby
                         var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
                         spell.Cast(pos.CastPosition);
                         break;
-                    
+                case 2: //Sprediction
+                    var sPos = spell.GetSPrediction(target);
+                    spell.Cast(sPos.CastPosition);
+                    break;
+
             }
         }
         public static void DoCast(Spell spell, IOrderedEnumerable<Obj_AI_Hero> targets , HitChance minHitChance)
@@ -77,20 +80,20 @@ namespace _Project_Geass.Functions
                     }
 
                     break;
-                case 1: //Sprediction
-                    foreach (var target in targets)
-                    {
-                        var pos = spell.GetSPrediction(target);
-                        if (pos.HitChance < minHitChance) continue;
-                        spell.Cast(pos.CastPosition);
-                        break;
-                    }
-                    break;
-                case 2: //Sebby
+                case 1: //Sebby
                     foreach (var target in targets)
                     {
                         var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
                         if ((HitChance)pos.Hitchance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+                    break;
+                case 2: //Sprediction
+                    foreach (var target in targets)
+                    {
+                        var pos = spell.GetSPrediction(target);
+                        if (pos.HitChance < minHitChance) continue;
                         spell.Cast(pos.CastPosition);
                         break;
                     }
@@ -121,13 +124,5 @@ namespace _Project_Geass.Functions
         }
 
         public static HitChance GetHitChance(string value) => (HitChance) Enum.Parse(typeof(HitChance), value);
-
-        public struct PredictionWrapper
-        {
-            public Obj_AI_Hero Champion;
-            public PredictionOutput Prediction;
-            public SPrediction.Prediction.Result SPrediction;
-            public SebbyLib.Prediction.PredictionOutput SebbyPrediction;
-        }
     }
 }

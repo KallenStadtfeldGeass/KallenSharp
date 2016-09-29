@@ -7,8 +7,8 @@ namespace _Project_Geass.Functions
         public static List<string> PredictionMethods = new List<string>
         {
             "Common",
-            "SPrediction",
             "SebbyPrediction",
+             "SPrediction",
         };
 
         /// <summary>
