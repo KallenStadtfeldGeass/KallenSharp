@@ -21,20 +21,20 @@ namespace _Project_Geass.Functions
                     var prediction = spell.GetPrediction(target);
                     if (!checkColision) return prediction.Hitchance >= minHitChance;
 
-                    if (prediction.CollisionObjects.Any(obj => obj.IsMinion))
-                        return false;
+                        if (prediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy))
+                            return false;
 
-                    return (prediction.Hitchance >= minHitChance;
+                    return prediction.Hitchance >= minHitChance;
                 }
                 case 1:
                 {
 
-                        var sebbyPrediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+                    var sebbyPrediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
 
                     if (!checkColision) return (HitChance) sebbyPrediction.Hitchance >= minHitChance;
 
 
-                    if (sebbyPrediction.CollisionObjects.Any(obj => obj.IsMinion))
+                    if (sebbyPrediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy))
                         return false;
 
                     return (HitChance)sebbyPrediction.Hitchance >= minHitChance;
