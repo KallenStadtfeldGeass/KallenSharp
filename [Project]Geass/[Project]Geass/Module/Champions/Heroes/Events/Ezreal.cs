@@ -148,8 +148,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     if (focusTarget != null)
                     {
                         if (
-                            StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}")
-                                .GetValue<bool>())
+                            StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
                             if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
                             {

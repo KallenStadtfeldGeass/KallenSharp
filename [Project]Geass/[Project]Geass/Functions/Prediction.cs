@@ -3,7 +3,6 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SPrediction;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Collision = SPrediction.Collision;
 
@@ -20,20 +19,30 @@ namespace _Project_Geass.Functions
                 case 0:
                 {
                     var prediction = spell.GetPrediction(target);
-                        if(checkColision)
-                            return (prediction.Hitchance >= minHitChance && prediction.CollisionObjects.Count(h => h.IsEnemy && !h.IsDead && h is Obj_AI_Minion) < 2);
+                    if (checkColision)
+                    {
+                            if (prediction.CollisionObjects.Any(obj => obj.IsMinion))
+                                return false;
+                            return (prediction.Hitchance >= minHitChance &&
+                                prediction.CollisionObjects.Count(h => h.IsEnemy && !h.IsDead && h is Obj_AI_Minion) < 2);
 
-                        return prediction.Hitchance >= minHitChance;
+                    }
+                    return prediction.Hitchance >= minHitChance;
                 }
                 case 1:
                 {
 
                         var sebbyPrediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
 
-                        if (checkColision)
-                            return ((HitChance)sebbyPrediction.Hitchance >= minHitChance && sebbyPrediction.CollisionObjects.Count(h => h.IsEnemy && !h.IsDead && h is Obj_AI_Minion) < 2);
+                    if (checkColision)
+                    {
+                        if (sebbyPrediction.CollisionObjects.Any(obj => obj.IsMinion))
+                            return false;
 
                         return (HitChance)sebbyPrediction.Hitchance >= minHitChance;
+                    }
+
+                    return (HitChance)sebbyPrediction.Hitchance >= minHitChance;
                  }
             }
 
