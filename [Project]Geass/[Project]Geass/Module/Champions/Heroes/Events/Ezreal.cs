@@ -49,11 +49,21 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             Game.OnUpdate += AutoEvents;
             LeagueSharp.Drawing.OnDraw += OnDraw;
             LeagueSharp.Drawing.OnDraw += OnDrawEnemy;
-
+            Spellbook.OnCastSpell += OnCastSpell;
             //Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
             _damageIndicator = new DamageIndicator(GetDamage, 2000);
             Orbwalker = orbwalker;
         }
+
+        private void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            if (!sender.Owner.IsMe) return;
+            if (args.Slot == SpellSlot.Q || args.Slot == SpellSlot.W)
+            {
+                Orbwalking.ResetAutoAttackTimer();
+            }
+        }
+
 
         //private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         //{
@@ -378,6 +388,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <summary>
         ///     On Clear
         /// </summary>
+        /// 
         private void Clear()
         {
             var basename = BaseName + "Clear.";
@@ -385,24 +396,30 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
                 if (_manaManager.CheckClearQ())
                 {
-                    foreach (
-                        var target in
-                        Minions.GetEnemyMinions2(Q.Range)
-                            .Where(x => (x.Health < Q.GetDamage(x)) && (x.Health > 30))
-                            .OrderBy(hp => hp.Health))
+                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.Minon.LastHit").GetValue<bool>())
                     {
-                        Q.Cast(target);
-                        return;
+                        foreach (
+                            var target in
+                            Minions.GetEnemyMinions2(Q.Range)
+                                .Where(x => (x.Health < Q.GetDamage(x)) && (x.Health > 30))
+                                .OrderBy(hp => hp.Health))
+                        {
+                            Q.Cast(target);
+                            return;
+                        }
                     }
-                    if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.OnJungle").GetValue<bool>()) return;
-                    foreach (
-                        var target in
-                        MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral)
-                            .Where(x => x.IsValidTarget(Q.Range))
-                            .OrderBy(hp => hp.MaxHealth/hp.Health))
+
+                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.OnJungle").GetValue<bool>())
                     {
-                        Q.Cast(target);
-                        return;
+                        foreach (
+                            var target in
+                            MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral)
+                                .Where(x => x.IsValidTarget(Q.Range))
+                                .OrderBy(hp => hp.MaxHealth/hp.Health))
+                        {
+                            Q.Cast(target);
+                            return;
+                        }
                     }
                 }
         }

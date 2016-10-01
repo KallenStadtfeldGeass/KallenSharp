@@ -138,6 +138,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             var mainMenu = new Menu(nameof(Clear), basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minon.LastHit", "Use Q To Last Hit Minons").SetValue(true));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnJungle", "Use Q on mosters").SetValue(true));
 
             return mainMenu;
