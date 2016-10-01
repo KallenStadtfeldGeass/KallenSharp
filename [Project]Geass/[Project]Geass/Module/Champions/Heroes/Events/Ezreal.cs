@@ -58,10 +58,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         private void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
             if (!sender.Owner.IsMe) return;
-            if (args.Slot == SpellSlot.Q || args.Slot == SpellSlot.W)
-            {
-                Orbwalking.ResetAutoAttackTimer();
-            }
+           // if (args.Slot == SpellSlot.Q || args.Slot == SpellSlot.W)
+            //{
+            //    Orbwalking.ResetAutoAttackTimer();
+            //}
         }
 
 
