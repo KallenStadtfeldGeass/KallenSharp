@@ -4,6 +4,7 @@ using LeagueSharp.Common;
 using SPrediction;
 using System;
 using System.Linq;
+using Collision = SPrediction.Collision;
 
 namespace _Project_Geass.Functions
 {
@@ -20,7 +21,7 @@ namespace _Project_Geass.Functions
                     var prediction = spell.GetPrediction(target);
                     if (!checkColision) return prediction.Hitchance >= minHitChance;
 
-                        if (prediction.CollisionObjects.Any())
+                        if (prediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy))
                             return false;
 
                     return prediction.Hitchance >= minHitChance;
@@ -33,7 +34,7 @@ namespace _Project_Geass.Functions
                     if (!checkColision) return (HitChance) sebbyPrediction.Hitchance >= minHitChance;
 
 
-                    if (sebbyPrediction.CollisionObjects.Any())
+                    if (sebbyPrediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy))
                         return false;
 
                     return (HitChance)sebbyPrediction.Hitchance >= minHitChance;
@@ -43,37 +44,66 @@ namespace _Project_Geass.Functions
 
             var sprediction = spell.GetSPrediction(target);
 
-            if (checkColision && sprediction.CollisionResult.Units.Any(a => !a.IsChampion()))
+            if (checkColision && sprediction.CollisionResult.Objects.HasFlag(Collision.Flags.Minions) || sprediction.CollisionResult.Objects.HasFlag(Collision.Flags.YasuoWall))
                 return false;
 
             return sprediction.HitChance >= minHitChance;
 
         }
 
-        public static bool DoCast(Spell spell, Obj_AI_Hero target,bool colisionCheck = false)
+        public static void DoCast(Spell spell, Obj_AI_Hero target)
         {
             switch (PredictionMethod)
             {
-
                 case 0: //Common
                         var cPos = spell.GetPrediction(target);
-                    if (colisionCheck && cPos.CollisionObjects.Any()) return false;
                         spell.Cast(cPos.CastPosition);
                         break;
                 case 1: //Sebby
                         var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
-                    if (colisionCheck && pos.CollisionObjects.Any()) return false;
-                    spell.Cast(pos.CastPosition);
+                        spell.Cast(pos.CastPosition);
                         break;
                 case 2: //Sprediction
                     var sPos = spell.GetSPrediction(target);
-                    if (colisionCheck && sPos.CollisionResult.Units.Any(a => !a.IsChampion()))
-                        spell.Cast(sPos.CastPosition);
+                    spell.Cast(sPos.CastPosition);
                     break;
 
             }
-            return true;
         }
+        public static void DoCast(Spell spell, IOrderedEnumerable<Obj_AI_Hero> targets , HitChance minHitChance)
+        {
+            switch (PredictionMethod)
+            {
+                case 0: //Common
+                    foreach (var target in targets)
+                    {
+                        var pos = spell.GetPrediction(target);
+                        if (pos.Hitchance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+
+                    break;
+                case 1: //Sebby
+                    foreach (var target in targets)
+                    {
+                        var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+                        if ((HitChance)pos.Hitchance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+                    break;
+                case 2: //Sprediction
+                    foreach (var target in targets)
+                    {
+                        var pos = spell.GetSPrediction(target);
+                        if (pos.HitChance < minHitChance) continue;
+                        spell.Cast(pos.CastPosition);
+                        break;
+                    }
+                    break;
+            }
+        } 
 
         static bool ValidChampion(Obj_AI_Hero target)
         {
