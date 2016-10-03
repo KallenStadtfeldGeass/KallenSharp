@@ -162,8 +162,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         {
                             if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
                             {
-                                focusTargetValid = true;
-                                Prediction.DoCast(Q, focusTarget);
+                                focusTargetValid = Prediction.DoCast(Q, focusTarget,true);
                             }
                         }
                     }
@@ -180,7 +179,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                             .GetValue<bool>())
                                 .Any(target => Prediction.CheckTarget(target, Q, minHitChance, true)))
                         {
-                            Prediction.DoCast(Q, focusTarget);
+                            Prediction.DoCast(Q, focusTarget,true);
                         }
                     }
 
@@ -328,7 +327,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                             if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
                             {
                                 focusTargetValid = true;
-                                Prediction.DoCast(Q, focusTarget);
+                                Prediction.DoCast(Q, focusTarget ,true);
                             }
                         }
                     }
@@ -340,7 +339,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                         if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, Q, minHitChance, true)))
                         {
-                            Prediction.DoCast(Q, focusTarget);
+                            Prediction.DoCast(Q, focusTarget,true);
                         }
                     }
 
@@ -404,6 +403,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .Where(x => (x.Health < Q.GetDamage(x)) && (x.Health > 30))
                                 .OrderBy(hp => hp.Health))
                         {
+                            if(Orbwalker.InAutoAttackRange(target) && StaticObjects.Player.CanAttack && StaticObjects.Player.GetAutoAttackDamage(target) > target.Health)continue;
+                            
                             Q.Cast(target);
                             return;
                         }
