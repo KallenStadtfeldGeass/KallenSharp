@@ -2,59 +2,55 @@
 
 namespace _Project_Geass.Logging
 {
+
     public class Logger
     {
+        #region Private Fields
+
+        private readonly string _baseName;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Logger" /> class. 
+        ///     Initializes a new instance of the <see cref="Logger" /> class.
         /// </summary>
         /// <param name="_base">
-        /// The base. 
+        ///     The base.
         /// </param>
-        public Logger(string _base)
-        {
-            _baseName = _base;
-        }
+        public Logger(string _base) {_baseName=_base;}
 
         #endregion Public Constructors
 
         #region Public Methods
 
         /// <summary>
-        /// Writes the log. 
+        ///     Writes the log.
         /// </summary>
         /// <param name="text">
-        /// The text. 
+        ///     The text.
         /// </param>
-        public void WriteLog(string text)
-        {
-            Console.WriteLine($"{_baseName}:{text}");
-        }
+        public void WriteLog(string text) {Console.WriteLine($"{_baseName}:{text}");}
 
         /// <summary>
-        /// Writes the log. 
+        ///     Writes the log.
         /// </summary>
         /// <param name="text">
-        /// The text. 
+        ///     The text.
         /// </param>
         /// <param name="color">
-        /// The color. 
+        ///     The color.
         /// </param>
         public void WriteLog(string text, ConsoleColor color)
         {
-            var holder = Console.ForegroundColor;
-            Console.ForegroundColor = color;
+            var holder=Console.ForegroundColor;
+            Console.ForegroundColor=color;
             Console.WriteLine($"{_baseName}:{text}");
-            Console.ForegroundColor = holder;
+            Console.ForegroundColor=holder;
         }
 
         #endregion Public Methods
-
-        #region Private Fields
-
-        private readonly string _baseName;
-
-        #endregion Private Fields
     }
+
 }

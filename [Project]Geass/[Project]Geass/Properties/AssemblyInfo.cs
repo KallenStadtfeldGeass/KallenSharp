@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following set of attributes.
-// Change these attribute values to modify the information associated with an assembly.
+// General Information about an assembly is controlled through the following set of attributes. Change these attribute values to modify the information associated with an assembly.
 
 [assembly: AssemblyTitle("[Project]Geass")]
 [assembly: AssemblyDescription("")]
@@ -13,8 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Setting ComVisible to false makes the types in this assembly not visible to COM components. If you
-// need to access a type in this assembly from COM, set the ComVisible attribute to true on that type.
+// Setting ComVisible to false makes the types in this assembly not visible to COM components. If you need to access a type in this assembly from COM, set the ComVisible attribute to true on that type.
 
 [assembly: ComVisible(false)]
 
@@ -26,8 +24,7 @@ using System.Runtime.InteropServices;
 //
 // Major Version Minor Version Build Number Revision
 //
-// You can specify all the values or you can default the Build and Revision Numbers by using the '*'
-// as shown below: [assembly: AssemblyVersion("1.0.*")]
+// You can specify all the values or you can default the Build and Revision Numbers by using the '*' as shown below: [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("6.20")]
 [assembly: AssemblyFileVersion("6.20")]

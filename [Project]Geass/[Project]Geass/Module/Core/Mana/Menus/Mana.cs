@@ -1,9 +1,10 @@
-﻿using _Project_Geass.Data.Champions;
+﻿using LeagueSharp.Common;
+using _Project_Geass.Data.Champions;
 using _Project_Geass.Functions;
-using LeagueSharp.Common;
 
 namespace _Project_Geass.Module.Core.Mana.Menus
 {
+
     internal sealed class ManaMenu
     {
         #region Public Fields
@@ -15,20 +16,20 @@ namespace _Project_Geass.Module.Core.Mana.Menus
         #region Public Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ManaMenu" /> class. 
+        ///     Initializes a new instance of the <see cref="ManaMenu" /> class.
         /// </summary>
         /// <param name="menu">
-        /// The menu. 
+        ///     The menu.
         /// </param>
         /// <param name="options">
-        /// The options. 
+        ///     The options.
         /// </param>
         /// <param name="enabled">
-        /// if set to <c> true </c> [enabled]. 
+        ///     if set to <c> true </c> [enabled].
         /// </param>
         public ManaMenu(Menu menu, int[,] options, bool enabled)
         {
-            Enabled = enabled;
+            Enabled=enabled;
             if (!enabled) return;
 
             menu.AddSubMenu(Menu(options));
@@ -41,18 +42,13 @@ namespace _Project_Geass.Module.Core.Mana.Menus
 
         private Menu Menu(int[,] options)
         {
-            var menu = new Menu(Names.Menu.ManaNameBase, "ManaManager");
-            menu.AddItem(new MenuItem(Names.Menu.ManaItemBase + "Use.ManaManager", "Use ManaManager").SetValue(true));
+            var menu=new Menu(Names.Menu.ManaNameBase, "ManaManager");
+            menu.AddItem(new MenuItem(Names.Menu.ManaItemBase+"Use.ManaManager", "Use ManaManager").SetValue(true));
 
-            for (var index = 0; index < SettingsBase.ManaModes.Length; index++)
+            for (var index=0;index<SettingsBase.ManaModes.Length;index++)
             {
-                var subMenu = new Menu($"{SettingsBase.ManaModes[index]}", $"{SettingsBase.ManaModes[index]}ManaMenu");
-                for (var i = 0; i < SettingsBase.ManaAbilities.Length; i++)
-                    if (options[index, i] != -1)
-                        subMenu.AddItem(
-                            new MenuItem(
-                                $"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[index]}.Slider.MinMana.{SettingsBase.ManaAbilities[i]}",
-                                $"Min Mana% {SettingsBase.ManaAbilities[i]}").SetValue(new Slider(options[index, i])));
+                var subMenu=new Menu($"{SettingsBase.ManaModes[index]}", $"{SettingsBase.ManaModes[index]}ManaMenu");
+                for (var i=0;i<SettingsBase.ManaAbilities.Length;i++) if (options[index, i]!=-1) subMenu.AddItem(new MenuItem($"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[index]}.Slider.MinMana.{SettingsBase.ManaAbilities[i]}", $"Min Mana% {SettingsBase.ManaAbilities[i]}").SetValue(new Slider(options[index, i])));
                 menu.AddSubMenu(subMenu);
             }
             return menu;
@@ -60,4 +56,5 @@ namespace _Project_Geass.Module.Core.Mana.Menus
 
         #endregion Private Methods
     }
+
 }

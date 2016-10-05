@@ -1,11 +1,18 @@
-﻿using _Project_Geass.Functions;
-using LeagueSharp.Common;
+﻿using LeagueSharp.Common;
+using _Project_Geass.Functions;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
+
     internal class Caitlyn
     {
+        #region Private Fields
+
+        private readonly string _baseName=Names.ProjectName+StaticObjects.Player.ChampionName+".";
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         public Caitlyn()
@@ -18,45 +25,30 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         #endregion Public Constructors
 
-        #region Private Fields
-
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
-
-        #endregion Private Fields
-
         #region Private Methods
 
         private Menu Auto()
         {
-            var basename = _baseName + "Auto.";
+            var basename=_baseName+"Auto.";
 
-            var mainMenu = new Menu(nameof(Auto), basename);
+            var mainMenu=new Menu(nameof(Auto), basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.OnImmobile ", "Use W on Immobile enemies").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnGapClose", "Use E on gapclose").SetValue(true));
-            var eMenu = new Menu("GapClose E Settings", basename + "GapCloseE");
+            var eMenu=new Menu("GapClose E Settings", basename+"GapCloseE");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-                eMenu.AddItem(
-                    new MenuItem($"{basename}.UseE.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}")
-                        .SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) eMenu.AddItem(new MenuItem($"{basename}.UseE.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose", "Use W on gapclose").SetValue(true));
-            var wMenu = new Menu("GapClose W Settings", basename + "GapCloseW");
+            var wMenu=new Menu("GapClose W Settings", basename+"GapCloseW");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-                wMenu.AddItem(
-                    new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}")
-                        .SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.OnKillable", "Use R on Killable").SetValue(true));
-            var rMenu = new Menu("Killable R Settings", basename + "KillableR");
+            var rMenu=new Menu("Killable R Settings", basename+"KillableR");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-                rMenu.AddItem(
-                    new MenuItem($"{basename}.UseR.OnKillable.{enemy.ChampionName}", $"On {enemy.ChampionName}")
-                        .SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) rMenu.AddItem(new MenuItem($"{basename}.UseR.OnKillable.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(eMenu);
             mainMenu.AddSubMenu(wMenu);
@@ -67,8 +59,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         private Menu Clear()
         {
-            var basename = _baseName + "Clear.";
-            var mainMenu = new Menu(nameof(Clear), basename);
+            var basename=_baseName+"Clear.";
+            var mainMenu=new Menu(nameof(Clear), basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minons Hit").SetValue(new Slider(4, 3, 10)));
@@ -78,23 +70,18 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         private Menu Combo()
         {
-            var basename = _baseName + "Combo.";
+            var basename=_baseName+"Combo.";
 
-            var mainMenu = new Menu(nameof(Combo), basename);
+            var mainMenu=new Menu(nameof(Combo), basename);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));
 
-            mainMenu.AddItem(
-                new MenuItem($"{basename}.UseQ.Prediction", "Q Prediction").SetValue(
-                    new StringList(Prediction.GetHitChanceNames())));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Prediction", "Q Prediction").SetValue(new StringList(Prediction.GetHitChanceNames())));
 
-            var wMenu = new Menu("W Settings", basename + "W Settings");
+            var wMenu=new Menu("W Settings", basename+"W Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-                wMenu.AddItem(
-                    new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
-                        true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
 
             mainMenu.AddSubMenu(wMenu);
 
@@ -103,20 +90,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         private Menu Mixed()
         {
-            var basename = _baseName + "Mixed.";
-            var mainMenu = new Menu(nameof(Mixed), basename);
+            var basename=_baseName+"Mixed.";
+            var mainMenu=new Menu(nameof(Mixed), basename);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
-            mainMenu.AddItem(
-                new MenuItem($"{basename}.UseQ.Prediction", "Q Prediction").SetValue(
-                    new StringList(Prediction.GetHitChanceNames())));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Prediction", "Q Prediction").SetValue(new StringList(Prediction.GetHitChanceNames())));
 
-            var wMenu = new Menu("Q Settings", basename + "Q Settings");
+            var wMenu=new Menu("Q Settings", basename+"Q Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
-                wMenu.AddItem(
-                    new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(
-                        true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) wMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
 
             mainMenu.AddSubMenu(wMenu);
             return mainMenu;
@@ -124,4 +106,5 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
         #endregion Private Methods
     }
+
 }
