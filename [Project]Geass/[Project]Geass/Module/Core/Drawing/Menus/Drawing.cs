@@ -23,7 +23,8 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
         /// </param>
         public Drawing(Menu menu, bool[] drawingOptions, bool enabled)
         {
-            if (!enabled) return;
+            if (!enabled)
+                return;
 
             menu.AddSubMenu(Menu(drawingOptions));
             // ReSharper disable once UnusedVariable
@@ -55,10 +56,14 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
             var selfMenu=new Menu("Self", Names.Menu.DrawingItemBase+"Self");
             //selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName + ".Boolean.DrawOnSelf", "Draw On Self").SetValue(true));
 
-            if (drawingOptions[0]) selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
-            if (drawingOptions[1]) selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.WColor", "W Range").SetValue(new Circle(true, Color.LightGreen)));
-            if (drawingOptions[2]) selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.EColor", "E Range").SetValue(new Circle(true, Color.LightCoral)));
-            if (drawingOptions[03]) selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.RColor", "R Range").SetValue(new Circle(true, Color.LightSlateGray)));
+            if (drawingOptions[0])
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
+            if (drawingOptions[1])
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.WColor", "W Range").SetValue(new Circle(true, Color.LightGreen)));
+            if (drawingOptions[2])
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.EColor", "E Range").SetValue(new Circle(true, Color.LightCoral)));
+            if (drawingOptions[03])
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.RColor", "R Range").SetValue(new Circle(true, Color.LightSlateGray)));
 
             var lastHitMenu=new Menu("Minions", Names.Menu.DrawingItemBase+"Minions");
 

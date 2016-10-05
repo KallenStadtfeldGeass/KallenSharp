@@ -90,7 +90,8 @@ namespace _Project_Geass.Drawing.Champions
         {
             get
             {
-                if (Unit!=null) return Unit.IsAlly? new Vector2(34, 9) : new Vector2(10, 20);
+                if (Unit!=null)
+                    return Unit.IsAlly? new Vector2(34, 9) : new Vector2(10, 20);
 
                 return new Vector2();
             }
@@ -107,7 +108,8 @@ namespace _Project_Geass.Drawing.Champions
 
         private void Drawing_OnDraw(EventArgs args)
         {
-            if (!FillEnabled&&!KillableEnabled) return;
+            if (!FillEnabled&&!KillableEnabled)
+                return;
 
             foreach (var enemy in Heroes.GetEnemies(Range))
             {
@@ -115,9 +117,11 @@ namespace _Project_Geass.Drawing.Champions
                 var damage=_damageToUnitDelegate(enemy);
 
                 // Continue on 0 damage
-                if (damage<=0) continue;
+                if (damage<=0)
+                    continue;
 
-                if ((damage>enemy.Health)&&KillableEnabled) LeagueSharp.Drawing.DrawText(enemy.HPBarPosition.X+10, enemy.HPBarPosition.Y+3, Killable, "Killable");
+                if ((damage>enemy.Health)&&KillableEnabled)
+                    LeagueSharp.Drawing.DrawText(enemy.HPBarPosition.X+10, enemy.HPBarPosition.Y+3, Killable, "Killable");
 
                 if (FillEnabled)
                 {

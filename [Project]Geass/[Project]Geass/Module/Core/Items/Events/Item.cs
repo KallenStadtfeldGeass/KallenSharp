@@ -50,11 +50,13 @@ namespace _Project_Geass.Module.Core.Items.Events
         {
             #region Offensive
 
-            if (!Handler.CheckItems()) return;
+            if (!Handler.CheckItems())
+                return;
 
             Handler.UseItems();
             var target=TargetSelector.GetTarget(1500, TargetSelector.DamageType.Physical);
-            if (target==null) return;
+            if (target==null)
+                return;
 
             if (StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase+"Boolean.Bork").GetValue<bool>()&&LeagueSharp.Common.Items.HasItem(_offensive.Botrk.Id))
                 // If enabled and has item

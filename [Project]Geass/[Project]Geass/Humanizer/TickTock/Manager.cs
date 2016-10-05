@@ -42,7 +42,8 @@ namespace _Project_Geass.Humanizer.TickTock
         /// </param>
         public void AddTick(string keyName, float min, float max)
         {
-            if (keyName.Length<=0) Console.WriteLine("Add Key can not be null");
+            if (keyName.Length<=0)
+                Console.WriteLine("Add Key can not be null");
 
             if (IsPresent(keyName))
             {
@@ -63,8 +64,10 @@ namespace _Project_Geass.Humanizer.TickTock
         /// </returns>
         public bool CheckTick(string key)
         {
-            if (key.Length<=0) Console.WriteLine("Check Key an not be null");
-            if (Ticks.ContainsKey(key)) return Ticks[key].IsReady(AssemblyTime.CurrentTime());
+            if (key.Length<=0)
+                Console.WriteLine("Check Key an not be null");
+            if (Ticks.ContainsKey(key))
+                return Ticks[key].IsReady(AssemblyTime.CurrentTime());
 
             Console.WriteLine($"Key {key} not found");
             return false;
@@ -104,10 +107,13 @@ namespace _Project_Geass.Humanizer.TickTock
         /// </param>
         public void UseTick(string key)
         {
-            if (key.Length<=0) return;
+            if (key.Length<=0)
+                return;
 
-            if (Ticks.ContainsKey(key)) Ticks[key].UseTick(AssemblyTime.CurrentTime(), _rng.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay())+_rng.NextFloat(_randomMin, _randomMax));
-            else Console.WriteLine($"Key {key} not found");
+            if (Ticks.ContainsKey(key))
+                Ticks[key].UseTick(AssemblyTime.CurrentTime(), _rng.NextFloat(Ticks[key].GetMinDelay(), Ticks[key].GetMaxDelay())+_rng.NextFloat(_randomMin, _randomMax));
+            else
+                Console.WriteLine($"Key {key} not found");
         }
 
         #endregion Public Methods

@@ -8,6 +8,7 @@ namespace _Project_Geass.Module.Champions.Core
 
     internal class Bootloader
     {
+
         /// <summary>
         ///     The champion bundled
         /// </summary>
@@ -34,6 +35,7 @@ namespace _Project_Geass.Module.Champions.Core
                     break;
             }
         }
+
     }
 
 }

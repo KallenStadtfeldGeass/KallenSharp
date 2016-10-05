@@ -20,8 +20,11 @@ namespace _Project_Geass
         public Initializer()
         {
             StaticObjects.ProjectLogger.WriteLog("Loading...");
-            if (!Bootloader.ChampionBundled.ContainsKey(StaticObjects.Player.ChampionName)) return;
-            if (!Bootloader.ChampionBundled[StaticObjects.Player.ChampionName]) return;
+            if (!Bootloader.ChampionBundled.ContainsKey(StaticObjects.Player.ChampionName))
+                return;
+            if (!Bootloader.ChampionBundled[StaticObjects.Player.ChampionName])
+                return;
+
             StaticObjects.ProjectLogger.WriteLog("Load Delays...");
             Handler.Load(true);
             // ReSharper disable once UnusedVariable
@@ -30,7 +33,8 @@ namespace _Project_Geass
 
             var championSettings=new Settings();
 
-            if (!StaticObjects.SettingsMenu.Item($"{Names.Menu.BaseItem}{StaticObjects.Player.ChampionName}.Enable").GetValue<bool>()) return;
+            if (!StaticObjects.SettingsMenu.Item($"{Names.Menu.BaseItem}{StaticObjects.Player.ChampionName}.Enable").GetValue<bool>())
+                return;
 
             var coreMenu=new Menu("Core Modules", "CoreModulesMenu");
 

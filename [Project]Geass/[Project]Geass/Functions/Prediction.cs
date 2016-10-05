@@ -27,19 +27,25 @@ namespace _Project_Geass.Functions
 
         public static bool CheckColision(PredictionOutput prediction) //Returns if a colision is meet
         {
-            foreach (var obj in prediction.CollisionObjects) StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+            foreach (var obj in prediction.CollisionObjects)
+                StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+
             return prediction.CollisionObjects.Any(obj => !obj.IsDead||!obj.IsChampion()||!obj.IsEnemy);
         }
 
         public static bool CheckColision(SebbyLib.Prediction.PredictionOutput prediction) //Returns if a colision is meet
         {
-            foreach (var obj in prediction.CollisionObjects) StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+            foreach (var obj in prediction.CollisionObjects)
+                StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+
             return prediction.CollisionObjects.Any(obj => !obj.IsDead||!obj.IsChampion()||!obj.IsEnemy);
         }
 
         public static bool CheckColision(SPrediction.Prediction.Result prediction) //Returns if a colision is meet
         {
-            foreach (var obj in prediction.CollisionResult.Units) StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+            foreach (var obj in prediction.CollisionResult.Units)
+                StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+
             return prediction.CollisionResult.Objects.HasFlag(Collision.Flags.Minions)||prediction.CollisionResult.Objects.HasFlag(Collision.Flags.YasuoWall);
         }
 
@@ -50,31 +56,46 @@ namespace _Project_Geass.Functions
             {
                 var output=spell.GetPrediction(target);
 
-                if (colisionCheck) if (CheckColision(output)) return false;
+                if (colisionCheck)
+                    if (CheckColision(output))
+                        return false;
 
-                if (minHitChance>output.Hitchance) return false;
+                if (minHitChance>output.Hitchance)
+                    return false;
+
                 spell.Cast(output.CastPosition);
                 return true;
             }
+
             if (PredictionMethod==1)
             {
                 var output=SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
-                if (colisionCheck) if (CheckColision(output)) return false;
+                if (colisionCheck)
+                    if (CheckColision(output))
+                        return false;
 
-                if (minHitChance>(HitChance)output.Hitchance) return false;
+                if (minHitChance>(HitChance)output.Hitchance)
+                    return false;
+
                 spell.Cast(output.CastPosition);
                 return true;
             }
+
             if (PredictionMethod==2)
             {
                 var output=spell.GetSPrediction(target);
 
-                if (colisionCheck) if (CheckColision(output)) return false;
+                if (colisionCheck)
+                    if (CheckColision(output))
+                        return false;
 
-                if (minHitChance>output.HitChance) return false;
+                if (minHitChance>output.HitChance)
+                    return false;
+
                 spell.Cast(output.CastPosition);
                 return true;
             }
+
             return false;
         }
 

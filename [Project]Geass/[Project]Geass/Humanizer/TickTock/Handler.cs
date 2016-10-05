@@ -58,7 +58,8 @@ namespace _Project_Geass.Humanizer.TickTock
         public static void Load(bool humanize)
         {
             var offset=0;
-            if (humanize) offset=100;
+            if (humanize)
+                offset=100;
 
             MyTicker.AddTick($"{Names.ProjectName}.OnLevel", 50+offset, 75+offset);
             MyTicker.AddTick($"{Names.ProjectName}.UseItems", offset, 25+offset);

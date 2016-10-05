@@ -123,13 +123,18 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// </param>
         private void AutoEvents(EventArgs args)
         {
-            if (!Handler.CheckAutoEvents()) return;
+            if (!Handler.CheckAutoEvents())
+                return;
+
             if (!_tearFull)
                 if (!StaticObjects.Player.IsRecalling())
                 {
                     var basename=BaseName+"Misc.";
 
-                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>()&&(_manaManager.ManaPercent>=StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value)) if (Items.HasItem(ItemData.Tear_of_the_Goddess.Id)||Items.HasItem(ItemData.Manamune.Id)) if ((Minions.GetEnemyMinions2(1500).Count<1)&&(Functions.Objects.Heroes.GetEnemies(1500).Count<1)&&(MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count<1)) Q.Cast(Game.CursorPos);
+                    if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>()&&(_manaManager.ManaPercent>=StaticObjects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value))
+                        if (Items.HasItem(ItemData.Tear_of_the_Goddess.Id)||Items.HasItem(ItemData.Manamune.Id))
+                            if ((Minions.GetEnemyMinions2(1500).Count<1)&&(Functions.Objects.Heroes.GetEnemies(1500).Count<1)&&(MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count<1))
+                                Q.Cast(Game.CursorPos);
                 }
             Handler.UseAutoEvent();
         }
@@ -148,7 +153,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         foreach (var target in
                             Minions.GetEnemyMinions2(Q.Range).Where(x => (x.Health<Q.GetDamage(x))&&(x.Health>30)).OrderBy(hp => hp.Health))
                         {
-                            if (!StaticObjects.Player.IsWindingUp&&(StaticObjects.Player.GetAutoAttackDamage(target)<target.Health+25)&&(StaticObjects.Player.Distance(target)<StaticObjects.Player.AttackRange)) continue;
+                            if (!StaticObjects.Player.IsWindingUp&&(StaticObjects.Player.GetAutoAttackDamage(target)<target.Health+25)&&(StaticObjects.Player.Distance(target)<StaticObjects.Player.AttackRange))
+                                continue;
 
                             Q.Cast(target);
                             return;
@@ -179,7 +185,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     var focusTargetValid=false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget=TargetSelector.GetTarget(Q.Range, Q.DamageType);
-                    if (focusTarget!=null) if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>()) focusTargetValid=Prediction.DoCast(Q, focusTarget, minHitChance, true);
+                    if (focusTarget!=null)
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
+                            focusTargetValid=Prediction.DoCast(Q, focusTarget, minHitChance, true);
 
                     if (!focusTargetValid)
                     {
@@ -187,8 +195,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                         foreach (var target in orderedTargets)
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>()) continue;
-                            if (Prediction.DoCast(Q, focusTarget, minHitChance, true)) break;
+                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>())
+                                continue;
+
+                            if (Prediction.DoCast(Q, focusTarget, minHitChance, true))
+                                break;
                         }
                     }
                 }
@@ -201,7 +212,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     var focusTargetValid=false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget=TargetSelector.GetTarget(W.Range, W.DamageType);
-                    if (focusTarget!=null) if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>()) focusTargetValid=Prediction.DoCast(W, focusTarget, minHitChance);
+                    if (focusTarget!=null)
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>())
+                            focusTargetValid=Prediction.DoCast(W, focusTarget, minHitChance);
 
                     if (!focusTargetValid)
                     {
@@ -209,8 +222,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                         foreach (var target in orderedTargets)
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()) continue;
-                            if (Prediction.DoCast(W, focusTarget, minHitChance)) break;
+                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>())
+                                continue;
+
+                            if (Prediction.DoCast(W, focusTarget, minHitChance))
+                                break;
                         }
                     }
                 }
@@ -223,7 +239,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     var focusTargetValid=false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget=TargetSelector.GetTarget(StaticObjects.ProjectMenu.Item($"{basename}.UseR.Range").GetValue<Slider>().Value, R.DamageType);
-                    if (focusTarget!=null) if (StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}").GetValue<bool>()) if (focusTarget.Distance(StaticObjects.Player)>Q.Range) if (GetRealRDamage(focusTarget)>focusTarget.Health) focusTargetValid=Prediction.DoCast(R, focusTarget, minHitChance);
+                    if (focusTarget!=null)
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}").GetValue<bool>())
+                            if (focusTarget.Distance(StaticObjects.Player)>Q.Range)
+                                if (GetRealRDamage(focusTarget)>focusTarget.Health)
+                                    focusTargetValid=Prediction.DoCast(R, focusTarget, minHitChance);
 
                     if (!focusTargetValid)
                     {
@@ -231,11 +251,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                         foreach (var target in orderedTargets)
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{target.ChampionName}").GetValue<bool>()) continue;
-                            if (target.Health>GetRealRDamage(target)) continue;
-                            if (Q.Range>target.Distance(StaticObjects.Player)) continue;
+                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{target.ChampionName}").GetValue<bool>())
+                                continue;
+                            if (target.Health>GetRealRDamage(target))
+                                continue;
+                            if (Q.Range>target.Distance(StaticObjects.Player))
+                                continue;
 
-                            if (Prediction.DoCast(R, target, minHitChance)) break;
+                            if (Prediction.DoCast(R, target, minHitChance))
+                                break;
                         }
                     }
                 }
@@ -252,11 +276,14 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         private float GetDamage(Obj_AI_Hero target)
         {
             var damage=0f;
-            if ((target.Distance(StaticObjects.Player)<StaticObjects.Player.AttackRange-25)&&StaticObjects.Player.CanAttack&&!StaticObjects.Player.IsWindingUp) damage+=(float)StaticObjects.Player.GetAutoAttackDamage(target)-10;
+            if ((target.Distance(StaticObjects.Player)<StaticObjects.Player.AttackRange-25)&&StaticObjects.Player.CanAttack&&!StaticObjects.Player.IsWindingUp)
+                damage+=(float)StaticObjects.Player.GetAutoAttackDamage(target)-10;
 
-            if (W.IsReady()) damage+=W.GetDamage(target);
+            if (W.IsReady())
+                damage+=W.GetDamage(target);
 
-            if (R.IsReady()) damage+=R.GetDamage(target);
+            if (R.IsReady())
+                damage+=R.GetDamage(target);
 
             return Damage.CalcRealDamage(target, damage);
         }
@@ -276,7 +303,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     var focusTargetValid=false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget=TargetSelector.GetTarget(Q.Range, Q.DamageType);
-                    if (focusTarget!=null) if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>()) focusTargetValid=Prediction.DoCast(Q, focusTarget, minHitChance, true);
+                    if (focusTarget!=null)
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
+                            focusTargetValid=Prediction.DoCast(Q, focusTarget, minHitChance, true);
 
                     if (!focusTargetValid)
                     {
@@ -284,8 +313,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                         foreach (var target in orderedTargets)
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>()) continue;
-                            if (Prediction.DoCast(Q, focusTarget, minHitChance, true)) break;
+                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>())
+                                continue;
+
+                            if (Prediction.DoCast(Q, focusTarget, minHitChance, true))
+                                break;
                         }
                     }
                 }
@@ -298,7 +330,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     var focusTargetValid=false;
                     //Check if the target in target selector is valid (best target)
                     var focusTarget=TargetSelector.GetTarget(W.Range, W.DamageType);
-                    if (focusTarget!=null) if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>()) focusTargetValid=Prediction.DoCast(W, focusTarget, minHitChance);
+                    if (focusTarget!=null)
+                        if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>())
+                            focusTargetValid=Prediction.DoCast(W, focusTarget, minHitChance);
 
                     if (!focusTargetValid)
                     {
@@ -306,8 +340,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                         foreach (var target in orderedTargets)
                         {
-                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()) continue;
-                            if (Prediction.DoCast(W, focusTarget, minHitChance)) break;
+                            if (!StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>())
+                                continue;
+
+                            if (Prediction.DoCast(W, focusTarget, minHitChance))
+                                break;
                         }
                     }
                 }
@@ -315,8 +352,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
         private void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
-            if (!sender.Owner.IsMe) return;
-            if ((args.Slot==SpellSlot.Q)||(args.Slot==SpellSlot.W)) Orbwalking.ResetAutoAttackTimer();
+            if (!sender.Owner.IsMe)
+                return;
+
+            if ((args.Slot==SpellSlot.Q)||(args.Slot==SpellSlot.W))
+                Orbwalking.ResetAutoAttackTimer();
         }
 
         //private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
@@ -336,8 +376,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// </param>
         private void OnDraw(EventArgs args)
         {
-            if (Q.Level>0) if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active) Render.Circle.DrawCircle(StaticObjects.Player.Position, Q.Range, StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
-            if (W.Level>0) if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active) Render.Circle.DrawCircle(StaticObjects.Player.Position, W.Range, StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
+            if (Q.Level>0)
+                if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(StaticObjects.Player.Position, Q.Range, StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.QColor").GetValue<Circle>().Color, 2);
+            if (W.Level>0)
+                if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Active)
+                    Render.Circle.DrawCircle(StaticObjects.Player.Position, W.Range, StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+StaticObjects.Player.ChampionName+".Boolean.DrawOnSelf.WColor").GetValue<Circle>().Color, 2);
         }
 
         //    _lastTick = Functions.AssemblyTime.CurrentTime();
@@ -350,7 +394,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// </param>
         private void OnUpdate(EventArgs args)
         {
-            if (!Handler.CheckOrbwalker()) return;
+            if (!Handler.CheckOrbwalker())
+                return;
 
             switch (Orbwalker.ActiveMode)
             {
@@ -370,6 +415,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     break;
                 }
             }
+
             Handler.UseOrbwalker();
         }
 

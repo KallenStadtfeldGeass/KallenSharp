@@ -23,7 +23,9 @@ namespace _Project_Geass.Module.Core.Items.Menus
         /// </param>
         public Item(Menu menu, bool enabled, Orbwalking.Orbwalker orbwalker)
         {
-            if (!enabled) return;
+            if (!enabled)
+                return;
+
             StaticObjects.ProjectLogger.WriteLog("Item Menu and events loaded.");
             menu.AddSubMenu(Menu());
             // ReSharper disable once UnusedVariable
@@ -53,14 +55,16 @@ namespace _Project_Geass.Module.Core.Items.Menus
             qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Boolean.QSS", "Use QSS").SetValue(true));
             qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Slider.QSS.Delay", "QSS Delay").SetValue(new Slider(300, 250, 1500)));
 
-            foreach (var buff in Buffs.GetTypes) qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Boolean.QSS."+buff, "On "+buff).SetValue(true));
+            foreach (var buff in Buffs.GetTypes)
+                qssMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Boolean.QSS."+buff, "On "+buff).SetValue(true));
 
             var mercMenu=new Menu(".Merc Menu", "MercMenu");
 
             mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Boolean.Merc", "Use Merc").SetValue(true));
             mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Slider.Merc.Delay", "Merc Delay").SetValue(new Slider(300, 250, 1500)));
 
-            foreach (var buff in Buffs.GetTypes) mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Boolean.Merc."+buff, "On "+buff).SetValue(true));
+            foreach (var buff in Buffs.GetTypes)
+                mercMenu.AddItem(new MenuItem(Names.Menu.MenuDefensiveItemBase+"Boolean.Merc."+buff, "On "+buff).SetValue(true));
 
             defensiveMenu.AddSubMenu(qssMenu);
             defensiveMenu.AddSubMenu(mercMenu);

@@ -39,13 +39,18 @@ namespace _Project_Geass.Module.Core.Items.Events
         /// </param>
         private void OnUpdate(EventArgs args)
         {
-            if (!Handler.CheckTrinket()) return;
+            if (!Handler.CheckTrinket())
+                return;
 
-            if (!StaticObjects.ProjectMenu.Item(Names.Menu.TrinketItemBase+"Boolean.BuyOrb").GetValue<bool>()) return;
+            if (!StaticObjects.ProjectMenu.Item(Names.Menu.TrinketItemBase+"Boolean.BuyOrb").GetValue<bool>())
+                return;
+
             Handler.UseTrinket();
 
-            if (StaticObjects.Player.Level<9) return;
-            if (!StaticObjects.Player.InShop()||LeagueSharp.Common.Items.HasItem(_trinket.Orb.Id)) return;
+            if (StaticObjects.Player.Level<9)
+                return;
+            if (!StaticObjects.Player.InShop()||LeagueSharp.Common.Items.HasItem(_trinket.Orb.Id))
+                return;
 
             StaticObjects.ProjectLogger.WriteLog("Buy Orb");
             _trinket.Orb.Buy();

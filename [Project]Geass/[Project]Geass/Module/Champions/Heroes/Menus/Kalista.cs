@@ -83,7 +83,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var qMenu=new Menu("Q Settings", basename+"Q Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
 
             mainMenu.AddSubMenu(qMenu);
             return mainMenu;
@@ -102,7 +103,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var qMenu=new Menu("Q Settings", basename+"Q Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                qMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
 
             mainMenu.AddSubMenu(qMenu);
             return mainMenu;

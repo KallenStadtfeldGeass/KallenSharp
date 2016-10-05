@@ -11,26 +11,34 @@ namespace _Project_Geass.Functions.Calculations
 
         public static float CalcRealDamage(Obj_AI_Base target, float fakeDamage)
         {
-            if (CheckNoDamageBuffs((Obj_AI_Hero)target)) return 0f;
+            if (CheckNoDamageBuffs((Obj_AI_Hero)target))
+                return 0f;
 
             var defuffer=1f;
 
-            if (target.HasBuff("FerociousHowl")||target.HasBuff("GarenW")) defuffer*=.7f;
+            if (target.HasBuff("FerociousHowl")||target.HasBuff("GarenW"))
+                defuffer*=.7f;
 
-            if (target.HasBuff("Medidate")) defuffer*=.5f-target.Spellbook.GetSpell(SpellSlot.E).Level*.05f;
+            if (target.HasBuff("Medidate"))
+                defuffer*=.5f-target.Spellbook.GetSpell(SpellSlot.E).Level*.05f;
 
-            if (target.HasBuff("gragaswself")) defuffer*=.9f-target.Spellbook.GetSpell(SpellSlot.W).Level*.02f;
+            if (target.HasBuff("gragaswself"))
+                defuffer*=.9f-target.Spellbook.GetSpell(SpellSlot.W).Level*.02f;
 
-            if (target.Name.Contains("Baron")&&StaticObjects.Player.HasBuff("barontarget")) defuffer*=0.5f;
+            if (target.Name.Contains("Baron")&&StaticObjects.Player.HasBuff("barontarget"))
+                defuffer*=0.5f;
 
-            if (StaticObjects.Player.HasBuff("summonerexhaust")) defuffer*=.4f;
+            if (StaticObjects.Player.HasBuff("summonerexhaust"))
+                defuffer*=.4f;
 
-            if (!target.IsChampion()) return fakeDamage*defuffer;
+            if (!target.IsChampion())
+                return fakeDamage*defuffer;
 
             var healthDebuffer=0f;
             var hero=(Obj_AI_Hero)target;
 
-            if ((hero.ChampionName=="Blitzcrank")&&!target.HasBuff("BlitzcrankManaBarrierCD")&&!target.HasBuff("ManaBarrier")) healthDebuffer+=target.Mana/2;
+            if ((hero.ChampionName=="Blitzcrank")&&!target.HasBuff("BlitzcrankManaBarrierCD")&&!target.HasBuff("ManaBarrier"))
+                healthDebuffer+=target.Mana/2;
 
             return fakeDamage*defuffer-(healthDebuffer+GetShield(target)+target.FlatHPRegenMod+10);
         }
@@ -47,7 +55,9 @@ namespace _Project_Geass.Functions.Calculations
                         return true;
 
                     case "Undying Rage":
-                        if (target.ChampionName=="Tryndamere") return true;
+                        if (target.ChampionName=="Tryndamere")
+                            return true;
+
                         continue;
 
                     //Spell Shields

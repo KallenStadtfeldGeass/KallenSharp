@@ -21,7 +21,8 @@ namespace _Project_Geass.Functions
             {
                 var temp=new Menu(champ.Key, Names.Menu.BaseItem+champ);
 
-                foreach (var element in GenerateSettingsList(Names.Menu.BaseItem+champ.Key)) temp.AddItem(element);
+                foreach (var element in GenerateSettingsList(Names.Menu.BaseItem+champ.Key))
+                    temp.AddItem(element);
 
                 StaticObjects.SettingsMenu.AddSubMenu(temp);
             }

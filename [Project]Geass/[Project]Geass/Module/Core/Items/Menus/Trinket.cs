@@ -19,7 +19,9 @@ namespace _Project_Geass.Module.Core.Items.Menus
         /// </param>
         public Trinket(Menu menu, bool enabled)
         {
-            if (!enabled) return;
+            if (!enabled)
+                return;
+
             menu.AddSubMenu(Menu());
             // ReSharper disable once UnusedVariable
             var trinket=new Events.Trinket();

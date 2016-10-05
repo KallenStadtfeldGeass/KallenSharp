@@ -27,7 +27,8 @@ namespace _Project_Geass.Module.Core.Drawing.Events
         /// </param>
         public void OnDraw(EventArgs args)
         {
-            if (StaticObjects.Player.IsDead) return;
+            if (StaticObjects.Player.IsDead)
+                return;
 
             if (StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase+".Minion."+"Circle.LastHitHelper").GetValue<Circle>().Active)
                 foreach (var minion in Minions.GetEnemyMinions(StaticObjects.Player.AttackRange+150))

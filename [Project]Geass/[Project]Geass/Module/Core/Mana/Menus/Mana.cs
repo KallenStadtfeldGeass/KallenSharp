@@ -30,7 +30,8 @@ namespace _Project_Geass.Module.Core.Mana.Menus
         public ManaMenu(Menu menu, int[,] options, bool enabled)
         {
             Enabled=enabled;
-            if (!enabled) return;
+            if (!enabled)
+                return;
 
             menu.AddSubMenu(Menu(options));
             // ReSharper disable once UnusedVariable
@@ -48,9 +49,13 @@ namespace _Project_Geass.Module.Core.Mana.Menus
             for (var index=0;index<SettingsBase.ManaModes.Length;index++)
             {
                 var subMenu=new Menu($"{SettingsBase.ManaModes[index]}", $"{SettingsBase.ManaModes[index]}ManaMenu");
-                for (var i=0;i<SettingsBase.ManaAbilities.Length;i++) if (options[index, i]!=-1) subMenu.AddItem(new MenuItem($"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[index]}.Slider.MinMana.{SettingsBase.ManaAbilities[i]}", $"Min Mana% {SettingsBase.ManaAbilities[i]}").SetValue(new Slider(options[index, i])));
+                for (var i=0;i<SettingsBase.ManaAbilities.Length;i++)
+                    if (options[index, i]!=-1)
+                        subMenu.AddItem(new MenuItem($"{Names.Menu.ManaItemBase}{SettingsBase.ManaModes[index]}.Slider.MinMana.{SettingsBase.ManaAbilities[i]}", $"Min Mana% {SettingsBase.ManaAbilities[i]}").SetValue(new Slider(options[index, i])));
+
                 menu.AddSubMenu(subMenu);
             }
+
             return menu;
         }
 

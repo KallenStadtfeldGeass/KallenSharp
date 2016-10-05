@@ -38,17 +38,20 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnGapClose", "Use E on gapclose").SetValue(true));
             var eMenu=new Menu("GapClose E Settings", basename+"GapCloseE");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) eMenu.AddItem(new MenuItem($"{basename}.UseE.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                eMenu.AddItem(new MenuItem($"{basename}.UseE.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose", "Use W on gapclose").SetValue(true));
             var wMenu=new Menu("GapClose W Settings", basename+"GapCloseW");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                wMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.OnKillable", "Use R on Killable").SetValue(true));
             var rMenu=new Menu("Killable R Settings", basename+"KillableR");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) rMenu.AddItem(new MenuItem($"{basename}.UseR.OnKillable.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                rMenu.AddItem(new MenuItem($"{basename}.UseR.OnKillable.{enemy.ChampionName}", $"On {enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(eMenu);
             mainMenu.AddSubMenu(wMenu);
@@ -81,7 +84,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var wMenu=new Menu("W Settings", basename+"W Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                wMenu.AddItem(new MenuItem($"{basename}.UseW.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
 
             mainMenu.AddSubMenu(wMenu);
 
@@ -98,7 +102,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var wMenu=new Menu("Q Settings", basename+"Q Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) wMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                wMenu.AddItem(new MenuItem($"{basename}.UseQ.On.{enemy.ChampionName}", $"{enemy.ChampionName}.Enable").SetValue(true));
 
             mainMenu.AddSubMenu(wMenu);
             return mainMenu;

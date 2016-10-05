@@ -44,7 +44,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var rMenu=new Menu("R Settings", basename+"RSettings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) rMenu.AddItem(new MenuItem($"{basename}.UseR.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                rMenu.AddItem(new MenuItem($"{basename}.UseR.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(rMenu);
 
@@ -93,13 +94,15 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var eMenu=new Menu("E Settings", basename+"E Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseR", "Use R (kill)").SetValue(true));
 
             var rMenu=new Menu("R Settings", basename+"R Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) rMenu.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                rMenu.AddItem(new MenuItem($"{basename}.UseR.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(eMenu);
             mainMenu.AddSubMenu(rMenu);
@@ -135,7 +138,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 
             var eMenu=new Menu("E Settings", basename+"E Settings");
 
-            foreach (var enemy in Functions.Objects.Heroes.GetEnemies()) eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
+            foreach (var enemy in Functions.Objects.Heroes.GetEnemies())
+                eMenu.AddItem(new MenuItem($"{basename}.UseE.On.{enemy.ChampionName}", $"{enemy.ChampionName}").SetValue(true));
 
             mainMenu.AddSubMenu(eMenu);
             return mainMenu;

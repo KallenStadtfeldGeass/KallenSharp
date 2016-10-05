@@ -10,7 +10,8 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
 
         public Abilities(Menu menu, int[] abiSeq, bool enabled)
         {
-            if (!enabled) return;
+            if (!enabled)
+                return;
 
             menu.AddSubMenu(Menu());
 
