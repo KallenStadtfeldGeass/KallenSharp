@@ -161,8 +161,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         }
 
                     if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.OnJungle").GetValue<bool>())
-                        foreach (var target in
-                            MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral).Where(x => x.IsValidTarget(Q.Range)).OrderBy(hp => hp.MaxHealth/hp.Health))
+                        foreach (var target in MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral).Where(x => x.IsValidTarget(Q.Range)).OrderBy(hp => hp.Health))
                         {
                             Q.Cast(target);
                             return;
