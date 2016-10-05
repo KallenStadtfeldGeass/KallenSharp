@@ -27,14 +27,16 @@ namespace _Project_Geass.Functions
 
         public static bool CheckColision(PredictionOutput prediction) //Returns if a colision is meet
         {
+            StaticObjects.ProjectLogger.WriteLog("Colision Call");
             foreach (var obj in prediction.CollisionObjects)
-                StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
+                StaticObjects.ProjectLogger.WriteLog($"Name:{obj.IsMinion}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
 
             return prediction.CollisionObjects.Any(obj => !obj.IsDead||!obj.IsChampion()||!obj.IsEnemy);
         }
 
         public static bool CheckColision(SebbyLib.Prediction.PredictionOutput prediction) //Returns if a colision is meet
         {
+            StaticObjects.ProjectLogger.WriteLog("Colision Call");
             foreach (var obj in prediction.CollisionObjects)
                 StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
 
@@ -43,6 +45,7 @@ namespace _Project_Geass.Functions
 
         public static bool CheckColision(SPrediction.Prediction.Result prediction) //Returns if a colision is meet
         {
+            StaticObjects.ProjectLogger.WriteLog("Colision Call");
             foreach (var obj in prediction.CollisionResult.Units)
                 StaticObjects.ProjectLogger.WriteLog($"Name:{obj.Name}:IsDead:{obj.IsDead}:IsEnemy{obj.IsEnemy}:IsChampion:{obj.IsChampion()}");
 
