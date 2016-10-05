@@ -58,10 +58,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         private void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
             if (!sender.Owner.IsMe) return;
-           // if (args.Slot == SpellSlot.Q || args.Slot == SpellSlot.W)
-            //{
-            //    Orbwalking.ResetAutoAttackTimer();
-            //}
+            if (args.Slot == SpellSlot.Q || args.Slot == SpellSlot.W)
+            {
+                Orbwalking.ResetAutoAttackTimer();
+            }
         }
 
 
@@ -160,27 +160,19 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         if (
                             StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
-                            {
-                                focusTargetValid = true;
-                                Prediction.DoCast(Q, focusTarget);
-                            }
+                                focusTargetValid = Prediction.DoCast(Q, focusTarget,minHitChance);
                         }
+                        
                     }
 
                     if (!focusTargetValid)
                     {
                         var orderedTargets = Prediction.OrderTargets(Q);
 
-
-                        if (
-                            orderedTargets.Where(
-                                    target =>
-                                        StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}")
-                                            .GetValue<bool>())
-                                .Any(target => Prediction.CheckTarget(target, Q, minHitChance, true)))
+                        foreach (var target in orderedTargets)
                         {
-                            Prediction.DoCast(Q, focusTarget);
+                            if(StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>())continue;
+                            if (Prediction.DoCast(Q, focusTarget, minHitChance,true)) break;
                         }
                     }
 
@@ -205,11 +197,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                             StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}")
                                 .GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, W, minHitChance))
-                            {
-                                focusTargetValid = true;
-                                Prediction.DoCast(W, focusTarget);
-                            }
+                                focusTargetValid = Prediction.DoCast(W, focusTarget,minHitChance);
+                            
                         }
                     }
 
@@ -218,14 +207,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         var orderedTargets = Prediction.OrderTargets(W);
 
 
-                        if (
-                            orderedTargets.Where(
-                                    target =>
-                                        StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}")
-                                            .GetValue<bool>())
-                                .Any(target => Prediction.CheckTarget(target, W, minHitChance, true)))
+                        foreach (var target in orderedTargets)
                         {
-                            Prediction.DoCast(W, focusTarget);
+                            if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()) continue;
+                            if (Prediction.DoCast(W, focusTarget, minHitChance)) break;
                         }
                     }
 
@@ -251,17 +236,14 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                             StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{focusTarget.ChampionName}")
                                 .GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, R, minHitChance))
-                            {
                                 if (focusTarget.Distance(StaticObjects.Player) > Q.Range)
                                 {
                                     if (GetRealRDamage(focusTarget) > focusTarget.Health)
                                     {
-                                        focusTargetValid = true;
-                                        Prediction.DoCast(R, focusTarget);
+                                        focusTargetValid= Prediction.DoCast(R, focusTarget, minHitChance);
                                     }
                                 }
-                            }
+                            
                         }
                     }
 
@@ -275,11 +257,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                             if (target.Health > GetRealRDamage(target)) continue;
                             if (Q.Range > target.Distance(StaticObjects.Player)) continue;
 
-                            if (Prediction.CheckTarget(target, R, minHitChance))
-                            {
-                                Prediction.DoCast(R, target);
+                            if (Prediction.DoCast(R, target,minHitChance))
                                 break;
-                            }
+                            
                         }
                     }
 
@@ -325,11 +305,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     {
                         if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, Q, minHitChance, true))
-                            {
-                                focusTargetValid = true;
-                                Prediction.DoCast(Q, focusTarget);
-                            }
+                                focusTargetValid = Prediction.DoCast(Q, focusTarget,minHitChance,true);
+                            
                         }
                     }
 
@@ -337,10 +314,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     {
                         var orderedTargets = Prediction.OrderTargets(Q);
 
-
-                        if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, Q, minHitChance, true)))
+                        foreach (var target in orderedTargets)
                         {
-                            Prediction.DoCast(Q, focusTarget);
+                            if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{target.ChampionName}").GetValue<bool>()) continue;
+                            if (Prediction.DoCast(Q, focusTarget, minHitChance, true)) break;
                         }
                     }
 
@@ -363,11 +340,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     {
                         if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, W, minHitChance))
-                            {
-                                focusTargetValid = true;
-                                Prediction.DoCast(W, focusTarget);
-                            }
+                                focusTargetValid = Prediction.DoCast(W, focusTarget,minHitChance);
+                            
                         }
                     }
 
@@ -376,9 +350,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         var orderedTargets = Prediction.OrderTargets(W);
 
 
-                        if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, W, minHitChance, true)))
+                        foreach (var target in orderedTargets)
                         {
-                            Prediction.DoCast(W, focusTarget);
+                            if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()) continue;
+                            if (Prediction.DoCast(W, focusTarget, minHitChance)) break;
                         }
                     }
 
@@ -404,6 +379,9 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .Where(x => (x.Health < Q.GetDamage(x)) && (x.Health > 30))
                                 .OrderBy(hp => hp.Health))
                         {
+                            if (StaticObjects.Player.IsWindingUp ||
+                                StaticObjects.Player.GetAutoAttackDamage(target) < target.Health + 25) continue;
+
                             Q.Cast(target);
                             return;
                         }

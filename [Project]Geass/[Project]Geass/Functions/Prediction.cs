@@ -12,63 +12,60 @@ namespace _Project_Geass.Functions
     {
         public static readonly int PredictionMethod =StaticObjects.SettingsMenu.Item($"{Names.Menu.BaseItem}.PredictionMethod").GetValue<StringList>().SelectedIndex;
 
-        public static bool CheckTarget(Obj_AI_Hero target, Spell spell,HitChance minHitChance, bool checkColision = false)
+        public static bool CheckColision(PredictionOutput prediction) //Returns if a colision is meet
         {
-            switch (PredictionMethod)
-            {
-                case 0:
-                {
-                    var prediction = spell.GetPrediction(target);
-                    if (!checkColision) return prediction.Hitchance >= minHitChance;
-
-                        if (prediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy))
-                            return false;
-
-                    return prediction.Hitchance >= minHitChance;
-                }
-                case 1:
-                {
-
-                    var sebbyPrediction = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
-
-                    if (!checkColision) return (HitChance) sebbyPrediction.Hitchance >= minHitChance;
+            return prediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy);
+        }
 
 
-                    if (sebbyPrediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy))
-                        return false;
-
-                    return (HitChance)sebbyPrediction.Hitchance >= minHitChance;
-                }
-            }
+        public static bool CheckColision(SebbyLib.Prediction.PredictionOutput prediction) //Returns if a colision is meet
+        {
+            return prediction.CollisionObjects.Any(obj => obj.IsDead || !obj.IsChampion() || !obj.IsEnemy);
+        }
 
 
-            var sprediction = spell.GetSPrediction(target);
-
-            if (checkColision && sprediction.CollisionResult.Objects.HasFlag(Collision.Flags.Minions) || sprediction.CollisionResult.Objects.HasFlag(Collision.Flags.YasuoWall))
-                return false;
-
-            return sprediction.HitChance >= minHitChance;
+        public static bool CheckColision(SPrediction.Prediction.Result prediction) //Returns if a colision is meet
+        {
+            return prediction.CollisionResult.Objects.HasFlag(Collision.Flags.Minions) ||
+                   prediction.CollisionResult.Objects.HasFlag(Collision.Flags.YasuoWall);
 
         }
 
-        public static void DoCast(Spell spell, Obj_AI_Hero target)
+        public static bool DoCast(Spell spell, Obj_AI_Hero target,HitChance minHitChance,bool colisionCheck = false)
         {
-            switch (PredictionMethod)
+            if (PredictionMethod == 0)
             {
-                case 0: //Common
-                        var cPos = spell.GetPrediction(target);
-                        spell.Cast(cPos.CastPosition);
-                        break;
-                case 1: //Sebby
-                        var pos = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
-                        spell.Cast(pos.CastPosition);
-                        break;
-                case 2: //Sprediction
-                    var sPos = spell.GetSPrediction(target);
-                    spell.Cast(sPos.CastPosition);
-                    break;
+                var output = spell.GetPrediction(target);
 
+                if (colisionCheck)
+                    if (CheckColision(output)) return false;
+
+                if (minHitChance > output.Hitchance) return false;
+                spell.Cast(output.CastPosition);
+                return true;
             }
+            else if (PredictionMethod == 1)
+            {
+                var output = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+                if (colisionCheck)
+                    if (CheckColision(output)) return false;
+
+                if (minHitChance > (HitChance)output.Hitchance) return false;
+                spell.Cast(output.CastPosition);
+                return true;
+            }
+            else if (PredictionMethod == 2)
+            {
+                var output = spell.GetSPrediction(target);
+
+                if (colisionCheck)
+                    if (CheckColision(output)) return false;
+
+                if (minHitChance > output.HitChance) return false;
+                spell.Cast(output.CastPosition);
+                return true;
+            }
+            return false;
         }
         public static void DoCast(Spell spell, IOrderedEnumerable<Obj_AI_Hero> targets , HitChance minHitChance)
         {

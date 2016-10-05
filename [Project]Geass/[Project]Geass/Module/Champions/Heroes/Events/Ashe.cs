@@ -109,11 +109,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     {
                         if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, W, minHitChance))
-                            {
-                                focusTargetValid = true;
-                                Prediction.DoCast(W, focusTarget);
-                            }
+
+                                focusTargetValid = Prediction.DoCast(W, focusTarget,minHitChance);
                         }
                     }
                     if (!focusTargetValid)
@@ -121,9 +118,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         var orderedTargets = Prediction.OrderTargets(W);
 
 
-                        if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, W, minHitChance)))
+                        foreach (var target in orderedTargets)
                         {
-                            Prediction.DoCast(W, focusTarget);
+                            if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()) continue;
+                            if (Prediction.DoCast(W, target, minHitChance)) break;
                         }
                     }
                 }
@@ -153,11 +151,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                         $"{basename}.UseR.On.{focusTarget.ChampionName}.HpMax").GetValue<Slider>().Value <
                                     focusTarget.HealthPercent)
                                 {
-                                    if (Prediction.CheckTarget(focusTarget, R, minHitChance))
-                                    {
-                                        focusTargetValid = true;
-                                        Prediction.DoCast(R, focusTarget);
-                                    }
+                                        focusTargetValid = Prediction.DoCast(R, focusTarget,minHitChance);
+                                    
                                 }
 
                     if (!focusTargetValid)
@@ -178,10 +173,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                     .GetValue<Slider>()
                                     .Value < target.HealthPercent) continue;
 
-
-                            if (!Prediction.CheckTarget(focusTarget, R, minHitChance)) continue;
-
-                            Prediction.DoCast(R, focusTarget);
+                            if (Prediction.DoCast(R, target, minHitChance)) break;
                         }
                     }
                 }
@@ -211,11 +203,8 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                     {
                         if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
-                            if (Prediction.CheckTarget(focusTarget, W, minHitChance))
-                            {
-                                focusTargetValid = true;
-                                Prediction.DoCast(W, focusTarget);
-                            }
+                                focusTargetValid = Prediction.DoCast(W, focusTarget,minHitChance);
+                            
                         }
                     }
                     if (!focusTargetValid)
@@ -223,9 +212,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         var orderedTargets = Prediction.OrderTargets(W);
 
 
-                        if (orderedTargets.Where(target => StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()).Any(target => Prediction.CheckTarget(target, W, minHitChance)))
+                        foreach (var target in orderedTargets)
                         {
-                            Prediction.DoCast(W, focusTarget);
+                            if (StaticObjects.ProjectMenu.Item($"{basename}.UseW.On.{target.ChampionName}").GetValue<bool>()) continue;
+                            if (Prediction.DoCast(W, target, minHitChance)) break;
                         }
                     }
                 }
