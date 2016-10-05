@@ -160,7 +160,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                         if (
                             StaticObjects.ProjectMenu.Item($"{basename}.UseQ.On.{focusTarget.ChampionName}").GetValue<bool>())
                         {
-                                focusTargetValid = Prediction.DoCast(Q, focusTarget,minHitChance);
+                                focusTargetValid = Prediction.DoCast(Q, focusTarget,minHitChance,true);
                         }
                         
                     }
