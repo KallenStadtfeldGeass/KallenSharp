@@ -7,13 +7,17 @@ namespace _Project_Geass.Functions
 {
     internal class StaticObjects
     {
-        public static Logger ProjectLogger = new Logger(Names.ProjectName);
-        public static Menu SettingsMenu = new Menu(Names.SettingsName, Names.SettingsName, true);
+        #region Public Fields
 
-        public static Obj_AI_Hero Player = ObjectManager.Player;
         public static DateTime AssemblyLoadTime = DateTime.Now;
+        public static Obj_AI_Hero Player = ObjectManager.Player;
+        public static Logger ProjectLogger = new Logger(Names.ProjectName);
 
         public static Menu ProjectMenu = new Menu($"{Names.ProjectName}.{Player.ChampionName}",
             $"{Names.ProjectName}.{Player.ChampionName}", true);
+
+        public static Menu SettingsMenu = new Menu(Names.SettingsName, Names.SettingsName, true);
+
+        #endregion Public Fields
     }
 }

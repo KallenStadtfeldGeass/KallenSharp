@@ -6,10 +6,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Ezreal
     {
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+        #region Public Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Ezreal" /> class.
+        /// Initializes a new instance of the <see cref="Ezreal" /> class. 
         /// </summary>
         public Ezreal()
         {
@@ -19,25 +19,38 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Clear());
         }
 
-        /// <summary>
-        ///     Miscs
-        /// </summary>
-        /// <returns></returns>
-        private Menu Misc()
-        {
-            var basename = _baseName + "Misc.";
+        #endregion Public Constructors
 
-            var mainMenu = new Menu(nameof(Misc), basename);
-            mainMenu.AddItem(
-                new MenuItem($"{basename}.UseQ.TearStack", "Use Q to tear stack (when no enemy in range)").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack.MinMana", "Min Mana%").SetValue(new Slider(70)));
+        #region Private Fields
+
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
+        #endregion Private Fields
+
+        #region Private Methods
+
+        /// <summary>
+        /// On Clear 
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        private Menu Clear()
+        {
+            var basename = _baseName + "Clear.";
+            var mainMenu = new Menu(nameof(Clear), basename);
+
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minon.LastHit", "Use Q To Last Hit Minons").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnJungle", "Use Q on mosters").SetValue(true));
+
             return mainMenu;
         }
 
         /// <summary>
-        ///     On Combo
+        /// On Combo 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
         private Menu Combo()
         {
             var basename = _baseName + "Combo.";
@@ -90,9 +103,26 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        ///     On Mixed
+        /// Miscs 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
+        private Menu Misc()
+        {
+            var basename = _baseName + "Misc.";
+
+            var mainMenu = new Menu(nameof(Misc), basename);
+            mainMenu.AddItem(
+                new MenuItem($"{basename}.UseQ.TearStack", "Use Q to tear stack (when no enemy in range)").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack.MinMana", "Min Mana%").SetValue(new Slider(70)));
+            return mainMenu;
+        }
+
+        /// <summary>
+        /// On Mixed 
+        /// </summary>
+        /// <returns>
+        /// </returns>
         private Menu Mixed()
         {
             var basename = _baseName + "Mixed.";
@@ -128,20 +158,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
-        /// <summary>
-        ///     On Clear
-        /// </summary>
-        /// <returns></returns>
-        private Menu Clear()
-        {
-            var basename = _baseName + "Clear.";
-            var mainMenu = new Menu(nameof(Clear), basename);
-
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minon.LastHit", "Use Q To Last Hit Minons").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnJungle", "Use Q on mosters").SetValue(true));
-
-            return mainMenu;
-        }
+        #endregion Private Methods
     }
 }

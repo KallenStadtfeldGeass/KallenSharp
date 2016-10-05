@@ -7,8 +7,10 @@ namespace _Project_Geass.Functions
 {
     internal sealed class SettingsMenuGenerater
     {
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SettingsMenuGenerater" /> class.
+        /// Initializes a new instance of the <see cref="SettingsMenuGenerater" /> class. 
         /// </summary>
         public SettingsMenuGenerater()
         {
@@ -26,11 +28,18 @@ namespace _Project_Geass.Functions
             }
         }
 
+        #endregion Public Constructors
+
+        #region Private Methods
+
         /// <summary>
-        ///     Generates the settings list.
+        /// Generates the settings list. 
         /// </summary>
-        /// <param name="basename">The basename.</param>
-        /// <returns></returns>
+        /// <param name="basename">
+        /// The basename. 
+        /// </param>
+        /// <returns>
+        /// </returns>
         private IEnumerable<MenuItem> GenerateSettingsList(string basename)
         {
             var items = new List<MenuItem>
@@ -45,5 +54,7 @@ namespace _Project_Geass.Functions
 
             return items;
         }
+
+        #endregion Private Methods
     }
 }

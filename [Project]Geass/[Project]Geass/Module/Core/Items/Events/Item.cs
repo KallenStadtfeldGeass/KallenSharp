@@ -11,14 +11,20 @@ namespace _Project_Geass.Module.Core.Items.Events
 {
     internal class Item
     {
-        private readonly Defensive _defensive;
-        private readonly Offensive _offensive;
+        #region Public Fields
+
         public Orbwalking.Orbwalker Orbwalker;
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Item" /> class.
+        /// Initializes a new instance of the <see cref="Item" /> class. 
         /// </summary>
-        /// <param name="orbwalker">The orbwalker.</param>
+        /// <param name="orbwalker">
+        /// The orbwalker. 
+        /// </param>
         public Item(Orbwalking.Orbwalker orbwalker)
         {
             Orbwalker = orbwalker;
@@ -29,18 +35,16 @@ namespace _Project_Geass.Module.Core.Items.Events
             Game.OnUpdate += OnUpdate;
         }
 
-        private void After_Attack(AttackableUnit unit, AttackableUnit target)
-        {
-        }
+        #endregion Public Constructors
 
-        private void Before_Attack(Orbwalking.BeforeAttackEventArgs args)
-        {
-        }
+        #region Public Methods
 
         /// <summary>
-        ///     Raises the <see cref="E:Update" /> event.
+        /// Raises the <see cref="E:Update" /> event. 
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
         public void OnUpdate(EventArgs args)
         {
             #region Offensive
@@ -81,7 +85,7 @@ namespace _Project_Geass.Module.Core.Items.Events
                                 (StaticObjects.Player.HealthPercent <
                                  StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveNameBase +
                                                                 "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
-                            //Player hp less then
+                        //Player hp less then
                         {
                             StaticObjects.ProjectLogger.WriteLog($"Use Bork on {target}");
                             LeagueSharp.Common.Items.UseItem(_offensive.Botrk.Id, target);
@@ -119,7 +123,7 @@ namespace _Project_Geass.Module.Core.Items.Events
                                 (StaticObjects.Player.HealthPercent <
                                  StaticObjects.ProjectMenu.Item(Names.Menu.MenuOffensiveItemBase +
                                                                 "Slider.Bork.MinHp.Player").GetValue<Slider>().Value))
-                            //Player hp less then
+                        //Player hp less then
                         {
                             StaticObjects.ProjectLogger.WriteLog($"Use Cutless on {target}");
                             LeagueSharp.Common.Items.UseItem(_offensive.Cutless.Id, target);
@@ -193,5 +197,26 @@ namespace _Project_Geass.Module.Core.Items.Events
 
             #endregion Defensive
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        private readonly Defensive _defensive;
+        private readonly Offensive _offensive;
+
+        #endregion Private Fields
+
+        #region Private Methods
+
+        private void After_Attack(AttackableUnit unit, AttackableUnit target)
+        {
+        }
+
+        private void Before_Attack(Orbwalking.BeforeAttackEventArgs args)
+        {
+        }
+
+        #endregion Private Methods
     }
 }

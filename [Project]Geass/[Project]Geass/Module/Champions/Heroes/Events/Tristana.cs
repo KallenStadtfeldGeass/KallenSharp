@@ -14,14 +14,17 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 {
     internal class Tristana : Base
     {
-        private readonly DamageIndicator _damageIndicator;
-        private readonly Mana _manaManager;
+        #region Public Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Tristana" /> class.
+        /// Initializes a new instance of the <see cref="Tristana" /> class. 
         /// </summary>
-        /// <param name="manaEnabled">if set to <c>true</c> [mana enabled].</param>
-        /// <param name="orbwalker">The orbwalker.</param>
+        /// <param name="manaEnabled">
+        /// if set to <c> true </c> [mana enabled]. 
+        /// </param>
+        /// <param name="orbwalker">
+        /// The orbwalker. 
+        /// </param>
         public Tristana(bool manaEnabled, Orbwalking.Orbwalker orbwalker)
         {
             Q = new Spell(SpellSlot.Q, 550);
@@ -41,52 +44,98 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             Orbwalker = orbwalker;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         /// <summary>
-        ///     Updates the champion ranges.
+        /// Get the E damage. 
         /// </summary>
-        /// <param name="level">The level.</param>
+        /// <param name="target">
+        /// The target. 
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public float GetChargeDamage(Obj_AI_Hero target)
+        {
+            if (target.HasBuff("tristanaecharge"))
+            {
+                var count = target.GetBuffCount("tristanaecharge");
+                if (StaticObjects.Player.IsWindingUp)
+                    return (float)(E.GetDamage(target) * (count * 0.30)) + E.GetDamage(target);
+
+                if (StaticObjects.Player.Distance(target) < StaticObjects.Player.AttackRange) // target in auto range
+                    count++;
+
+                return (float)(E.GetDamage(target) * (count * 0.30)) + E.GetDamage(target);
+            }
+            if (!E.IsReady()) return 0f;
+
+            if (StaticObjects.Player.Distance(target) < E.Range)
+                return (float)(E.GetDamage(target) * 0.30) + E.GetDamage(target); // 1 auto charge
+
+            return 0f;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:DrawEnemy" /> event. 
+        /// </summary>
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
+        public void OnDrawEnemy(EventArgs args)
+        {
+            if (
+                !StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                                ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Active)
+            {
+                _damageIndicator.SetFillEnabled(false);
+                _damageIndicator.SetKillableEnabled(false);
+                return;
+            }
+
+            _damageIndicator.SetFillEnabled(true);
+            _damageIndicator.SetFill(
+                StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
+                                               ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Color);
+
+            _damageIndicator.SetKillableEnabled(false);
+        }
+
+        #endregion Public Methods
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Updates the champion ranges. 
+        /// </summary>
+        /// <param name="level">
+        /// The level. 
+        /// </param>
         protected virtual void UpdateChampionRange(int level)
         {
-            Q.Range = 550 + 9*(level - 1);
-            E.Range = 625 + 9*(level - 1);
-            R.Range = 517 + 9*(level - 1);
+            Q.Range = 550 + 9 * (level - 1);
+            E.Range = 625 + 9 * (level - 1);
+            R.Range = 517 + 9 * (level - 1);
         }
 
-        /// <summary>
-        ///     Raises the <see cref="E:Update" /> event.
-        /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void OnUpdate(EventArgs args)
-        {
-            if (!Handler.CheckOrbwalker()) return;
+        #endregion Protected Methods
 
-            UpdateChampionRange(StaticObjects.Player.Level);
+        #region Private Fields
 
-            switch (Orbwalker.ActiveMode)
-            {
-                case Orbwalking.OrbwalkingMode.Combo:
-                {
-                    Combo();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.Mixed:
-                {
-                    Mixed();
-                    break;
-                }
-                case Orbwalking.OrbwalkingMode.LaneClear:
-                {
-                    Clear();
-                    break;
-                }
-            }
-            Handler.UseOrbwalker();
-        }
+        private readonly DamageIndicator _damageIndicator;
+        private readonly Mana _manaManager;
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         /// <summary>
-        ///     Automated events.
+        /// Automated events. 
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
         private void AutoEvents(EventArgs args)
         {
             if (!Handler.CheckAutoEvents()) return;
@@ -114,87 +163,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         }
 
         /// <summary>
-        ///     On Combo
-        /// </summary>
-        private void Combo()
-        {
-            var basename = BaseName + "Combo.";
-
-            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range).OrderBy(hp => hp.Health);
-
-            if (StaticObjects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
-                if (_manaManager.CheckComboR())
-                    foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)))
-                    {
-                        if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}").GetValue<bool>())
-                            continue;
-
-                        if (GetDamage(enemy) < enemy.Health) continue;
-                        R.Cast(enemy);
-                        break;
-                    }
-
-            if (StaticObjects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
-                if (_manaManager.CheckComboE())
-                    foreach (var target in enemies)
-                    {
-                        if (
-                            !StaticObjects.ProjectMenu.Item($"{basename}.UseE.On.{target.ChampionName}")
-                                .GetValue<bool>())
-                            continue;
-
-                        if (target.HasBuffOfType(BuffType.Invulnerability) ||
-                            target.HasBuffOfType(BuffType.SpellImmunity) ||
-                            target.HasBuffOfType(BuffType.SpellShield)) continue;
-
-                        E.Cast(target);
-                        break;
-                    }
-
-            if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                foreach (var target in enemies.Where(x => x.HasBuff("TristanaECharge")))
-                {
-                    Q.Cast();
-                    Orbwalker.ForceTarget(target);
-                    break;
-                }
-        }
-
-        /// <summary>
-        ///     On Mixed
-        /// </summary>
-        private void Mixed()
-        {
-            var basename = BaseName + "Mixed.";
-
-            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range).OrderBy(x => x.Health);
-            if (StaticObjects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
-                if (_manaManager.CheckMixedE())
-                    foreach (var target in enemies)
-                    {
-                        if (
-                            !StaticObjects.ProjectMenu.Item($"{basename}.UseE.On.{target.ChampionName}")
-                                .GetValue<bool>())
-                            continue;
-
-                        if (target.HasBuffOfType(BuffType.Invulnerability) ||
-                            target.HasBuffOfType(BuffType.SpellImmunity) ||
-                            target.HasBuffOfType(BuffType.SpellShield)) continue;
-
-                        E.Cast(target);
-                        break;
-                    }
-
-            if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
-                foreach (var target in enemies.Where(x => x.HasBuff("TristanaECharge")))
-                {
-                    Q.Cast();
-                    Orbwalker.ForceTarget(target);
-                }
-        }
-
-        /// <summary>
-        ///     On Clear
+        /// On Clear 
         /// </summary>
         private void Clear()
         {
@@ -282,9 +251,114 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         }
 
         /// <summary>
-        ///     Raises the <see cref="E:Draw" /> event.
+        /// On Combo 
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void Combo()
+        {
+            var basename = BaseName + "Combo.";
+
+            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range).OrderBy(hp => hp.Health);
+
+            if (StaticObjects.ProjectMenu.Item($"{basename}.UseR").GetValue<bool>())
+                if (_manaManager.CheckComboR())
+                    foreach (var enemy in enemies.Where(e => e.IsValidTarget(R.Range)))
+                    {
+                        if (!StaticObjects.ProjectMenu.Item($"{basename}.UseR.On.{enemy.ChampionName}").GetValue<bool>())
+                            continue;
+
+                        if (GetDamage(enemy) < enemy.Health) continue;
+                        R.Cast(enemy);
+                        break;
+                    }
+
+            if (StaticObjects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
+                if (_manaManager.CheckComboE())
+                    foreach (var target in enemies)
+                    {
+                        if (
+                            !StaticObjects.ProjectMenu.Item($"{basename}.UseE.On.{target.ChampionName}")
+                                .GetValue<bool>())
+                            continue;
+
+                        if (target.HasBuffOfType(BuffType.Invulnerability) ||
+                            target.HasBuffOfType(BuffType.SpellImmunity) ||
+                            target.HasBuffOfType(BuffType.SpellShield)) continue;
+
+                        E.Cast(target);
+                        break;
+                    }
+
+            if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
+                foreach (var target in enemies.Where(x => x.HasBuff("TristanaECharge")))
+                {
+                    Q.Cast();
+                    Orbwalker.ForceTarget(target);
+                    break;
+                }
+        }
+
+        /// <summary>
+        /// Gets estimated damage 
+        /// </summary>
+        /// <param name="target">
+        /// The target. 
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private float GetDamage(Obj_AI_Hero target)
+        {
+            var damage = 0f;
+            if ((target.Distance(StaticObjects.Player) < StaticObjects.Player.AttackRange - 25) &&
+                StaticObjects.Player.CanAttack && !StaticObjects.Player.IsWindingUp)
+                damage += (float)StaticObjects.Player.GetAutoAttackDamage(target) - 10;
+
+            if (R.IsReady())
+                damage += R.GetDamage(target);
+
+            damage += GetChargeDamage(target);
+
+            return Damage.CalcRealDamage(target, damage);
+        }
+
+        /// <summary>
+        /// On Mixed 
+        /// </summary>
+        private void Mixed()
+        {
+            var basename = BaseName + "Mixed.";
+
+            var enemies = Functions.Objects.Heroes.GetEnemies(E.Range).OrderBy(x => x.Health);
+            if (StaticObjects.ProjectMenu.Item($"{basename}.UseE").GetValue<bool>())
+                if (_manaManager.CheckMixedE())
+                    foreach (var target in enemies)
+                    {
+                        if (
+                            !StaticObjects.ProjectMenu.Item($"{basename}.UseE.On.{target.ChampionName}")
+                                .GetValue<bool>())
+                            continue;
+
+                        if (target.HasBuffOfType(BuffType.Invulnerability) ||
+                            target.HasBuffOfType(BuffType.SpellImmunity) ||
+                            target.HasBuffOfType(BuffType.SpellShield)) continue;
+
+                        E.Cast(target);
+                        break;
+                    }
+
+            if (StaticObjects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
+                foreach (var target in enemies.Where(x => x.HasBuff("TristanaECharge")))
+                {
+                    Q.Cast();
+                    Orbwalker.ForceTarget(target);
+                }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:Draw" /> event. 
+        /// </summary>
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
         private void OnDraw(EventArgs args)
         {
             var basename = BaseName + "Drawing.";
@@ -320,72 +394,38 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         }
 
         /// <summary>
-        ///     Raises the <see cref="E:DrawEnemy" /> event.
+        /// Raises the <see cref="E:Update" /> event. 
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
-        public void OnDrawEnemy(EventArgs args)
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
+        private void OnUpdate(EventArgs args)
         {
-            if (
-                !StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
-                                                ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Active)
+            if (!Handler.CheckOrbwalker()) return;
+
+            UpdateChampionRange(StaticObjects.Player.Level);
+
+            switch (Orbwalker.ActiveMode)
             {
-                _damageIndicator.SetFillEnabled(false);
-                _damageIndicator.SetKillableEnabled(false);
-                return;
+                case Orbwalking.OrbwalkingMode.Combo:
+                    {
+                        Combo();
+                        break;
+                    }
+                case Orbwalking.OrbwalkingMode.Mixed:
+                    {
+                        Mixed();
+                        break;
+                    }
+                case Orbwalking.OrbwalkingMode.LaneClear:
+                    {
+                        Clear();
+                        break;
+                    }
             }
-
-            _damageIndicator.SetFillEnabled(true);
-            _damageIndicator.SetFill(
-                StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + StaticObjects.Player.ChampionName +
-                                               ".Boolean.DrawOnEnemy.ComboDamage").GetValue<Circle>().Color);
-
-            _damageIndicator.SetKillableEnabled(false);
+            Handler.UseOrbwalker();
         }
 
-        /// <summary>
-        ///     Get the E damage.
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <returns></returns>
-        public float GetChargeDamage(Obj_AI_Hero target)
-        {
-            if (target.HasBuff("tristanaecharge"))
-            {
-                var count = target.GetBuffCount("tristanaecharge");
-                if (StaticObjects.Player.IsWindingUp)
-                    return (float) (E.GetDamage(target)*(count*0.30)) + E.GetDamage(target);
-
-                if (StaticObjects.Player.Distance(target) < StaticObjects.Player.AttackRange) // target in auto range
-                    count++;
-
-                return (float) (E.GetDamage(target)*(count*0.30)) + E.GetDamage(target);
-            }
-            if (!E.IsReady()) return 0f;
-
-            if (StaticObjects.Player.Distance(target) < E.Range)
-                return (float) (E.GetDamage(target)*0.30) + E.GetDamage(target); // 1 auto charge
-
-            return 0f;
-        }
-
-        /// <summary>
-        ///     Gets estimated damage
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <returns></returns>
-        private float GetDamage(Obj_AI_Hero target)
-        {
-            var damage = 0f;
-            if ((target.Distance(StaticObjects.Player) < StaticObjects.Player.AttackRange - 25) &&
-                StaticObjects.Player.CanAttack && !StaticObjects.Player.IsWindingUp)
-                damage += (float) StaticObjects.Player.GetAutoAttackDamage(target) - 10;
-
-            if (R.IsReady())
-                damage += R.GetDamage(target);
-
-            damage += GetChargeDamage(target);
-
-            return Damage.CalcRealDamage(target, damage);
-        }
+        #endregion Private Methods
     }
 }

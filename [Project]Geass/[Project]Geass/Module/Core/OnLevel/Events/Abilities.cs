@@ -9,9 +9,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
 {
     internal class Abilities : SettingsBase
     {
-        private readonly int[] _abilitySequences;
-        private readonly Random _rng;
-        private int _lastLevel;
+        #region Public Constructors
 
         public Abilities(int[] sequence)
         {
@@ -20,6 +18,10 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
             Obj_AI_Base.OnLevelUp += Obj_AI_Base_OnLevelUp;
             Game.OnUpdate += OnUpdate;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void OnUpdate(EventArgs args)
         {
@@ -36,14 +38,17 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
             Handler.UseOnLevel();
         }
 
-        private void Obj_AI_Base_OnLevelUp(Obj_AI_Base sender, EventArgs args)
-        {
-            if (!sender.IsMe ||
-                !StaticObjects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
-                return;
+        #endregion Public Methods
 
-            Utility.DelayAction.Add(_rng.Next(50, 200) - Game.Ping, LevelUpSpells);
-        }
+        #region Private Fields
+
+        private readonly int[] _abilitySequences;
+        private readonly Random _rng;
+        private int _lastLevel;
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         private void LevelUpSpells()
         {
@@ -62,5 +67,16 @@ namespace _Project_Geass.Module.Core.OnLevel.Events
                 _lastLevel++;
             }
         }
+
+        private void Obj_AI_Base_OnLevelUp(Obj_AI_Base sender, EventArgs args)
+        {
+            if (!sender.IsMe ||
+                !StaticObjects.ProjectMenu.Item(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp").GetValue<bool>())
+                return;
+
+            Utility.DelayAction.Add(_rng.Next(50, 200) - Game.Ping, LevelUpSpells);
+        }
+
+        #endregion Private Methods
     }
 }

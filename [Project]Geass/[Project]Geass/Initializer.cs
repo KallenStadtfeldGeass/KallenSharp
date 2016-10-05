@@ -11,8 +11,10 @@ namespace _Project_Geass
 {
     internal class Initializer
     {
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Initializer" /> class.
+        /// Initializes a new instance of the <see cref="Initializer" /> class. 
         /// </summary>
         public Initializer()
         {
@@ -67,5 +69,7 @@ namespace _Project_Geass
             StaticObjects.ProjectMenu.AddToMainMenu();
             Bootloader.Load(manaEnabled, orbWalker);
         }
+
+        #endregion Public Constructors
     }
 }

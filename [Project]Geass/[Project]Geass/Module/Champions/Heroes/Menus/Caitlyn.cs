@@ -6,7 +6,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Caitlyn
     {
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+        #region Public Constructors
 
         public Caitlyn()
         {
@@ -15,6 +15,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Clear());
             StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
+
+        #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         private Menu Auto()
         {
@@ -51,6 +61,17 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             mainMenu.AddSubMenu(eMenu);
             mainMenu.AddSubMenu(wMenu);
             mainMenu.AddSubMenu(rMenu);
+
+            return mainMenu;
+        }
+
+        private Menu Clear()
+        {
+            var basename = _baseName + "Clear.";
+            var mainMenu = new Menu(nameof(Clear), basename);
+
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minons Hit").SetValue(new Slider(4, 3, 10)));
 
             return mainMenu;
         }
@@ -101,15 +122,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
-        private Menu Clear()
-        {
-            var basename = _baseName + "Clear.";
-            var mainMenu = new Menu(nameof(Clear), basename);
-
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(false));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minons Hit").SetValue(new Slider(4, 3, 10)));
-
-            return mainMenu;
-        }
+        #endregion Private Methods
     }
 }

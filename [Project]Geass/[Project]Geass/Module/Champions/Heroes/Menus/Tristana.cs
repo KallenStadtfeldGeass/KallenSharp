@@ -5,10 +5,10 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Tristana
     {
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+        #region Public Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Tristana" /> class.
+        /// Initializes a new instance of the <see cref="Tristana" /> class. 
         /// </summary>
         public Tristana()
         {
@@ -19,24 +19,21 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
 
-        /// <summary>
-        ///     Drawings this instance.
-        /// </summary>
-        /// <returns></returns>
-        private Menu Drawing()
-        {
-            var basename = _baseName + "Drawing.";
+        #endregion Public Constructors
 
-            var mainMenu = new Menu(nameof(basename), basename);
-            mainMenu.AddItem(new MenuItem($"{basename}.DrawEStacks", "Draw E Stacks").SetValue(true));
+        #region Private Fields
 
-            return mainMenu;
-        }
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         /// <summary>
-        ///     Automative events
+        /// Automative events 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
         private Menu Auto()
         {
             var basename = _baseName + "Auto.";
@@ -56,9 +53,36 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        ///     On Combo
+        /// On Clear 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
+        private Menu Clear()
+        {
+            var basename = _baseName + "Clear.";
+            var mainMenu = new Menu(nameof(Clear), basename);
+
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnMinions", "Use Q On Minons").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnTurrets", "Use Q On Turrets").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnJungle", "Use Q On Monsters").SetValue(true));
+
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnMinions", "Use E On Minons").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnTurrets", "Use E On Turrets").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnJungle", "Use E On Monsters").SetValue(true));
+
+            mainMenu.AddItem(new MenuItem($"{basename}.MinionsInRange", "Minons In Range").SetValue(new Slider(4, 3, 10)));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.Focus", "Focus E target").SetValue(true));
+
+            return mainMenu;
+        }
+
+        /// <summary>
+        /// On Combo 
+        /// </summary>
+        /// <returns>
+        /// </returns>
         private Menu Combo()
         {
             var basename = _baseName + "Combo.";
@@ -89,9 +113,25 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         }
 
         /// <summary>
-        ///     On Mixed
+        /// Drawings this instance. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
+        private Menu Drawing()
+        {
+            var basename = _baseName + "Drawing.";
+
+            var mainMenu = new Menu(nameof(basename), basename);
+            mainMenu.AddItem(new MenuItem($"{basename}.DrawEStacks", "Draw E Stacks").SetValue(true));
+
+            return mainMenu;
+        }
+
+        /// <summary>
+        /// On Mixed 
+        /// </summary>
+        /// <returns>
+        /// </returns>
         private Menu Mixed()
         {
             var basename = _baseName + "Mixed.";
@@ -108,29 +148,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
-        /// <summary>
-        ///     On Clear
-        /// </summary>
-        /// <returns></returns>
-        private Menu Clear()
-        {
-            var basename = _baseName + "Clear.";
-            var mainMenu = new Menu(nameof(Clear), basename);
-
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnMinions", "Use Q On Minons").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnTurrets", "Use Q On Turrets").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseQ.OnJungle", "Use Q On Monsters").SetValue(true));
-
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnMinions", "Use E On Minons").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnTurrets", "Use E On Turrets").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnJungle", "Use E On Monsters").SetValue(true));
-
-            mainMenu.AddItem(new MenuItem($"{basename}.MinionsInRange", "Minons In Range").SetValue(new Slider(4, 3, 10)));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.Focus", "Focus E target").SetValue(true));
-
-            return mainMenu;
-        }
+        #endregion Private Methods
     }
 }

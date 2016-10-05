@@ -7,18 +7,26 @@ namespace _Project_Geass.Module.Core.Drawing.Events
 {
     internal class Drawing
     {
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Drawing" /> class.
+        /// Initializes a new instance of the <see cref="Drawing" /> class. 
         /// </summary>
         public Drawing()
         {
             LeagueSharp.Drawing.OnDraw += OnDraw;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         /// <summary>
-        ///     Raises the <see cref="E:Draw" /> event.
+        /// Raises the <see cref="E:Draw" /> event. 
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
         public void OnDraw(EventArgs args)
         {
             if (StaticObjects.Player.IsDead) return;
@@ -33,5 +41,7 @@ namespace _Project_Geass.Module.Core.Drawing.Events
                             StaticObjects.ProjectMenu.Item(Names.Menu.DrawingItemBase + ".Minion." +
                                                            "Circle.LastHitHelper").GetValue<Circle>().Color, 3);
         }
+
+        #endregion Public Methods
     }
 }

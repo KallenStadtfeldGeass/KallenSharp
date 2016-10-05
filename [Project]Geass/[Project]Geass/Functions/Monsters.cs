@@ -6,21 +6,10 @@ namespace _Project_Geass.Functions
 {
     public static class Monsters
     {
-        /// <summary>
-        ///     The monster locations
-        /// </summary>
-        public static Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>
-        {
-            {"Neutral.Dragon", SummonersRift.River.Dragon},
-            {"Neutral.Baron", SummonersRift.River.Baron},
-            {"Chaos.Red", new Vector2(7016.869f, 10775.55f)},
-            {"Chaos.Blue", new Vector2(10931.73f, 6990.844f)},
-            {"Order.Red", new Vector2(7862.244f, 4111.187f)},
-            {"Order.Blue", new Vector2(3871.489f, 7901.054f)}
-        };
+        #region Public Fields
 
         /// <summary>
-        ///     The big monsters
+        /// The big monsters 
         /// </summary>
         public static string[] BigMonsters =
         {
@@ -29,7 +18,7 @@ namespace _Project_Geass.Functions
         };
 
         /// <summary>
-        ///     The monster bar dictionary
+        /// The monster bar dictionary 
         /// </summary>
         public static Dictionary<string, MonsterBar> MonsterBarDictionary = new Dictionary<string, MonsterBar>
         {
@@ -44,15 +33,42 @@ namespace _Project_Geass.Functions
             {"SRU_Razorbeak", new MonsterBar(75, 54, 18, 4)}
         };
 
+        /// <summary>
+        /// The monster locations 
+        /// </summary>
+        public static Dictionary<string, Vector2> MonsterLocations = new Dictionary<string, Vector2>
+        {
+            {"Neutral.Dragon", SummonersRift.River.Dragon},
+            {"Neutral.Baron", SummonersRift.River.Baron},
+            {"Chaos.Red", new Vector2(7016.869f, 10775.55f)},
+            {"Chaos.Blue", new Vector2(10931.73f, 6990.844f)},
+            {"Order.Red", new Vector2(7862.244f, 4111.187f)},
+            {"Order.Blue", new Vector2(3871.489f, 7901.054f)}
+        };
+
+        #endregion Public Fields
+
+        #region Public Structs
+
         public struct MonsterBar
         {
+            #region Public Constructors
+
             /// <summary>
-            ///     Initializes a new instance of the <see cref="MonsterBar" /> struct.
+            /// Initializes a new instance of the <see cref="MonsterBar" /> struct. 
             /// </summary>
-            /// <param name="barWidth">Width of the bar.</param>
-            /// <param name="xoffset">The xoffset.</param>
-            /// <param name="yOffsetBegin">The y offset begin.</param>
-            /// <param name="yOffsetEnd">The y offset end.</param>
+            /// <param name="barWidth">
+            /// Width of the bar. 
+            /// </param>
+            /// <param name="xoffset">
+            /// The xoffset. 
+            /// </param>
+            /// <param name="yOffsetBegin">
+            /// The y offset begin. 
+            /// </param>
+            /// <param name="yOffsetEnd">
+            /// The y offset end. 
+            /// </param>
             public MonsterBar(int barWidth, int xoffset, int yOffsetBegin, int yOffsetEnd)
             {
                 BarWidth = barWidth;
@@ -61,10 +77,18 @@ namespace _Project_Geass.Functions
                 YOffsetEnd = yOffsetEnd;
             }
 
+            #endregion Public Constructors
+
+            #region Public Properties
+
             public int BarWidth { get; }
             public int XOffset { get; }
             public int YOffsetBegin { get; }
             public int YOffsetEnd { get; }
+
+            #endregion Public Properties
         }
+
+        #endregion Public Structs
     }
 }

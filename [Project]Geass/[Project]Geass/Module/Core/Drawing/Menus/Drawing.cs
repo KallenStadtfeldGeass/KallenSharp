@@ -6,12 +6,20 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
 {
     internal sealed class Drawing
     {
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Drawing" /> class.
+        /// Initializes a new instance of the <see cref="Drawing" /> class. 
         /// </summary>
-        /// <param name="menu">The menu.</param>
-        /// <param name="drawingOptions">The drawing options.</param>
-        /// <param name="enabled">if set to <c>true</c> [enabled].</param>
+        /// <param name="menu">
+        /// The menu. 
+        /// </param>
+        /// <param name="drawingOptions">
+        /// The drawing options. 
+        /// </param>
+        /// <param name="enabled">
+        /// if set to <c> true </c> [enabled]. 
+        /// </param>
         public Drawing(Menu menu, bool[] drawingOptions, bool enabled)
         {
             if (!enabled) return;
@@ -23,11 +31,18 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
             StaticObjects.ProjectLogger.WriteLog("Drawing Menu and events loaded.");
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         /// <summary>
-        ///     Menus the specified drawing options.
+        /// Menus the specified drawing options. 
         /// </summary>
-        /// <param name="drawingOptions">The drawing options.</param>
-        /// <returns></returns>
+        /// <param name="drawingOptions">
+        /// The drawing options. 
+        /// </param>
+        /// <returns>
+        /// </returns>
         public Menu Menu(bool[] drawingOptions)
         {
             var menu = new Menu(nameof(Drawing), Names.Menu.DrawingNameBase);
@@ -78,5 +93,7 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
 
             return menu;
         }
+
+        #endregion Public Methods
     }
 }

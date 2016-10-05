@@ -7,40 +7,41 @@ namespace _Project_Geass.Humanizer.TickTock
 {
     internal class Manager
     {
-        /// <summary>
-        ///     The RNG
-        /// </summary>
-        private readonly Random _rng;
+        #region Public Fields
 
         /// <summary>
-        ///     The ticks
+        /// The ticks 
         /// </summary>
         public readonly Dictionary<string, Tick> Ticks = new Dictionary<string, Tick>();
 
-        /// <summary>
-        ///     The random maximum
-        /// </summary>
-        private float _randomMax;
+        #endregion Public Fields
+
+        #region Public Constructors
 
         /// <summary>
-        ///     The random minimum
-        /// </summary>
-        private float _randomMin;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Manager" /> class.
+        /// Initializes a new instance of the <see cref="Manager" /> class. 
         /// </summary>
         public Manager()
         {
             _rng = new Random();
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         /// <summary>
-        ///     Adds the tick.
+        /// Adds the tick. 
         /// </summary>
-        /// <param name="keyName">Name of the key.</param>
-        /// <param name="min">The minimum.</param>
-        /// <param name="max">The maximum.</param>
+        /// <param name="keyName">
+        /// Name of the key. 
+        /// </param>
+        /// <param name="min">
+        /// The minimum. 
+        /// </param>
+        /// <param name="max">
+        /// The maximum. 
+        /// </param>
         public void AddTick(string keyName, float min, float max)
         {
             if (keyName.Length <= 0)
@@ -56,10 +57,13 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        ///     Checks the tick.
+        /// Checks the tick. 
         /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns></returns>
+        /// <param name="key">
+        /// The key. 
+        /// </param>
+        /// <returns>
+        /// </returns>
         public bool CheckTick(string key)
         {
             if (key.Length <= 0)
@@ -72,11 +76,13 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        ///     Determines whether the specified key is present.
+        /// Determines whether the specified key is present. 
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <param name="key">
+        /// The key. 
+        /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified key is present; otherwise, <c>false</c>.
+        /// <c> true </c> if the specified key is present; otherwise, <c> false </c>. 
         /// </returns>
         public bool IsPresent(string key)
         {
@@ -84,10 +90,14 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        ///     Sets the randomizer.
+        /// Sets the randomizer. 
         /// </summary>
-        /// <param name="min">The minimum.</param>
-        /// <param name="max">The maximum.</param>
+        /// <param name="min">
+        /// The minimum. 
+        /// </param>
+        /// <param name="max">
+        /// The maximum. 
+        /// </param>
         public void SetRandomizer(float min, float max)
         {
             _randomMin = min;
@@ -95,9 +105,11 @@ namespace _Project_Geass.Humanizer.TickTock
         }
 
         /// <summary>
-        ///     Uses the tick.
+        /// Uses the tick. 
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <param name="key">
+        /// The key. 
+        /// </param>
         public void UseTick(string key)
         {
             if (key.Length <= 0) return;
@@ -109,5 +121,26 @@ namespace _Project_Geass.Humanizer.TickTock
             else
                 Console.WriteLine($"Key {key} not found");
         }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        /// <summary>
+        /// The RNG 
+        /// </summary>
+        private readonly Random _rng;
+
+        /// <summary>
+        /// The random maximum 
+        /// </summary>
+        private float _randomMax;
+
+        /// <summary>
+        /// The random minimum 
+        /// </summary>
+        private float _randomMin;
+
+        #endregion Private Fields
     }
 }

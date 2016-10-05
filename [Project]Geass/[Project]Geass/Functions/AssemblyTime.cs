@@ -4,11 +4,16 @@ namespace _Project_Geass.Functions
 {
     internal static class AssemblyTime
     {
+        #region Public Methods
+
         /// <summary>
-        ///     Return current time
+        /// Return current time 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// </returns>
         public static float CurrentTime()
-            => (float) DateTime.Now.Subtract(StaticObjects.AssemblyLoadTime).TotalMilliseconds;
+            => (float)DateTime.Now.Subtract(StaticObjects.AssemblyLoadTime).TotalMilliseconds;
+
+        #endregion Public Methods
     }
 }

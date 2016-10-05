@@ -5,6 +5,8 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
 {
     internal sealed class Abilities
     {
+        #region Public Constructors
+
         public Abilities(Menu menu, int[] abiSeq, bool enabled)
         {
             if (!enabled) return;
@@ -17,6 +19,10 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
             StaticObjects.ProjectLogger.WriteLog("OnLevel Menu and events loaded.");
         }
 
+        #endregion Public Constructors
+
+        #region Private Methods
+
         private Menu Menu()
         {
             var menu = new Menu(Names.Menu.LevelNameBase, "levelMenu");
@@ -24,5 +30,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
                 new MenuItem(Names.Menu.LevelItemBase + "Boolean.AutoLevelUp", "Auto level-up abilities").SetValue(true));
             return menu;
         }
+
+        #endregion Private Methods
     }
 }

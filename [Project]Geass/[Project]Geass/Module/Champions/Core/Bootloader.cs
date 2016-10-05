@@ -8,7 +8,7 @@ namespace _Project_Geass.Module.Champions.Core
     internal class Bootloader
     {
         /// <summary>
-        ///     The champion bundled
+        /// The champion bundled 
         /// </summary>
         public static readonly Dictionary<string, bool> ChampionBundled = new Dictionary<string, bool>
         {

@@ -10,29 +10,20 @@ namespace _Project_Geass.Drawing.Champions
 {
     internal class DamageIndicator
     {
-        //
-        private const int Width = 104;
-
-        private readonly Utility.HpBarDamageIndicator.DamageToUnitDelegate _damageToUnitDelegate;
-
-        /*
-                private const int Thinkness = 9;
-        */
-
-        // ReSharper disable once NotAccessedField.Local
-        private readonly bool _debugger;
-
-        /*
-                private static readonly Vector2 BarOffset = new Vector2(10, 25);
-        */
+        #region Public Fields
 
         public Device DxDevice = LeagueSharp.Drawing.Direct3DDevice;
+
         public Line DxLine;
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         public DamageIndicator(Utility.HpBarDamageIndicator.DamageToUnitDelegate _delegate, int range,
-            bool debugger = false)
+                    bool debugger = false)
         {
-            DxLine = new Line(DxDevice) {Width = 9};
+            DxLine = new Line(DxDevice) { Width = 9 };
             _debugger = debugger;
             Range = range;
             _damageToUnitDelegate = _delegate;
@@ -45,7 +36,73 @@ namespace _Project_Geass.Drawing.Champions
             AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnDomainUnload;
         }
 
-        private Obj_AI_Hero Unit { get; set; }
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public Vector2 StartPosition => new Vector2(Unit.HPBarPosition.X + Offset.X, Unit.HPBarPosition.Y + Offset.Y);
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void DrawDmg(float dmg, ColorBGRA color)
+        {
+            var hpPosNow = GetHpPosAfterDmg(0);
+            var hpPosAfter = GetHpPosAfterDmg(dmg);
+
+            fillHPBar(hpPosNow, hpPosAfter, color);
+            //fillHPBar((int)(hpPosNow.X - startPosition.X), (int)(hpPosAfter.X- startPosition.X), color);
+        }
+
+        public void SetFill(Color color)
+        {
+            Fill = color;
+        }
+
+        public void SetFillEnabled(bool enable)
+        {
+            FillEnabled = enable;
+        }
+
+        public void SetKillable(Color color)
+        {
+            Killable = color;
+        }
+
+        public void SetKillableEnabled(bool enable)
+        {
+            KillableEnabled = enable;
+        }
+
+        #endregion Public Methods
+
+        #region Private Fields
+
+        //
+        private const int Width = 104;
+
+        private readonly Utility.HpBarDamageIndicator.DamageToUnitDelegate _damageToUnitDelegate;
+
+        /*
+                private const int Thinkness = 9;
+        */
+
+        // ReSharper disable once NotAccessedField.Local
+        private readonly bool _debugger;
+
+        #endregion Private Fields
+
+        /*
+                private static readonly Vector2 BarOffset = new Vector2(10, 25);
+        */
+
+        #region Private Properties
+
+        private Color Fill { get; set; }
+        private bool FillEnabled { get; set; }
+        private Color Killable { get; set; }
+        private bool KillableEnabled { get; set; }
 
         private Vector2 Offset
         {
@@ -58,81 +115,16 @@ namespace _Project_Geass.Drawing.Champions
             }
         }
 
-        public Vector2 StartPosition => new Vector2(Unit.HPBarPosition.X + Offset.X, Unit.HPBarPosition.Y + Offset.Y);
-
-        private bool FillEnabled { get; set; }
-        private bool KillableEnabled { get; set; }
         private int Range { get; }
-        private Color Fill { get; set; }
-        private Color Killable { get; set; }
+        private Obj_AI_Hero Unit { get; set; }
 
-        private float GetHpProc(float dmg = 0)
-        {
-            var health = Unit.Health - dmg > 0 ? Unit.Health - dmg : 0;
-            return health/Unit.MaxHealth;
-        }
+        #endregion Private Properties
 
-        private Vector2 GetHpPosAfterDmg(float dmg)
-        {
-            var w = GetHpProc(dmg)*Width;
-            return new Vector2(StartPosition.X + w, StartPosition.Y);
-        }
-
-        public void DrawDmg(float dmg, ColorBGRA color)
-        {
-            var hpPosNow = GetHpPosAfterDmg(0);
-            var hpPosAfter = GetHpPosAfterDmg(dmg);
-
-            fillHPBar(hpPosNow, hpPosAfter, color);
-            //fillHPBar((int)(hpPosNow.X - startPosition.X), (int)(hpPosAfter.X- startPosition.X), color);
-        }
+        #region Private Methods
 
         private void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
         {
             DxLine.Dispose();
-        }
-
-        private void DrawingOnOnPostReset(EventArgs args)
-        {
-            DxLine.OnResetDevice();
-        }
-
-        private void DrawingOnOnPreReset(EventArgs args)
-        {
-            DxLine.OnLostDevice();
-        }
-
-        public void SetFillEnabled(bool enable)
-        {
-            FillEnabled = enable;
-        }
-
-        public void SetKillableEnabled(bool enable)
-        {
-            KillableEnabled = enable;
-        }
-
-        public void SetFill(Color color)
-        {
-            Fill = color;
-        }
-
-        public void SetKillable(Color color)
-        {
-            Killable = color;
-        }
-
-        private void fillHPBar(Vector2 from, Vector2 to, ColorBGRA color)
-        {
-            DxLine.Begin();
-
-            DxLine.Draw(new[]
-            {
-                new Vector2((int) from.X, (int) from.Y + 4f),
-                new Vector2((int) to.X, (int) to.Y + 4f)
-            }, color);
-
-            DxLine.End();
         }
 
         private void Drawing_OnDraw(EventArgs args)
@@ -170,12 +162,48 @@ namespace _Project_Geass.Drawing.Champions
                     //        (int)(enemy.HPBarPosition.X + BarOffset.X + currentHealthPercentage * Width) + 1,
                     //        (int)(enemy.HPBarPosition.Y + BarOffset.Y) - 5);
 
-                    // Draw the line
-                    //  LeagueSharp.Drawing.DrawLine(startPoint, endPoint, Thinkness, Fill);
+                    // Draw the line LeagueSharp.Drawing.DrawLine(startPoint, endPoint, Thinkness, Fill);
 
-                    //    if (_debugger) Console.WriteLine($"GeassLib: {enemy.Name} {startPoint} {endPoint}");
+                    // if (_debugger) Console.WriteLine($"GeassLib: {enemy.Name} {startPoint} {endPoint}");
                 }
             }
         }
+
+        private void DrawingOnOnPostReset(EventArgs args)
+        {
+            DxLine.OnResetDevice();
+        }
+
+        private void DrawingOnOnPreReset(EventArgs args)
+        {
+            DxLine.OnLostDevice();
+        }
+
+        private void fillHPBar(Vector2 from, Vector2 to, ColorBGRA color)
+        {
+            DxLine.Begin();
+
+            DxLine.Draw(new[]
+            {
+                new Vector2((int) from.X, (int) from.Y + 4f),
+                new Vector2((int) to.X, (int) to.Y + 4f)
+            }, color);
+
+            DxLine.End();
+        }
+
+        private Vector2 GetHpPosAfterDmg(float dmg)
+        {
+            var w = GetHpProc(dmg) * Width;
+            return new Vector2(StartPosition.X + w, StartPosition.Y);
+        }
+
+        private float GetHpProc(float dmg = 0)
+        {
+            var health = Unit.Health - dmg > 0 ? Unit.Health - dmg : 0;
+            return health / Unit.MaxHealth;
+        }
+
+        #endregion Private Methods
     }
 }

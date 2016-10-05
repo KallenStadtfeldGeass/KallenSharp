@@ -9,10 +9,7 @@ namespace _Project_Geass.Module.Core.Items.Events
 {
     internal class Trinket
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Trinket" /> class.
-        /// </summary>
-        private readonly Trinkets _trinket;
+        #region Public Constructors
 
         public Trinket()
         {
@@ -20,10 +17,25 @@ namespace _Project_Geass.Module.Core.Items.Events
             Game.OnUpdate += OnUpdate;
         }
 
+        #endregion Public Constructors
+
+        #region Private Fields
+
         /// <summary>
-        ///     Raises the <see cref="E:Update" /> event.
+        /// Initializes a new instance of the <see cref="Trinket" /> class. 
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private readonly Trinkets _trinket;
+
+        #endregion Private Fields
+
+        #region Private Methods
+
+        /// <summary>
+        /// Raises the <see cref="E:Update" /> event. 
+        /// </summary>
+        /// <param name="args">
+        /// The <see cref="EventArgs" /> instance containing the event data. 
+        /// </param>
         private void OnUpdate(EventArgs args)
         {
             if (!Handler.CheckTrinket()) return;
@@ -38,5 +50,7 @@ namespace _Project_Geass.Module.Core.Items.Events
             StaticObjects.ProjectLogger.WriteLog("Buy Orb");
             _trinket.Orb.Buy();
         }
+
+        #endregion Private Methods
     }
 }

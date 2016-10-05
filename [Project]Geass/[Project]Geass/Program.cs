@@ -5,8 +5,10 @@ namespace _Project_Geass
 {
     internal class Program
     {
+        #region Private Methods
+
         /// <summary>
-        ///     Defines the entry point of the application.
+        /// Defines the entry point of the application. 
         /// </summary>
         private static void Main()
         {
@@ -18,5 +20,7 @@ namespace _Project_Geass
             // ReSharper disable once UnusedVariable
             var init = new Initializer();
         }
+
+        #endregion Private Methods
     }
 }

@@ -6,12 +6,20 @@ namespace _Project_Geass.Module.Core.Items.Menus
 {
     internal sealed class Item
     {
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Item" /> class.
+        /// Initializes a new instance of the <see cref="Item" /> class. 
         /// </summary>
-        /// <param name="menu">The menu.</param>
-        /// <param name="enabled">if set to <c>true</c> [enabled].</param>
-        /// <param name="orbwalker">The orbwalker.</param>
+        /// <param name="menu">
+        /// The menu. 
+        /// </param>
+        /// <param name="enabled">
+        /// if set to <c> true </c> [enabled]. 
+        /// </param>
+        /// <param name="orbwalker">
+        /// The orbwalker. 
+        /// </param>
         public Item(Menu menu, bool enabled, Orbwalking.Orbwalker orbwalker)
         {
             if (!enabled) return;
@@ -20,6 +28,10 @@ namespace _Project_Geass.Module.Core.Items.Menus
             // ReSharper disable once UnusedVariable
             var items = new Events.Item(orbwalker);
         }
+
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private Menu Menu()
         {
@@ -77,5 +89,7 @@ namespace _Project_Geass.Module.Core.Items.Menus
             menu.AddSubMenu(defensiveMenu);
             return menu;
         }
+
+        #endregion Private Methods
     }
 }

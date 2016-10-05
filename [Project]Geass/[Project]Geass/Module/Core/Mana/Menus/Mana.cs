@@ -6,14 +6,26 @@ namespace _Project_Geass.Module.Core.Mana.Menus
 {
     internal sealed class ManaMenu
     {
+        #region Public Fields
+
         public bool Enabled;
 
+        #endregion Public Fields
+
+        #region Public Constructors
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ManaMenu" /> class.
+        /// Initializes a new instance of the <see cref="ManaMenu" /> class. 
         /// </summary>
-        /// <param name="menu">The menu.</param>
-        /// <param name="options">The options.</param>
-        /// <param name="enabled">if set to <c>true</c> [enabled].</param>
+        /// <param name="menu">
+        /// The menu. 
+        /// </param>
+        /// <param name="options">
+        /// The options. 
+        /// </param>
+        /// <param name="enabled">
+        /// if set to <c> true </c> [enabled]. 
+        /// </param>
         public ManaMenu(Menu menu, int[,] options, bool enabled)
         {
             Enabled = enabled;
@@ -22,6 +34,10 @@ namespace _Project_Geass.Module.Core.Mana.Menus
             menu.AddSubMenu(Menu(options));
             // ReSharper disable once UnusedVariable
         }
+
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private Menu Menu(int[,] options)
         {
@@ -41,5 +57,7 @@ namespace _Project_Geass.Module.Core.Mana.Menus
             }
             return menu;
         }
+
+        #endregion Private Methods
     }
 }

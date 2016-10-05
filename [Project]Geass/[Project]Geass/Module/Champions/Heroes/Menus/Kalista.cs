@@ -6,7 +6,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
     internal class Kalista
     {
-        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+        #region Public Constructors
 
         public Kalista()
         {
@@ -15,6 +15,16 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             StaticObjects.ProjectMenu.AddSubMenu(Clear());
             StaticObjects.ProjectMenu.AddSubMenu(Auto());
         }
+
+        #endregion Public Constructors
+
+        #region Private Fields
+
+        private readonly string _baseName = Names.ProjectName + StaticObjects.Player.ChampionName + ".";
+
+        #endregion Private Fields
+
+        #region Private Methods
 
         //Auto Not DONE
         private Menu Auto()
@@ -41,6 +51,19 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             rMenu.AddItem(new MenuItem($"{basename}.UseR", "Enable").SetValue(true));
 
             mainMenu.AddSubMenu(rMenu);
+
+            return mainMenu;
+        }
+
+        private Menu Clear()
+        {
+            var basename = _baseName + "Clear.";
+            var mainMenu = new Menu(basename, nameof(Clear));
+
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnMinions", "Use E On Minons").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnTurrets", "Use E On Turrets").SetValue(true));
+            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnJungle", "Use E On Monsters").SetValue(true));
 
             return mainMenu;
         }
@@ -92,17 +115,6 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
             return mainMenu;
         }
 
-        private Menu Clear()
-        {
-            var basename = _baseName + "Clear.";
-            var mainMenu = new Menu(basename, nameof(Clear));
-
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE", "Use E").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnMinions", "Use E On Minons").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnTurrets", "Use E On Turrets").SetValue(true));
-            mainMenu.AddItem(new MenuItem($"{basename}.UseE.OnJungle", "Use E On Monsters").SetValue(true));
-
-            return mainMenu;
-        }
+        #endregion Private Methods
     }
 }
