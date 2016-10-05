@@ -33,12 +33,12 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         /// <param name="orbwalker">The orbwalker.</param>
         public Ezreal(bool manaEnabled, Orbwalking.Orbwalker orbwalker)
         {
-            Q = new Spell(SpellSlot.Q, 1150);
-            W = new Spell(SpellSlot.W, 1000);
+            Q = new Spell(SpellSlot.Q, 1190);
+            W = new Spell(SpellSlot.W, 950);
             R = new Spell(SpellSlot.R, 2200);
 
             Q.SetSkillshot(.25f, 60, 2000, true, SkillshotType.SkillshotLine);
-            W.SetSkillshot(.25f, 80, 1550, false, SkillshotType.SkillshotLine);
+            W.SetSkillshot(.25f, 80, 1600, false, SkillshotType.SkillshotLine);
             R.SetSkillshot(1, 160, 2000, false, SkillshotType.SkillshotLine);
 
             _manaManager = new Mana(Q, W, E, R, manaEnabled);
@@ -379,7 +379,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                                 .Where(x => (x.Health < Q.GetDamage(x)) && (x.Health > 30))
                                 .OrderBy(hp => hp.Health))
                         {
-                            if (StaticObjects.Player.IsWindingUp ||
+                            if (!StaticObjects.Player.IsWindingUp &&
                                 StaticObjects.Player.GetAutoAttackDamage(target) < target.Health + 25) continue;
 
                             Q.Cast(target);
