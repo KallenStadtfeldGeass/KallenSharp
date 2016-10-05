@@ -5,7 +5,6 @@ using LeagueSharp.Common;
 using SharpDX;
 using SPrediction;
 using _Project_Geass.Functions.Objects;
-using Collision = SPrediction.Collision;
 
 namespace _Project_Geass.Functions
 {
@@ -28,37 +27,30 @@ namespace _Project_Geass.Functions
 
         public static bool CheckColision(PredictionOutput prediction) //Returns if a colision is meet
         {
-            var colision = prediction.CollisionObjects.Any(obj => !obj.IsChampion() && obj.IsEnemy);
+            var colision=prediction.CollisionObjects.Any(obj => !obj.IsChampion()&&obj.IsEnemy);
             //if(colision) StaticObjects.ProjectLogger.WriteLog($"Colision");
             return colision;
         }
 
         public static bool CheckColision(SPrediction.Prediction.Result prediction) //Returns if a colision is meet
         {
-            var commonOutput = new PredictionOutput
-            {
-                Hitchance = prediction.HitChance,
-                CollisionObjects = prediction.CollisionResult.Units,
-                CastPosition = (Vector3)prediction.CastPosition,
-                UnitPosition = (Vector3)prediction.UnitPosition
-            };
+            var commonOutput=new PredictionOutput {Hitchance=prediction.HitChance, CollisionObjects=prediction.CollisionResult.Units, CastPosition=(Vector3)prediction.CastPosition, UnitPosition=(Vector3)prediction.UnitPosition};
             StaticObjects.ProjectLogger.WriteLog("SPrediction=>Common Colision Check");
             return CheckColision(commonOutput);
         }
 
         public static bool DoCast(Spell spell, Obj_AI_Hero target, HitChance minHitChance, bool colisionCheck=false)
         {
-          //  StaticObjects.ProjectLogger.WriteLog("DoCast Call");
-            if (PredictionMethod==0 || PredictionMethod == 1 && colisionCheck)//Sebby Colision is broken...lol
+            //  StaticObjects.ProjectLogger.WriteLog("DoCast Call");
+            if ((PredictionMethod==0)||((PredictionMethod==1)&&colisionCheck)) //Sebby Colision is broken...lol
             {
                 var output=spell.GetPrediction(target);
-                if (PredictionMethod == 1)
+                if (PredictionMethod==1)
                     StaticObjects.ProjectLogger.WriteLog("SebbyPrediction=>Common (Sebby Colision is broken)");
 
                 if (colisionCheck)
                     if (CheckColision(output))
                         return false;
-                    
 
                 if (minHitChance>output.Hitchance)
                     return false;
@@ -67,9 +59,9 @@ namespace _Project_Geass.Functions
                 return true;
             }
 
-            else if (PredictionMethod==1)
-            { 
-                var output = SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
+            if (PredictionMethod==1)
+            {
+                var output=SebbyLib.Prediction.Prediction.GetPrediction(target, spell.Delay);
 
                 if (minHitChance>(HitChance)output.Hitchance)
                     return false;
@@ -78,7 +70,7 @@ namespace _Project_Geass.Functions
                 return true;
             }
 
-            else if (PredictionMethod==2)
+            if (PredictionMethod==2)
             {
                 var output=spell.GetSPrediction(target);
 
