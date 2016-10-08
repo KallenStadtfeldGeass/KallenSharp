@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using LeagueSharp.Common;
-using _Project_Geass.Functions;
+using _Project_Geass.Data.Static;
 using _Project_Geass.Module.Champions.Heroes.Events;
 
 namespace _Project_Geass.Module.Champions.Core
@@ -17,7 +17,7 @@ namespace _Project_Geass.Module.Champions.Core
         public static void Load(bool manaEnabled, Orbwalking.Orbwalker orbWalker)
 #pragma warning restore CC0091 // Use static method
         {
-            switch (StaticObjects.Player.ChampionName)
+            switch (Objects.Player.ChampionName)
             {
                 case nameof(Tristana):
                     // ReSharper disable once UnusedVariable

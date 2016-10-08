@@ -1,6 +1,6 @@
 ﻿using LeagueSharp.Common;
-using _Project_Geass.Data.Champions;
-using _Project_Geass.Functions;
+using _Project_Geass.Data.Constant.Champions;
+using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Module.Core.Mana.Menus
 {

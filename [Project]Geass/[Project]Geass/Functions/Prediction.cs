@@ -4,7 +4,7 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using SPrediction;
-using _Project_Geass.Functions.Objects;
+using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Functions
 {
@@ -13,7 +13,7 @@ namespace _Project_Geass.Functions
     {
         #region Public Fields
 
-        public static int PredictionMethod => StaticObjects.SettingsMenu.Item($"{Names.Menu.BaseItem}.PredictionMethod").GetValue<StringList>().SelectedIndex;
+        public static int PredictionMethod => Data.Static.Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}.PredictionMethod").GetValue<StringList>().SelectedIndex;
 
         #endregion Public Fields
 
@@ -28,25 +28,22 @@ namespace _Project_Geass.Functions
         public static bool CheckColision(PredictionOutput prediction) //Returns if a colision is meet
         {
             var colision=prediction.CollisionObjects.Any(obj => !obj.IsChampion()&&obj.IsEnemy);
-            //if(colision) StaticObjects.ProjectLogger.WriteLog($"Colision");
+            //if(colision) Data.Static.Objects.ProjectLogger.WriteLog($"Colision");
             return colision;
         }
 
         public static bool CheckColision(SPrediction.Prediction.Result prediction) //Returns if a colision is meet
         {
             var commonOutput=new PredictionOutput {Hitchance=prediction.HitChance, CollisionObjects=prediction.CollisionResult.Units, CastPosition=(Vector3)prediction.CastPosition, UnitPosition=(Vector3)prediction.UnitPosition};
-            StaticObjects.ProjectLogger.WriteLog("SPrediction=>Common Colision Check");
             return CheckColision(commonOutput);
         }
 
         public static bool DoCast(Spell spell, Obj_AI_Hero target, HitChance minHitChance, bool colisionCheck=false)
         {
-            //  StaticObjects.ProjectLogger.WriteLog("DoCast Call");
+            //  Data.Static.Objects.ProjectLogger.WriteLog("DoCast Call");
             if ((PredictionMethod==0)||((PredictionMethod==1)&&colisionCheck)) //Sebby Colision is broken...lol
             {
                 var output=spell.GetPrediction(target);
-                if (PredictionMethod==1)
-                    StaticObjects.ProjectLogger.WriteLog("SebbyPrediction=>Common (Sebby Colision is broken)");
 
                 if (colisionCheck)
                     if (CheckColision(output))
@@ -99,7 +96,9 @@ namespace _Project_Geass.Functions
         public static IOrderedEnumerable<Obj_AI_Hero> OrderTargets(Spell spell)
         {
             var damageType=spell.DamageType==TargetSelector.DamageType.Physical;
-            return damageType? Heroes.GetEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentArmorMod) : Heroes.GetEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentMagicReduction);
+            return damageType
+                       ? Drawing.Data.Cache.Objects.GetCacheEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentArmorMod)
+                       : Drawing.Data.Cache.Objects.GetCacheEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentMagicReduction);
         }
 
         #endregion Public Methods

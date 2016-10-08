@@ -1,5 +1,5 @@
 ﻿using LeagueSharp.Common;
-using _Project_Geass.Functions;
+using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Module.Core.OnLevel.Menus
 {
@@ -18,7 +18,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
             // ReSharper disable once UnusedVariable
             var onLevel=new Events.Abilities(abiSeq);
 
-            StaticObjects.ProjectLogger.WriteLog("OnLevel Menu and events loaded.");
+            Objects.ProjectLogger.WriteLog("OnLevel Menu and events loaded.");
         }
 
         #endregion Public Constructors

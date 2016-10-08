@@ -25,10 +25,10 @@ namespace _Project_Geass.Functions.Calculations
             if (target.HasBuff("gragaswself"))
                 defuffer*=.9f-target.Spellbook.GetSpell(SpellSlot.W).Level*.02f;
 
-            if (target.Name.Contains("Baron")&&StaticObjects.Player.HasBuff("barontarget"))
+            if (target.Name.Contains("Baron")&&Data.Static.Objects.Player.HasBuff("barontarget"))
                 defuffer*=0.5f;
 
-            if (StaticObjects.Player.HasBuff("summonerexhaust"))
+            if (Data.Static.Objects.Player.HasBuff("summonerexhaust"))
                 defuffer*=.4f;
 
             if (!target.IsChampion())

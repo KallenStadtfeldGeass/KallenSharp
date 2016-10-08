@@ -1,9 +1,9 @@
 ﻿using System;
 using LeagueSharp;
 using LeagueSharp.Common;
-using _Project_Geass.Data.Items;
-using _Project_Geass.Functions;
-using _Project_Geass.Humanizer.TickTock;
+using _Project_Geass.Data.Constant.Items;
+using _Project_Geass.Data.Static;
+using _Project_Geass.Tick;
 
 namespace _Project_Geass.Module.Core.Items.Events
 {
@@ -42,17 +42,17 @@ namespace _Project_Geass.Module.Core.Items.Events
             if (!Handler.CheckTrinket())
                 return;
 
-            if (!StaticObjects.ProjectMenu.Item(Names.Menu.TrinketItemBase+"Boolean.BuyOrb").GetValue<bool>())
+            if (!Objects.ProjectMenu.Item(Names.Menu.TrinketItemBase+"Boolean.BuyOrb").GetValue<bool>())
                 return;
 
             Handler.UseTrinket();
 
-            if (StaticObjects.Player.Level<9)
+            if (Objects.Player.Level<9)
                 return;
-            if (!StaticObjects.Player.InShop()||LeagueSharp.Common.Items.HasItem(_trinket.Orb.Id))
+            if (!Objects.Player.InShop()||LeagueSharp.Common.Items.HasItem(_trinket.Orb.Id))
                 return;
 
-            StaticObjects.ProjectLogger.WriteLog("Buy Orb");
+            Objects.ProjectLogger.WriteLog("Buy Orb");
             _trinket.Orb.Buy();
         }
 

@@ -1,5 +1,5 @@
 ﻿using LeagueSharp.Common;
-using _Project_Geass.Functions;
+using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
 {
@@ -8,7 +8,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
     {
         #region Private Fields
 
-        private readonly string _baseName=Names.ProjectName+StaticObjects.Player.ChampionName+".";
+        private readonly string _baseName=Names.ProjectName+Objects.Player.ChampionName+".";
 
         #endregion Private Fields
 
@@ -19,11 +19,11 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         /// </summary>
         public Tristana()
         {
-            StaticObjects.ProjectMenu.AddSubMenu(Drawing());
-            StaticObjects.ProjectMenu.AddSubMenu(Combo());
-            StaticObjects.ProjectMenu.AddSubMenu(Mixed());
-            StaticObjects.ProjectMenu.AddSubMenu(Clear());
-            StaticObjects.ProjectMenu.AddSubMenu(Auto());
+            Objects.ProjectMenu.AddSubMenu(Drawing());
+            Objects.ProjectMenu.AddSubMenu(Combo());
+            Objects.ProjectMenu.AddSubMenu(Mixed());
+            Objects.ProjectMenu.AddSubMenu(Clear());
+            Objects.ProjectMenu.AddSubMenu(Auto());
         }
 
         #endregion Public Constructors

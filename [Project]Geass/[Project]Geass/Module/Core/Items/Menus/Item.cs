@@ -1,6 +1,5 @@
 ﻿using LeagueSharp.Common;
-using _Project_Geass.Functions;
-using _Project_Geass.Global.Data;
+using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Module.Core.Items.Menus
 {
@@ -26,7 +25,7 @@ namespace _Project_Geass.Module.Core.Items.Menus
             if (!enabled)
                 return;
 
-            StaticObjects.ProjectLogger.WriteLog("Item Menu and events loaded.");
+            Objects.ProjectLogger.WriteLog("Item Menu and events loaded.");
             menu.AddSubMenu(Menu());
             // ReSharper disable once UnusedVariable
             var items=new Events.Item(orbwalker);

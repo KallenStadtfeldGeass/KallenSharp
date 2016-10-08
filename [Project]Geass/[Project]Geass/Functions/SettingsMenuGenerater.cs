@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LeagueSharp.Common;
+using _Project_Geass.Data.Static;
 using _Project_Geass.Module.Champions.Core;
 
 namespace _Project_Geass.Functions
@@ -15,7 +16,7 @@ namespace _Project_Geass.Functions
         /// </summary>
         public SettingsMenuGenerater()
         {
-            StaticObjects.SettingsMenu.AddItem(new MenuItem($"{Names.Menu.BaseItem}.PredictionMethod", "PredictionMethod")).SetValue(new StringList(Names.PredictionMethods.ToArray(), 2));
+            Data.Static.Objects.SettingsMenu.AddItem(new MenuItem($"{Names.Menu.BaseItem}.PredictionMethod", "PredictionMethod")).SetValue(new StringList(Names.PredictionMethods.ToArray(), 2));
 
             foreach (var champ in Bootloader.ChampionBundled.Where(x => x.Value))
             {
@@ -24,7 +25,7 @@ namespace _Project_Geass.Functions
                 foreach (var element in GenerateSettingsList(Names.Menu.BaseItem+champ.Key))
                     temp.AddItem(element);
 
-                StaticObjects.SettingsMenu.AddSubMenu(temp);
+                Data.Static.Objects.SettingsMenu.AddSubMenu(temp);
             }
         }
 

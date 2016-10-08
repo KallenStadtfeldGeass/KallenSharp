@@ -3,7 +3,7 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using SharpDX.Direct3D9;
-using _Project_Geass.Functions.Objects;
+using _Project_Geass.Drawing.Data.Cache;
 using Color = System.Drawing.Color;
 
 namespace _Project_Geass.Drawing.Champions
@@ -111,7 +111,7 @@ namespace _Project_Geass.Drawing.Champions
             if (!FillEnabled&&!KillableEnabled)
                 return;
 
-            foreach (var enemy in Heroes.GetEnemies(Range))
+            foreach (var enemy in Objects.GetCacheEnemies(Range))
             {
                 // Get damage to unit
                 var damage=_damageToUnitDelegate(enemy);

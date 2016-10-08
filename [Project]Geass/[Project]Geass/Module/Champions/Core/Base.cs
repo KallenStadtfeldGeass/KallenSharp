@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LeagueSharp.Common;
-using _Project_Geass.Functions;
+using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Module.Champions.Core
 {
@@ -10,7 +10,7 @@ namespace _Project_Geass.Module.Champions.Core
     {
         #region Public Fields
 
-        public readonly string BaseName=Names.ProjectName+StaticObjects.Player.ChampionName+".";
+        public readonly string BaseName=Names.ProjectName+Objects.Player.ChampionName+".";
 
         /// <summary>
         ///     The RNG :D
