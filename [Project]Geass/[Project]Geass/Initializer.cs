@@ -28,7 +28,7 @@ namespace _Project_Geass
 
             Objects.ProjectLogger.WriteLog("Load Delays...");
             Handler.Load(true);
-            Drawing.Data.Cache.Objects.Load();
+            Data.Cache.Objects.Load();
 
             // ReSharper disable once UnusedVariable
             var initializerMenu=new SettingsMenuGenerater();

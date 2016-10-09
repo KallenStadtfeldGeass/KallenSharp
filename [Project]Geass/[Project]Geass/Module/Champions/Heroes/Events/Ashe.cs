@@ -95,7 +95,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
         {
             var basename=BaseName+"Clear.";
 
-            var validMinions=Drawing.Data.Cache.Objects.GetCacheMinions(W.Range);
+            var validMinions=Data.Cache.Objects.GetCacheMinions(W.Range);
 
             if (Objects.ProjectMenu.Item($"{basename}.UseW").GetValue<bool>())
                 if (_manaManager.CheckClearW())

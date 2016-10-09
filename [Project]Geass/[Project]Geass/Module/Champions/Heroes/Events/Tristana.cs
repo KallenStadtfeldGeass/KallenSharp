@@ -211,7 +211,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
                     if (Objects.ProjectMenu.Item($"{basename}.UseE.OnMinions").GetValue<bool>())
                     {
-                        var validMinons=Drawing.Data.Cache.Objects.GetCacheMinions(E.Range);
+                        var validMinons=Data.Cache.Objects.GetCacheMinions(E.Range);
                         if (validMinons.Count>=Objects.ProjectMenu.Item($"{basename}.MinionsInRange").GetValue<Slider>().Value)
                         {
                             Obj_AI_Base target=null;

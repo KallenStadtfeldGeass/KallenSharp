@@ -97,8 +97,8 @@ namespace _Project_Geass.Functions
         {
             var damageType=spell.DamageType==TargetSelector.DamageType.Physical;
             return damageType
-                       ? Drawing.Data.Cache.Objects.GetCacheEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentArmorMod)
-                       : Drawing.Data.Cache.Objects.GetCacheEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentMagicReduction);
+                       ? Data.Cache.Objects.GetCacheEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentArmorMod)
+                       : Data.Cache.Objects.GetCacheEnemies(spell.Range).Where(ValidChampion).OrderBy(hp => hp.Health/hp.PercentMagicReduction);
         }
 
         #endregion Public Methods

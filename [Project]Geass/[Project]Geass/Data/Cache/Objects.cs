@@ -6,7 +6,7 @@ using LeagueSharp.Common;
 using _Project_Geass.Functions.Objects;
 using _Project_Geass.Tick;
 
-namespace _Project_Geass.Drawing.Data.Cache
+namespace _Project_Geass.Data.Cache
 {
 
     internal class Objects
@@ -27,7 +27,7 @@ namespace _Project_Geass.Drawing.Data.Cache
         /// </summary>
         /// <param name="range">The range.</param>
         /// <returns></returns>
-        public static List<Obj_AI_Hero> GetCacheEnemies(float range) => _cacheEnemies.Where(x => x.Distance(_Project_Geass.Data.Static.Objects.Player)<range).ToList();
+        public static List<Obj_AI_Hero> GetCacheEnemies(float range) => _cacheEnemies.Where(x => x.Distance(Static.Objects.Player)<range).ToList();
 
         /// <summary>
         ///     Gets the cache minions.
@@ -40,7 +40,7 @@ namespace _Project_Geass.Drawing.Data.Cache
         /// </summary>
         /// <param name="range">The range.</param>
         /// <returns></returns>
-        public static List<Obj_AI_Base> GetCacheMinions(float range) => _cacheMinions.Where(x => x.Distance(_Project_Geass.Data.Static.Objects.Player)<range).ToList();
+        public static List<Obj_AI_Base> GetCacheMinions(float range) => _cacheMinions.Where(x => x.Distance(Static.Objects.Player)<range).ToList();
 
         public static void Load()
         {

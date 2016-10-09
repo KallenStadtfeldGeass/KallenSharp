@@ -12,7 +12,6 @@ using _Project_Geass.Module.Champions.Core;
 using _Project_Geass.Module.Core.Mana.Functions;
 using _Project_Geass.Tick;
 using Damage = _Project_Geass.Functions.Calculations.Damage;
-using ItemData = LeagueSharp.Common.Data.ItemData;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 #endregion
@@ -59,7 +58,13 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
         #endregion Public Constructors
 
-        public static SpellSlot GetTearSpellSlot
+        /// <summary>
+        ///     Gets the tear slot.
+        /// </summary>
+        /// <value>
+        ///     The tear slot.
+        /// </value>
+        private SpellSlot TearSlot
         {
             get
             {
@@ -73,28 +78,20 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             }
         }
 
-        public static bool IsTearReady
+        /// <summary>
+        ///     Gets a value indicating whether [tear ready].
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if [tear ready]; otherwise, <c>false</c>.
+        /// </value>
+        private bool TearReady
         {
             get
             {
-                if (GetTearSpellSlot!=SpellSlot.Unknown)
-                    return Objects.Player.Spellbook.GetSpell(GetTearSpellSlot).State==SpellState.Surpressed;
+                if (TearSlot!=SpellSlot.Unknown)
+                    return Objects.Player.Spellbook.GetSpell(TearSlot).State==SpellState.Surpressed;
 
                 return false;
-            }
-        }
-
-        /// <summary>
-        ///     Returns true if tear is fully stacked
-        /// </summary>
-        public static bool IsTearStacked
-        {
-            get
-            {
-                if (GetTearSpellSlot!=SpellSlot.Unknown)
-                    return Objects.Player.Spellbook.GetSpell(GetTearSpellSlot).CooldownExpires+120>Game.Time;
-
-                return true;
             }
         }
 
@@ -148,6 +145,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
         #region Private Methods
 
+        //((Drawing.Data.Cache.Objects.GetCacheMinions().Count<1)&&(Drawing.Data.Cache.Objects.GetCacheEnemies().Count<1)&&(MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count<1))
         /// <summary>
         ///     Automated events.
         /// </summary>
@@ -159,16 +157,17 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
             if (!Handler.CheckAutoEvents())
                 return;
 
-            ///Objects.ProjectLogger.WriteLog($"Tear Stacked:{IsTearStacked} : Ready? {IsTearReady}");
-
             if (!Objects.Player.IsRecalling())
             {
                 var basename=BaseName+"Misc.";
+                Objects.ProjectLogger.WriteLog($"Ready? {TearReady}");
 
                 if (Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack").GetValue<bool>()&&(_manaManager.ManaPercent>=Objects.ProjectMenu.Item($"{basename}.UseQ.TearStack.MinMana").GetValue<Slider>().Value))
-                    if (Items.HasItem(ItemData.Tear_of_the_Goddess.Id)||Items.HasItem(ItemData.Manamune.Id))
-                        if ((Drawing.Data.Cache.Objects.GetCacheMinions().Count<1)&&(Drawing.Data.Cache.Objects.GetCacheEnemies().Count<1)&&(MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count<1))
-                            Q.Cast(Game.CursorPos);
+                    if (TearReady)
+                        if (Data.Cache.Objects.GetCacheMinions(1500).Count<1)
+                            if (Data.Cache.Objects.GetCacheEnemies(1500).Count<1)
+                                if (MinionManager.GetMinions(1500, MinionTypes.All, MinionTeam.Neutral).Count<1)
+                                    Q.Cast(Game.CursorPos);
             }
             Handler.UseAutoEvent();
         }
@@ -185,7 +184,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
                 {
                     if (Objects.ProjectMenu.Item($"{basename}.UseQ.Minon.LastHit").GetValue<bool>())
                         foreach (var target in
-                            Drawing.Data.Cache.Objects.GetCacheMinions(Q.Range).Where(x => (x.Health<Q.GetDamage(x))&&(x.Health>30)).OrderBy(hp => hp.Health))
+                            Data.Cache.Objects.GetCacheMinions(Q.Range).Where(x => (x.Health<Q.GetDamage(x))&&(x.Health>30)).OrderBy(hp => hp.Health))
                         {
                             if (!Objects.Player.IsWindingUp&&(Objects.Player.GetAutoAttackDamage(target)<target.Health+25)&&(Objects.Player.Distance(target)<Objects.Player.AttackRange))
                                 continue;

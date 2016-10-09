@@ -3,7 +3,7 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using SharpDX.Direct3D9;
-using _Project_Geass.Drawing.Data.Cache;
+using _Project_Geass.Data.Cache;
 using Color = System.Drawing.Color;
 
 namespace _Project_Geass.Drawing.Champions

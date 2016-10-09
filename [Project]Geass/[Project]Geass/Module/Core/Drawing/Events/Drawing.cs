@@ -30,7 +30,7 @@ namespace _Project_Geass.Module.Core.Drawing.Events
                 return;
 
             if (Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase+".Minion."+"Circle.LastHitHelper").GetValue<Circle>().Active)
-                foreach (var minion in _Project_Geass.Drawing.Data.Cache.Objects.GetCacheMinions(Objects.Player.AttackRange+150))
+                foreach (var minion in Data.Cache.Objects.GetCacheMinions(Objects.Player.AttackRange+150))
                     if (Objects.Player.GetAutoAttackDamage(minion)-5>minion.Health) // Is killable
                         Render.Circle.DrawCircle(minion.Position, minion.BoundingRadius-10, Objects.ProjectMenu.Item(Names.Menu.DrawingItemBase+".Minion."+"Circle.LastHitHelper").GetValue<Circle>().Color, 3);
         }

@@ -84,7 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\Data\Cache\Objects.cs" />
+    <Compile Include="Data\Cache\Objects.cs" />
     <Compile Include="Module\Champions\Core\Bootloader.cs" />
     <Compile Include="Module\Champions\Heroes\Events\Ashe.cs" />
     <Compile Include="Module\Champions\Core\Base.cs" />
@@ -110,20 +110,20 @@
     <Compile Include="Module\Champions\Heroes\Events\Ezreal.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="Functions\SettingsMenuGenerater.cs" />
-    <Compile Include="Drawing\Data\Constant\Champions\SettingsBase.cs" />
-    <Compile Include="Drawing\Data\Constant\Champions\Settings.cs" />
-    <Compile Include="Drawing\Data\Static\Names.cs" />
-    <Compile Include="Drawing\Data\Static\Buffs.cs" />
-    <Compile Include="Drawing\Data\Constant\Items\Defensive.cs" />
-    <Compile Include="Drawing\Data\Constant\Items\Offensive.cs" />
-    <Compile Include="Drawing\Data\Constant\Items\Trinkets.cs" />
-    <Compile Include="Drawing\Data\Static\Monsters.cs" />
+    <Compile Include="Data\Constant\Champions\SettingsBase.cs" />
+    <Compile Include="Data\Constant\Champions\Settings.cs" />
+    <Compile Include="Data\Static\Names.cs" />
+    <Compile Include="Data\Static\Buffs.cs" />
+    <Compile Include="Data\Constant\Items\Defensive.cs" />
+    <Compile Include="Data\Constant\Items\Offensive.cs" />
+    <Compile Include="Data\Constant\Items\Trinkets.cs" />
+    <Compile Include="Data\Static\Monsters.cs" />
     <Compile Include="Drawing\Champions\DamageIndicator.cs" />
     <Compile Include="Functions\AssemblyTime.cs" />
     <Compile Include="Functions\Calculations\Damage.cs" />
     <Compile Include="Functions\Objects\Heroes.cs" />
     <Compile Include="Functions\Objects\Minions.cs" />
-    <Compile Include="Drawing\Data\Static\StaticObjects.cs" />
+    <Compile Include="Data\Static\StaticObjects.cs" />
     <Compile Include="Tick\Handler.cs" />
     <Compile Include="Tick\Tick.cs" />
     <Compile Include="Tick\Manager.cs" />
