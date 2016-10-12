@@ -248,7 +248,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Events
 
             if (Objects.ProjectMenu.Item($"{basename}.UseQ").GetValue<bool>())
                 if (_manaManager.CheckMixedQ())
-                    if (Functions.Objects.Heroes.GetEnemies(Objects.Player.AttackRange-50).Count>=1)
+                    if (Data.Cache.Objects.GetCacheEnemies(Objects.Player.AttackRange-50).Count>=1)
                         Q.Cast();
         }
 

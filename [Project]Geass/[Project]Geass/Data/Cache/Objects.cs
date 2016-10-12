@@ -44,6 +44,7 @@ namespace _Project_Geass.Data.Cache
 
         public static void Load()
         {
+            _cacheEnemies=Heroes.GetEnemies();
             UpdateCache();
             Game.OnUpdate+=OnUpdate;
         }
@@ -51,7 +52,7 @@ namespace _Project_Geass.Data.Cache
         private static void UpdateCache()
         {
             _cacheMinions=Minions.GetEnemyMinions2(1500);
-            _cacheEnemies=Heroes.GetEnemies();
+            // _cacheEnemies=Heroes.GetEnemies();
         }
 
         private static void OnUpdate(EventArgs args)

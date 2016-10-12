@@ -2,7 +2,6 @@
 
 namespace _Project_Geass.Data.Static
 {
-
     internal static class Buffs
     {
         #region Public Properties
