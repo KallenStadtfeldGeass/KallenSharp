@@ -50,24 +50,26 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
             var menu=new Menu(nameof(Drawing), Names.Menu.DrawingNameBase);
 
             var enemyMenu=new Menu("Enemys", Names.Menu.DrawingItemBase+"Enemy");
-            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnEnemy.ComboDamage", "Combo Damage Fill").SetValue(new Circle(true, Color.DarkGray)));
-            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnEnemy.DrawRange", "Draw Enemy AA Range").SetValue(new Circle(true, Color.Red)));
+            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnEnemy.ComboDamage", "Combo Damage").SetValue(new Circle(true, Color.DarkGray))).SetTooltip("Draw Champion Combo Damage",
+                                                                                                                                                                                                             SharpDX.Color.Aqua);
+            enemyMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnEnemy.DrawRange", "Enemy AA").SetValue(new Circle(true, Color.Red))).SetTooltip("Draw Enemies AA Range", SharpDX.Color.Aqua);
 
             var selfMenu=new Menu("Self", Names.Menu.DrawingItemBase+"Self");
             //selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase + Data.Static.Objects.Player.ChampionName + ".Boolean.DrawOnSelf", "Draw On Self").SetValue(true));
 
             if (drawingOptions[0])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.QColor", "Q Range").SetValue(new Circle(true, Color.LightBlue)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.QColor", "Q").SetValue(new Circle(true, Color.LightBlue))).SetTooltip("Draw Q Range", SharpDX.Color.Aqua);
             if (drawingOptions[1])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.WColor", "W Range").SetValue(new Circle(true, Color.LightGreen)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.WColor", "W").SetValue(new Circle(true, Color.LightGreen))).SetTooltip("Draw W Range", SharpDX.Color.Aqua);
             if (drawingOptions[2])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.EColor", "E Range").SetValue(new Circle(true, Color.LightCoral)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.EColor", "E").SetValue(new Circle(true, Color.LightCoral))).SetTooltip("Draw E Range", SharpDX.Color.Aqua);
             if (drawingOptions[03])
-                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.RColor", "R Range").SetValue(new Circle(true, Color.LightSlateGray)));
+                selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.RColor", "R").SetValue(new Circle(true, Color.LightSlateGray))).SetTooltip("Draw R Range", SharpDX.Color.Aqua);
+            ;
 
             var lastHitMenu=new Menu("Minions", Names.Menu.DrawingItemBase+"Minions");
 
-            lastHitMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+".Minion."+"Circle.LastHitHelper", "LastHit Helper").SetValue(new Circle(true, Color.LightGray)));
+            lastHitMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+".Minion."+"Circle.LastHitHelper", "LastHit").SetValue(new Circle(true, Color.LightGray))).SetTooltip("Draw Last Hit Circle", SharpDX.Color.Aqua);
 
             menu.AddSubMenu(lastHitMenu);
             menu.AddSubMenu(enemyMenu);

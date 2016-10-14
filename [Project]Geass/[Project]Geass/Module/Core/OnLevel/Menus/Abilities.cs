@@ -1,4 +1,5 @@
 ﻿using LeagueSharp.Common;
+using SharpDX;
 using _Project_Geass.Data.Static;
 
 namespace _Project_Geass.Module.Core.OnLevel.Menus
@@ -28,7 +29,7 @@ namespace _Project_Geass.Module.Core.OnLevel.Menus
         private Menu Menu()
         {
             var menu=new Menu(Names.Menu.LevelNameBase, "levelMenu");
-            menu.AddItem(new MenuItem(Names.Menu.LevelItemBase+"Boolean.AutoLevelUp", "Auto level-up abilities").SetValue(true));
+            menu.AddItem(new MenuItem(Names.Menu.LevelItemBase+"Boolean.AutoLevelUp", "Auto Level").SetValue(true)).SetTooltip("Auto Level Up skills", Color.Aqua);
             return menu;
         }
 

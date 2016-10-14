@@ -13,8 +13,8 @@ namespace _Project_Geass.Data.Static
         public static DateTime AssemblyLoadTime=DateTime.Now;
         public static Obj_AI_Hero Player=ObjectManager.Player;
         public static Logger ProjectLogger=new Logger(Names.ProjectName);
-        public static Menu ProjectMenu=new Menu($"{Names.ProjectName}.{Player.ChampionName}", $"{Names.ProjectName}.{Player.ChampionName}", true);
-        public static Menu SettingsMenu=new Menu(Names.SettingsName, Names.SettingsName, true);
+        public static Menu ProjectMenu=new Menu($"{Names.ProjectName}.{Player.ChampionName}", $"{Names.ProjectName}.{Player.ChampionName}", true).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+        public static Menu SettingsMenu=new Menu(Names.SettingsName, Names.SettingsName, true).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.GreenYellow);
 
         #endregion Public Fields
     }
