@@ -1,6 +1,7 @@
-﻿using LeagueSharp.Common;
-using SharpDX;
+﻿using System.Drawing;
+using LeagueSharp.Common;
 using _Project_Geass.Data.Static;
+using Color = SharpDX.Color;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
@@ -39,7 +40,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         private Menu Clear()
         {
             var basename=_baseName+"Clear.";
-            var mainMenu=new Menu(nameof(Clear), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Clear), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Q").SetValue(true)).SetTooltip($"Use Q", Color.Aqua);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minon.LastHit", "On Minions").SetValue(true)).SetTooltip($"Use Q on minions", Color.Aqua);
@@ -57,7 +58,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         {
             var basename=_baseName+"Combo.";
 
-            var mainMenu = new Menu(nameof(Combo), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Combo), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Q").SetValue(true)).SetTooltip($"Use Q", Color.Aqua);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "W").SetValue(true)).SetTooltip($"Use W", Color.Aqua);
@@ -103,7 +104,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         {
             var basename=_baseName+"Misc.";
 
-            var mainMenu = new Menu(nameof(Misc), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Misc), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack", "Stack Tear").SetValue(true)).SetTooltip($"Use Q to stack tear (no enemies in view)", Color.Aqua);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.TearStack.MinMana", "Min Mana%").SetValue(new Slider(70))).SetTooltip($"Min Man% to stack tear", Color.Aqua);
             return mainMenu;
@@ -117,7 +118,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         private Menu Mixed()
         {
             var basename=_baseName+"Mixed.";
-            var mainMenu=new Menu(nameof(Mixed), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Mixed), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Q").SetValue(true)).SetTooltip($"Use Q", Color.Aqua);
 

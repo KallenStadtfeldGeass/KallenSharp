@@ -1,4 +1,5 @@
-﻿using LeagueSharp.Common;
+﻿using System.Drawing;
+using LeagueSharp.Common;
 using _Project_Geass.Data.Constant.Champions;
 using _Project_Geass.Data.Static;
 using _Project_Geass.Functions;
@@ -7,6 +8,7 @@ using _Project_Geass.Module.Core.Items.Menus;
 using _Project_Geass.Module.Core.Mana.Menus;
 using _Project_Geass.Module.Core.OnLevel.Menus;
 using _Project_Geass.Tick;
+using Color = SharpDX.Color;
 
 namespace _Project_Geass
 {
@@ -48,7 +50,7 @@ namespace _Project_Geass
             var trinketEnabled=Objects.SettingsMenu.Item($"{Names.Menu.BaseItem}{Objects.Player.ChampionName}.TrinketMenu").GetValue<bool>();
 
             Objects.ProjectLogger.WriteLog("Load Base Menu's...");
-            var orbWalker=new Orbwalking.Orbwalker(Objects.ProjectMenu.SubMenu(nameof(Orbwalking.Orbwalker)).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.GreenYellow));
+            var orbWalker=new Orbwalking.Orbwalker(Objects.ProjectMenu.SubMenu(nameof(Orbwalking.Orbwalker)).SetFontStyle(FontStyle.Bold, Color.GreenYellow));
             // ReSharper disable once UnusedVariable
             var manaMenu=new ManaMenu(coreMenu, championSettings.ManaSettings, manaEnabled);
             // ReSharper disable once UnusedVariable
@@ -60,7 +62,7 @@ namespace _Project_Geass
             // ReSharper disable once UnusedVariable
             var trinketMenu=new Trinket(coreMenu, trinketEnabled);
 
-            Objects.ProjectMenu.AddSubMenu(coreMenu.SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.GreenYellow));
+            Objects.ProjectMenu.AddSubMenu(coreMenu.SetFontStyle(FontStyle.Bold, Color.GreenYellow));
             Objects.ProjectMenu.AddToMainMenu();
             Bootloader.Load(manaEnabled, orbWalker);
         }

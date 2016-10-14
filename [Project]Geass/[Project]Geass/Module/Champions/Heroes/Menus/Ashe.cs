@@ -1,6 +1,7 @@
-﻿using LeagueSharp.Common;
-using SharpDX;
+﻿using System.Drawing;
+using LeagueSharp.Common;
 using _Project_Geass.Data.Static;
+using Color = SharpDX.Color;
 using Prediction = _Project_Geass.Functions.Prediction;
 
 namespace _Project_Geass.Module.Champions.Heroes.Menus
@@ -40,7 +41,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         {
             var basename=_baseName+"Auto.";
 
-            var mainMenu = new Menu(nameof(Auto), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Auto), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
             mainMenu.AddItem(new MenuItem($"{basename}.UseW.OnGapClose", "W").SetValue(true)).SetTooltip("Use W on gapclose", Color.Aqua);
             mainMenu.AddItem(new MenuItem($"{basename}.UseR.OnGapClose", "R").SetValue(false)).SetTooltip("Use R on gapclose", Color.Aqua);
 
@@ -68,7 +69,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         private Menu Clear()
         {
             var basename=_baseName+"Clear.";
-            var mainMenu=new Menu(nameof(Clear), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Clear), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Q").SetValue(false)).SetTooltip($"Use Q", Color.Aqua);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ.Minions", "Minions").SetValue(new Slider(4, 3, 10))).SetTooltip($"Minions in AA range", Color.Aqua);
@@ -87,7 +88,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         {
             var basename=_baseName+"Combo.";
 
-            var mainMenu = new Menu(nameof(Combo), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Combo), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Q").SetValue(true)).SetTooltip($"Use Q", Color.Aqua);
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "W").SetValue(true)).SetTooltip($"Use W", Color.Aqua);
@@ -129,7 +130,7 @@ namespace _Project_Geass.Module.Champions.Heroes.Menus
         private Menu Mixed()
         {
             var basename=_baseName+"Mixed.";
-            var mainMenu=new Menu(nameof(Mixed), basename).SetFontStyle(System.Drawing.FontStyle.Bold, SharpDX.Color.LightSkyBlue);
+            var mainMenu=new Menu(nameof(Mixed), basename).SetFontStyle(FontStyle.Bold, Color.LightSkyBlue);
             mainMenu.AddItem(new MenuItem($"{basename}.UseQ", "Use Q").SetValue(true));
 
             mainMenu.AddItem(new MenuItem($"{basename}.UseW", "Use W").SetValue(true));

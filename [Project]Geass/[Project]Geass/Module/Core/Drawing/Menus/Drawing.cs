@@ -65,7 +65,7 @@ namespace _Project_Geass.Module.Core.Drawing.Menus
                 selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.EColor", "E").SetValue(new Circle(true, Color.LightCoral))).SetTooltip("Draw E Range", SharpDX.Color.Aqua);
             if (drawingOptions[03])
                 selfMenu.AddItem(new MenuItem(Names.Menu.DrawingItemBase+Objects.Player.ChampionName+".Boolean.DrawOnSelf.RColor", "R").SetValue(new Circle(true, Color.LightSlateGray))).SetTooltip("Draw R Range", SharpDX.Color.Aqua);
-            ;
+            
 
             var lastHitMenu=new Menu("Minions", Names.Menu.DrawingItemBase+"Minions");
 
